@@ -1,0 +1,21 @@
+.menuLink {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+  
+  .menuLink:hover {
+    color: var(--primary-color);
+  }
+  
+  .current {
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  .menuLink:hover {
+    color: var(--primary-color);
+}
+
+.current {
+    color: var(--primary-color);
+}
