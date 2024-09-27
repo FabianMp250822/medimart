@@ -23,7 +23,7 @@ export default function service() {
     }
     return (
         <>
-            <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Service Details">
+            <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Nuestra Clínica">
                 <div>
                 {/* service-section */}
                 <section className="service-details pt_120 pb_110">

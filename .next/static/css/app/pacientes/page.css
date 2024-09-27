@@ -1,0 +1,595 @@
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./app/examenes-laboratorio/examenesLaboratorio.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************/
+/* General container styling */
+.service-details {
+    background-color: #f9f9f9;
+    padding: 60px 0;
+}
+
+/* Image zoom effect */
+.hover-zoom {
+    transition: transform 0.3s ease-in-out;
+}
+
+.hover-zoom:hover {
+    transform: scale(1.05);
+}
+
+/* Fade-in effect */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Section titles */
+.section-title {
+    font-size: 32px;
+    color: #333;
+    font-weight: 700;
+}
+
+.section-description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* Card section styling */
+.card-section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+/* Hover effect for card sections */
+.hover-section:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Section headers */
+.card-section h3 {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+/* List styling */
+.card-section ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.card-section ul li {
+    line-height: 1.8;
+    color: #555;
+}
+
+/* Margins for different sections */
+.mb_40 {
+    margin-bottom: 40px;
+}
+
+.mb_60 {
+    margin-bottom: 60px;
+}
+
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./app/horarios-toma-muestras/horarioTomaMuestras.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
+.horario-toma-muestras {
+    background-color: #f0f8ff; /* Fondo suave */
+    padding: 60px 0;
+}
+
+.service-details {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+.icon-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.icon {
+    font-size: 28px;
+    color: #00aaff;
+    margin-right: 10px;
+}
+
+h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: 600;
+}
+
+.custom-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.custom-list li {
+    font-size: 18px;
+    color: #555;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.custom-list li:last-child {
+    border-bottom: none;
+}
+
+.custom-list li strong {
+    color: #007bff;
+}
+
+.content-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.mb_60 {
+    margin-bottom: 60px;
+}
+
+.pt_120 {
+    padding-top: 120px;
+}
+
+.pb_110 {
+    padding-bottom: 110px;
+}
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./app/recomendaciones-examenes/recomendacionExamenes.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************/
+.recomendacion-examenes {
+    background-color: #f7f9fc;
+    padding: 60px 0;
+}
+
+.service-details {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.content-header h1 {
+    font-size: 32px;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.content-header p {
+    font-size: 18px;
+    color: #7f8c8d;
+}
+
+.icon-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.icon-title .icon {
+    font-size: 28px;
+    color: #3498db;
+    margin-right: 10px;
+}
+
+.content-section h2 {
+    font-size: 26px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.content-section h3 {
+    font-size: 22px;
+    color: #2980b9;
+    margin-top: 20px;
+}
+
+.custom-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.custom-list li {
+    font-size: 18px;
+    color: #34495e;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+.custom-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #3498db;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.content-section p {
+    font-size: 18px;
+    color: #7f8c8d;
+    line-height: 1.6;
+}
+
+.mb_60 {
+    margin-bottom: 60px;
+}
+
+.pt_60 {
+    padding-top: 60px;
+}
+
+.pb_110 {
+    padding-bottom: 110px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .service-details {
+        padding: 20px;
+    }
+
+    .content-header h1 {
+        font-size: 28px;
+    }
+
+    .content-section h2 {
+        font-size: 24px;
+    }
+
+    .content-section h3 {
+        font-size: 20px;
+    }
+}
+.scroll-container {
+    max-height: 600px; /* Ajusta la altura según tus necesidades */
+    overflow-y: auto;
+    padding-right: 15px; /* Para evitar que el scroll tape el contenido */
+}
+
+/* Opcional: Personalizar la barra de scroll */
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #3498db;
+    border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./app/solicitud-historias-clinicas/solicitudHistoriasClinicas.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+.solicitud-historias-clinicas {
+    background-color: #f7f9fc;
+    padding: 60px 0;
+}
+
+.service-details {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.content-header {
+    text-align: center;
+}
+
+.icon-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.icon-title .icon {
+    font-size: 36px;
+    color: #3498db;
+    margin-right: 10px;
+}
+
+.content-header h1 {
+    font-size: 32px;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.content-header p {
+    font-size: 18px;
+    color: #7f8c8d;
+}
+
+.steps-container {
+    margin-top: 40px;
+}
+
+.step-item {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.step-number {
+    min-width: 80px;
+    height: 80px;
+    background-color: #3498db;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.step-number span {
+    font-size: 24px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.step-description p {
+    font-size: 18px;
+    color: #34495e;
+    line-height: 1.6;
+}
+
+.note-section {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 40px;
+}
+
+.note-section p {
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+.mb_60 {
+    margin-bottom: 60px;
+}
+
+.pt_60 {
+    padding-top: 60px;
+}
+
+.pb_110 {
+    padding-bottom: 110px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .step-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step-number {
+        margin-bottom: 15px;
+    }
+
+    .step-description p {
+        text-align: center;
+    }
+}
+
+/*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./app/derechos-pacientes/derechosPacientes.css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************/
+.derechos-pacientes {
+    background-color: #f7f9fc;
+    padding: 60px 0;
+}
+
+.service-details {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.content-header {
+    margin-bottom: 40px;
+}
+
+.icon-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.icon-title .icon {
+    font-size: 36px;
+    color: #3498db;
+    margin-right: 15px;
+}
+
+.content-header h1 {
+    font-size: 32px;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.content-header p {
+    font-size: 18px;
+    color: #7f8c8d;
+    line-height: 1.6;
+}
+
+.content-section h2 {
+    font-size: 28px;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.content-section h3 {
+    font-size: 22px;
+    color: #2980b9;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.custom-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.custom-list li {
+    font-size: 18px;
+    color: #34495e;
+    line-height: 1.6;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+.custom-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #3498db;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.custom-list ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.custom-list ul li {
+    padding-left: 0;
+    margin-bottom: 5px;
+}
+
+.custom-list ul li::before {
+    content: '-';
+    position: absolute;
+    left: 0;
+    color: #3498db;
+    font-size: 18px;
+}
+
+a {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+.mb_60 {
+    margin-bottom: 60px;
+}
+
+.pt_60 {
+    padding-top: 60px;
+}
+
+.pb_110 {
+    padding-bottom: 110px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .icon-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .icon-title .icon {
+        margin-bottom: 10px;
+    }
+
+    .content-header h1 {
+        font-size: 28px;
+    }
+
+    .content-section h2 {
+        font-size: 24px;
+    }
+
+    .content-section h3 {
+        font-size: 20px;
+    }
+}
+
+/* Añadir espacio y ajustar el ancho */
+.service-details-content {
+    padding: 20px;
+}
+
+/* Contenedor con scroll */
+.scroll-container {
+    max-height: 600px; /* Ajusta la altura según necesites */
+    overflow-y: auto;
+    padding-right: 15px; /* Evita que el scroll tape el contenido */
+}
+
+/* Personalización de la barra de scroll */
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #3498db;
+    border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Estilos para la lista de anexos */
+.anexos-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.anexos-list li {
+    margin-bottom: 10px;
+}
+
+.anexos-list a {
+    text-decoration: none;
+    color: #3498db;
+    display: flex;
+    align-items: center;
+}
+
+.anexos-list a:hover {
+    color: #2980b9;
+}
+
+.download-icon {
+    margin-right: 10px;
+}
