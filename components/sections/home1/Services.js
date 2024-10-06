@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import React from 'react';
 
-export default function service() {
+export default function Service() {
   return (
     <section className="service-section sec-pad">
       <div className="auto-container">
         <div className="sec-title mb_50 centred">
           <span className="sub-title">Nuestros Servicios</span>
-          <h2>Ofrecemos Atención Médica <br />Salvando Vidas</h2>
+          <h2>Atención Integral <br />Cuidando de Ti Siempre</h2>
         </div>
         <div className="row clearfix">
           {/* Servicio 1: Neurocirugía */}
@@ -24,7 +24,7 @@ export default function service() {
                 </div>
                 <div className="lower-content">
                   <h3><Link href="service-details-3">Neurocirugía</Link></h3>
-                  <p>Ofrecemos servicios avanzados de neurocirugía con un equipo de especialistas en el cuidado del sistema nervioso central.</p>
+                  <p>Nos preocupamos por tu salud cerebral con un equipo de neurocirujanos altamente calificados, siempre listos para brindarte el mejor cuidado posible.</p>
                 </div>
               </div>
             </div>
@@ -43,7 +43,7 @@ export default function service() {
                 </div>
                 <div className="lower-content">
                   <h3><Link href="service-details-6">Laboratorio Moderno</Link></h3>
-                  <p>Contamos con un laboratorio equipado con tecnología de punta para realizar análisis precisos y confiables.</p>
+                  <p>Entendemos lo importante que es un diagnóstico preciso. Nuestro laboratorio está equipado con la última tecnología para brindarte resultados rápidos y confiables.</p>
                 </div>
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function service() {
                 </div>
                 <div className="lower-content">
                   <h3><Link href="service-details">Médicos Experimentados</Link></h3>
-                  <p>Nuestros médicos especialistas brindan la mejor atención médica en diversas áreas de la salud.</p>
+                  <p>Nuestros médicos están aquí para escucharte, cuidarte y acompañarte, ofreciendo un enfoque cálido y humano para garantizar tu bienestar.</p>
                 </div>
               </div>
             </div>

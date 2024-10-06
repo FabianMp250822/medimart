@@ -12,46 +12,46 @@ export default function ChooseUs() {
             <div className="content-box">
               <div className="sec-title light mb_50">
                 <span className="sub-title">¿Por qué Elegirnos?</span>
-                <h2>Elige lo Mejor Para Tu <br /> Salud</h2>
+                <h2>Tu Salud es Nuestra <br /> Mayor Prioridad</h2>
               </div>
               <div className="row clearfix">
-                {/* Professional Staff */}
+                {/* Personal Médico Profesional */}
                 <div className="col-lg-6 col-md-6 col-sm-12 chooseus-block">
                   <div className="chooseus-block-one">
                     <div className="inner-box">
                       <div className="icon-box"><i className="icon-18"></i></div>
-                      <h3>Personal Médico Profesional</h3>
-                      <p>Contamos con un equipo de médicos y especialistas altamente calificados para brindarte una atención de calidad.</p>
+                      <h3>Personal Médico Comprometido</h3>
+                      <p>Nuestro equipo está formado por médicos y especialistas apasionados por cuidarte, ofreciendo un trato cercano y humano para que te sientas en confianza.</p>
                     </div>
                   </div>
                 </div>
-                {/* Emergency Case */}
+                {/* Atención de Emergencias */}
                 <div className="col-lg-6 col-md-6 col-sm-12 chooseus-block">
                   <div className="chooseus-block-one">
                     <div className="inner-box">
                       <div className="icon-box"><i className="icon-21"></i></div>
-                      <h3>Atención de Emergencias</h3>
-                      <p>Ofrecemos atención de emergencias las 24 horas, los 7 días de la semana, con un equipo preparado para cualquier situación.</p>
+                      <h3>Atención de Emergencias 24/7</h3>
+                      <p>Sabemos que los momentos de emergencia no esperan. Estamos disponibles las 24 horas, siempre listos para ayudarte cuando más lo necesitas.</p>
                     </div>
                   </div>
                 </div>
-                {/* Online Appointment */}
+                {/* Citas en Línea */}
                 <div className="col-lg-6 col-md-6 col-sm-12 chooseus-block">
                   <div className="chooseus-block-one">
                     <div className="inner-box">
                       <div className="icon-box"><i className="icon-19"></i></div>
-                      <h3>Citas en Línea</h3>
-                      <p>Puedes agendar tus citas médicas de manera fácil y rápida a través de nuestra plataforma en línea.</p>
+                      <h3>Citas Médicas en Línea</h3>
+                      <p>Queremos que acceder a nuestra atención sea lo más cómodo para ti. Agenda tus citas fácilmente desde la comodidad de tu hogar.</p>
                     </div>
                   </div>
                 </div>
-                {/* 24/7 Services */}
+                {/* Servicios 24/7 */}
                 <div className="col-lg-6 col-md-6 col-sm-12 chooseus-block">
                   <div className="chooseus-block-one">
                     <div className="inner-box">
                       <div className="icon-box"><i className="icon-20"></i></div>
-                      <h3>Servicios 24/7</h3>
-                      <p>Nuestros servicios médicos están disponibles las 24 horas del día para ofrecerte la mejor atención en todo momento.</p>
+                      <h3>Atención Continuada</h3>
+                      <p>Estamos aquí para ti siempre que nos necesites. Nuestros servicios están disponibles 24/7, porque tu bienestar es nuestra prioridad.</p>
                     </div>
                   </div>
                 </div>

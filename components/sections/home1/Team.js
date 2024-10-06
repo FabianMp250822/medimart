@@ -23,7 +23,7 @@ export default function Team() {
       <div className="auto-container">
         <div className="sec-title mb_50">
           <span className="sub-title">Nuestro Equipo</span>
-          <h2>Conoce a nuestros médicos especialistas para un tratamiento de calidad</h2>
+          <h2>Conoce a Nuestro Equipo de Profesionales <br /> que Están Aquí para Ti</h2>
         </div>
         <div className="row clearfix">
           {teamMembers.map((member, index) => (
@@ -41,7 +41,7 @@ export default function Team() {
                         alt={`Foto de ${member.name}`}
                         style={{
                           width: '100%',
-                          height: '300px', // Ajusta la altura según tus necesidades
+                          height: '300px',
                           objectFit: 'cover',
                           objectPosition: 'center',
                         }}
@@ -75,6 +75,7 @@ export default function Team() {
                       <Link href="team-details">{member.name}</Link>
                     </h3>
                     <span className="designation">{member.role}</span>
+                    <p>Estamos aquí para apoyarte y guiarte en tu proceso de salud, siempre brindándote una atención cercana y profesional.</p>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-// File: D:\Arquitectura\medimart pack\medimart\app\page.js
+// File: /home/flag/Documentos/Arquitectura/medimart pack/medimart/app/page.js
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
