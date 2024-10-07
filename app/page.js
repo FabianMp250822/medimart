@@ -30,7 +30,7 @@ export default function Home() {
                 <Testimonial />
               
                 <News />
-                <Subscribe />
+                {/* <Subscribe /> */}
             </Layout>
         </>
     )
