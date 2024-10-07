@@ -1,130 +1,185 @@
 'use client'
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
-import { useState } from 'react'
-export default function service() {
-    const [isActive, setIsActive] = useState({
-        status: false,
-        key: 1,
-    })
 
-    const handleToggle = (key) => {
-        if (isActive.key === key) {
-            setIsActive({
-                status: false,
-            })
-        } else {
-            setIsActive({
-                status: true,
-                key,
-            })
-        }
-    }
+export default function Service() {
+    const services = [
+        {
+            title: 'Diagnóstico y Terapia Personalizados',
+            link: 'service-details-1',
+            description: 'Obtén un diagnóstico preciso y un plan de tratamiento adaptado a tus necesidades únicas.',
+        },
+        {
+            title: 'Asistencia Médica 24/7',
+            link: 'service-details-2',
+            description: 'Estamos aquí para ti en cualquier momento, brindando atención médica de calidad cuando más lo necesitas.',
+        },
+        {
+            title: 'Especialistas en Cardiología Pediátrica',
+            link: 'service-details-3',
+            description: 'Cuidamos el corazón de tus pequeños con los mejores especialistas en cardiología infantil.',
+        },
+        {
+            title: 'Chequeos Médicos Preventivos',
+            link: 'service-details-4',
+            description: 'Mantente saludable con nuestros completos chequeos preventivos y detección temprana de enfermedades.',
+        },
+        {
+            title: 'Cirugía de Vanguardia',
+            link: 'service-details-5',
+            description: 'Contamos con cirujanos expertos y tecnología avanzada para garantizar tu recuperación.',
+        },
+        {
+            title: 'Cirugía Ambulatoria Rápida',
+            link: 'service-details-6',
+            description: 'Procedimientos quirúrgicos eficaces que te permiten regresar a casa el mismo día.',
+        },
+        {
+            title: 'Cirugía Plástica y Reconstructiva',
+            link: 'service-details-7',
+            description: 'Recupera tu confianza y bienestar con nuestros tratamientos estéticos y reconstructivos.',
+        },
+        {
+            title: 'Atención Médica General',
+            link: 'service-details-8',
+            description: 'Consulta a nuestros médicos para cualquier necesidad de salud que tengas.',
+        },
+        {
+            title: 'Cuidados Intensivos Especializados',
+            link: 'service-details-9',
+            description: 'Brindamos atención crítica con personal altamente capacitado y tecnología de punta.',
+        },
+        {
+            title: 'Esterilización y Transporte Seguro',
+            link: 'service-details-10',
+            description: 'Garantizamos tu seguridad con protocolos estrictos de esterilización y transporte médico.',
+        },
+        {
+            title: 'Equipos Cardiovasculares de Última Generación',
+            link: 'service-details-11',
+            description: 'Tecnología avanzada para el diagnóstico y tratamiento de enfermedades cardíacas.',
+        },
+        {
+            title: 'Gastroenterología Clínica Integral',
+            link: 'service-details-12',
+            description: 'Cuidamos tu sistema digestivo con especialistas comprometidos con tu bienestar.',
+        },
+        {
+            title: 'Hospitalización Confortable',
+            link: 'service-details-13',
+            description: 'Habitaciones acogedoras y atención personalizada para una estancia agradable.',
+        },
+        {
+            title: 'Cuidado Oncológico Integral',
+            link: 'service-details-14',
+            description: 'Acompañamos tu lucha contra el cáncer con tratamientos avanzados y apoyo continuo.',
+        },
+        {
+            title: 'Neurología y Neurofisiología Especializadas',
+            link: 'service-details-15',
+            description: 'Abordamos trastornos neurológicos con precisión y cuidado excepcional.',
+        },
+        {
+            title: 'Salud Pulmonar Óptima',
+            link: 'service-details-16',
+            description: 'Nuestros neumólogos te ayudan a respirar mejor y vivir plenamente.',
+        },
+        {
+            title: 'Programa Integral contra la Tuberculosis',
+            link: 'service-details-17',
+            description: 'Tratamiento y seguimiento personalizado para combatir la tuberculosis.',
+        },
+        {
+            title: 'Especialistas en Nefrología',
+            link: 'service-details-18',
+            description: 'Cuidamos de tus riñones con tratamientos especializados y prevención.',
+        },
+        {
+            title: 'Vacunas y Protección Específica',
+            link: 'service-details-19',
+            description: 'Mantente protegido con nuestro amplio programa de inmunizaciones.',
+        },
+        {
+            title: 'Urología Avanzada',
+            link: 'service-details-20',
+            description: 'Soluciones efectivas para tus necesidades urológicas con un enfoque sensible.',
+        },
+        {
+            title: 'Atención al Dolor Torácico',
+            link: 'service-details-21',
+            description: 'Diagnóstico rápido y tratamiento eficaz para aliviar tu dolor y preocupación.',
+        },
+        {
+            title: 'Servicio de PET-CT Avanzado',
+            link: 'service-details-22',
+            description: 'Tecnología de imagen avanzada para diagnósticos precisos y tratamientos efectivos.',
+        },
+        {
+            title: 'Radioterapia de Precisión',
+            link: 'service-details-23',
+            description: 'Tratamientos radioterapéuticos exactos para combatir el cáncer de manera efectiva.',
+        },
+        {
+            title: 'Urgencias Médicas Inmediatas',
+            link: 'service-details-24',
+            description: 'Atención de emergencia disponible las 24 horas para situaciones críticas.',
+        },
+        {
+            title: 'Trasplante Renal y Pancreático',
+            link: 'service-details-25',
+            description: 'Programas de trasplante con altos estándares para mejorar tu calidad de vida.',
+        },
+        {
+            title: 'Tratamiento para Insuficiencia Cardíaca',
+            link: 'service-details-26',
+            description: 'Opciones avanzadas para el manejo y recuperación de la función cardíaca.',
+        },
+        {
+            title: 'Trasplante Intestinal Innovador',
+            link: 'service-details-27',
+            description: 'Procedimientos pioneros para restaurar tu salud intestinal.',
+        },
+        {
+            title: 'Trasplante de Riñón e Hígado',
+            link: 'service-details-28',
+            description: 'Expertos en trasplantes multiorgánicos para una nueva oportunidad de vida.',
+        },
+    ];
+
     return (
         <>
-            <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Service-Details">
-                <div>
-                {/* service-section */}
-                <section className="service-details pt_120 pb_110">
+            <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Nuestros Servicios">
+                <section className="service-section sec-pad">
                     <div className="auto-container">
+                        <div className="sec-title mb_50 centred">
+                            <span className="sub-title">Nuestros Servicios</span>
+                            <h2>Atención Integral <br />Cuidando de Ti Siempre</h2>
+                        </div>
                         <div className="row clearfix">
-                            <div className="col-lg-4 col-md-12 col-sm-12 sidebar-side">
-                                <div className="default-sidebar service-sidebar mr_15">
-                                    <div className="sidebar-widget category-widget">
-                                        <div className="widget-title">
-                                            <h3>Categories</h3>
-                                        </div>
-                                        <div className="widget-content">
-                                            <ul className="category-list clearfix">
-                                                <li><Link href="service-details">Cardiology</Link></li>
-                                                <li><Link href="service-details-2">Dental Clinic</Link></li>
-                                                <li><Link href="service-details-3">Neurosurgery</Link></li>
-                                                <li><Link href="service-details-4">Medical</Link></li>
-                                                <li><Link href="service-details-5">Pediatrics</Link></li>
-                                                <li><Link href="service-details-6" className="current">Modern Laboratory</Link></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="service-block-one">
+                            {services.map((service, index) => (
+                                <div key={index} className="col-lg-4 col-md-6 col-sm-12 service-block">
+                                    <div className="service-block-one wow fadeInUp animated" data-wow-delay={`${(index % 6) * 100}ms`} data-wow-duration="1500ms">
                                         <div className="inner-box">
                                             <div className="image-box">
-                                                <figure className="image"><img src="assets/images/service/service-2.jpg" alt="" /></figure>
-                                                <div className="icon-box"><i className="icon-16"></i></div>
+                                                <figure className="image">
+                                                    <Link href={service.link}>
+                                                        <img src={`https://picsum.photos/300/200?random=${index + 1}`} alt={service.title} />
+                                                    </Link>
+                                                </figure>
+                                                <div className="icon-box"><i className={`icon-${index + 1}`}></i></div>
                                             </div>
                                             <div className="lower-content">
-                                                <h3>Modern Laboratory</h3>
-                                                <p>Amet minim mollit non deserunt ullamco aliqua dolor do amet sint.</p>
+                                                <h3><Link href={service.link}>{service.title}</Link></h3>
+                                                <p>{service.description}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-lg-8 col-md-12 col-sm-12 content-side">
-                                <div className="service-details-content">
-                                    <div className="content-one mb_60">
-                                        <figure className="image-box mb_40"><img src="assets/images/service/service-14.jpg" alt="" /></figure>
-                                        <div className="text-box">
-                                            <h2>Modern Laboratory</h2>
-                                            <p>Quam arcu pretium quis quam sed, laorey afficits volutpat lobortis sem consq consequat lore dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut laboret dol aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip exac consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
-                                            <p>Velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proide in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis isten sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque.</p>
-                                        </div>
-                                    </div>
-                                    <div className="content-two">
-                                        <div className="image-inner">
-                                            <div className="row clearfix">
-                                                <div className="col-lg-6 col-md-6 col-sm-12 image-column">
-                                                    <figure className="image-box mb_30"><img src="assets/images/service/service-8.jpg" alt="" /></figure>
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 image-column">
-                                                    <figure className="image-box mb_30"><img src="assets/images/service/service-9.jpg" alt="" /></figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="text-box">
-                                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor mque lauda totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vite sunt explicabo. Nemo ipsam voluptatem quia voluptas sit aspernatur.</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullam nmco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehender it in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </section>
-                {/* service-section end */}
-                {/* subscibe */}
-                <section className="subscribe-section">
-                        <div className="auto-container">
-                            <div className="inner-container">
-                            <div className="row align-items-center">
-                                <div className="col-lg-6 col-md-12 col-sm-12 text-column">
-                                <div className="text-box">
-                                    <h2><span>Subscribe</span> for the exclusive updates!</h2>
-                                </div>
-                                </div>
-                                <div className="col-lg-6 col-md-12 col-sm-12 form-column">
-                                <div className="form-inner">
-                                    <form method="post" action="contact">
-                                    <div className="form-group">
-                                        <input type="email" name="email" placeholder="Enter Your Email Address" required />
-                                        <button type="submit" className="theme-btn btn-one"><span>Subscribe Now</span></button>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="check-box">
-                                        <input className="check" type="checkbox" id="checkbox1" />
-                                        <label htmlFor="checkbox1">I agree to the <Link href="/">Privacy Policy.</Link></label>
-                                        </div>
-                                    </div>
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </section>
-                        {/* subscibe end */}
-                </div>
-
             </Layout>
         </>
-    )
+    );
 }

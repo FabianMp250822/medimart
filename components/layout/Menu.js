@@ -17,7 +17,7 @@ export default function Menu() {
 
                 {/* Sección "Servicios" */}
                 <li className="dropdown">
-                    <Link href="/">Servicios</Link>
+                    <Link href="/service-details-6">Servicios</Link>
                     <ul>
                         <li><Link href="/hospitalizacion">Hospitalización</Link></li>
                         <li><Link href="/cuidado-critico">Cuidado Crítico</Link></li>
