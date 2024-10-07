@@ -24,9 +24,9 @@ export default function Home() {
                 <Services />
                 <WhyChooseUs />
                 <Funfacts />
-                {/* <Video /> */}
                 <Process />
                 <Testimonial />
+                {/* <Video /> */}
               
                 <Team />
                 {/* <News /> */}
