@@ -24,12 +24,12 @@ export default function Home() {
                 <Services />
                 <WhyChooseUs />
                 <Funfacts />
-                <Team />
                 {/* <Video /> */}
                 <Process />
                 <Testimonial />
               
-                <News />
+                <Team />
+                {/* <News /> */}
                 {/* <Subscribe /> */}
             </Layout>
         </>

@@ -1,9 +1,1 @@
-{
-  "/page": "app/page.js",
-  "/cuidado-critico/page": "app/cuidado-critico/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/imagenes-diagnosticas/page": "app/imagenes-diagnosticas/page.js",
-  "/faq/page": "app/faq/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/pacientes/page": "app/pacientes/page.js"
-}
+{}
