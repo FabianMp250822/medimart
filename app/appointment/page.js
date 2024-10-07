@@ -65,7 +65,8 @@ export default function Home() {
 
     return (
         <>
-            <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Agendamiento de citas">
+            <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Agendamiento de Citas Médicas Especializadas">
+
                 {/* Appointments-section */}
                 <section className="appointment-section sec-pad-2" style={{ paddingBottom: '0' }}>
                     <div className="outer-container p_relative">
