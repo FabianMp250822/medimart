@@ -33,7 +33,7 @@ export default function Home() {
                 <Video />
                 <News />
                 <Contact />
-                <Subscribe />
+                {/* <Subscribe /> */}
                
             </Layout>
         </>

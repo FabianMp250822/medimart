@@ -25,7 +25,7 @@ export default function Home() {
                 <WhyChooseUs />
                 <Funfacts />
                 <Team />
-                <Video />
+                {/* <Video /> */}
                 <Process />
                 <Testimonial />
               
