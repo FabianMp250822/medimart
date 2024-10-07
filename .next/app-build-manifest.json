@@ -31,6 +31,17 @@
       "static/chunks/main-app.js",
       "static/css/app/about-us/page.css",
       "static/chunks/app/about-us/page.js"
+    ],
+    "/appointment/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/appointment/page.css",
+      "static/chunks/app/appointment/page.js"
+    ],
+    "/onepage/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/onepage/page.js"
     ]
   }
 }

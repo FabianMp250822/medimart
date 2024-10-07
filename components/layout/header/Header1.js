@@ -4,6 +4,10 @@ import Menu from "../Menu"
 import MobileMenu from "../MobileMenu"
 
 export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSidebar, handlePopup, handleSidebar }) {
+    const whatsappNumber = '+573003456789';
+    const whatsappMessage = 'Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa.';
+    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
     return (
         <>
             <header className={`main-header ${scroll ? "fixed-header" : ""}`}>
@@ -52,7 +56,7 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSide
                                     </nav>
                                 </div>
                                 <div className="btn-box">
-                                    <Link href="/" className="theme-btn btn-one"><span>Asignar Cita</span></Link>
+                                <Link href="/appointment"  className="theme-btn btn-one"><span>Asignar citas</span></Link>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +78,7 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSide
                             </nav>
                             <ul className="menu-right-content">
                                 <div className="btn-box">
-                                    <Link href="/" className="theme-btn btn-one"><span>Asignar Cita</span></Link>
+                                <Link href="/appointment"  className="theme-btn btn-one"><span>Asignar citas</span></Link>
                                 </div>
                             </ul>
                         </div>

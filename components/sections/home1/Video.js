@@ -26,7 +26,7 @@ export default function Video() {
             Accede a consultas desde la comodidad de tu hogar. Nuestros médicos están aquí para brindarte la mejor atención con un enfoque cálido y humano.
           </p>
           <div className="btn-box">
-            <Link href="/#" className="theme-btn btn-one" style={{ padding: '15px 30px', fontSize: '18px' }}><span>Agendar una Cita</span></Link>
+            <Link href="/appointment" className="theme-btn btn-one" style={{ padding: '15px 30px', fontSize: '18px' }}><span>Agendar una Cita</span></Link>
           </div>
         </div>
       </div>

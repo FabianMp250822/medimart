@@ -20,7 +20,7 @@ export default function Banner() {
               <h2 style={{ fontSize: '36px', lineHeight: '1.3em' }}>Tu Salud, Nuestra <span>Prioridad</span> por 35 Años</h2>
               <p style={{ fontSize: '16px', lineHeight: '1.5em', maxWidth: '400px' }}>En la Clínica de la Costa, sabemos lo importante que es sentirte acompañado en los momentos que más lo necesitas. Nuestro equipo está comprometido con brindarte una atención cálida, humana y personalizada, asegurándonos de que te sientas en un entorno seguro y lleno de confianza.</p>
               <div className="btn-box">
-                <Link href="/servicios" className="theme-btn btn-two"><span>Conoce Nuestros Servicios para Ti</span></Link>
+                <Link href="/appointment" className="theme-btn btn-two"><span>Agenda tu cita</span></Link>
               </div>
             </div>
           </div>
