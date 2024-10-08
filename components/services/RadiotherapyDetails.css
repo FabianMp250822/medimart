@@ -1,0 +1,197 @@
+/* RadiotherapyDetails.css */
+
+/* Estilos generales para el contenedor principal */
+.radiotherapy-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.radiotherapy-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.radiotherapy-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.radiotherapy-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Servicios */
+.radiotherapy-services {
+    margin-bottom: 30px;
+}
+
+.radiotherapy-services h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.radiotherapy-services ul {
+    list-style: none;
+    padding: 0;
+}
+
+.radiotherapy-services ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.radiotherapy-services ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Infraestructura y Dotación */
+.radiotherapy-infrastructure {
+    margin-bottom: 30px;
+}
+
+.radiotherapy-infrastructure h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.radiotherapy-infrastructure p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.radiotherapy-infrastructure ul {
+    list-style: none;
+    padding: 0;
+}
+
+.radiotherapy-infrastructure ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.radiotherapy-infrastructure ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Equipo Electa Infinity */
+.radiotherapy-equipment {
+    margin-bottom: 30px;
+}
+
+.radiotherapy-equipment h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.equipment-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+.equipment-text {
+    flex: 2;
+}
+
+.equipment-text ul {
+    list-style: none;
+    padding: 0;
+}
+
+.equipment-text ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.equipment-text ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.equipment-image {
+    flex: 1;
+    text-align: center;
+}
+
+.equipment-image img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    border: 4px solid #e0e0e0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .radiotherapy-details {
+        padding: 20px;
+    }
+
+    .radiotherapy-header h2 {
+        font-size: 24px;
+    }
+
+    .radiotherapy-services h3,
+    .radiotherapy-infrastructure h3,
+    .radiotherapy-equipment h3 {
+        font-size: 18px;
+    }
+
+    .radiotherapy-services ul li,
+    .radiotherapy-infrastructure p,
+    .radiotherapy-infrastructure ul li,
+    .equipment-text ul li {
+        font-size: 14px;
+    }
+
+    .equipment-details {
+        flex-direction: column;
+    }
+
+    .equipment-image img {
+        max-width: 100%;
+    }
+}

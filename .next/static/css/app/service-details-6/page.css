@@ -446,3 +446,1915 @@
     }
 }
 
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/PlasticSurgeryDetails.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/PediatricCardiologyDetails.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
+/* PediatricCardiologyDetails.css */
+
+/* Estilos generales para el contenedor principal */
+.pediatric-cardiology-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Corazones decorativos */
+.pediatric-cardiology-details::before,
+.pediatric-cardiology-details::after {
+    content: '❤';
+    font-size: 80px;
+    color: #88c9f9;
+    position: absolute;
+    opacity: 0.1;
+}
+
+.pediatric-cardiology-details::before {
+    top: -20px;
+    left: 10px;
+}
+
+.pediatric-cardiology-details::after {
+    bottom: -20px;
+    right: 20px;
+}
+
+/* Encabezado del servicio */
+.cardiology-header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.cardiology-header h2 {
+    font-size: 32px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.cardiology-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+/* Descripción de la cardiología pediátrica */
+.cardiology-description {
+    text-align: justify;
+    margin-bottom: 30px;
+}
+
+.cardiology-description p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Áreas de servicio */
+.cardiology-areas {
+    margin-bottom: 30px;
+}
+
+.cardiology-areas h4 {
+    font-size: 20px;
+    color: #0069A5;
+    margin-bottom: 15px;
+}
+
+.cardiology-areas ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cardiology-areas ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.cardiology-areas ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imagen representativa */
+.cardiology-image {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.cardiology-image img {
+    width: 300px;
+    border-radius: 8px;
+    border: 4px solid #e0e0e0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .pediatric-cardiology-details {
+        padding: 20px;
+    }
+
+    .cardiology-header h2 {
+        font-size: 24px;
+    }
+
+    .cardiology-areas ul li,
+    .cardiology-description p {
+        font-size: 14px;
+    }
+
+    .cardiology-image img {
+        width: 250px;
+    }
+}
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/CardiacVascularDetailsComplete.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************/
+/* CardiacVascularDetailsComplete.css */
+
+/* Estilos generales para el contenedor principal */
+.cardiac-vascular-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.cardiac-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cardiac-header h2 {
+    font-size: 32px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.cardiac-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Descripción general */
+.cardiac-description,
+.rehab-unit,
+.cardiac-surgery,
+.non-invasive-methods,
+.electrophysiology,
+.hemodynamics,
+.cardiac-diagnosis {
+    margin-bottom: 30px;
+}
+
+.cardiac-description p,
+.rehab-unit p,
+.cardiac-surgery p,
+.non-invasive-methods p,
+.electrophysiology p,
+.hemodynamics p,
+.cardiac-diagnosis p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    text-align: justify;
+}
+
+/* Estilos de imágenes */
+.cardiac-main-image img,
+.rehab-image img,
+.non-invasive-image img,
+.electrophysiology-image img,
+.hemodynamics-image img,
+.diagnosis-image img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 10px;
+    margin: 20px auto;
+    display: block;
+}
+
+/* Títulos secundarios */
+h3 {
+    font-size: 24px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+/* Beneficios */
+.benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.benefits ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.benefits ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .cardiac-vascular-details {
+        padding: 20px;
+    }
+
+    .cardiac-header h2 {
+        font-size: 24px;
+    }
+
+    p,
+    ul li {
+        font-size: 14px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+}
+
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/HematologyOncologyDetails.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+/* HematologyOncologyDetails.css */
+
+/* Estilos generales para el contenedor principal */
+.hematology-oncology-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.hematology-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.hematology-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.hematology-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Descripción general */
+.hematology-description {
+    text-align: justify;
+    margin-bottom: 30px;
+}
+
+.hematology-description p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Equipo */
+.hematology-team {
+    margin-bottom: 30px;
+}
+
+.hematology-team h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.hematology-team ul {
+    list-style: none;
+    padding: 0;
+}
+
+.hematology-team ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.hematology-team ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Beneficios del programa */
+.hematology-benefits {
+    margin-bottom: 30px;
+}
+
+.hematology-benefits h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.hematology-benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.hematology-benefits ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.hematology-benefits ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Servicios especializados */
+.hematology-specialized-services {
+    margin-bottom: 30px;
+}
+
+.hematology-specialized-services h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.services-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.service {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(50% - 10px);
+    box-sizing: border-box;
+}
+
+.service h4 {
+    font-size: 18px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.service p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.service img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .hematology-oncology-details {
+        padding: 20px;
+    }
+
+    .hematology-header h2 {
+        font-size: 24px;
+    }
+
+    .hematology-team h3,
+    .hematology-benefits h3,
+    .hematology-specialized-services h3 {
+        font-size: 18px;
+    }
+
+    .hematology-team ul li,
+    .hematology-description p,
+    .hematology-benefits ul li,
+    .service p {
+        font-size: 14px;
+    }
+
+    .services-container {
+        flex-direction: column;
+    }
+
+    .service {
+        width: 100%;
+    }
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/RadiotherapyDetails.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+/* RadiotherapyDetails.css */
+
+/* Estilos generales para el contenedor principal */
+.radiotherapy-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.radiotherapy-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.radiotherapy-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.radiotherapy-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Servicios */
+.radiotherapy-services {
+    margin-bottom: 30px;
+}
+
+.radiotherapy-services h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.radiotherapy-services ul {
+    list-style: none;
+    padding: 0;
+}
+
+.radiotherapy-services ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.radiotherapy-services ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Infraestructura y Dotación */
+.radiotherapy-infrastructure {
+    margin-bottom: 30px;
+}
+
+.radiotherapy-infrastructure h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.radiotherapy-infrastructure p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.radiotherapy-infrastructure ul {
+    list-style: none;
+    padding: 0;
+}
+
+.radiotherapy-infrastructure ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.radiotherapy-infrastructure ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Equipo Electa Infinity */
+.radiotherapy-equipment {
+    margin-bottom: 30px;
+}
+
+.radiotherapy-equipment h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.equipment-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+.equipment-text {
+    flex: 2 1;
+}
+
+.equipment-text ul {
+    list-style: none;
+    padding: 0;
+}
+
+.equipment-text ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.equipment-text ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.equipment-image {
+    flex: 1 1;
+    text-align: center;
+}
+
+.equipment-image img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    border: 4px solid #e0e0e0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .radiotherapy-details {
+        padding: 20px;
+    }
+
+    .radiotherapy-header h2 {
+        font-size: 24px;
+    }
+
+    .radiotherapy-services h3,
+    .radiotherapy-infrastructure h3,
+    .radiotherapy-equipment h3 {
+        font-size: 18px;
+    }
+
+    .radiotherapy-services ul li,
+    .radiotherapy-infrastructure p,
+    .radiotherapy-infrastructure ul li,
+    .equipment-text ul li {
+        font-size: 14px;
+    }
+
+    .equipment-details {
+        flex-direction: column;
+    }
+
+    .equipment-image img {
+        max-width: 100%;
+    }
+}
+
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/PetCTDetails.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/* PetCTDetails.css */
+
+/* Estilos generales para el contenedor principal */
+.petct-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.petct-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.petct-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.petct-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Descripción inicial */
+.petct-description {
+    margin-bottom: 30px;
+}
+
+.petct-description p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.petct-description ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.petct-description ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.petct-description ul li::before {
+    content: '→';
+    color: #0069A5;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Servicios */
+.petct-services {
+    margin-bottom: 30px;
+}
+
+.petct-services h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.petct-services ul {
+    list-style: none;
+    padding: 0;
+}
+
+.petct-services ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.petct-services ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Tecnología */
+.petct-technology {
+    margin-bottom: 30px;
+}
+
+.petct-technology h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.petct-technology ul {
+    list-style: none;
+    padding: 0;
+}
+
+.petct-technology ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.petct-technology ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.petct-technology .petct-image {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.petct-technology .petct-image img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    border: 4px solid #e0e0e0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .petct-details {
+        padding: 20px;
+    }
+
+    .petct-header h2 {
+        font-size: 24px;
+    }
+
+    .petct-description ul li,
+    .petct-services h3,
+    .petct-technology h3,
+    .petct-services ul li,
+    .petct-technology ul li {
+        font-size: 14px;
+    }
+
+    .petct-technology .petct-image img {
+        max-width: 100%;
+    }
+}
+
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/KidneyLiverTransplant.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+/* KidneyLiverTransplant.css */
+
+/* Estilos generales para el contenedor principal */
+.kidney-liver-transplant-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.service-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.service-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenido del servicio */
+.service-content {
+    margin-bottom: 30px;
+}
+
+.service-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Resaltado del servicio */
+.service-highlight {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-left: 5px solid #0076a3;
+    border-radius: 5px;
+}
+
+.service-highlight h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.service-highlight ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-highlight ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.service-highlight ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imagen del servicio */
+.service-image {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.service-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .kidney-liver-transplant-details {
+        padding: 20px;
+    }
+
+    .service-header h2 {
+        font-size: 24px;
+    }
+
+    .service-content p,
+    .service-highlight h3,
+    .service-highlight ul li {
+        font-size: 14px;
+    }
+}
+
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/OrthopedicsTraumatology.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+/* OrthopedicsTraumatology.css */
+
+/* Estilos generales para el contenedor principal */
+.orthopedics-traumatology-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.service-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.service-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenido del servicio */
+.service-content {
+    margin-bottom: 30px;
+}
+
+.service-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Resaltado del servicio */
+.service-highlight {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-left: 5px solid #0076a3;
+    border-radius: 5px;
+}
+
+.service-highlight h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.service-highlight ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-highlight ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.service-highlight ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imagen del servicio */
+.service-image {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.service-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .orthopedics-traumatology-details {
+        padding: 20px;
+    }
+
+    .service-header h2 {
+        font-size: 24px;
+    }
+
+    .service-content p,
+    .service-highlight h3,
+    .service-highlight ul li {
+        font-size: 14px;
+    }
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/PulmonologyThoracic.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+/* PulmonologyThoracic.css */
+
+/* Estilos generales para el contenedor principal */
+.pulmonology-thoracic-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.service-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.service-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenido del servicio */
+.service-content {
+    margin-bottom: 30px;
+}
+
+.service-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Resaltado del servicio */
+.service-highlight {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-left: 5px solid #0076a3;
+    border-radius: 5px;
+}
+
+.service-highlight h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.service-highlight ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-highlight ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.service-highlight ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imagen del servicio */
+.service-image {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.service-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .pulmonology-thoracic-details {
+        padding: 20px;
+    }
+
+    .service-header h2 {
+        font-size: 24px;
+    }
+
+    .service-content p,
+    .service-highlight h3,
+    .service-highlight ul li {
+        font-size: 14px;
+    }
+}
+
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/NeurologyLab.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/* NeurologyLab.css */
+
+/* Estilos generales para el contenedor principal */
+.neurology-lab-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.service-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.service-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenido del servicio */
+.service-content {
+    margin-bottom: 30px;
+}
+
+.service-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Resaltado del servicio */
+.service-highlight {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-left: 5px solid #0076a3;
+    border-radius: 5px;
+}
+
+.service-highlight h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.service-highlight ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-highlight ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.service-highlight ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imagen del servicio */
+.service-image {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.service-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .neurology-lab-details {
+        padding: 20px;
+    }
+
+    .service-header h2 {
+        font-size: 24px;
+    }
+
+    .service-content p,
+    .service-highlight h3,
+    .service-highlight ul li {
+        font-size: 14px;
+    }
+}
+
+/*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/NephrologyProgram.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************/
+/* NephrologyProgram.css */
+
+/* Estilos generales para el contenedor principal */
+.nephrology-program-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.service-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.service-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenido del servicio */
+.service-content {
+    margin-bottom: 30px;
+}
+
+.service-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Resaltado del servicio */
+.service-highlight {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-left: 5px solid #0076a3;
+    border-radius: 5px;
+}
+
+.service-highlight h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.service-highlight ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-highlight ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.service-highlight ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imagen del servicio */
+.service-image {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.service-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .nephrology-program-details {
+        padding: 20px;
+    }
+
+    .service-header h2 {
+        font-size: 24px;
+    }
+
+    .service-content p,
+    .service-highlight h3,
+    .service-highlight ul li {
+        font-size: 14px;
+    }
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/HeartFailureSupport.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+/* HeartFailureSupport.css */
+
+/* Estilos generales para el contenedor principal */
+.heart-failure-support-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.service-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.service-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenido del servicio */
+.service-content {
+    margin-bottom: 30px;
+}
+
+.service-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Resaltado del servicio */
+.service-highlight {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-left: 5px solid #0076a3;
+    border-radius: 5px;
+}
+
+.service-highlight h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.service-highlight ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-highlight ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.service-highlight ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imagen del servicio */
+.service-image {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.service-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .heart-failure-support-details {
+        padding: 20px;
+    }
+
+    .service-header h2 {
+        font-size: 24px;
+    }
+
+    .service-content p,
+    .service-highlight h3,
+    .service-highlight ul li {
+        font-size: 14px;
+    }
+}
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/TransplantServices.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/* TransplantServices.css */
+
+/* Estilos generales para el contenedor principal */
+.transplant-services-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.service-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.service-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenido del servicio */
+.service-content {
+    margin-bottom: 40px;
+}
+
+.service-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Resaltado del servicio */
+.service-highlight {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-left: 5px solid #0076a3;
+    border-radius: 5px;
+}
+
+.service-highlight h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.service-highlight ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-highlight ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.service-highlight ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .transplant-services-details {
+        padding: 20px;
+    }
+
+    .service-header h2 {
+        font-size: 24px;
+    }
+
+    .service-content p,
+    .service-highlight h3,
+    .service-highlight ul li {
+        font-size: 14px;
+    }
+}
+
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/GastroenterologyDetails.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+/* GastroenterologyDetails.css */
+
+/* Estilos generales para el contenedor principal */
+.gastroenterology-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.gastro-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.gastro-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.gastro-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Descripción general */
+.gastro-description {
+    text-align: justify;
+    margin-bottom: 30px;
+}
+
+.gastro-description p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Estudios ofrecidos */
+.gastro-studies {
+    margin-bottom: 30px;
+}
+
+.gastro-studies h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.gastro-studies ul {
+    list-style: none;
+    padding: 0;
+}
+
+.gastro-studies ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.gastro-studies ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imágenes representativas */
+.gastro-images {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.capsule-info {
+    background-color: #0076a3;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    max-width: 300px;
+    flex: 1 1;
+    margin-right: 15px;
+}
+
+.capsule-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.gastro-main-image {
+    flex: 2 1;
+    display: flex;
+    justify-content: center;
+}
+
+.gastro-main-image img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    border: 4px solid #e0e0e0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .gastroenterology-details {
+        padding: 20px;
+    }
+
+    .gastro-header h2 {
+        font-size: 24px;
+    }
+
+    .gastro-studies h3 {
+        font-size: 18px;
+    }
+
+    .gastro-studies ul li,
+    .gastro-description p {
+        font-size: 14px;
+    }
+
+    .capsule-info,
+    .gastro-main-image img {
+        max-width: 100%;
+    }
+
+    .gastro-images {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .capsule-info {
+        margin-bottom: 20px;
+    }
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/TuberculosisAndChestPainProgram.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/* TuberculosisAndChestPainProgram.css */
+
+/* Estilos generales para el contenedor principal */
+.tuberculosis-chest-pain-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del programa */
+.program-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.program-header h2 {
+    font-size: 28px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.program-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenido del programa */
+.program-content {
+    margin-bottom: 40px;
+}
+
+.program-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Resaltado del programa */
+.program-highlight {
+    margin-top: 20px;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-left: 5px solid #0076a3;
+    border-radius: 5px;
+}
+
+.program-highlight h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+}
+
+.program-highlight p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Áreas del programa */
+.program-areas {
+    margin-top: 20px;
+}
+
+.program-areas h3 {
+    font-size: 20px;
+    color: #0076a3;
+    margin-bottom: 10px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+.program-areas ul {
+    list-style: none;
+    padding: 0;
+}
+
+.program-areas ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.program-areas ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .tuberculosis-chest-pain-details {
+        padding: 20px;
+    }
+
+    .program-header h2 {
+        font-size: 24px;
+    }
+
+    .program-content p,
+    .program-highlight h3,
+    .program-highlight p,
+    .program-areas h3,
+    .program-areas ul li {
+        font-size: 14px;
+    }
+}
+

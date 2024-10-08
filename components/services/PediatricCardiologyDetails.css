@@ -1,0 +1,133 @@
+/* PediatricCardiologyDetails.css */
+
+/* Estilos generales para el contenedor principal */
+.pediatric-cardiology-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Corazones decorativos */
+.pediatric-cardiology-details::before,
+.pediatric-cardiology-details::after {
+    content: '❤';
+    font-size: 80px;
+    color: #88c9f9;
+    position: absolute;
+    opacity: 0.1;
+}
+
+.pediatric-cardiology-details::before {
+    top: -20px;
+    left: 10px;
+}
+
+.pediatric-cardiology-details::after {
+    bottom: -20px;
+    right: 20px;
+}
+
+/* Encabezado del servicio */
+.cardiology-header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.cardiology-header h2 {
+    font-size: 32px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.cardiology-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+/* Descripción de la cardiología pediátrica */
+.cardiology-description {
+    text-align: justify;
+    margin-bottom: 30px;
+}
+
+.cardiology-description p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Áreas de servicio */
+.cardiology-areas {
+    margin-bottom: 30px;
+}
+
+.cardiology-areas h4 {
+    font-size: 20px;
+    color: #0069A5;
+    margin-bottom: 15px;
+}
+
+.cardiology-areas ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cardiology-areas ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.cardiology-areas ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Imagen representativa */
+.cardiology-image {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.cardiology-image img {
+    width: 300px;
+    border-radius: 8px;
+    border: 4px solid #e0e0e0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .pediatric-cardiology-details {
+        padding: 20px;
+    }
+
+    .cardiology-header h2 {
+        font-size: 24px;
+    }
+
+    .cardiology-areas ul li,
+    .cardiology-description p {
+        font-size: 14px;
+    }
+
+    .cardiology-image img {
+        width: 250px;
+    }
+}

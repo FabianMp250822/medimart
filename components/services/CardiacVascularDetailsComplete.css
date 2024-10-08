@@ -1,0 +1,124 @@
+/* CardiacVascularDetailsComplete.css */
+
+/* Estilos generales para el contenedor principal */
+.cardiac-vascular-details {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del servicio */
+.cardiac-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cardiac-header h2 {
+    font-size: 32px;
+    color: #0069A5;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.cardiac-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background-color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Descripción general */
+.cardiac-description,
+.rehab-unit,
+.cardiac-surgery,
+.non-invasive-methods,
+.electrophysiology,
+.hemodynamics,
+.cardiac-diagnosis {
+    margin-bottom: 30px;
+}
+
+.cardiac-description p,
+.rehab-unit p,
+.cardiac-surgery p,
+.non-invasive-methods p,
+.electrophysiology p,
+.hemodynamics p,
+.cardiac-diagnosis p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    text-align: justify;
+}
+
+/* Estilos de imágenes */
+.cardiac-main-image img,
+.rehab-image img,
+.non-invasive-image img,
+.electrophysiology-image img,
+.hemodynamics-image img,
+.diagnosis-image img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 10px;
+    margin: 20px auto;
+    display: block;
+}
+
+/* Títulos secundarios */
+h3 {
+    font-size: 24px;
+    color: #0076a3;
+    margin-bottom: 15px;
+    border-left: 5px solid #0076a3;
+    padding-left: 10px;
+}
+
+/* Beneficios */
+.benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.benefits ul li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.benefits ul li::before {
+    content: '→';
+    color: #0076a3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .cardiac-vascular-details {
+        padding: 20px;
+    }
+
+    .cardiac-header h2 {
+        font-size: 24px;
+    }
+
+    p,
+    ul li {
+        font-size: 14px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+}
