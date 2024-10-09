@@ -5,16 +5,20 @@ import Link from "next/link"
 import TeamSection from "./TeamSection"
 import ValoresCorporativos from "./ValoresCorporativos"
 import Process from "@/components/sections/home1/Process"
-import WOW from 'wowjs'
+
 import './ValoresCorporativos.css'; // Archivo CSS separado
 
 export default function Home() {
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const wow = new WOW.WOW({ live: false })
+          import('wowjs').then((module) => {
+            const WOW = module.default
+            const wow = new WOW({ live: false })
             wow.init()
+          })
         }
-    }, [])
+      }, [])
+      
 
     const [isOpen, setOpen] = useState(false)
     const [isActive, setIsActive] = useState({
