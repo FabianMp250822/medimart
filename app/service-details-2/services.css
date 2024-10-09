@@ -1,0 +1,157 @@
+/* Categorías */
+.category-list {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+.category-list h3 {
+    margin-bottom: 15px;
+    color: #1e54b1;
+}
+
+.category-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-list li {
+    padding: 10px;
+    cursor: pointer;
+    color: #555;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.category-list li:hover, .category-list li.active {
+    background-color: #1e54b1;
+    color: #fff;
+}
+
+/* Tarjeta de la Categoría */
+.category-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.category-card h3 {
+    color: #1e54b1;
+    margin-bottom: 15px;
+}
+
+.category-card p {
+    color: #555;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* Subcategorías */
+.subcategories {
+    margin-top: 20px;
+}
+
+.subcategory-card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+.subcategory-card h4 {
+    cursor: pointer;
+    color: #1e54b1;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.subcategory-card h4 .toggle-icon {
+    float: right;
+    font-size: 24px;
+    line-height: 18px;
+}
+
+.subcategory-card p {
+    color: #555;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+.documents-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.documents-list li {
+    padding: 10px;
+    cursor: pointer;
+    color: #1e54b1;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+}
+
+.documents-list li:hover {
+    background-color: #f0f8ff;
+}
+
+/* No Category Selected */
+.no-category-selected {
+    background-color: #fff;
+    padding: 50px;
+    text-align: center;
+    color: #888;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991px) {
+    .category-list {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .category-list, .category-card, .subcategory-card {
+        padding: 15px;
+    }
+
+    .category-card h3, .subcategory-card h4 {
+        font-size: 20px;
+    }
+
+    .subcategory-card h4 .toggle-icon {
+        font-size: 20px;
+    }
+}
+
+/* Smooth Toggle Animation */
+.subcategory-card h4 {
+    position: relative;
+}
+
+.subcategory-card h4::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.subcategory-card .documents-list,
+.subcategory-card p {
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+}
+
+.subcategory-card .documents-list {
+    max-height: 500px;
+}
+
+.subcategory-card .documents-list.collapsed,
+.subcategory-card p.collapsed {
+    max-height: 0;
+}

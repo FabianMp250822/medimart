@@ -1,6 +1,5 @@
 {
-  "/service-details-6/page": "app/service-details-6/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/cuidado-critico/page": "app/cuidado-critico/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/about-us/page": "app/about-us/page.js",
+  "/service-details-2/page": "app/service-details-2/page.js"
 }

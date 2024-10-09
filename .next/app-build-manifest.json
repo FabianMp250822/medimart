@@ -1,10 +1,9 @@
 {
   "pages": {
-    "/service-details-6/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/service-details-6/page.css",
-      "static/chunks/app/service-details-6/page.js"
+      "static/chunks/app/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -22,20 +21,17 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/_not-found/page": [
+    "/about-us/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/css/app/about-us/page.css",
+      "static/chunks/app/about-us/page.js"
     ],
-    "/cuidado-critico/page": [
+    "/service-details-2/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/cuidado-critico/page.js"
-    ],
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/css/app/service-details-2/page.css",
+      "static/chunks/app/service-details-2/page.js"
     ]
   }
 }
