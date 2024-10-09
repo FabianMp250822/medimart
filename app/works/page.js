@@ -1,228 +1,179 @@
-'use client'
-import Layout from "@/components/layout/Layout"
-import TestimonialSlider1 from '@/components/slider/TestimonialSlider1'
-import Link from "next/link"
-import React, { useState } from 'react';
-import ModalVideo from 'react-modal-video'
+'use client'; 
+import { useState } from 'react';
+import Layout from "@/components/layout/Layout";
+import Link from "next/link";
+
 export default function Home() {
-    const [isOpen, setOpen] = useState(false)
-    return (
-        <>
-            <Layout headerStyle={1} footerStyle={1} breadcrumbTitle="How It Works">
-                <div>
-                <section className="process-section sec-pad bg-color-1">
-                    <div className="shape">
-                        <div className="shape-1 float-bob-x" style={{ backgroundImage: 'url(assets/images/shape/shape-20.png)' }}></div>
-                        <div className="shape-2 float-bob-y" style={{ backgroundImage: 'url(assets/images/shape/shape-15.png)' }}></div>
-                        <div className="shape-3"></div>
-                    </div>
-                    <div className="auto-container">
-                        <div className="sec-title mb_50 centred">
-                        <span className="sub-title">Process</span>
-                        <h2>How it Helps You to <br />Keep Healthy</h2>
-                        </div>
-                        <div className="inner-container">
-                        <div className="arrow-shape" style={{ backgroundImage: 'url(assets/images/shape/shape-18.png)' }}></div>
+  const [selectedService, setSelectedService] = useState('Equipo Médico Especializado');
 
-                        {/* Processing Blocks */}
-                        {[1, 2, 3].map((count) => (
-                            <div key={count} className={`processing-block-one wow fadeInLeft animated`} data-wow-delay={`${(count - 1) * 300}ms`} data-wow-duration="1500ms">
-                            <div className="inner-box">
-                                <span className="count-text">0{count}</span>
-                                <figure className="image-box"><img src={`assets/images/resource/process-${count}.jpg`} alt="" /></figure>
-                                <div className="lower-content">
-                                {/* Replace with actual titles and descriptions */}
-                                <h3>Title {count}</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                </div>
-                            </div>
-                            </div>
+  const menuItems = [
+    'Equipo Médico Especializado',
+    'Atención Integral en Emergencias',
+    'Tecnología Avanzada y Diagnóstico',
+    'Apoyo Terapéutico y Quirúrgico',
+    'Servicio Continuo 24/7',
+    'Facilidades de Pago y Atención Rápida',
+  ];
+
+  const serviceContent = {
+    'Equipo Médico Especializado': (
+      <>
+        <p>
+          Nuestro **Servicio de Urgencias** cuenta con un equipo de especialistas en **Medicina Interna**, **Ginecología**, **Pediatría**, y **Medicina General**, junto a enfermeras certificadas en soporte vital básico y avanzado. También disponemos de **terapeutas respiratorios** y acceso a médicos de todas las especialidades clínicas y quirúrgicas, todos dedicados exclusivamente a la atención en nuestra clínica.
+        </p>
+        <p>
+          Este equipo interdisciplinario trabaja de manera coordinada para atender cualquier tipo de emergencia, desde situaciones críticas hasta urgencias menos complejas, asegurando siempre la mejor atención y el tratamiento adecuado para cada paciente.
+        </p>
+      </>
+    ),
+    'Atención Integral en Emergencias': (
+      <>
+        <p>
+          En cada emergencia o urgencia, nuestro personal médico está capacitado para **valorar**, **diagnosticar** y **tratar** de manera rápida y efectiva. La atención integral está orientada a garantizar que cada paciente reciba la intervención adecuada, desde el primer contacto hasta la finalización del tratamiento.
+        </p>
+        <p>
+          Nos enfocamos en el trabajo en equipo, asegurando que cada caso sea evaluado con precisión y que los tratamientos se lleven a cabo de manera coordinada entre los distintos especialistas.
+        </p>
+      </>
+    ),
+    'Tecnología Avanzada y Diagnóstico': (
+      <>
+        <p>
+          Nuestro servicio de urgencias está respaldado por **tecnología de última generación** en **imágenes diagnósticas**, **laboratorio clínico**, y otros medios de diagnóstico avanzados. Esto nos permite obtener resultados rápidos y precisos, lo que es esencial para determinar el tratamiento más adecuado en cada caso.
+        </p>
+        <p>
+          Contamos con equipos de imagenología de alta resolución, pruebas de laboratorio confiables y tecnología que facilita diagnósticos rápidos, garantizando una atención eficiente y precisa.
+        </p>
+      </>
+    ),
+    'Apoyo Terapéutico y Quirúrgico': (
+      <>
+        <p>
+          Disponemos de **apoyo terapéutico** y **quirúrgico** las 24 horas del día, lo que nos permite atender cualquier situación de emergencia que requiera intervención inmediata. Nuestro equipo está preparado para realizar desde procedimientos menores hasta cirugías complejas, asegurando que el paciente reciba la mejor atención en el menor tiempo posible.
+        </p>
+        <p>
+          Además, la **unidad transfusional** está disponible para emergencias que requieran transfusiones de sangre, brindando una respuesta rápida y efectiva en situaciones críticas.
+        </p>
+      </>
+    ),
+    'Servicio Continuo 24/7': (
+      <>
+        <p>
+          En el servicio de urgencias de la **Clínica de la Costa**, estamos disponibles las **24 horas del día**, los **7 días de la semana**. Nuestro personal siempre está preparado para atender cualquier emergencia que se presente, asegurando que cada paciente reciba la atención que necesita sin importar el momento.
+        </p>
+        <p>
+          La continuidad de nuestro servicio garantiza que las emergencias sean atendidas con la misma calidad y rapidez en cualquier momento, ofreciendo seguridad y tranquilidad a nuestros pacientes y sus familias.
+        </p>
+      </>
+    ),
+    'Facilidades de Pago y Atención Rápida': (
+      <>
+        <p>
+          Entendemos que las emergencias pueden generar estrés, tanto emocional como económico. Por ello, ofrecemos **facilidades de pago** para que nuestros pacientes puedan enfocarse en su salud mientras nosotros nos encargamos de los trámites. Contamos con un equipo que te guiará en todo momento, asegurando que el proceso sea rápido y sin complicaciones.
+        </p>
+        <p>
+          Nuestro objetivo es que puedas recibir la atención médica que necesitas de manera rápida y efectiva, sin preocuparte por los trámites administrativos.
+        </p>
+        <p>
+          En caso de emergencia, no dudes en dirigirte a nuestro **Servicio de Urgencias** en la **Clínica de la Costa**. Nuestro equipo está listo para recibirte y brindarte el cuidado que necesitas. Estamos aquí para ti, siempre que lo necesites.
+        </p>
+      </>
+    ),
+  };
+
+  return (
+    <>
+      <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Servicio de Urgencias">
+        {/* sidebar-page-container */}
+        <section className="sidebar-page-container sec-pad-2">
+          <div className="auto-container">
+            <div className="row clearfix">
+              {/* Menú lateral con scroll */}
+              <div className="col-lg-4 col-md-12 col-sm-12 sidebar-side">
+                <div className="blog-sidebar default-sidebar mr_10">
+                  <div className="sidebar-widget category-widget">
+                    <div className="widget-title">
+                      <h3>Servicios de Urgencias</h3>
+                    </div>
+                    <div className="widget-content" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                      <ul className="category-list clearfix">
+                        {menuItems.map((item) => (
+                          <li key={item}>
+                            <a
+                              href="#"
+                              className={selectedService === item ? 'active' : ''}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setSelectedService(item);
+                              }}
+                            >
+                              {item}
+                            </a>
+                          </li>
                         ))}
-                        </div>
+                      </ul>
                     </div>
-                    </section>
-
-                <section className="testimonial-style-two bg-color-1">
-                <div className="auto-container">
-                    <div className="row align-items-center">
-                        <div className="col-lg-6 col-md-12 col-sm-12 thumb-column">
-                            <div className="thumb-box">
-                                <div className="thumb thumb-1"><img src="assets/images/resource/thumb-1.png" alt="" /></div>
-                                <div className="thumb thumb-2"><img src="assets/images/resource/thumb-2.png" alt="" /></div>
-                                <div className="thumb thumb-3"><img src="assets/images/resource/thumb-3.png" alt="" /></div>
-                                <div className="thumb thumb-4"><img src="assets/images/resource/thumb-4.png" alt="" /></div>
-                                <div className="thumb thumb-5"><img src="assets/images/resource/thumb-5.png" alt="" /></div>
-                                <div className="thumb thumb-6"><img src="assets/images/resource/thumb-6.png" alt="" /></div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-md-12 col-sm-12 content-column">
-                            <div className="content-box">
-                                <div className="sec-title mb_50">
-                                    <span className="sub-title">TESTIMONIALS</span>
-                                    <h2>What Our Client Say About medimart</h2>
-                                </div>
-                        <div className="content-box">
-                            {/*Theme Carousel*/}
-                            <TestimonialSlider1 />                        
-                        </div>
-                    </div>
-                    
-                    </div>
-                    </div>
+                  </div>
                 </div>
-                </section>
+              </div>
 
-                <section className="video-section alternat-2 p_relative">
-                    <div className="bg-layer" style={{ backgroundImage: "url(assets/images/background/video-bg.jpg)" }}></div>
-                    <figure className="image-layer"><img src="assets/images/resource/video-2.png" alt="" /></figure>
-                    <div className="auto-container">
-                        <div className="inner-box">
-                            <div className="shape" style={{ backgroundImage: "url(assets/images/shape/shape-17.png)" }}></div>
-                            <div className="video-btn">
-                            <a onClick={() => setOpen(true)}><i className="fas fa-play"></i></a>
-                            </div>
-                            <h2>Online Consultations With <br />Qualified Doctors 2</h2>
-                            <div className="btn-box">
-                                <Link href="/" className="theme-btn btn-one"><span>Make an Appointment</span></Link>
-                            </div>
-                        </div>
+              {/* Área de contenido */}
+              <div className="col-lg-8 col-md-12 col-sm-12 content-side">
+                <div className="blog-details-content">
+                  <div className="news-block-one">
+                    <div className="inner-box">
+                      <div className="lower-content">
+                        <h2>{selectedService}</h2>
+                        {serviceContent[selectedService]}
+                      </div>
                     </div>
-                </section>
+                  </div>
+                  <div className="call-to-action" style={{ padding: '30px', backgroundColor: '#f7f7f7', borderRadius: '8px', textAlign: 'center', marginTop: '40px' }}>
+  <h3 style={{ fontSize: '28px', fontWeight: 'bold', color: '#333' }}>
+    ¿Necesitas atención urgente?
+  </h3>
+  <p style={{ fontSize: '18px', color: '#555', marginBottom: '20px' }}>
+    No esperes más. Acude a nuestro <strong>Servicio de Urgencias</strong> en la <strong>Clínica de la Costa</strong>. Estamos disponibles <strong>las 24 horas del día</strong> para atender cualquier emergencia médica. 
+    ¡<strong>Tu salud es nuestra prioridad</strong> y estamos listos para brindarte la mejor atención en el momento en que más lo necesitas!
+  </p>
+  <Link href="/appointment" legacyBehavior>
+    <a
+      style={{
+        display: 'inline-block',
+        padding: '15px 30px',
+        backgroundColor: '#1054ac', // Color de fondo inicial del botón
+        color: '#fff',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        borderRadius: '50px',
+        transition: 'all 0.3s ease',
+        textDecoration: 'none',
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      }}
+      onMouseOver={(e) => {
+        e.currentTarget.style.backgroundColor = '#1e5cb1'; // Color al pasar el ratón (hover)
+        e.currentTarget.style.boxShadow = '0 6px 15px rgba(0, 0, 0, 0.2)';
+      }}
+      onMouseOut={(e) => {
+        e.currentTarget.style.backgroundColor = '#1054ac'; // Volver al color original
+        e.currentTarget.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.1)';
+      }}
+    >
+      Ir a Urgencias
+    </a>
+  </Link>
+</div>
 
-                <section className="team-section sec-pad centred">
-      <div className="shape">
-        <div className="shape-1 float-bob-y" style={{ backgroundImage: 'url(assets/images/shape/shape-15.png)' }}></div>
-        <div className="shape-2"></div>
-        <div className="shape-3 float-bob-x" style={{ backgroundImage: 'url(assets/images/shape/shape-16.png)' }}></div>
-      </div>
-      <div className="auto-container">
-        <div className="sec-title mb_50">
-          <span className="sub-title">Our Team</span>
-          <h2>Meet our experienced doctors <br />for best treatment</h2>
-        </div>
-                <div className="row clearfix">
-                    <div className="col-lg-3 col-md-6 col-sm-12 team-block">
-                        <div className="team-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <div className="inner-box">
-                                <div className="image-box">
-                                    <figure className="image"><img src="assets/images/team/team-1.jpg" alt="" /></figure>
-                                    <ul className="social-links clearfix">
-                                        <li><Link href="/"><i className="icon-4"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-5"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-6"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-7"></i></Link></li>
-                                    </ul>
-                                </div>
-                                <div className="lower-content">
-                                    <h3><Link href="team-details">Black Marvin</Link></h3>
-                                    <span className="designation">Medical Assistant</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12 team-block">
-                        <div className="team-block-one wow fadeInUp animated" data-wow-delay="200ms" data-wow-duration="1500ms">
-                            <div className="inner-box">
-                                <div className="image-box">
-                                    <figure className="image"><img src="assets/images/team/team-2.jpg" alt="" /></figure>
-                                    <ul className="social-links clearfix">
-                                        <li><Link href="/"><i className="icon-4"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-5"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-6"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-7"></i></Link></li>
-                                    </ul>
-                                </div>
-                                <div className="lower-content">
-                                    <h3><Link href="team-details">Eleanor Pena</Link></h3>
-                                    <span className="designation">Doctor</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12 team-block">
-                        <div className="team-block-one wow fadeInUp animated" data-wow-delay="400ms" data-wow-duration="1500ms">
-                            <div className="inner-box">
-                                <div className="image-box">
-                                    <figure className="image"><img src="assets/images/team/team-3.jpg" alt="" /></figure>
-                                    <ul className="social-links clearfix">
-                                        <li><Link href="/"><i className="icon-4"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-5"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-6"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-7"></i></Link></li>
-                                    </ul>
-                                </div>
-                                <div className="lower-content">
-                                    <h3><Link href="team-details">Arlene Maccy</Link></h3>
-                                    <span className="designation">Nursing Assistant</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12 team-block">
-                        <div className="team-block-one wow fadeInUp animated" data-wow-delay="600ms" data-wow-duration="1500ms">
-                            <div className="inner-box">
-                                <div className="image-box">
-                                    <figure className="image"><img src="assets/images/team/team-4.jpg" alt="" /></figure>
-                                    <ul className="social-links clearfix">
-                                        <li><Link href="/"><i className="icon-4"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-5"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-6"></i></Link></li>
-                                        <li><Link href="/"><i className="icon-7"></i></Link></li>
-                                    </ul>
-                                </div>
-                                <div className="lower-content">
-                                    <h3><Link href="team-details">Jenny Wilson</Link></h3>
-                                    <span className="designation">Senior Doctor</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   
                 </div>
-                <div className="pagination-wrapper mt_20 centred">
-                    <ul className="pagination clearfix">
-                        <li><Link href="team" className="current">1</Link></li>
-                        <li><Link href="team">2</Link></li>
-                        <li><Link href="team">3</Link></li>
-                        <li><Link href="team"><i className="icon-36"></i></Link></li>
-                    </ul>
-                </div>
+              </div>
             </div>
-                </section>
-                {/* subscibe */}
-                         <section className="subscribe-section">
-                        <div className="auto-container">
-                            <div className="inner-container">
-                            <div className="row align-items-center">
-                                <div className="col-lg-6 col-md-12 col-sm-12 text-column">
-                                <div className="text-box">
-                                    <h2><span>Subscribe</span> for the exclusive updates!</h2>
-                                </div>
-                                </div>
-                                <div className="col-lg-6 col-md-12 col-sm-12 form-column">
-                                <div className="form-inner">
-                                    <form method="post" action="contact">
-                                    <div className="form-group">
-                                        <input type="email" name="email" placeholder="Enter Your Email Address" required />
-                                        <button type="submit" className="theme-btn btn-one"><span>Subscribe Now</span></button>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="check-box">
-                                        <input className="check" type="checkbox" id="checkbox1" />
-                                        <label htmlFor="checkbox1">I agree to the <Link href="/">Privacy Policy.</Link></label>
-                                        </div>
-                                    </div>
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </section>
-                        {/* subscibe end */}
-                </div>
-         <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="nfP5N9Yc72A" onClose={() => setOpen(false)} />
-            </Layout>
-        </>
-    )
+          </div>
+        </section>
+        {/* sidebar-page-container end */}
+
+       
+      </Layout>
+    </>
+  );
 }
