@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export default function Footer1() {
     return (
@@ -64,8 +64,10 @@ export default function Footer1() {
                                     <div className="widget-content">
                                         <ul className="info-list">
                                             <li><img src="assets/images/icons/icon-1.png" alt="" /> Cra. 50 #80-144, Barranquilla, Colombia</li>
-                                            <li><i className="icon-2"></i><Link href="tel:+576053369999">+57 (605) 3369999</Link></li>
+                                            <li><i className="icon-2"></i><Link href="tel:+576053369999">+57 (605) 3369999 Ext 0</Link></li>
+                                            <li><i className="icon-26"></i><Link href="mailto:consultaexterna@clinicadelacosta.co">consultaexterna@clinicadelacosta.co</Link></li>
                                             <li><i className="icon-26"></i><Link href="mailto:info@clinicadelacosta.co">info@clinicadelacosta.co</Link></li>
+                                            <li><i className="icon-26"></i><Link href="mailto:juridica@clinicadelacosta.co">juridica@clinicadelacosta.co</Link></li>
                                         </ul>
                                     </div>
                                 </div>

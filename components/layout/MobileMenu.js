@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Link from "next/link";
 import { useState } from "react";
 
@@ -29,99 +29,116 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
     <>
       <div className="mobile-menu">
         <div className="menu-backdrop" onClick={handleMobileMenu} />
-        <div className="close-btn" onClick={handleMobileMenu}><span className="far fa-times" /></div>
+        <div className="close-btn" onClick={handleMobileMenu}>
+          <span className="far fa-times" />
+        </div>
         <nav className="menu-box">
           <div className="nav-logo">
             <Link href="/">
-              <img src="/assets/images/logo-2.png" alt="" />
+              <img src="/assets/images/logo-2.png" alt="Clínica de la Costa" />
             </Link>
           </div>
           <div className="menu-outer">
-            <div
-              className="collapse navbar-collapse show clearfix"
-              id="navbarSupportedContent">
-              <ul className="navigation clearfix">
-                <li className={isActive.key == 1 ? "dropdown current" : "dropdown"}>
-                  <Link href="/" >Home</Link>
-                  <ul style={{ display: `${isActive.key == 1 ? "block" : "none"}` }}>
-                    <li><Link href="/"onClick={handleMobileMenu}>Home Page One</Link></li>
-                    <li><Link href="/index-2" onClick={handleMobileMenu}>Home Page Two</Link></li>
-                    <li><Link href="/index-3" onClick={handleMobileMenu}>Home Page Three</Link></li>
-                    <li><Link href="/onepage" onClick={handleMobileMenu}>One Page Home</Link></li>
-                  </ul>
-                  <div className={isActive.key == 1 ? "dropdown-btn open" : "dropdown-btn"} onClick={() => handleToggle(1)}><span className="fa fa-angle-right" /></div>
-                </li>
-                <li><Link href="/about-us">About</Link></li>
-                <li className={isActive.key == 2 ? "dropdown current" : "dropdown"}>
-                  <Link href="/#">Services</Link>
-                  <ul style={{ display: `${isActive.key == 2 ? "block" : "none"}` }}>
-                    <li><Link href="/service" onClick={handleMobileMenu}>Our Services</Link></li>
-                    <li><Link href="/service-details" onClick={handleMobileMenu}>Cardioligy</Link></li>
-                                        <li><Link href="/service-details-2" onClick={handleMobileMenu}>Dental Clinic</Link></li>
-                                        <li><Link href="/service-details-3" onClick={handleMobileMenu}>NeuroSergery</Link></li>
-                                        <li><Link href="/service-details-4" onClick={handleMobileMenu}>Medical</Link></li>
-                                        <li><Link href="/service-details-5" onClick={handleMobileMenu}>Pediatrics</Link></li>
-                                        <li><Link href="/service-details-6" onClick={handleMobileMenu}>Modern Laboratory</Link></li>
-                  </ul>
-                  <div className={isActive.key == 2 ? "dropdown-btn open" : "dropdown-btn"} onClick={() => handleToggle(2)}><span className="fa fa-angle-right" /></div>
-                </li>
-                
-                    <li className={isActive.key  == 3 ? "dropdown current" : "dropdown"}>
-                      <Link href="/#">Team</Link>
-                      <ul style={{ display: `${isActive.key  == 3 ? "block" : "none"}` }}>
-                        <li><Link href="/team" onClick={handleMobileMenu}>Our Team</Link></li>
-                        <li><Link href="/team-details" onClick={handleMobileMenu}>Team Details</Link></li>
-                      </ul>
-                      <div className={isActive.key  == 3 ? "dropdown-btn open" : "dropdown-btn"} onClick={() => handleToggle(3)}><span className="fa fa-angle-right" /></div>
-                    </li>
-                <li className={isActive.key == 4 ? "dropdown current" : "dropdown"}>
-                  <Link href="/#">Pages</Link>
-                  <ul style={{ display: `${isActive.key == 4 ? "block" : "none"}` }}>
-                        <li className={isActive.subMenuKey == 5 ? "dropdown current" : "dropdown"}><Link href="/#">News</Link>
-                          <ul style={{ display: `${isActive.subMenuKey == 5 ? "block" : "none"}` }}>
-                          <li><Link href="/blog" onClick={handleMobileMenu}>Blog Grid</Link></li>
-                              <li><Link href="/blog-2" onClick={handleMobileMenu}>Blog Sidebar</Link></li>
-                              <li><Link href="/blog-details" onClick={handleMobileMenu}>Blog Details</Link></li>
-                          </ul>
-                          <div className={isActive.subMenuKey == 5 ? "dropdown-btn open" : "dropdown-btn"} onClick={() => handleToggle(4,5)}><span className="fa fa-angle-right" /></div>
-                      </li>
-                      <li><Link href="/tesmonial" onClick={handleMobileMenu}>Tesmonial</Link></li>
-                        <li><Link href="/works" onClick={handleMobileMenu}>How it works</Link></li>
-                        <li><Link href="/chooseus" onClick={handleMobileMenu}>Why Choose Us</Link></li>
-                        <li><Link href="/pricing-table" onClick={handleMobileMenu}>Pricing-Table</Link></li>
-                        <li><Link href="/faq" onClick={handleMobileMenu}>Faq's</Link></li>
-                        <li><Link href="/gallery" onClick={handleMobileMenu}>Gallery</Link></li>
-                        <li><Link href="/appointment" onClick={handleMobileMenu}>Make Appointment</Link></li>
-                        <li><Link href="/error-page" onClick={handleMobileMenu}>Page Not Found</Link></li>
-                      </ul>
-                      <div className={isActive.key  == 4 ? "dropdown-btn open" : "dropdown-btn"} onClick={() => handleToggle(4)}><span className="fa fa-angle-right" /></div>
-                    </li>
-                <li><Link href="/contact" onClick={handleMobileMenu}>Contact</Link></li>
-              </ul>
-            </div>
+            <ul className="navigation clearfix">
+              {/* Inicio */}
+              <li>
+                <Link href="/">Inicio</Link>
+              </li>
+
+              {/* Nosotros */}
+              <li className={isActive.key === 1 ? "dropdown current" : "dropdown"}>
+                <Link href="/about-us">Nosotros</Link>
+                <ul style={{ display: `${isActive.key === 1 ? "block" : "none"}` }}>
+                  <li><Link href="/service-details-2" onClick={handleMobileMenu}>Gestión Documental</Link></li>
+                </ul>
+                <div
+                  className={isActive.key === 1 ? "dropdown-btn open" : "dropdown-btn"}
+                  onClick={() => handleToggle(1)}
+                >
+                  <span className="fa fa-angle-right" />
+                </div>
+              </li>
+
+              {/* Servicios */}
+              <li className={isActive.key === 2 ? "dropdown current" : "dropdown"}>
+                <Link href="/service-details-6">Servicios</Link>
+                <ul style={{ display: `${isActive.key === 2 ? "block" : "none"}` }}>
+                  <li><Link href="/works" onClick={handleMobileMenu}>Servicio de Urgencias</Link></li>
+                  <li><Link href="/hospitalizacion" onClick={handleMobileMenu}>Hospitalización</Link></li>
+                  <li><Link href="/cuidado-critico" onClick={handleMobileMenu}>Cuidado Crítico</Link></li>
+                  <li><Link href="/imagenes-diagnosticas" onClick={handleMobileMenu}>Departamento de Imágenes Diagnósticas</Link></li>
+                  <li><Link href="/laboratorio-patologia" onClick={handleMobileMenu}>Laboratorio de Patología</Link></li>
+                  <li><Link href="/laboratorio-clinico" onClick={handleMobileMenu}>Laboratorio Clínico</Link></li>
+                  <li><Link href="/programas-especiales" onClick={handleMobileMenu}>Programas Especiales</Link></li>
+                </ul>
+                <div
+                  className={isActive.key === 2 ? "dropdown-btn open" : "dropdown-btn"}
+                  onClick={() => handleToggle(2)}
+                >
+                  <span className="fa fa-angle-right" />
+                </div>
+              </li>
+
+              {/* Pacientes */}
+              <li>
+                <Link href="/pacientes" onClick={handleMobileMenu}>Pacientes</Link>
+              </li>
+
+              {/* Equipo */}
+              <li className={isActive.key === 3 ? "dropdown current" : "dropdown"}>
+                <Link href="/">Equipo</Link>
+                <ul style={{ display: `${isActive.key === 3 ? "block" : "none"}` }}>
+                  <li><Link href="/team" onClick={handleMobileMenu}>Nuestro Equipo</Link></li>
+                </ul>
+                <div
+                  className={isActive.key === 3 ? "dropdown-btn open" : "dropdown-btn"}
+                  onClick={() => handleToggle(3)}
+                >
+                  <span className="fa fa-angle-right" />
+                </div>
+              </li>
+
+              {/* Preguntas Frecuentes */}
+              <li>
+                <Link href="/faq" onClick={handleMobileMenu}>Faq's</Link>
+              </li>
+
+              {/* Contacto */}
+              <li>
+                <Link href="/contact" onClick={handleMobileMenu}>Contacto</Link>
+              </li>
+            </ul>
           </div>
+
+          {/* Información de Contacto */}
           <div className="contact-info">
-          <h4>Contact Info</h4>
-          <ul>
-            <li>Chicago 12, Melborne City, USA</li>
-            <li><Link href="tel:+8801682648101">+88 01682648101</Link></li>
-            <li><Link href="mailto:info@example.com">info@example.com</Link></li>
-          </ul>
-        </div>
-          {/*Social Links*/}
+            <h4>Contáctanos</h4>
+            <ul>
+              <li>Cra. 50 #80-144, Barranquilla, Colombia</li>
+              <li><Link href="tel:+576053369999">+57 (605) 3369999 Ext 0</Link></li>
+              <li><Link href="mailto:consultaexterna@clinicadelacosta.co">consultaexterna@clinicadelacosta.co</Link></li>
+              <li><Link href="mailto:info@clinicadelacosta.co">info@clinicadelacosta.co</Link></li>
+              <li><Link href="mailto:juridica@clinicadelacosta.co">juridica@clinicadelacosta.co</Link></li>
+            </ul>
+          </div>
+
+          {/* Redes Sociales */}
           <div className="social-links">
-          <ul className="clearfix">
-            <li><Link href="/"><span className="fab fa-twitter"></span></Link></li>
-            <li><Link href="/"><span className="fab fa-facebook-square"></span></Link></li>
-            <li><Link href="/"><span className="fab fa-pinterest-p"></span></Link></li>
-            <li><Link href="/"><span className="fab fa-instagram"></span></Link></li>
-            <li><Link href="/l"><span className="fab fa-youtube"></span></Link></li>
-          </ul>
-        </div>
-      </nav>
-    </div>{/* End Mobile Menu */}
-      <div className="nav-overlay" style={{ display: `${isSidebar ? "block" : "none"}` }} onClick={handleSidebar} />
+            <ul className="clearfix">
+              <li><Link href="/"><span className="fab fa-twitter" /></Link></li>
+              <li><Link href="/"><span className="fab fa-facebook-square" /></Link></li>
+              <li><Link href="/"><span className="fab fa-pinterest-p" /></Link></li>
+              <li><Link href="/"><span className="fab fa-instagram" /></Link></li>
+              <li><Link href="/"><span className="fab fa-youtube" /></Link></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div
+        className="nav-overlay"
+        style={{ display: `${isSidebar ? "block" : "none"}` }}
+        onClick={handleSidebar}
+      />
     </>
   );
-};
-
+}
