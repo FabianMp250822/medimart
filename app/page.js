@@ -16,10 +16,10 @@ import Team from "@/components/sections/home1/Team";
 export default function Home() {
   const [selectedSede, setSelectedSede] = useState(null);
   const sedes = [
-    { id: 1, name: "Barranquilla", image: "https://picsum.photos/400/400?random=1", alt: "Sede en Barranquilla" },
-    { id: 2, name: "Cartagena", image: "https://picsum.photos/400/400?random=2", alt: "Sede en Cartagena" },
+    { id: 1, name: "Barranquilla", image: "/assets/images/sedes/barranquilla.png", alt: "Sede en Barranquilla" },
+    { id: 2, name: "Cartagena", image: "/assets/images/sedes/Cartagena.png", alt: "Sede en Cartagena" },
     { id: 3, name: "Santa Marta", image: "https://picsum.photos/400/400?random=3", alt: "Sede en Santa Marta" },
-    { id: 4, name: "Rioacha", image: "https://picsum.photos/400/400?random=4", alt: "Sede en Rioacha" },
+    { id: 4, name: "Rioacha", image: "/assets/images/sedes/rioacha.jpeg", alt: "Sede en Rioacha" },
   ];
   
   useEffect(() => {
