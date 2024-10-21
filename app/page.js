@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Asegura que este componente se ejecute en el cliente
 
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
@@ -12,32 +12,29 @@ import Testimonial from "@/components/sections/home1/Testimonial";
 import WhyChooseUs from "@/components/sections/home1/WhyChooseUs";
 import Process from "@/components/sections/home1/Process";
 import Team from "@/components/sections/home1/Team";
+import { useSede } from "./context/SedeContext";
+import { sedesData } from "./data/sedesData";
+
 
 export default function Home() {
-  const [selectedSede, setSelectedSede] = useState(null);
-  const sedes = [
-    { id: 1, name: "Barranquilla", image: "/assets/images/sedes/barranquilla.png", alt: "Sede en Barranquilla" },
-    { id: 2, name: "Cartagena", image: "/assets/images/sedes/Cartagena.png", alt: "Sede en Cartagena" },
-    { id: 3, name: "Santa Marta", image: "https://picsum.photos/400/400?random=3", alt: "Sede en Santa Marta" },
-    { id: 4, name: "Rioacha", image: "/assets/images/sedes/rioacha.jpeg", alt: "Sede en Rioacha" },
-  ];
-  
+  const { selectedSede, selectSede } = useSede(); // Obtener y actualizar la sede seleccionada desde el contexto
+
   useEffect(() => {
     const storedSede = localStorage.getItem("selectedSede");
-  
+
     if (!storedSede) {
       openSedeModal(); // Si no hay sede seleccionada, abre el modal
     } else {
-      setSelectedSede(storedSede);
+      selectSede(storedSede); // Cargar la sede almacenada en el contexto
     }
-  }, []);
-  
+  }, [selectSede]);
+
   const handleSedeSelect = (sede) => {
-    setSelectedSede(sede);
-    localStorage.setItem("selectedSede", sede);
+    selectSede(sede); // Actualiza la sede en el contexto global
+    localStorage.setItem("selectedSede", sede); // Guardar la sede seleccionada en localStorage
     Swal.close(); // Cerrar el modal de SweetAlert2
   };
-  
+
   const openSedeModal = () => {
     Swal.fire({
       title: 'Selecciona una Sede',
@@ -107,12 +104,12 @@ export default function Home() {
           }
         </style>
         <div class="sede-grid">
-          ${sedes
+          ${Object.keys(sedesData)
             .map(
-              (sede) => `
-                <div class="sede-item" id="sede-${sede.id}" aria-label="Seleccionar sede de ${sede.name}">
-                  <img src="${sede.image}" alt="${sede.alt}" />
-                  <h2>${sede.name}</h2>
+              (sedeKey) => `
+                <div class="sede-item" id="sede-${sedeKey}" aria-label="Seleccionar sede de ${sedesData[sedeKey].nombre}">
+                  <img src="${sedesData[sedeKey].image}" alt="${sedesData[sedeKey].nombre}" />
+                  <h2>${sedesData[sedeKey].nombre}</h2>
                 </div>
               `
             )
@@ -125,16 +122,14 @@ export default function Home() {
       allowEnterKey: false, 
       backdrop: true,
       didOpen: () => {
-        sedes.forEach((sede) => {
+        Object.keys(sedesData).forEach((sedeKey) => {
           document
-            .getElementById(`sede-${sede.id}`)
-            .addEventListener("click", () => handleSedeSelect(sede.name));
+            .getElementById(`sede-${sedeKey}`)
+            .addEventListener("click", () => handleSedeSelect(sedeKey));
         });
       },
     });
   };
-  
-  
 
   return (
     <>

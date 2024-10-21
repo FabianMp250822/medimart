@@ -373,16 +373,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({\n    value: true\n}));
 
 /***/ }),
 
-/***/ "(rsc)/./node_modules/next/font/google/target.css?{\"path\":\"lib/font.js\",\"import\":\"Poppins\",\"arguments\":[{\"weight\":[\"300\",\"400\",\"500\",\"600\",\"700\",\"800\",\"900\"],\"subsets\":[\"latin\"],\"variable\":\"--poppins\",\"display\":\"swap\"}],\"variableName\":\"poppins\"}":
-/*!******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/next/font/google/target.css?{"path":"lib/font.js","import":"Poppins","arguments":[{"weight":["300","400","500","600","700","800","900"],"subsets":["latin"],"variable":"--poppins","display":"swap"}],"variableName":"poppins"} ***!
-  \******************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module) => {
-
-eval("// Exports\nmodule.exports = {\n\t\"style\": {\"fontFamily\":\"'__Poppins_51ed1a', '__Poppins_Fallback_51ed1a'\",\"fontStyle\":\"normal\"},\n\t\"className\": \"__className_51ed1a\",\n\t\"variable\": \"__variable_51ed1a\"\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvbmV4dC9mb250L2dvb2dsZS90YXJnZXQuY3NzP3tcInBhdGhcIjpcImxpYi9mb250LmpzXCIsXCJpbXBvcnRcIjpcIlBvcHBpbnNcIixcImFyZ3VtZW50c1wiOlt7XCJ3ZWlnaHRcIjpbXCIzMDBcIixcIjQwMFwiLFwiNTAwXCIsXCI2MDBcIixcIjcwMFwiLFwiODAwXCIsXCI5MDBcIl0sXCJzdWJzZXRzXCI6W1wibGF0aW5cIl0sXCJ2YXJpYWJsZVwiOlwiLS1wb3BwaW5zXCIsXCJkaXNwbGF5XCI6XCJzd2FwXCJ9XSxcInZhcmlhYmxlTmFtZVwiOlwicG9wcGluc1wifSIsIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0EsV0FBVyxvRkFBb0Y7QUFDL0Y7QUFDQTtBQUNBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vc3RhcnQtYXBwLWRpci8uL25vZGVfbW9kdWxlcy9uZXh0L2ZvbnQvZ29vZ2xlL3RhcmdldC5jc3M/YjBiNyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBFeHBvcnRzXG5tb2R1bGUuZXhwb3J0cyA9IHtcblx0XCJzdHlsZVwiOiB7XCJmb250RmFtaWx5XCI6XCInX19Qb3BwaW5zXzUxZWQxYScsICdfX1BvcHBpbnNfRmFsbGJhY2tfNTFlZDFhJ1wiLFwiZm9udFN0eWxlXCI6XCJub3JtYWxcIn0sXG5cdFwiY2xhc3NOYW1lXCI6IFwiX19jbGFzc05hbWVfNTFlZDFhXCIsXG5cdFwidmFyaWFibGVcIjogXCJfX3ZhcmlhYmxlXzUxZWQxYVwiXG59O1xuIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/next/font/google/target.css?{\"path\":\"lib/font.js\",\"import\":\"Poppins\",\"arguments\":[{\"weight\":[\"300\",\"400\",\"500\",\"600\",\"700\",\"800\",\"900\"],\"subsets\":[\"latin\"],\"variable\":\"--poppins\",\"display\":\"swap\"}],\"variableName\":\"poppins\"}\n");
-
-/***/ }),
-
 /***/ "(ssr)/./node_modules/next/dist/api/app-dynamic.js":
 /*!***************************************************!*\
   !*** ./node_modules/next/dist/api/app-dynamic.js ***!

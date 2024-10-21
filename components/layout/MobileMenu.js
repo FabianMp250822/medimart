@@ -86,7 +86,7 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
 
               {/* Equipo */}
               <li className={isActive.key === 3 ? "dropdown current" : "dropdown"}>
-                <Link href="/">Equipo</Link>
+                <Link href="/">Nuestros Investigadores</Link>
                 <ul style={{ display: `${isActive.key === 3 ? "block" : "none"}` }}>
                   <li><Link href="/team" onClick={handleMobileMenu}>Nuestro Equipo</Link></li>
                 </ul>
