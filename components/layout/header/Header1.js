@@ -55,8 +55,9 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSide
                                         </div>
                                     </nav>
                                 </div>
+                               
                                 <div className="btn-box">
-                                <Link href="/appointment"  className="theme-btn btn-one"><span>Asignar citas</span></Link>
+                                <Link href="/reclamar-resultados"  className="theme-btn btn-one"><span>Reclamar Resultados</span></Link>
                                 </div>
                             </div>
                         </div>
