@@ -24,11 +24,23 @@ export default function Header3({
     whatsappMessage
   )}`;
 
+  // Encontrar la clave de la sede seleccionada
+  const selectedSedeKey =
+    Object.keys(sedesData).find(
+      (key) => sedesData[key].nombre === sedeData?.nombre
+    ) || "";
+
   // Manejar la selección de una nueva sede desde el selector
   const handleSedeChange = (event) => {
     const nuevaSede = event.target.value;
-    selectSede(nuevaSede); // Actualizar la sede en el contexto
-    localStorage.setItem("selectedSede", nuevaSede); // Guardar la sede seleccionada en localStorage
+
+    // Asegurarnos de que la nueva sede exista en los datos
+    const sedeSeleccionada = sedesData[nuevaSede];
+
+    if (sedeSeleccionada) {
+      selectSede(sedeSeleccionada); // Actualizar la sede en el contexto con los datos completos
+      localStorage.setItem("selectedSede", nuevaSede); // Guardar la clave de la sede seleccionada en localStorage
+    }
   };
 
   return (
@@ -49,7 +61,7 @@ export default function Header3({
                   <img src="assets/images/icons/icon-1.png" alt="" />{" "}
                   {sedeData?.direccion || "Cra. 50 #80-149, Sede 3"}
                 </li>
-                {/* WhatsApp link */}
+                {/* Enlace de WhatsApp */}
                 <li>
                   <a
                     href={whatsappLink}
@@ -66,7 +78,7 @@ export default function Header3({
                 <label htmlFor="sede-select">Seleccionar Sede:</label>
                 <select
                   id="sede-select"
-                  value={sedeData?.nombre || ""}
+                  value={selectedSedeKey}
                   onChange={handleSedeChange}
                   className="custom-select"
                 >
@@ -158,9 +170,9 @@ export default function Header3({
             </div>
           </div>
         </div>
-        {/* End Sticky Menu */}
+        {/* Fin del Sticky Menu */}
 
-        {/* Mobile Menu */}
+        {/* Menú Móvil */}
         <MobileMenu handleMobileMenu={handleMobileMenu} />
       </header>
       <style jsx>{`
