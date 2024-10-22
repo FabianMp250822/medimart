@@ -129,7 +129,7 @@ export default function Home() {
             .map(
               (sedeKey) => `
                 <div class="sede-item" id="sede-${sedeKey}" aria-label="Seleccionar sede de ${sedesData[sedeKey].nombre}">
-                  <img src="${sedesData[sedeKey].image}" alt="${sedesData[sedeKey].nombre}" />
+                  <img src="${sedesData[sedeKey].modalImage}" alt="${sedesData[sedeKey].nombre}" />
                   <h2>${sedesData[sedeKey].nombre}</h2>
                 </div>
               `

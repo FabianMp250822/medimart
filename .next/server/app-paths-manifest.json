@@ -1,9 +1,5 @@
 {
   "/page": "app/page.js",
-  "/appointment/page": "app/appointment/page.js",
-  "/team/page": "app/team/page.js",
-  "/service-details-2/page": "app/service-details-2/page.js",
-  "/works/page": "app/works/page.js",
-  "/pacientes/page": "app/pacientes/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/_not-found/page": "app/_not-found/page.js"
 }
