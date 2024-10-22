@@ -15,24 +15,28 @@ import Team from "@/components/sections/home1/Team";
 import { useSede } from "./context/SedeContext";
 import { sedesData } from "./data/sedesData";
 
-
 export default function Home() {
   const { selectedSede, selectSede } = useSede(); // Obtener y actualizar la sede seleccionada desde el contexto
 
   useEffect(() => {
     const storedSede = localStorage.getItem("selectedSede");
 
-    if (!storedSede) {
-      openSedeModal(); // Si no hay sede seleccionada, abre el modal
+    if (!storedSede || !sedesData[storedSede]) {
+      // Si no hay sede o la sede almacenada no es válida, abre el modal
+      openSedeModal();
     } else {
       selectSede(storedSede); // Cargar la sede almacenada en el contexto
     }
   }, [selectSede]);
 
   const handleSedeSelect = (sede) => {
-    selectSede(sede); // Actualiza la sede en el contexto global
-    localStorage.setItem("selectedSede", sede); // Guardar la sede seleccionada en localStorage
-    Swal.close(); // Cerrar el modal de SweetAlert2
+    if (sedesData[sede]) {
+      selectSede(sede); // Actualiza la sede en el contexto global
+      localStorage.setItem("selectedSede", sede); // Guardar la sede seleccionada en localStorage
+      Swal.close(); // Cerrar el modal de SweetAlert2
+    } else {
+      console.error("Sede seleccionada no válida");
+    }
   };
 
   const openSedeModal = () => {
@@ -117,9 +121,9 @@ export default function Home() {
         </div>
       `,
       showConfirmButton: false,
-      allowOutsideClick: false, 
-      allowEscapeKey: false, 
-      allowEnterKey: false, 
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
       backdrop: true,
       didOpen: () => {
         Object.keys(sedesData).forEach((sedeKey) => {
