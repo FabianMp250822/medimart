@@ -1,4 +1,8 @@
-export const sedesData = {
+
+import { db } from '@/lib/firebase';
+import { setDoc, doc } from 'firebase/firestore';
+
+const sedesData = {
   Barranquilla: {
     nombre: "Clínica de la Costa - Barranquilla",
     direccion: "Calle 85 #47-11, Barranquilla",
@@ -6,8 +10,8 @@ export const sedesData = {
     whatsappNumber: "+573003456789",
     whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Barranquilla.",
     servicios: ["Radioterapia", "Urgencias 24h", "Consultas Médicas Especializadas"],
-    image: "/assets/images/banner/banner.webp", // Imagen del banner
-    modalImage: "/assets/images/sedes/barranquilla.png", // Nueva imagen para el modal
+    image: "/assets/images/banner/banner.webp",
+    modalImage: "/assets/images/sedes/barranquilla.png",
     mensaje: "En la Clínica de la Costa Barranquilla, sabemos que en los momentos más importantes de tu salud, necesitas un equipo que te acompañe con calidez y humanidad. Nuestro compromiso es brindarte atención personalizada, asegurando que te sientas en un entorno seguro y de confianza en cada paso de tu recuperación"
   },
   Cartagena: {
@@ -43,8 +47,8 @@ export const sedesData = {
       "TRANSPORTE ASISTENCIAL BASICO",
       "TRANSPORTE ASISTENCIAL MEDICALIZADO"
     ],
-    image: "/assets/images/sedes/Cartagena.png", // Imagen del banner
-    modalImage: "/assets/images/sedes/Cartagena.png", // Nueva imagen para el modal
+    image: "/assets/images/sedes/Cartagena.png",
+    modalImage: "/assets/images/sedes/Cartagena.png",
     mensaje: "En la Clínica de la Costa Cartagena, entendemos que cuidar de tu salud significa más que un tratamiento. Nuestro equipo está dedicado a ofrecerte una atención cálida y cercana, creando un ambiente seguro y confiable para que siempre te sientas acompañado y en las mejores manos."
   },
   "Santa Marta": {
@@ -54,8 +58,8 @@ export const sedesData = {
     whatsappNumber: "+573112097409",
     whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Santa Marta.",
     servicios: ["Consulta Externa", "Radioterapia", "Laboratorio Clínico"],
-    image: "/assets/images/sedes/Santamartha.jpeg", // Imagen del banner
-    modalImage: "/assets/images/sedes/Santamartha.jpeg", // Nueva imagen para el modal
+    image: "/assets/images/sedes/Santamartha.jpeg",
+    modalImage: "/assets/images/sedes/Santamartha.jpeg",
     mensaje: "En la Clínica de la Costa Santa Marta, nos comprometemos a brindarte un cuidado integral, centrado en tus necesidades. Nuestro equipo médico ofrece un servicio personalizado y humano, garantizando que te sientas en un entorno de confianza, seguro y acogedor durante tu tratamiento."
   },
   Rioacha: {
@@ -65,8 +69,23 @@ export const sedesData = {
     whatsappNumber: "+573218085712",
     whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Rioacha.",
     servicios: ["Hospitalización", "Pediatría", "Cirugía"],
-    image: "/assets/images/sedes/rioacha.jpeg", // Imagen del banner
-    modalImage: "/assets/images/sedes/rioacha.jpeg", // Nueva imagen para el modal
+    image: "/assets/images/sedes/rioacha.jpeg",
+    modalImage: "/assets/images/sedes/rioacha.jpeg",
     mensaje: "En la Clínica de la Costa Valledupar, trabajamos para que tu experiencia médica sea excepcional. Nuestro equipo altamente calificado te brindará una atención cercana y personalizada, asegurando que te sientas en un entorno confiable, seguro y con el apoyo que necesitas para tu bienestar."
   }
 };
+
+// Subir los datos a Firestore
+const subirDatos = async () => {
+  try {
+    for (const sede in sedesData) {
+      await setDoc(doc(db, "sedes", sede), sedesData[sede]);
+    }
+    console.log("Datos de las sedes subidos correctamente");
+  } catch (error) {
+    console.error("Error al subir los datos de las sedes:", error);
+  }
+};
+
+// Ejecuta esta función cuando quieras subir los datos
+subirDatos();

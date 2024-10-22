@@ -1,10 +1,9 @@
-"use client"; // Asegura que este componente sea un Client Component
+"use client"; // Asegúrate de que este componente sea un Client Component
 
 import Link from "next/link";
 import Menu from "../Menu";
 import MobileMenu from "../MobileMenu";
 import { useSede } from "@/app/context/SedeContext";
-import { sedesData } from "@/app/data/sedesData";
 
 export default function Header1({
   scroll,
@@ -14,7 +13,9 @@ export default function Header1({
   handlePopup,
   handleSidebar,
 }) {
-  const { sedeData, selectSede } = useSede(); // Obtener los datos de la sede seleccionada y la función para seleccionar sede
+  const { sedesData, selectedSede, selectSede } = useSede(); // Obtener los datos de Firebase y la sede seleccionada
+
+  const sedeData = sedesData[selectedSede]; // Obtener la sede seleccionada desde el contexto
 
   const whatsappNumber = sedeData?.whatsappNumber || "+573003456789";
   const whatsappMessage =
@@ -24,22 +25,12 @@ export default function Header1({
     whatsappMessage
   )}`;
 
-  // Encontrar la clave de la sede seleccionada
-  const selectedSedeKey =
-    Object.keys(sedesData).find(
-      (key) => sedesData[key].nombre === sedeData?.nombre
-    ) || "";
-
   // Manejar la selección de una nueva sede desde el selector
   const handleSedeChange = (event) => {
     const nuevaSede = event.target.value;
-
-    // Asegurarnos de que la nueva sede exista en los datos
-    const sedeSeleccionada = sedesData[nuevaSede];
-
-    if (sedeSeleccionada) {
-      selectSede(sedeSeleccionada); // Actualizar la sede en el contexto con los datos completos
-      localStorage.setItem("selectedSede", nuevaSede); // Guardar la clave de la sede seleccionada en localStorage
+    if (sedesData[nuevaSede]) {
+      selectSede(nuevaSede); // Actualizar la sede seleccionada en el contexto
+      localStorage.setItem("selectedSede", nuevaSede); // Guardar en localStorage
     }
   };
 
@@ -78,7 +69,7 @@ export default function Header1({
                 <label htmlFor="sede-select">Seleccionar Sede:</label>
                 <select
                   id="sede-select"
-                  value={selectedSedeKey}
+                  value={selectedSede || ""}
                   onChange={handleSedeChange}
                   className="custom-select"
                 >

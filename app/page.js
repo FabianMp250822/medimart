@@ -1,4 +1,4 @@
-"use client"; // Asegura que este componente se ejecute en el cliente
+"use client"; // Asegúrate de que este componente se ejecute en el cliente
 
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
@@ -12,11 +12,10 @@ import Testimonial from "@/components/sections/home1/Testimonial";
 import WhyChooseUs from "@/components/sections/home1/WhyChooseUs";
 import Process from "@/components/sections/home1/Process";
 import Team from "@/components/sections/home1/Team";
-import { useSede } from "./context/SedeContext";
-import { sedesData } from "./data/sedesData";
+import { useSede } from "@/app/context/SedeContext";
 
 export default function Home() {
-  const { selectedSede, selectSede } = useSede(); // Obtener y actualizar la sede seleccionada desde el contexto
+  const { selectedSede, selectSede, sedesData } = useSede(); // Obtener las sedes desde el contexto
 
   useEffect(() => {
     const storedSede = localStorage.getItem("selectedSede");
@@ -27,7 +26,7 @@ export default function Home() {
     } else {
       selectSede(storedSede); // Cargar la sede almacenada en el contexto
     }
-  }, [selectSede]);
+  }, [sedesData, selectSede]); // Ejecutar cada vez que las sedes o el selectSede cambien
 
   const handleSedeSelect = (sede) => {
     if (sedesData[sede]) {
@@ -40,6 +39,8 @@ export default function Home() {
   };
 
   const openSedeModal = () => {
+    if (!sedesData || Object.keys(sedesData).length === 0) return; // Evitar mostrar el modal si los datos aún no están listos
+
     Swal.fire({
       title: 'Selecciona una Sede',
       html: `
