@@ -1,4 +1,3 @@
-// data/sedesData.js
 export const sedesData = {
     Barranquilla: {
       nombre: "Clínica de la Costa - Barranquilla",
@@ -7,7 +6,8 @@ export const sedesData = {
       whatsappNumber: "+573003456789",
       whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Barranquilla.",
       servicios: ["Radioterapia", "Urgencias 24h", "Consultas Médicas Especializadas"],
-      image: "/assets/images/sedes/barranquilla.png",
+      image: "/assets/images/banner/banner.webp",
+      mensaje: "En la Clínica de la Costa Barranquilla, sabemos que en los momentos más importantes de tu salud, necesitas un equipo que te acompañe con calidez y humanidad. Nuestro compromiso es brindarte atención personalizada, asegurando que te sientas en un entorno seguro y de confianza en cada paso de tu recuperación"
     },
     Cartagena: {
       nombre: "Clínica de la Costa - Cartagena",
@@ -43,6 +43,7 @@ export const sedesData = {
         "TRANSPORTE ASISTENCIAL MEDICALIZADO"
       ],
       image: "/assets/images/sedes/Cartagena.png",
+      mensaje: "En la Clínica de la Costa Cartagena, entendemos que cuidar de tu salud significa más que un tratamiento. Nuestro equipo está dedicado a ofrecerte una atención cálida y cercana, creando un ambiente seguro y confiable para que siempre te sientas acompañado y en las mejores manos."
     },
     "Santa Marta": {
       nombre: "Clínica de la Costa - Santa Marta",
@@ -52,15 +53,17 @@ export const sedesData = {
       whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Santa Marta.",
       servicios: ["Consulta Externa", "Radioterapia", "Laboratorio Clínico"],
       image: "https://picsum.photos/400/400?random=3",
+      mensaje: "En la Clínica de la Costa Santa Marta, nos comprometemos a brindarte un cuidado integral, centrado en tus necesidades. Nuestro equipo médico ofrece un servicio personalizado y humano, garantizando que te sientas en un entorno de confianza, seguro y acogedor durante tu tratamiento."
     },
     Rioacha: {
       nombre: "Clínica de la Costa - Rioacha",
       direccion: "Calle 51 N 4/15 kL 2 salida valle dupar",
       telefono: "+57 3218085712",
       whatsappNumber: "+573218085712",
-      whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en valle dupar.",
+      whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Rioacha.",
       servicios: ["Hospitalización", "Pediatría", "Cirugía"],
       image: "/assets/images/sedes/rioacha.jpeg",
-    },
+      mensaje: "En la Clínica de la Costa Valledupar, trabajamos para que tu experiencia médica sea excepcional. Nuestro equipo altamente calificado te brindará una atención cercana y personalizada, asegurando que te sientas en un entorno confiable, seguro y con el apoyo que necesitas para tu bienestar."
+    }
   };
   
