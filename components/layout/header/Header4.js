@@ -52,7 +52,7 @@ export default function Header4({
             <div className="top-inner">
               <ul className="info-list clearfix">
                 <li>
-                  <i className="icon-1"></i>Atención al Usuario:
+                  <i className="icon-1"></i>Atención:
                   <Link href={`tel:${sedeData?.telefono}`}>
                     {sedeData?.telefono || "+57 (605) 3369973"}
                   </Link>

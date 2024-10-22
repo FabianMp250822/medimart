@@ -54,7 +54,7 @@ export default function Home() {
             align-items: center;
           }
           .swal2-title {
-            font-size: 2.5rem;
+            font-size: 2rem; /* Reduce el tamaño del título para móviles */
             margin-bottom: 20px;
             font-weight: bold;
             color: #333;
@@ -73,15 +73,15 @@ export default function Home() {
             cursor: pointer;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 200px;
+            width: 150px; /* Ajusta el ancho para móviles */
             background-color: transparent;
           }
           .sede-item:hover {
             transform: scale(1.05);
           }
           .sede-item img {
-            width: 150px;
-            height: 150px;
+            width: 100px; /* Ajusta el tamaño de la imagen para móviles */
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
             transition: transform 0.3s ease;
@@ -92,8 +92,8 @@ export default function Home() {
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
           }
           .sede-item h2 {
-            margin-top: 15px;
-            font-size: 1.5rem;
+            margin-top: 10px;
+            font-size: 1.2rem; /* Reduce el tamaño del texto */
             font-weight: 700;
             color: #333;
             transition: color 0.3s ease, background-size 0.3s ease;
@@ -105,6 +105,23 @@ export default function Home() {
           }
           .sede-item:hover h2 {
             background-position: right;
+          }
+  
+          /* Media Queries para móviles */
+          @media (max-width: 600px) {
+            .swal2-title {
+              font-size: 1.5rem; /* Título más pequeño en móviles */
+            }
+            .sede-item {
+              width: 120px; /* Ajustar el ancho para móviles más pequeños */
+            }
+            .sede-item img {
+              width: 80px; /* Ajustar tamaño de imagen en móviles más pequeños */
+              height: 80px;
+            }
+            .sede-item h2 {
+              font-size: 1rem; /* Reducir el tamaño de fuente en móviles */
+            }
           }
         </style>
         <div class="sede-grid">
@@ -134,6 +151,7 @@ export default function Home() {
       },
     });
   };
+  
 
   return (
     <>
