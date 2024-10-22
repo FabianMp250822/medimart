@@ -5,7 +5,7 @@ import { setDoc, doc } from 'firebase/firestore';
 const sedesData = {
   Barranquilla: {
     nombre: "Clínica de la Costa - Barranquilla",
-    direccion: "Calle 85 #47-11, Barranquilla",
+    direccion: "Calle 85 #47-11, Barranquilla 1",
     telefono: "+57 5 3855555",
     whatsappNumber: "+573003456789",
     whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Barranquilla.",

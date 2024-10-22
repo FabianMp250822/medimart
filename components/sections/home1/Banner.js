@@ -19,7 +19,7 @@ export default function Banner() {
           {/* Contenido del Banner */}
           <div className="col-lg-5 col-md-12 col-sm-12 content-column">
             <div className="content-box">
-              <span className="upper-text" style={{ fontSize: '18px' }}>Cuidando de Ti y de los Tuyos </span>
+              <span className="upper-text" style={{ fontSize: '18px' }}>Cuidando de Ti y de los Tuyos</span>
               <h2 style={{ fontSize: '36px', lineHeight: '1.3em' }}>Tu Salud, Nuestra <span>Prioridad</span> por 35 Años</h2>
               {/* Mostrar el mensaje personalizado según la sede seleccionada */}
               <p style={{ fontSize: '16px', lineHeight: '1.5em', maxWidth: '400px' }}>
@@ -38,7 +38,12 @@ export default function Banner() {
                 <img
                   src={sedeData?.image || "assets/images/banner/banner.webp"} // Mostrar la imagen de la sede seleccionada
                   alt={sedeData?.nombre || "Paciente recibiendo atención y cuidado"}
-                  style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                  style={{ 
+                    width: '100%', 
+                    height: '500px', // Altura fija
+                    objectFit: 'cover', // Asegura que la imagen se ajuste al contenedor sin distorsión
+                    objectPosition: 'center' // Centrar la imagen si es más grande que el contenedor
+                  }}
                 />
               </figure>
             </div>
