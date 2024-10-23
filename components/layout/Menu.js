@@ -37,10 +37,8 @@ export default function Menu() {
 
                 {/* Sección "Equipo" */}
                 <li className="dropdown">
-                    <Link href="/">RRHH</Link>
-                    <ul>
-                        <li><Link href="/team">Nuestros Profesionales </Link></li>
-                    </ul>
+                    <Link href="/team">Equipo Médico</Link>
+                    
                 </li>
 
                 {/* Sección "Preguntas Frecuentes" */}
