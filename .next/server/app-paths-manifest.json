@@ -1,10 +1,6 @@
 {
-  "/contact/page": "app/contact/page.js",
-  "/page": "app/page.js",
-  "/about-us/page": "app/about-us/page.js",
+  "/reclamar-resultados/page": "app/reclamar-resultados/page.js",
   "/team/page": "app/team/page.js",
-  "/team-details/page": "app/team-details/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/pacientes/page": "app/pacientes/page.js",
-  "/_not-found/page": "app/_not-found/page.js"
+  "/page": "app/page.js",
+  "/team-details/[id]/page": "app/team-details/[id]/page.js"
 }

@@ -23,33 +23,11 @@ export default function Home() {
       querySnapshot.forEach((doc) => {
         const data = doc.data().informacion_personal;
         if (data && data.nombre_completo !== "Luis Aurelio Castillo Parodi") {
-          researchersData.push(data); // Filtrar a Luis Aurelio
+          researchersData.push({ ...data, id: doc.id }); // Incluir el ID del documento
         }
       });
 
-      // Filtrar y ordenar los investigadores prioritarios
-      const prioritizedResearchers = [
-        "Gustavo Aroca Martínez",
-        "Alberto Jose Cadena Bonfanti",
-        "Andres Angelo Cadena Bonfanti",
-        "Carmen Marcela Alcalá Castro",
-      ];
-
-      const prioritized = researchersData.filter((researcher) =>
-        prioritizedResearchers.includes(researcher.nombre_completo)
-      );
-
-      prioritized.sort(
-        (a, b) =>
-          prioritizedResearchers.indexOf(a.nombre_completo) -
-          prioritizedResearchers.indexOf(b.nombre_completo)
-      );
-
-      const others = researchersData.filter(
-        (researcher) => !prioritizedResearchers.includes(researcher.nombre_completo)
-      );
-
-      setResearchers([...prioritized, ...others]);
+      setResearchers(researchersData);
     } catch (error) {
       console.error("Error al obtener investigadores:", error);
     }
@@ -81,14 +59,14 @@ export default function Home() {
                               <img src={researcher.foto} alt={researcher.nombre_completo} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             </figure>
                             <ul className="social-links clearfix">
-                              <li><Link href="/"><i className="icon-4"></i></Link></li>
-                              <li><Link href="/"><i className="icon-5"></i></Link></li>
-                              <li><Link href="/"><i className="icon-6"></i></Link></li>
-                              <li><Link href="/"><i className="icon-7"></i></Link></li>
+                              <li><Link href={`/team-details/${researcher.id}`}><i className="icon-4"></i></Link></li>
+                              <li><Link href={`/team-details/${researcher.id}`}><i className="icon-5"></i></Link></li>
+                              <li><Link href={`/team-details/${researcher.id}`}><i className="icon-6"></i></Link></li>
+                              <li><Link href={`/team-details/${researcher.id}`}><i className="icon-7"></i></Link></li>
                             </ul>
                           </div>
                           <div className="lower-content" style={{ height: '40%' }}>
-                            <h3><Link href="team-details">{researcher.nombre_completo}</Link></h3>
+                            <h3><Link href={`/team-details/${researcher.id}`}>{researcher.nombre_completo}</Link></h3>
                             <span className="designation">{researcher.nacionalidad}</span>
                           </div>
                         </div>
@@ -96,7 +74,7 @@ export default function Home() {
                     </div>
                   ))
                 ) : (
-                  <p>No se encontraron Colaboradores para la sede seleccionada.</p>
+                  <p>No se encontraron colaboradores para la sede seleccionada.</p>
                 )}
               </div>
             </div>

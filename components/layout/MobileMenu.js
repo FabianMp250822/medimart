@@ -86,10 +86,8 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
 
               {/* Equipo */}
               <li className={isActive.key === 3 ? "dropdown current" : "dropdown"}>
-                <Link href="/">Nuestros Investigadores</Link>
-                <ul style={{ display: `${isActive.key === 3 ? "block" : "none"}` }}>
-                  <li><Link href="/team" onClick={handleMobileMenu}>Nuestro Equipo</Link></li>
-                </ul>
+                <Link href="/team">Nuestros Profesionales</Link>
+                
                 <div
                   className={isActive.key === 3 ? "dropdown-btn open" : "dropdown-btn"}
                   onClick={() => handleToggle(3)}

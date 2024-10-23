@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/contact/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/contact/page.js"
+      "static/chunks/app/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -21,15 +21,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/_not-found/page": [
+    "/service-details-2/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
-    ],
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/css/app/service-details-2/page.css",
+      "static/chunks/app/service-details-2/page.js"
     ],
     "/about-us/page": [
       "static/chunks/webpack.js",
@@ -37,21 +33,25 @@
       "static/css/app/about-us/page.css",
       "static/chunks/app/about-us/page.js"
     ],
+    "/reclamar-resultados/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/reclamar-resultados/page.js"
+    ],
     "/team/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/team/page.js"
     ],
-    "/team-details/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/team-details/page.js"
+      "static/chunks/app/_not-found/page.js"
     ],
-    "/pacientes/page": [
+    "/team-details/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/pacientes/page.css",
-      "static/chunks/app/pacientes/page.js"
+      "static/chunks/app/team-details/[id]/page.js"
     ]
   }
 }
