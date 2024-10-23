@@ -1,6 +1,8 @@
+"use client"; 
 import React from 'react';
 import Link from "next/link";
-import { useSede } from "@/app/context/SedeContext"; // Importar el contexto de sede
+import { useSede } from '@/app/context/SedeContext';
+
 
 export default function Banner() {
   const { sedeData } = useSede(); // Obtener los datos de la sede seleccionada
