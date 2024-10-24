@@ -47,10 +47,22 @@ export default function Home() {
     setCurrentPage(1);
   }, [searchTerm, especialidad]);
 
+  // Función para normalizar cadenas (eliminar acentos y espacios extra)
+  const normalizeString = (str) => {
+    return str
+      .normalize("NFD") // Descompone caracteres Unicode
+      .replace(/[\u0300-\u036f]/g, "") // Elimina los diacríticos (acentos)
+      .toLowerCase()
+      .trim(); // Elimina espacios en blanco al inicio y al final
+  };
+
   // Filtrar médicos por nombre completo a partir del tercer carácter y por especialidad
   const filteredMedicos = medicos.filter((medico) => {
-    const matchesSearchTerm = searchTerm.length >= 3 
-      ? medico.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase())
+    const normalizedSearchTerm = normalizeString(searchTerm);
+    const normalizedNombreCompleto = normalizeString(medico.nombreCompleto);
+
+    const matchesSearchTerm = normalizedSearchTerm.length >= 3 
+      ? normalizedNombreCompleto.includes(normalizedSearchTerm)
       : true;
 
     const matchesEspecialidad = especialidad
@@ -93,10 +105,9 @@ export default function Home() {
                 <option value="Radioterapia y Oncología">Radioterapia y Oncología</option>
                 <option value="cirugía - Clínica">Cirugía - Clínica</option>
                 <option value="Ginecología y Obstetricia">Ginecología y Obstetricia</option>
-                <option value="Ginecología y Obstetricia">Nutrición Clínica</option>
+                <option value="Nutrición Clínica">Nutrición Clínica</option>
                 <option value="Ortopedia y Traumatología">Ortopedia y Traumatología</option>
-                <option value="Ginecología y Obstetricia">Ginecología y Obstetricia</option>
-                {/* Agrega más opciones de especialidades   Ginecología y Obstetricia */}
+                {/* Agrega más opciones de especialidades */}
               </select>
             </div>
           </section>
