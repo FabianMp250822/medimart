@@ -1,0 +1,88 @@
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./app/team-details/[id]/TeamDetails.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+.TeamDetails_container__QGwoV {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .TeamDetails_medicoInfo__t0BIp {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .TeamDetails_imageColumn__A5l_2 {
+    flex: 1 1;
+    min-width: 250px;
+    margin-right: 20px;
+  }
+  
+  .TeamDetails_infoColumn__EGu2z {
+    flex: 2 1;
+  }
+  
+  .TeamDetails_medicoImage__miWQB {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .TeamDetails_medicoImage__miWQB:hover {
+    transform: scale(1.05);
+  }
+  
+  .TeamDetails_infoList__uX468 {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .TeamDetails_section__4QaPm {
+    margin-bottom: 40px;
+  }
+  
+  .TeamDetails_subscribeSection__dw6A4 {
+    background-color: #f7f7f7;
+    padding: 30px 0;
+  }
+  
+  .TeamDetails_innerContainer__5LrAZ {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .TeamDetails_formGroup__6s8ib {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .TeamDetails_emailInput__7_gEM {
+    padding: 10px;
+    margin-right: 10px;
+    flex: 1 1;
+  }
+  
+  .TeamDetails_submitButton__VrYBP {
+    padding: 10px 20px;
+    background-color: #3f51b5;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .TeamDetails_submitButton__VrYBP:hover {
+    background-color: #303f9f;
+  }
+  
+  .TeamDetails_checkbox__bt7_P {
+    margin-right: 10px;
+  }
+  
+  .TeamDetails_loading__5c11C, .TeamDetails_notFound__u73ew {
+    text-align: center;
+    margin: 50px 0;
+  }
+  

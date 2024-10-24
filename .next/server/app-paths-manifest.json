@@ -2,5 +2,6 @@
   "/reclamar-resultados/page": "app/reclamar-resultados/page.js",
   "/team/page": "app/team/page.js",
   "/page": "app/page.js",
-  "/team-details/[id]/page": "app/team-details/[id]/page.js"
+  "/team-details/[id]/page": "app/team-details/[id]/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

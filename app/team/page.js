@@ -7,35 +7,35 @@ import Link from "next/link";
 import { useSede } from "../context/SedeContext"; // Importa el contexto de sede
 
 export default function Home() {
-  const [researchers, setResearchers] = useState([]);
+  const [medicos, setMedicos] = useState([]);
   const { sedeData } = useSede(); // Obtén los datos de la sede seleccionada desde el contexto
 
   // Obtener datos de Firebase según la sede seleccionada
-  const fetchResearchers = async () => {
+  const fetchMedicos = async () => {
     try {
       if (!sedeData?.nombre) return; // Asegúrate de que la sede esté seleccionada
 
-      // Consultar investigadores que pertenecen a la sede seleccionada
-      const q = query(collection(db, "researchers"), where("sede", "==", sedeData.nombre));
+      // Consultar médicos que pertenecen a la sede seleccionada
+      const q = query(collection(db, "medicos"), where("sede", "==", sedeData.nombre));
       const querySnapshot = await getDocs(q);
       
-      const researchersData = [];
+      const medicosData = [];
       querySnapshot.forEach((doc) => {
-        const data = doc.data().informacion_personal;
-        if (data && data.nombre_completo !== "Luis Aurelio Castillo Parodi") {
-          researchersData.push({ ...data, id: doc.id }); // Incluir el ID del documento
+        const data = doc.data();
+        if (data && data.nombreCompleto !== "Luis Aurelio Castillo Parodi") { // Excluir este nombre si es necesario
+          medicosData.push({ ...data, id: doc.id }); // Incluir el ID del documento
         }
       });
 
-      setResearchers(researchersData);
+      setMedicos(medicosData);
     } catch (error) {
-      console.error("Error al obtener investigadores:", error);
+      console.error("Error al obtener médicos:", error);
     }
   };
 
   // Ejecutar al montar el componente o cuando cambie la sede
   useEffect(() => {
-    fetchResearchers();
+    fetchMedicos();
   }, [sedeData]);
 
   return (
@@ -49,32 +49,37 @@ export default function Home() {
           <section className="team-section sec-pad-2 centred">
             <div className="auto-container">
               <div className="row clearfix">
-                {researchers.length > 0 ? (
-                  researchers.map((researcher, index) => (
-                    <div className="col-lg-3 col-md-6 col-sm-12 team-block" key={index}>
-                      <div className="team-block-one wow fadeInUp animated" data-wow-delay={`${index * 200}ms`} data-wow-duration="1500ms" style={{ height: '400px', marginBottom: '20px' }}>
-                        <div className="inner-box" style={{ height: '100%' }}>
-                          <div className="image-box" style={{ height: '60%', overflow: 'hidden' }}>
-                            <figure className="image" style={{ height: '100%', objectFit: 'cover' }}>
-                              <img src={researcher.foto} alt={researcher.nombre_completo} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                            </figure>
-                            <ul className="social-links clearfix">
-                              <li><Link href={`/team-details/${researcher.id}`}><i className="icon-4"></i></Link></li>
-                              <li><Link href={`/team-details/${researcher.id}`}><i className="icon-5"></i></Link></li>
-                              <li><Link href={`/team-details/${researcher.id}`}><i className="icon-6"></i></Link></li>
-                              <li><Link href={`/team-details/${researcher.id}`}><i className="icon-7"></i></Link></li>
-                            </ul>
-                          </div>
-                          <div className="lower-content" style={{ height: '40%' }}>
-                            <h3><Link href={`/team-details/${researcher.id}`}>{researcher.nombre_completo}</Link></h3>
-                            <span className="designation">{researcher.nacionalidad}</span>
+                {medicos.length > 0 ? (
+                  medicos.map((medico, index) => {
+                    // Verifica primero en "fotoPerfil", luego en "profileImage"
+                    const imageUrl = medico.fotoPerfil || medico.profileImage || "https://via.placeholder.com/150";
+
+                    return (
+                      <div className="col-lg-3 col-md-6 col-sm-12 team-block" key={index}>
+                        <div className="team-block-one wow fadeInUp animated" data-wow-delay={`${index * 200}ms`} data-wow-duration="1500ms" style={{ height: '400px', marginBottom: '20px' }}>
+                          <div className="inner-box" style={{ height: '100%' }}>
+                            <div className="image-box" style={{ height: '60%', overflow: 'hidden' }}>
+                              <figure className="image" style={{ height: '100%', objectFit: 'cover' }}>
+                                <img src={imageUrl} alt={medico.nombreCompleto} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              </figure>
+                              <ul className="social-links clearfix">
+                                <li><Link href={`/team-details/${medico.id}`}><i className="icon-4"></i></Link></li>
+                                <li><Link href={`/team-details/${medico.id}`}><i className="icon-5"></i></Link></li>
+                                <li><Link href={`/team-details/${medico.id}`}><i className="icon-6"></i></Link></li>
+                                <li><Link href={`/team-details/${medico.id}`}><i className="icon-7"></i></Link></li>
+                              </ul>
+                            </div>
+                            <div className="lower-content" style={{ height: '40%' }}>
+                              <h3><Link href={`/team-details/${medico.id}`}>{medico.nombreCompleto}</Link></h3>
+                              <span className="designation">{medico.nacionalidad}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
-                  <p>No se encontraron colaboradores para la sede seleccionada.</p>
+                  <p>No se encontraron médicos para la sede seleccionada.</p>
                 )}
               </div>
             </div>

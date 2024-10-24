@@ -1,179 +1,223 @@
-// app/team-details/[id]/page.js
 'use client';
+
 import { useEffect, useState } from "react";
-import { useParams } from 'next/navigation'; // Importar useParams desde next/navigation
+import { useParams } from 'next/navigation';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 
-// Componente de barra de progreso
+// Componentes adicionales
+const Loading = () => (
+  <div className="loading">
+    <p>Cargando...</p>
+  </div>
+);
+
+const NotFound = () => (
+  <div className="not-found">
+    <p>No se encontró información del profesional.</p>
+  </div>
+);
+
 const ProgressBar = ({ label, percent }) => (
-    <div className="progress-box">
-      <p>{label}</p>
-      <div className="bar">
-        <div className="bar-inner count-bar" style={{ width: `${percent}%` }}></div>
-        <div className="count-text">{`${percent}%`}</div>
+  <div className="progress-box">
+    <p>{label}</p>
+    <div className="bar">
+      <div className="bar-inner count-bar" style={{ width: `${percent}%` }}></div>
+      <div className="count-text">{`${percent}%`}</div>
+    </div>
+  </div>
+);
+
+const MedicoInfo = ({ medico }) => {
+  const imageUrl = medico.fotoPerfil || medico.profileImage || "https://via.placeholder.com/150";
+
+  return (
+    <div className="team-details-content mb_50">
+      <div className="row clearfix">
+        {/* Imagen del médico */}
+        <div className="col-lg-5 col-md-12 col-sm-12 image-column">
+          <figure className="image-box mr_15">
+            <img src={imageUrl} alt={medico.nombreCompleto} />
+          </figure>
+        </div>
+
+        {/* Información personal del médico */}
+        <div className="col-lg-7 col-md-12 col-sm-12 content-column">
+          <div className="content-box">
+            <h2>{medico.nombreCompleto}</h2>
+            <span className="designation">{medico.nacionalidad}</span>
+            <p>
+              {medico.descripcion || `Profesional con experiencia en ${medico.lugarNacimiento || "información no disponible"}.`}
+            </p>
+
+            <ul className="info-list mb_30 clearfix">
+              <li><strong>Fecha de Nacimiento: </strong>{medico.fechaNacimiento || "Información no disponible"}</li>
+              <li><strong>Email: </strong>{medico.email ? <Link href={`mailto:${medico.email}`}>{medico.email}</Link> : "No disponible"}</li>
+              <li><strong>Teléfono: </strong>{medico.telefono ? <Link href={`tel:${medico.telefono}`}>{medico.telefono}</Link> : "No disponible"}</li>
+              <li><strong>Dirección: </strong>{medico.direccion || "No disponible"}</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
+  );
+};
+
+const Section = ({ title, items, renderItem }) => (
+  <div className="section mb_50">
+    <h2>{title}</h2>
+    {items && items.length > 0 ? items.map(renderItem) : <p>No hay {title.toLowerCase()} disponibles.</p>}
+  </div>
+);
+
+const SubscribeSection = () => (
+  <section className="subscribe-section">
+    <div className="auto-container">
+      <div className="inner-container">
+        <div className="row align-items-center">
+          <div className="col-lg-6 col-md-12 col-sm-12 text-column">
+            <div className="text-box">
+              <h2><span>Suscríbete</span> para recibir actualizaciones exclusivas!</h2>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-12 col-sm-12 form-column">
+            <div className="form-inner">
+              <form method="post" action="contact">
+                <div className="form-group">
+                  <input type="email" name="email" placeholder="Ingresa tu dirección de email" required />
+                  <button type="submit" className="theme-btn btn-one"><span>Suscribirse Ahora</span></button>
+                </div>
+                <div className="form-group">
+                  <div className="check-box">
+                    <input className="check" type="checkbox" id="checkbox1" required />
+                    <label htmlFor="checkbox1">
+                      Estoy de acuerdo con la <Link href="/">Política de Privacidad.</Link>
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 );
 
 export default function TeamDetails() {
-  const params = useParams();
-  const { id } = params; // Obtener el ID desde los parámetros de la ruta
-  const [researcher, setResearcher] = useState(null); // Estado para el investigador
-  const [loading, setLoading] = useState(true); // Estado de carga
+  const { id } = useParams();
+  const [medico, setMedico] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Obtener datos del investigador desde Firebase
+  // Obtener datos del médico desde Firebase
   useEffect(() => {
-    const fetchResearcher = async () => {
+    const fetchMedico = async () => {
+      if (!id) return;
+
       try {
-        if (!id) return; // Espera a que el ID esté disponible
-        const docRef = doc(db, "researchers", id);
+        const docRef = doc(db, "medicos", id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          const data = docSnap.data();
-          setResearcher(data.informacion_personal); // Establecer los datos del investigador
+          setMedico(docSnap.data());
         } else {
-          console.log("No such document!");
+          console.log("¡No se encontró el documento!");
+          setMedico(null);
         }
       } catch (error) {
-        console.error("Error al obtener el investigador:", error);
+        console.error("Error al obtener los datos del médico:", error);
       } finally {
-        setLoading(false); // Finalizar la carga
+        setLoading(false);
       }
     };
 
-    fetchResearcher();
+    fetchMedico();
   }, [id]);
 
+  if (loading) {
+    return <Loading />;
+  }
 
-  // Si no se encuentra el investigador
-  if (!researcher) {
-    return <p>No se encontró el investigador.</p>;
+  if (!medico) {
+    return <NotFound />;
   }
 
   return (
-    <>
-      <Layout headerStyle={2} footerStyle={1} breadcrumbTitle={researcher.nombre_completo}>
-        <section className="team-details sec-pad-2">
-          <div className="auto-container">
-            <div className="team-details-content mb_50">
-              <div className="row clearfix">
-                <div className="col-lg-5 col-md-12 col-sm-12 image-column">
-                  <figure className="image-box mr_15">
-                    <img src={researcher.foto} alt={researcher.nombre_completo} />
-                  </figure>
-                </div>
-                <div className="col-lg-7 col-md-12 col-sm-12 content-column">
-                  <div className="content-box">
-                    <h2>{researcher.nombre_completo}</h2>
-                    <span className="designation">{researcher.nacionalidad}</span>
-                    <p>Este es un profesional con experiencia en {researcher.lugar_nacimiento}.</p>
-                    <ul className="info-list mb_30 clearfix">
-                      <li><strong>Fecha de Nacimiento: </strong>{researcher.fecha_nacimiento}</li>
-                      <li><strong>Email: </strong><Link href={`mailto:${researcher.email}`}>{researcher.email}</Link></li>
-                      <li><strong>Teléfono: </strong><Link href={`tel:${researcher.telefono}`}>{researcher.telefono}</Link></li>
-                    </ul>
-                    <ul className="social-links clearfix">
-                      <li><Link href="/"><i className="icon-4"></i></Link></li>
-                      <li><Link href="/"><i className="icon-5"></i></Link></li>
-                      <li><Link href="/"><i className="icon-6"></i></Link></li>
-                      <li><Link href="/"><i className="icon-7"></i></Link></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <Layout headerStyle={1} footerStyle={1} breadcrumbTitle={medico.nombreCompleto}>
+      <section className="team-details sec-pad-2">
+        <div className="auto-container">
+          <MedicoInfo medico={medico} />
 
-            {/* Experiencia personal */}
-            <div className="experience-details mb_50">
-              <h2>Experiencia Personal</h2>
-              <p>{researcher.experiencia || "Información no disponible."}</p>
-            </div>
-
-            {/* Sección de habilidades */}
-            <div className="two-column">
-              <div className="row clearfix">
-                <div className="col-lg-6 col-md-6 col-sm-12 skills-column">
-                  <div className="skills-box">
-                    <div className="text-box mb_30">
-                      <h2>Expertise & Skills</h2>
-                      <p>Consectetur adipiscing elit. Semper sagittis dolor aliquet quam feugiat ultrices feugiat.</p>
-                    </div>
-                    <div className="progress-inner">
-                      <ProgressBar label="Waste management" percent={85} />
-                      <ProgressBar label="Recycling" percent={90} />
-                      <ProgressBar label="Customer support" percent={80} />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-12 appointment-column">
-                  <div className="appointment-inner">
-                    <h2>Reserva una Cita</h2>
-                    <form method="post" action="team-details" className="default-form">
-                      <div className="row clearfix">
-                        <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                          <input type="text" name="fname" placeholder="Nombre" required />
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                          <input type="text" name="phone" placeholder="Número de Teléfono" required />
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                          <input type="email" name="email" placeholder="Email" required />
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                          <input type="text" name="subject" placeholder="Asunto" required />
-                        </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 form-group">
-                          <textarea name="message" placeholder="Mensaje"></textarea>
-                        </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                          <button type="submit" className="theme-btn btn-one"><span>Enviar Mensaje</span></button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+          {/* Sección de formación académica */}
+          <Section
+            title="Formación Académica"
+            items={medico.academicInfo}
+            renderItem={(academico, index) => (
+              <div key={index}>
+                <p><strong>{academico.gradoAcademico}</strong> - {academico.institucion} ({academico.anoGraduacion})</p>
               </div>
-            </div>
-          </div>
-        </section>
+            )}
+          />
 
-        {/* Sección de suscripción */}
-        <section className="subscribe-section">
-          <div className="auto-container">
-            <div className="inner-container">
-              <div className="row align-items-center">
-                <div className="col-lg-6 col-md-12 col-sm-12 text-column">
-                  <div className="text-box">
-                    <h2><span>Suscríbete</span> para recibir actualizaciones exclusivas!</h2>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-12 col-sm-12 form-column">
-                  <div className="form-inner">
-                    <form method="post" action="contact">
-                      <div className="form-group">
-                        <input type="email" name="email" placeholder="Ingresa tu dirección de email" required />
-                        <button type="submit" className="theme-btn btn-one"><span>Suscribirse Ahora</span></button>
-                      </div>
-                      <div className="form-group">
-                        <div className="check-box">
-                          <input className="check" type="checkbox" id="checkbox1" />
-                          <label htmlFor="checkbox1">
-                            Estoy de acuerdo con la <Link href="/">Política de Privacidad.</Link>
-                          </label>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+          {/* Sección de experiencia profesional */}
+          <Section
+            title="Experiencia Profesional"
+            items={medico.professionalExperience}
+            renderItem={(experiencia, index) => (
+              <div key={index}>
+                <p><strong>{experiencia.posicion}</strong> - {experiencia.institucionTrabajo} ({experiencia.fechaInicio} - {experiencia.fechaFin || "Actualidad"})</p>
               </div>
-            </div>
-          </div>
-        </section>
-      </Layout>
-    </>
+            )}
+          />
+
+          {/* Sección de certificaciones */}
+          <Section
+            title="Certificaciones"
+            items={medico.certifications}
+            renderItem={(certificacion, index) => (
+              <div key={index}>
+                <p><strong>{certificacion}</strong></p>
+              </div>
+            )}
+          />
+
+          {/* Sección de publicaciones */}
+          <Section
+            title="Publicaciones"
+            items={medico.publications}
+            renderItem={(publicacion, index) => (
+              <div key={index}>
+                <p><strong>{publicacion}</strong></p>
+              </div>
+            )}
+          />
+
+          {/* Sección de premios */}
+          <Section
+            title="Premios"
+            items={medico.awards}
+            renderItem={(premio, index) => (
+              <div key={index}>
+                <p><strong>{premio}</strong></p>
+              </div>
+            )}
+          />
+
+          {/* Sección de habilidades */}
+          <Section
+            title="Habilidades"
+            items={medico.habilidades}
+            renderItem={(habilidad, index) => (
+              <ProgressBar label={habilidad.nombre} percent={habilidad.nivel || 80} key={index} />
+            )}
+          />
+        </div>
+      </section>
+
+      {/* Sección de suscripción */}
+      <SubscribeSection />
+    </Layout>
   );
 }
