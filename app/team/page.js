@@ -90,7 +90,7 @@ export default function Home() {
                 <option value="">Todas las especialidades</option>
                 <option value="Cirugía">Cirugía</option>
                 <option value="Transplante">Transplante</option>
-                <option value="Radioterapia">Radioterapia</option>
+                <option value="Radioterapia y Oncología">Radioterapia y Oncología</option>
                 {/* Agrega más opciones de especialidades */}
               </select>
             </div>
