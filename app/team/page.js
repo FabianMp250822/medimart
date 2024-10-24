@@ -91,7 +91,12 @@ export default function Home() {
                 <option value="Cirugía">Cirugía</option>
                 <option value="Transplante">Transplante</option>
                 <option value="Radioterapia y Oncología">Radioterapia y Oncología</option>
-                {/* Agrega más opciones de especialidades */}
+                <option value="cirugía - Clínica">Cirugía - Clínica</option>
+                <option value="Ginecología y Obstetricia">Ginecología y Obstetricia</option>
+                <option value="Ginecología y Obstetricia">Nutrición Clínica</option>
+                <option value="Ortopedia y Traumatología">Ortopedia y Traumatología</option>
+                <option value="Ginecología y Obstetricia">Ginecología y Obstetricia</option>
+                {/* Agrega más opciones de especialidades   Ginecología y Obstetricia */}
               </select>
             </div>
           </section>
