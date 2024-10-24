@@ -49,7 +49,7 @@ export default function Header2({
                   </Link>
                 </li>
                 <li>
-                  <img src="assets/images/icons/icon-1.png" alt="" />{" "}
+                  <img src="/assets/images/icons/icon-1.png" alt="" />{" "}
                   {sedeData?.direccion || "Cra. 50 #80-149, Sede 3"}
                 </li>
                 {/* Enlace de WhatsApp */}
@@ -93,7 +93,7 @@ export default function Header2({
                   <figure className="logo">
                     <Link href="/">
                       <img
-                        src="assets/images/logo.png"
+                        src="/assets/images/logo.png"
                         alt="Clínica de la Costa"
                       />
                     </Link>
@@ -136,7 +136,7 @@ export default function Header2({
                 <figure className="logo">
                   <Link href="/">
                     <img
-                      src="assets/images/logo.png"
+                      src="/assets/images/logo.png"
                       alt="Clínica de la Costa"
                     />
                   </Link>

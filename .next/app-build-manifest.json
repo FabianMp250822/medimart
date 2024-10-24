@@ -52,6 +52,12 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/team-details/[id]/page.js"
+    ],
+    "/pacientes/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/pacientes/page.css",
+      "static/chunks/app/pacientes/page.js"
     ]
   }
 }
