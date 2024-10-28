@@ -49,6 +49,7 @@ export default function Home() {
 
   // Función para normalizar cadenas (eliminar acentos y espacios extra)
   const normalizeString = (str) => {
+    if (typeof str !== 'string') return ""; // Si str no es una cadena, devuelve una cadena vacía
     return str
       .normalize("NFD") // Descompone caracteres Unicode
       .replace(/[\u0300-\u036f]/g, "") // Elimina los diacríticos (acentos)
@@ -59,9 +60,10 @@ export default function Home() {
   // Filtrar médicos por nombre completo a partir del tercer carácter y por especialidad
   const filteredMedicos = medicos.filter((medico) => {
     const normalizedSearchTerm = normalizeString(searchTerm);
-    const normalizedNombreCompleto = normalizeString(medico.nombreCompleto);
+    const nombreCompleto = medico.nombreCompleto || ""; // Aseguramos que sea una cadena
+    const normalizedNombreCompleto = normalizeString(nombreCompleto);
 
-    const matchesSearchTerm = normalizedSearchTerm.length >= 3 
+    const matchesSearchTerm = normalizedSearchTerm.length >= 3
       ? normalizedNombreCompleto.includes(normalizedSearchTerm)
       : true;
 

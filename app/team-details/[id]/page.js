@@ -52,12 +52,18 @@ const MedicoInfo = ({ medico }) => {
               {medico.descripcion || `Profesional con experiencia en ${medico.lugarNacimiento || "información no disponible"}.`}
             </p>
 
-            <ul className="info-list mb_30 clearfix">
-              <li><strong>Fecha de Nacimiento: </strong>{medico.fechaNacimiento || "Información no disponible"}</li>
-              <li><strong>Email: </strong>{medico.email ? <Link href={`mailto:${medico.email}`}>{medico.email}</Link> : "No disponible"}</li>
-              <li><strong>Teléfono: </strong>{medico.telefono ? <Link href={`tel:${medico.telefono}`}>{medico.telefono}</Link> : "No disponible"}</li>
-              <li><strong>Dirección: </strong>{medico.direccion || "No disponible"}</li>
-            </ul>
+            {/* Sección de formación académica */}
+            {medico.academicInfo && medico.academicInfo.length > 0 && (
+              <Section
+                title="Formación Académica"
+                items={medico.academicInfo}
+                renderItem={(academico, index) => (
+                  <div key={index}>
+                    <p><strong>{academico.gradoAcademico}</strong> - {academico.institucion} ({academico.anoGraduacion})</p>
+                  </div>
+                )}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -68,7 +74,7 @@ const MedicoInfo = ({ medico }) => {
 const Section = ({ title, items, renderItem }) => (
   <div className="section mb_50">
     <h2>{title}</h2>
-    {items && items.length > 0 ? items.map(renderItem) : <p>No hay {title.toLowerCase()} disponibles.</p>}
+    {items.map(renderItem)}
   </div>
 );
 
@@ -136,88 +142,95 @@ export default function TeamDetails() {
     fetchMedico();
   }, [id]);
 
+  // Definimos el contenido principal basado en el estado de carga y si el médico existe
+  let content;
+
   if (loading) {
-    return <Loading />;
+    content = <Loading />;
+  } else if (!medico) {
+    content = <NotFound />;
+  } else {
+    content = (
+      <>
+        <section className="team-details sec-pad-2">
+          <div className="auto-container">
+            <MedicoInfo medico={medico} />
+
+            {/* Sección de experiencia profesional */}
+            {medico.professionalExperience && medico.professionalExperience.length > 0 && (
+              <Section
+                title="Experiencia Profesional"
+                items={medico.professionalExperience}
+                renderItem={(experiencia, index) => (
+                  <div key={index}>
+                    <p><strong>{experiencia.posicion}</strong> - {experiencia.institucionTrabajo} ({experiencia.fechaInicio} - {experiencia.fechaFin || "Actualidad"})</p>
+                  </div>
+                )}
+              />
+            )}
+
+            {/* Sección de certificaciones */}
+            {medico.certifications && medico.certifications.length > 0 && (
+              <Section
+                title="Certificaciones"
+                items={medico.certifications}
+                renderItem={(certificacion, index) => (
+                  <div key={index}>
+                    <p><strong>{certificacion}</strong></p>
+                  </div>
+                )}
+              />
+            )}
+
+            {/* Sección de publicaciones */}
+            {medico.publications && medico.publications.length > 0 && (
+              <Section
+                title="Publicaciones"
+                items={medico.publications}
+                renderItem={(publicacion, index) => (
+                  <div key={index}>
+                    <p><strong>{publicacion}</strong></p>
+                  </div>
+                )}
+              />
+            )}
+
+            {/* Sección de premios */}
+            {medico.awards && medico.awards.length > 0 && (
+              <Section
+                title="Premios"
+                items={medico.awards}
+                renderItem={(premio, index) => (
+                  <div key={index}>
+                    <p><strong>{premio}</strong></p>
+                  </div>
+                )}
+              />
+            )}
+
+            {/* Sección de habilidades */}
+            {medico.habilidades && medico.habilidades.length > 0 && (
+              <Section
+                title="Habilidades"
+                items={medico.habilidades}
+                renderItem={(habilidad, index) => (
+                  <ProgressBar label={habilidad.nombre} percent={habilidad.nivel || 80} key={index} />
+                )}
+              />
+            )}
+          </div>
+        </section>
+
+        {/* Sección de suscripción */}
+        <SubscribeSection />
+      </>
+    );
   }
 
-  if (!medico) {
-    return <NotFound />;
-  }
-
+  // Retornamos el componente Layout con el contenido adecuado
   return (
-    <Layout headerStyle={1} footerStyle={1} breadcrumbTitle={medico.nombreCompleto}>
-      <section className="team-details sec-pad-2">
-        <div className="auto-container">
-          <MedicoInfo medico={medico} />
-
-          {/* Sección de formación académica */}
-          <Section
-            title="Formación Académica"
-            items={medico.academicInfo}
-            renderItem={(academico, index) => (
-              <div key={index}>
-                <p><strong>{academico.gradoAcademico}</strong> - {academico.institucion} ({academico.anoGraduacion})</p>
-              </div>
-            )}
-          />
-
-          {/* Sección de experiencia profesional */}
-          <Section
-            title="Experiencia Profesional"
-            items={medico.professionalExperience}
-            renderItem={(experiencia, index) => (
-              <div key={index}>
-                <p><strong>{experiencia.posicion}</strong> - {experiencia.institucionTrabajo} ({experiencia.fechaInicio} - {experiencia.fechaFin || "Actualidad"})</p>
-              </div>
-            )}
-          />
-
-          {/* Sección de certificaciones */}
-          <Section
-            title="Certificaciones"
-            items={medico.certifications}
-            renderItem={(certificacion, index) => (
-              <div key={index}>
-                <p><strong>{certificacion}</strong></p>
-              </div>
-            )}
-          />
-
-          {/* Sección de publicaciones */}
-          <Section
-            title="Publicaciones"
-            items={medico.publications}
-            renderItem={(publicacion, index) => (
-              <div key={index}>
-                <p><strong>{publicacion}</strong></p>
-              </div>
-            )}
-          />
-
-          {/* Sección de premios */}
-          <Section
-            title="Premios"
-            items={medico.awards}
-            renderItem={(premio, index) => (
-              <div key={index}>
-                <p><strong>{premio}</strong></p>
-              </div>
-            )}
-          />
-
-          {/* Sección de habilidades */}
-          <Section
-            title="Habilidades"
-            items={medico.habilidades}
-            renderItem={(habilidad, index) => (
-              <ProgressBar label={habilidad.nombre} percent={habilidad.nivel || 80} key={index} />
-            )}
-          />
-        </div>
-      </section>
-
-      {/* Sección de suscripción */}
-      <SubscribeSection />
+    <Layout headerStyle={1} footerStyle={1} breadcrumbTitle={medico ? medico.nombreCompleto : "Cargando..."}>
+      {content}
     </Layout>
   );
 }
