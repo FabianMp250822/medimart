@@ -1,212 +1,224 @@
-'use client'
-import Layout from "@/components/layout/Layout"
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+'use client';
 
-// Importar los componentes de detalles de servicio
-import ServiceDetails1 from '@/components/services/ServiceDetails1'
-import PathologyLabDetails from "@/components/services/PathologyLabDetails"
-import ClinicalLabDetails from "@/components/services/ClinicalLabDetails"
-import PlasticSurgeryDetails from "@/components/services/PlasticSurgeryDetails"
-import PediatricCardiologyDetails from "@/components/services/PediatricCardiologyDetails"
-import CardiacVascularDetailsComplete from "@/components/services/CardiacVascularDetails"
-import HematologyOncologyDetails from "@/components/services/HematologyOncologyDetails"
-import RadiotherapyDetails from "@/components/services/RadiotherapyDetails"
-import PetCTDetails from "@/components/services/PetCTDetails"
-import ServiceDetailsNefrologia from "@/components/services/HIVSupportProgram"
-import KidneyLiverTransplant from "@/components/services/KidneyLiverTransplant"
-import OrthopedicsTraumatology from "@/components/services/OrthopedicsTraumatology"
-import PulmonologyThoracic from "@/components/services/PulmonologyThoracic"
-import NeurologyLab from "@/components/services/NeurologyLab"
-import NephrologyProgram from "@/components/services/NephrologyProgram"
-import HeartFailureSupport from "@/components/services/HeartFailureSupport"
-import TransplantServices from "@/components/services/TransplantServices"
-import GastroenterologyDetails from "@/components/services/GastroenterologyDetails"
-import TuberculosisAndChestPainProgram from "@/components/services/TuberculosisAndChestPainProgram"
+import React, { useState } from 'react';
+import Layout from "@/components/layout/Layout";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import GenericServiceDetail from '@/components/services/GenericServiceDetail';
+
+// JSON de servicios y subservicios
+const initialServices = [
+    {
+        title: "Medicina Interna",
+        subservices: [
+            "Cardiología",
+            "Cuidados Paliativos Adultos",
+            "Dermatología",
+            "Endocrinología",
+            "Gastroenterología",
+            "Geriatría",
+            "Hemato-oncología",
+            "Hematología",
+            "Hepatología",
+            "Infectología",
+            "Medicina del Deporte",
+            "Medicina Familiar",
+            "Medicina Física y Rehabilitación - Fisiatría",
+            "Medicina Interna",
+            "Nefrología",
+            "Neumología",
+            "Neurología",
+            "Oncología",
+            "Psiquiatría",
+            "Radioterapia",
+            "Reumatología"
+        ]
+    },
+    {
+        title: "Medicina Crítica",
+        subservices: [
+            "Cuidados Intensivos e Intermedios Adultos",
+            "Cuidados Intensivos e Intermedios Neonatales",
+            "Cuidados Intensivos e Intermedios Pediátricos",
+            "Teleurgencias",
+            "Unidad de Alto Riesgo Obstétrico",
+            "Urgencias Adultos",
+            "Urgencias Pediátricas"
+        ]
+    },
+    {
+        title: "Imágenes Diagnósticas",
+        subservices: [
+            "Radiología",
+            "Ultrasonido",
+            "Tomografía Computarizada",
+            "Resonancia Magnética"
+        ]
+    },
+    {
+        title: "Patología y Medicina de Laboratorio",
+        subservices: [
+            "Banco de Sangre",
+            "Cariotipos en Sangre Periférica y Médula Ósea",
+            "Citogenética",
+            "Citometría de Flujo",
+            "Genética Molecular",
+            "Gestión Pretransfusional",
+            "Hemostasia y Hematología Especial",
+            "Inmunología de Trasplantes e Inmunogenética",
+            "Inmunología e Inmunodeficiencias",
+            "Laboratorio Clínico",
+            "Laboratorio de Hemostasia y Hematología Especial",
+            "Microbiología",
+            "Programa de Point of Care Testing (POCT)",
+            "Secuenciación",
+            "Servicio de Patología"
+        ]
+    },
+    {
+        title: "Materno Infantil",
+        subservices: [
+            "Cardiología Pediátrica",
+            "Cirugía Pediátrica",
+            "Cirugía Plástica",
+            "Cuidados Intensivos e Intermedios Neonatales",
+            "Cuidados Intensivos e Intermedios Pediátricos",
+            "Cuidados Paliativos Pediátricos",
+            "Endocrinología Pediátrica",
+            "Gastroenterología Pediátrica",
+            "Ginecología y Obstetricia",
+            "Hemato-Oncología Pediátrica",
+            "Hospitalización",
+            "Infectología Pediátrica",
+            "Inmunología Clínica Pediátrica",
+            "Nefrología Pediátrica",
+            "Neumología Pediátrica",
+            "Neurología Pediátrica o Neuropediatría",
+            "Oftalmología Pediátrica",
+            "Pediatría",
+            "Psiquiatría Infantil",
+            "Reumatología Pediátrica",
+            "Unidad de Alto Riesgo Obstétrico",
+            "Unidad de Cuidado Intensivo Cardiovascular Pediátrico",
+            "Unidad de Recién Nacidos",
+            "Urgencias Pediátricas",
+            "Vacunación"
+        ]
+    },
+    {
+        title: "Cirugía",
+        subservices: [
+            "Anestesiología",
+            "Cirugía Bariátrica y Laparoscópica Avanzada",
+            "Cirugía Cardiovascular Pediátrica",
+            "Cirugía de Cabeza y Cuello",
+            "Cirugía de Colon y Recto",
+            "Cirugía de Tórax",
+            "Cirugía de Trauma y Emergencias",
+            "Cirugía Gastrointestinal",
+            "Cirugía General",
+            "Cirugía Hepatobiliar y Trasplantes",
+            "Cirugía Oncológica",
+            "Cirugía Oral y Maxilofacial",
+            "Cirugía Pediátrica",
+            "Cirugía Plástica, Reconstructiva, Estética y Oncológica",
+            "Cirugía Vascular Periférica",
+            "Electrofisiología",
+            "Mastología",
+            "Neurocirugía",
+            "Neurointervencionismo",
+            "Oftalmología",
+            "Ortopedia y Traumatología",
+            "Otorrinolaringología",
+            "Trasplantes",
+            "Unidad de Intervencionismo Vascular",
+            "Urología"
+        ]
+    },
+    {
+        title: "Servicios",
+        subservices: [
+            "Hospitalización",
+            "Consulta Externa",
+            "Endoscopia",
+            "Clínicas y Programas Especiales",
+            "Medicina Nuclear",
+            "Medicina Física y Rehabilitación",
+            "Vacunación"
+        ]
+    }
+];
 
 
 export default function Service() {
-    const MySwal = withReactContent(Swal)
-
-    const services = [
-        {
-            title: 'Diagnóstico y Terapia Personalizados',
-            link: 'Diagnóstico y Terapia Personalizados',
-            description: 'Obtén un diagnóstico preciso y un plan de tratamiento adaptado a tus necesidades únicas.',
-            component: ServiceDetails1,
-        },
-        {
-            title: 'Laboratorio de Patología',
-            link: 'Laboratorio de Patología',
-            description: 'El laboratorio de patología ofrece un diagnóstico seguro para determinar el plan de manejo que se aplicará al paciente.',
-            component: PathologyLabDetails,
-        },
-        {
-            title: 'Laboratorio Clínico',
-            link: 'Laboratorio Clínico',
-            description: 'Conociendo la importancia del diagnóstico, el Laboratorio Clínico ofrece un servicio respaldado por la más completa tecnología.',
-            component: ClinicalLabDetails,
-        },
-        {
-            title: 'Cirugía Plástica Reconstructiva y de Estética',
-            link: 'Cirugía Plástica Reconstructiva y de Estética',
-            description: 'Tecnología de última generación con precisión y excelencia en cirugía plástica, estética y reconstructiva.',
-            component: PlasticSurgeryDetails,
-        },
-        {
-            title: 'Cardiología Pediátrica',
-            link: 'Cardiología Pediátrica',
-            description: 'Programa enfocado en el tratamiento y detección de cardiopatías congénitas en niños.',
-            component: PediatricCardiologyDetails,
-        },
-        {
-            title: 'Enfermedades Cardiacas y Vasculares',
-            link: 'Enfermedades Cardiacas y Vasculares',
-            description: 'Diagnóstico y tratamiento de enfermedades cardíacas y vasculares, con procedimientos no invasivos y cirugía avanzada.',
-            component: CardiacVascularDetailsComplete,
-        },
-        // {
-        //     title: 'Unidad de Rehabilitación Cardíaca',
-        //     link: 'Unidad de Rehabilitación Cardíaca',
-        //     description: 'Rehabilitación cardíaca para pacientes post operados, con atención personalizada.',
-        //     component: CardiacRehabilitationDetails,
-        // },
-        {
-            title: 'Gastroenterología Clínica y Endoscopia',
-            link: 'Gastroenterología Clínica y Endoscopia',
-            description: 'Atención de urgencias por gastroenterología y procedimientos endoscópicos.',
-            component: GastroenterologyDetails,
-        },
-        {
-            title: 'Paciente Hematoncológico',
-            link: 'Paciente Hematoncológico',
-            description: 'Manejo integral del paciente hematoncológico, con los más altos niveles de excelencia académica y de investigación.',
-            component: HematologyOncologyDetails,
-        },
-        {
-            title: 'Radioterapia',
-            link: 'Radioterapia',
-            description: 'Tratamiento con radioterapia avanzada y equipos de alta tecnología para pacientes oncológicos.',
-            component: RadiotherapyDetails,
-        },
-        {
-            title: 'PET-CT',
-            link: 'PET-CT',
-            description: 'Tomografía por emisión de positrones con tomografía computarizada para diagnóstico no invasivo.',
-            component: PetCTDetails,
-        },
-        {
-            title: 'Paciente con Tuberculosis',
-            link: 'Paciente con Tuberculosis',
-            description: 'Detección, diagnóstico y tratamiento de pacientes con tuberculosis.',
-            component: TuberculosisAndChestPainProgram,
-        },
-        // {
-        //     title: 'Dolor Torácico',
-        //     link: 'Dolor Torácico',
-        //     description: 'Atención integral para pacientes con dolor torácico, ofreciendo evaluación y seguimiento especializado.',
-        //     component: ChestPainProgramDetails,
-        // },
-        {
-            title: 'Trasplante de Falla Intestinal',
-            link: 'Trasplante de Falla Intestinal',
-            description: 'Centro de Trasplantes que ofrece tratamientos para falla intestinal y soporte integral.',
-            component: TransplantServices,
-        },
-        {
-            title: 'Trasplante: Falla Cardíaca y Asistencia Ventricular',
-            link: 'Trasplante: Falla Cardíaca y Asistencia Ventricular',
-            description: 'Programa de trasplante para pacientes con falla cardíaca avanzada, con asistencia especializada.',
-            component: HeartFailureSupport,
-        },
-        {
-            title: 'Programa de Nefrología',
-            link: 'Programa de Nefrología',
-            description: 'Manejo de patologías renales y educación para pacientes y sus familias.',
-            component: NephrologyProgram,
-        },
-        {
-            title: 'Neurología y Laboratorio Neurofisiología',
-            link: 'Neurología y Laboratorio Neurofisiología',
-            description: 'Diagnóstico y tratamiento de enfermedades neurológicas y trastornos del sueño.',
-            component: NeurologyLab,
-        },
-        {
-            title: 'Neumología Clínica y Cirugía de Tórax',
-            link: 'Neumología Clínica y Cirugía de Tórax',
-            description: 'Atención integral para enfermedades respiratorias y cirugías del tórax.',
-            component: PulmonologyThoracic,
-        },
-        {
-            title: 'Ortopedia y Traumatología',
-            link: 'Ortopedia y Traumatología',
-            description: 'Tratamiento especializado en reemplazos articulares y atención de urgencias las 24 horas.',
-            component: OrthopedicsTraumatology,
-        },
-        {
-            title: 'Trasplante de Riñón e Hígado',
-            link: 'Trasplante de Riñón e Hígado',
-            description: 'Centro de Trasplante para riñón e hígado con un equipo especializado en el proceso completo.',
-            component: KidneyLiverTransplant,
-        },
-        {
-            title: 'VIH/SIDA',
-            link: 'VIH/SIDA',
-            description: 'Atención integral y especializada para pacientes con VIH/SIDA con enfoque en prevención y tratamiento.',
-            component: ServiceDetailsNefrologia,
-        },
-    ];
+    const MySwal = withReactContent(Swal);
+    const [services, setServices] = useState(initialServices);
+    const [activeService, setActiveService] = useState(null);
 
     const handleServiceClick = (service) => {
-        MySwal.fire({
-            html: <service.component />,
-            showCloseButton: true,
-            showConfirmButton: false,
-            width: '800px',
-        })
-    }
+        setActiveService(activeService === service ? null : service);
+    };
 
     return (
         <>
             <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Nuestros Servicios">
                 <section className="service-section sec-pad">
                     <div className="auto-container">
-                        <div className="sec-title mb_50 centred">
-                            <span className="sub-title">Nuestros Servicios</span>
-                            <h2>Atención Integral <br />Cuidando de Ti Siempre</h2>
-                        </div>
-                        <div className="row clearfix">
-                            {services.map((service, index) => (
-                                <div key={index} className="col-lg-4 col-md-6 col-sm-12 service-block">
+                        {/* Estilos CSS en línea */}
+                        <style jsx>{`
+                            .service-container {
+                                display: flex;
+                                gap: 20px;
+                            }
+                            .service-list, .subservice-list {
+                                width: 50%;
+                            }
+                            .service-item, .subservice-item {
+                                padding: 10px;
+                                border-bottom: 1px solid #e0e0e0;
+                                cursor: pointer;
+                                transition: background 0.3s ease;
+                            }
+                            .service-item:hover, .subservice-item:hover {
+                                background-color: #f0f0f0;
+                            }
+                            .service-item.active {
+                                font-weight: bold;
+                                background-color: #d8e8f8;
+                            }
+                            .subservice-item {
+                                padding-left: 20px;
+                            }
+                        `}</style>
+
+                        <div className="service-container">
+                            {/* Lista de servicios principales */}
+                            <div className="service-list">
+                                <h2>Servicios Principales</h2>
+                                {services.map((service, index) => (
                                     <div
-                                        className="service-block-one wow fadeInUp animated"
-                                        data-wow-delay={`${(index % 6) * 100}ms`}
-                                        data-wow-duration="1500ms"
+                                        key={index}
+                                        className={`service-item ${activeService === service ? 'active' : ''}`}
+                                        onClick={() => handleServiceClick(service)}
                                     >
-                                        <div
-                                            className="inner-box"
-                                            onClick={() => handleServiceClick(service)}
-                                            style={{ cursor: 'pointer' }}
-                                        >
-                                            <div className="image-box">
-                                                <figure className="image">
-                                                    <img
-                                                        src={`https://picsum.photos/300/200?random=${index + 1}`}
-                                                        alt={service.title}
-                                                    />
-                                                </figure>
-                                                <div className="icon-box">
-                                                    <i className={`icon-${index + 1}`}></i>
-                                                </div>
-                                            </div>
-                                            <div className="lower-content">
-                                                <h3>{service.title}</h3>
-                                                <p>{service.description}</p>
-                                            </div>
-                                        </div>
+                                        {service.title}
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
+
+                            {/* Lista de subservicios */}
+                            <div className="subservice-list">
+                                <h2>Subservicios</h2>
+                                {activeService && activeService.subservices.length > 0 ? (
+                                    activeService.subservices.map((subservice, subIndex) => (
+                                        <div key={subIndex} className="subservice-item">
+                                            {subservice}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>Selecciona un servicio para ver los subservicios.</p>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </section>

@@ -1,0 +1,122 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./components/services/GenericServiceDetail.css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************/
+/* Estilos generales */
+.service-detail {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    line-height: 1.8;
+    background-color: #f9f9f9;
+    text-align: left;
+  }
+  
+  /* Encabezado */
+  .service-header {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .service-title {
+    font-size: 2.5rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .service-description {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  /* Sección de contacto */
+  .contact-section {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .contact-section h2 {
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: 1rem;
+  }
+  
+  .contact-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .contact-section li {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+  
+  /* Galería de imágenes */
+  .image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 1rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .gallery-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .gallery-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Secciones del contenido */
+  .service-section {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .service-section h2 {
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: 1rem;
+  }
+  
+  .treatment-technique {
+    margin-bottom: 1.5rem;
+  }
+  
+  .treatment-technique h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .treatment-technique p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Listas generales */
+  ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+  }
+  
+  li {
+    margin-bottom: 0.5rem;
+  }
+  

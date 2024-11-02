@@ -176,7 +176,7 @@ export default function TeamDetails() {
                 items={medico.certifications}
                 renderItem={(certificacion, index) => (
                   <div key={index}>
-                    <p><strong>{certificacion}</strong></p>
+                    <p><strong>{certificacion.curso}</strong> - {certificacion.ubicacion} ({certificacion.ano})</p>
                   </div>
                 )}
               />
@@ -189,7 +189,7 @@ export default function TeamDetails() {
                 items={medico.publications}
                 renderItem={(publicacion, index) => (
                   <div key={index}>
-                    <p><strong>{publicacion}</strong></p>
+                    <p><strong>{publicacion.titulo}</strong> - {publicacion.fecha}</p>
                   </div>
                 )}
               />
@@ -202,7 +202,7 @@ export default function TeamDetails() {
                 items={medico.awards}
                 renderItem={(premio, index) => (
                   <div key={index}>
-                    <p><strong>{premio}</strong></p>
+                    <p><strong>{premio.titulo}</strong> - {premio.fecha}</p>
                   </div>
                 )}
               />
