@@ -4,9 +4,7 @@ import React, { useState } from 'react';
 import Layout from "@/components/layout/Layout";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import GenericServiceDetail from '@/components/services/GenericServiceDetail';
 
-// JSON de servicios y subservicios
 const initialServices = [
     {
         title: "Medicina Interna",
@@ -136,93 +134,215 @@ const initialServices = [
         ]
     },
     {
-        title: "Servicios",
+        title: "Clínicas y Programas Especiales",
+        subservices: [
+            "Clínica de Acretismo Placentario",
+            "Clínica de Anticoagulación",
+            "Clínica de Falla Cardiaca",
+            "Clínica de Género para Niños y Adolescentes",
+            "Clínica de Gliomas de Alto Grado",
+            "Clínica de Heridas y Terapia Enterostomal",
+            "Clínica de Infusiones",
+            "Clínica de Menopausia y Climaterio",
+            "Clínica de Tumores del Sistema Nervioso Central",
+            "Clínica del Dolor",
+            "Programa Soporte Oncológico",
+            "Telemedicina-LiliConnect"
+        ]
+    },
+    {
+        title: "Consulta Externa",
+        subservices: [
+            "Alergología",
+            "Cardiología",
+            "Cardiología Pediátrica",
+            "Clínica de Heridas y Terapia Enterostomal",
+            "Cuidados Paliativos Adultos",
+            "Cuidados Paliativos Pediátricos",
+            "Dermatología",
+            "Diagnóstico Vascular",
+            "Electrofisiología",
+            "Endocrinología",
+            "Endocrinología Pediátrica",
+            "Fonoaudiología",
+            "Gastroenterología",
+            "Geriatría",
+            "Ginecología y Obstetricia",
+            "Hemato-oncología",
+            "Hemato-Oncología Pediátrica",
+            "Hematología",
+            "Hepatología",
+            "Infectología",
+            "Infectología Pediátrica",
+            "Inmunología clínica pediátrica",
+            "Medicina Familiar",
+            "Nefrología",
+            "Nefrología Pediátrica",
+            "Neumología",
+            "Neumología Pediátrica",
+            "Neurointervencionismo",
+            "Neurología",
+            "Neurología Pediátrica o Neuropediatría",
+            "Neuropsicología",
+            "Nutrición y Dietética",
+            "Oftalmología Pediátrica",
+            "Ortopedia y Traumatología",
+            "Pediatría",
+            "Psicología",
+            "Psiquiatría",
+            "Psiquiatría Infantil",
+            "Reumatología",
+            "Reumatología Pediátrica",
+            "Urología"
+        ]
+    },
+    {
+        title: "Hospitalización",
         subservices: [
             "Hospitalización",
-            "Consulta Externa",
+         
+        ]
+    },
+    {
+        title: "Endoscopia",
+        subservices: [
             "Endoscopia",
-            "Clínicas y Programas Especiales",
-            "Medicina Nuclear",
-            "Medicina Física y Rehabilitación",
+            "Neumología (Broncoscopia Básica y Avanzada)"
+         
+        ]
+    },
+    {
+        title: "Medicina Nuclear",
+        subservices: [
+            "Medicina Nuclear Molecular",
+          
+         
+        ]
+    },
+    {
+        title: "Medicina Física y Rehabilitación",
+        subservices: [
+            "Medicina Física y Rehabilitación - Fisiatría",
+        
+        ]
+    },
+    {
+        title: "Vacunación",
+        subservices: [
             "Vacunación"
         ]
     }
 ];
 
-
-export default function Service() {
-    const MySwal = withReactContent(Swal);
-    const [services, setServices] = useState(initialServices);
-    const [activeService, setActiveService] = useState(null);
-
-    const handleServiceClick = (service) => {
-        setActiveService(activeService === service ? null : service);
-    };
-
-    return (
-        <>
-            <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Nuestros Servicios">
-                <section className="service-section sec-pad">
-                    <div className="auto-container">
-                        {/* Estilos CSS en línea */}
-                        <style jsx>{`
-                            .service-container {
-                                display: flex;
-                                gap: 20px;
-                            }
-                            .service-list, .subservice-list {
-                                width: 50%;
-                            }
-                            .service-item, .subservice-item {
-                                padding: 10px;
-                                border-bottom: 1px solid #e0e0e0;
-                                cursor: pointer;
-                                transition: background 0.3s ease;
-                            }
-                            .service-item:hover, .subservice-item:hover {
-                                background-color: #f0f0f0;
-                            }
-                            .service-item.active {
-                                font-weight: bold;
-                                background-color: #d8e8f8;
-                            }
-                            .subservice-item {
-                                padding-left: 20px;
-                            }
-                        `}</style>
-
-                        <div className="service-container">
-                            {/* Lista de servicios principales */}
-                            <div className="service-list">
-                                <h2>Servicios Principales</h2>
-                                {services.map((service, index) => (
-                                    <div
-                                        key={index}
-                                        className={`service-item ${activeService === service ? 'active' : ''}`}
-                                        onClick={() => handleServiceClick(service)}
-                                    >
-                                        {service.title}
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Lista de subservicios */}
-                            <div className="subservice-list">
-                                <h2>Subservicios</h2>
-                                {activeService && activeService.subservices.length > 0 ? (
-                                    activeService.subservices.map((subservice, subIndex) => (
-                                        <div key={subIndex} className="subservice-item">
-                                            {subservice}
+    export default function Service() {
+        const MySwal = withReactContent(Swal);
+        const [services, setServices] = useState(initialServices);
+        const [activeService, setActiveService] = useState(null);
+    
+        const handleServiceClick = (service) => {
+            setActiveService(activeService === service ? null : service);
+        };
+    
+        // Función para agrupar subservicios por la letra inicial y distribuir en dos columnas
+        const groupAndSplitSubservices = (subservices) => {
+            const grouped = subservices.reduce((acc, subservice) => {
+                const initial = subservice[0].toUpperCase();
+                if (!acc[initial]) acc[initial] = [];
+                acc[initial].push(subservice);
+                return acc;
+            }, {});
+    
+            // Convertir el objeto en una lista de listas de subservicios para organizar en dos columnas
+            const sortedGrouped = Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b));
+            const midIndex = Math.ceil(sortedGrouped.length / 2);
+            return [sortedGrouped.slice(0, midIndex), sortedGrouped.slice(midIndex)];
+        };
+    
+        return (
+            <>
+                <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Nuestros Servicios">
+                    <section className="service-section sec-pad">
+                        <div className="auto-container">
+                            {/* Estilos CSS en línea */}
+                            <style jsx>{`
+                                .service-container {
+                                    display: flex;
+                                    gap: 20px;
+                                }
+                                .service-list, .subservice-list {
+                                    width: 50%;
+                                }
+                                .service-item, .subservice-item {
+                                    padding: 10px;
+                                    border-bottom: 1px solid #e0e0e0;
+                                    cursor: pointer;
+                                    transition: background 0.3s ease;
+                                }
+                                .service-item:hover, .subservice-item:hover {
+                                    background-color: #f0f0f0;
+                                }
+                                .service-item.active {
+                                    font-weight: bold;
+                                    background-color: #d8e8f8;
+                                }
+                                .subservice-list h3 {
+                                    font-size: 18px;
+                                    color: #007bff;
+                                    margin-top: 20px;
+                                    margin-bottom: 5px;
+                                }
+                                .subservice-columns {
+                                    display: flex;
+                                    gap: 20px;
+                                }
+                                .subservice-column {
+                                    flex: 1;
+                                }
+                            `}</style>
+    
+                            <div className="service-container">
+                                {/* Lista de servicios principales */}
+                                <div className="service-list">
+                                    <h2>Servicios Principales</h2>
+                                    {services.map((service, index) => (
+                                        <div
+                                            key={index}
+                                            className={`service-item ${activeService === service ? 'active' : ''}`}
+                                            onClick={() => handleServiceClick(service)}
+                                        >
+                                            {service.title}
                                         </div>
-                                    ))
-                                ) : (
-                                    <p>Selecciona un servicio para ver los subservicios.</p>
-                                )}
+                                    ))}
+                                </div>
+    
+                                {/* Lista de subservicios organizados en dos columnas */}
+                                <div className="subservice-list">
+                                    <h2>Subservicios</h2>
+                                    {activeService && activeService.subservices.length > 0 ? (
+                                        <div className="subservice-columns">
+                                            {groupAndSplitSubservices(activeService.subservices).map((column, columnIndex) => (
+                                                <div className="subservice-column" key={columnIndex}>
+                                                    {column.map(([letter, items], index) => (
+                                                        <div key={index}>
+                                                            <h3>{letter}</h3>
+                                                            {items.map((subservice, subIndex) => (
+                                                                <div key={subIndex} className="subservice-item">
+                                                                    {subservice}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p>Selecciona un servicio para ver los subservicios.</p>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            </Layout>
-        </>
-    );
-}
+                    </section>
+                </Layout>
+            </>
+        );
+    }

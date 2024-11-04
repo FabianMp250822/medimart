@@ -37,7 +37,7 @@ export default function Menu() {
 
                 {/* Sección "Equipo" */}
                 <li className="dropdown">
-                    <Link href="/team">Equipo Médico</Link>
+                    <Link href="/team">Especialistas</Link>
                     
                 </li>
 

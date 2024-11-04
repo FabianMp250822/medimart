@@ -171,7 +171,7 @@ export default function Footer1() {
               </ul>
               <div className="copyright">
                 <p>
-                  &copy; 2024 Clínica de la Costa. Todos los derechos reservados.
+                  &copy; 2024 Clínica de la Costa. Dseño y Desarrollo: Fabian Muñoz Puello & Leidy Vega Anaya Todos los derechos reservados.
                 </p>
               </div>
             </div>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -8,31 +8,38 @@ import { useSede } from "../context/SedeContext";
 
 export default function Home() {
   const [medicos, setMedicos] = useState([]);
-  const { sedeData } = useSede(); // Obtén los datos de la sede seleccionada desde el contexto
+  const [especialidades, setEspecialidades] = useState([]);
+  const { sedeData } = useSede();
 
-  // Estados para búsqueda, paginación y filtro
-  const [searchTerm, setSearchTerm] = useState("");  // Estado para la búsqueda
-  const [especialidad, setEspecialidad] = useState("");  // Estado para el filtro de especialidad
-  const [currentPage, setCurrentPage] = useState(1);  // Estado para la página actual
-  const medicosPerPage = 6;  // Cantidad de médicos por página
+  const [searchTerm, setSearchTerm] = useState("");
+  const [especialidad, setEspecialidad] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const medicosPerPage = 6;
 
   const fetchMedicos = async () => {
     try {
-      if (!sedeData?.nombre) return; // Asegúrate de que la sede esté seleccionada
+      if (!sedeData?.nombre) return;
 
-      // Consultar médicos que pertenecen a la sede seleccionada
       const q = query(collection(db, "medicos"), where("sede", "==", sedeData.nombre));
       const querySnapshot = await getDocs(q);
 
       const medicosData = [];
+      const especialidadesSet = new Set();
+
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         if (data && data.nombreCompleto !== "Luis Aurelio Castillo Parodi") {
           medicosData.push({ ...data, id: doc.id });
+          if (data.especialidad) especialidadesSet.add(data.especialidad);
         }
       });
 
+      // Ordenar médicos por nombre completo
+      medicosData.sort((a, b) => a.nombreCompleto.localeCompare(b.nombreCompleto));
+
+      // Ordenar especialidades alfabéticamente y actualizar estados
       setMedicos(medicosData);
+      setEspecialidades([...especialidadesSet].sort());
     } catch (error) {
       console.error("Error al obtener médicos:", error);
     }
@@ -42,39 +49,30 @@ export default function Home() {
     fetchMedicos();
   }, [sedeData]);
 
-  // Restablecer currentPage a 1 cuando searchTerm o especialidad cambien
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, especialidad]);
 
-  // Función para normalizar cadenas (eliminar acentos y espacios extra)
   const normalizeString = (str) => {
-    if (typeof str !== 'string') return ""; // Si str no es una cadena, devuelve una cadena vacía
-    return str
-      .normalize("NFD") // Descompone caracteres Unicode
-      .replace(/[\u0300-\u036f]/g, "") // Elimina los diacríticos (acentos)
-      .toLowerCase()
-      .trim(); // Elimina espacios en blanco al inicio y al final
+    if (typeof str !== "string") return "";
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
   };
 
-  // Filtrar médicos por nombre completo a partir del tercer carácter y por especialidad
   const filteredMedicos = medicos.filter((medico) => {
     const normalizedSearchTerm = normalizeString(searchTerm);
-    const nombreCompleto = medico.nombreCompleto || ""; // Aseguramos que sea una cadena
+    const nombreCompleto = medico.nombreCompleto || "";
     const normalizedNombreCompleto = normalizeString(nombreCompleto);
 
-    const matchesSearchTerm = normalizedSearchTerm.length >= 3
-      ? normalizedNombreCompleto.includes(normalizedSearchTerm)
-      : true;
+    const matchesSearchTerm =
+      normalizedSearchTerm.length >= 3
+        ? normalizedNombreCompleto.includes(normalizedSearchTerm)
+        : true;
 
-    const matchesEspecialidad = especialidad
-      ? medico.especialidad === especialidad
-      : true;
+    const matchesEspecialidad = especialidad ? medico.especialidad === especialidad : true;
 
     return matchesSearchTerm && matchesEspecialidad;
   });
 
-  // Paginación
   const indexOfLastMedico = currentPage * medicosPerPage;
   const indexOfFirstMedico = indexOfLastMedico - medicosPerPage;
   const currentMedicos = filteredMedicos.slice(indexOfFirstMedico, indexOfLastMedico);
@@ -102,20 +100,15 @@ export default function Home() {
                 className="filter-select"
               >
                 <option value="">Todas las especialidades</option>
-                <option value="Cirugía">Cirugía</option>
-                <option value="Transplante">Transplante</option>
-                <option value="Radioterapia y Oncología">Radioterapia y Oncología</option>
-                <option value="cirugía - Clínica">Cirugía - Clínica</option>
-                <option value="Ginecología y Obstetricia">Ginecología y Obstetricia</option>
-                <option value="Nutrición Clínica">Nutrición Clínica</option>
-                <option value="Ortopedia y Traumatología">Ortopedia y Traumatología</option>
-                <option value="Hemodinámica">Hemodinámica</option>
-                {/* Agrega más opciones de especialidades */}
+                {especialidades.map((esp, index) => (
+                  <option key={index} value={esp}>
+                    {esp}
+                  </option>
+                ))}
               </select>
             </div>
           </section>
 
-          {/* Mensaje informativo */}
           {searchTerm.length > 0 && searchTerm.length < 3 && (
             <p>Por favor, ingresa al menos 3 caracteres para buscar.</p>
           )}
@@ -168,39 +161,6 @@ export default function Home() {
                   ))}
                 </ul>
               </nav>
-            </div>
-          </section>
-
-          {/* Sección de suscripción */}
-          <section className="subscribe-section">
-            <div className="auto-container">
-              <div className="inner-container">
-                <div className="row align-items-center">
-                  <div className="col-lg-6 col-md-12 col-sm-12 text-column">
-                    <div className="text-box">
-                      <h2><span>Suscríbete</span> para recibir actualizaciones exclusivas!</h2>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-12 col-sm-12 form-column">
-                    <div className="form-inner">
-                      <form method="post" action="contact">
-                        <div className="form-group">
-                          <input type="email" name="email" placeholder="Ingresa tu dirección de email" required className="input-email"/>
-                          <button type="submit" className="theme-btn btn-one"><span>Suscribirse Ahora</span></button>
-                        </div>
-                        <div className="form-group">
-                          <div className="check-box">
-                            <input className="check" type="checkbox" id="checkbox1" />
-                            <label htmlFor="checkbox1">
-                              Estoy de acuerdo con la <Link href="/">Política de Privacidad.</Link>
-                            </label>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
         </div>
