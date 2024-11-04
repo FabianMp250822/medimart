@@ -62,7 +62,7 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
               {/* Servicios */}
               <li className={isActive.key === 2 ? "dropdown current" : "dropdown"}>
                 <Link href="/service-details-6">Servicios</Link>
-                <ul style={{ display: `${isActive.key === 2 ? "block" : "none"}` }}>
+                {/* <ul style={{ display: `${isActive.key === 2 ? "block" : "none"}` }}>
                   <li><Link href="/works" onClick={handleMobileMenu}>Servicio de Urgencias</Link></li>
                   <li><Link href="/hospitalizacion" onClick={handleMobileMenu}>Hospitalización</Link></li>
                   <li><Link href="/cuidado-critico" onClick={handleMobileMenu}>Cuidado Crítico</Link></li>
@@ -70,7 +70,7 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
                   <li><Link href="/laboratorio-patologia" onClick={handleMobileMenu}>Laboratorio de Patología</Link></li>
                   <li><Link href="/laboratorio-clinico" onClick={handleMobileMenu}>Laboratorio Clínico</Link></li>
                   <li><Link href="/programas-especiales" onClick={handleMobileMenu}>Programas Especiales</Link></li>
-                </ul>
+                </ul> */}
                 <div
                   className={isActive.key === 2 ? "dropdown-btn open" : "dropdown-btn"}
                   onClick={() => handleToggle(2)}

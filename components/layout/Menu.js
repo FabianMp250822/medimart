@@ -18,7 +18,7 @@ export default function Menu() {
                 {/* Sección "Servicios" */}
                 <li className="dropdown">
                     <Link href="/service-details-6">Servicios</Link>
-                    <ul>
+                    {/* <ul>
                     <li><Link href="/works">Servicio de Urgencias</Link></li>
                         <li><Link href="/hospitalizacion">Hospitalización</Link></li>
                         <li><Link href="/cuidado-critico">Cuidado Crítico</Link></li>
@@ -26,7 +26,7 @@ export default function Menu() {
                         <li><Link href="/laboratorio-patologia">Laboratorio de Patología</Link></li>
                         <li><Link href="/laboratorio-clinico">Laboratorio Clínico</Link></li>
                         <li><Link href="/programas-especiales">Programas Especiales</Link></li>
-                    </ul>
+                    </ul> */}
                 </li>
 
                 {/* Sección "Pacientes" actualizada */}
