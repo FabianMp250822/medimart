@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST="{\"app/about-us/page.js -> wowjs\":{\"id\":\"app/about-us/page.js -> wowjs\",\"files\":[]},\"components/layout/Layout.js -> wowjs/dist/wow\":{\"id\":\"components/layout/Layout.js -> wowjs/dist/wow\",\"files\":[]}}"
