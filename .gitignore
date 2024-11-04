@@ -2,7 +2,7 @@
 node_modules/
 # Ignorar archivos de entorno
 .env
-
+.next
 # Ignorar carpetas de build y distribuciones
 dist/
 build/
