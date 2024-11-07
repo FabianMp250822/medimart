@@ -8,16 +8,38 @@ import { formatServiceNameForFirebase } from './utils';
 
 export default function Service() {
     const [activeService, setActiveService] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const handleServiceClick = (service) => {
         setActiveService(activeService === service ? null : service);
+        setSearchTerm(""); // Limpiar el campo de búsqueda al cambiar de servicio
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const getSubservicesToDisplay = () => {
+        if (searchTerm) {
+            // Búsqueda en todos los servicios y subservicios
+            return servicesData.flatMap(service => 
+                service.subservices
+                    .filter(subservice => subservice.toLowerCase().includes(searchTerm.toLowerCase()))
+                    .map(subservice => ({ serviceTitle: service.title, subservice }))
+            );
+        }
+        
+        // Si no hay término de búsqueda, mostrar los subservicios del servicio seleccionado
+        return activeService?.subservices.map(subservice => ({ serviceTitle: activeService.title, subservice })) || [];
     };
 
     const groupAndSplitSubservices = (subservices) => {
-        const grouped = subservices.reduce((acc, subservice) => {
-            const initial = subservice[0].toUpperCase();
-            if (!acc[initial]) acc[initial] = [];
-            acc[initial].push(subservice);
+        const grouped = subservices.reduce((acc, { subservice }) => {
+            if (typeof subservice === 'string' && subservice.length > 0) {
+                const initial = subservice[0].toUpperCase();
+                if (!acc[initial]) acc[initial] = [];
+                acc[initial].push(subservice);
+            }
             return acc;
         }, {});
 
@@ -29,13 +51,11 @@ export default function Service() {
     const handleSubserviceClick = (subservice) => {
         const firebaseId = formatServiceNameForFirebase(subservice);
         
-        // Mostrar en consola la relación entre la selección y el documento en Firebase
         console.log(`Subservicio seleccionado: "${subservice}"`);
-        console.log(`ID de documento en Firebase: "${firebaseId}"`);
-
-        // Aquí es donde redirigirías a la página de detalles del subservicio
-        // o buscarías el documento en Firebase en una lógica adicional
+        console.log(`ID de documento en Firebase: "${firebaseId}`);
     };
+
+    const subservicesToDisplay = getSubservicesToDisplay();
 
     return (
         <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Nuestros Servicios">
@@ -43,13 +63,18 @@ export default function Service() {
                 <div className="auto-container">
                     <style jsx>{`
                         .service-container { display: flex; gap: 20px; }
-                        .service-list, .subservice-list { width: 50%; }
+                        .service-list { width: 30%; }
+                        .subservice-list { width: 70%; }
                         .service-item, .subservice-item { padding: 10px; border-bottom: 1px solid #e0e0e0; cursor: pointer; transition: background 0.3s ease; }
                         .service-item:hover, .subservice-item:hover { background-color: #f0f0f0; }
                         .service-item.active { font-weight: bold; background-color: #d8e8f8; }
                         .subservice-list h3 { font-size: 18px; color: #007bff; margin-top: 20px; margin-bottom: 5px; }
                         .subservice-columns { display: flex; gap: 20px; }
                         .subservice-column { flex: 1; display: flex; flex-direction: column; }
+                        .subservice-letter { font-weight: bold; color: #007bff; margin-top: 10px; }
+                        .subservice-link { color: #333; text-decoration: none; transition: box-shadow 0.3s ease; }
+                        .subservice-link:hover { box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); color: #007bff; }
+                        .search-bar { padding: 8px; width: 100%; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; }
                     `}</style>
 
                     <div className="service-container">
@@ -68,13 +93,20 @@ export default function Service() {
 
                         <div className="subservice-list">
                             <h2>Subservicios</h2>
-                            {activeService && activeService.subservices.length > 0 ? (
+                            <input
+                                type="text"
+                                className="search-bar"
+                                placeholder="Buscar subservicio..."
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                            />
+                            {subservicesToDisplay.length > 0 ? (
                                 <div className="subservice-columns">
-                                    {groupAndSplitSubservices(activeService.subservices).map((column, columnIndex) => (
+                                    {groupAndSplitSubservices(subservicesToDisplay).map((column, columnIndex) => (
                                         <div className="subservice-column" key={columnIndex}>
                                             {column.map(([letter, items], index) => (
                                                 <div key={index}>
-                                                    <h3>{letter}</h3>
+                                                    <div className="subservice-letter">{letter}</div>
                                                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                                                         {items.map((subservice, subIndex) => (
                                                             <div 
@@ -83,7 +115,7 @@ export default function Service() {
                                                                 style={{ width: '45%' }}
                                                                 onClick={() => handleSubserviceClick(subservice)}
                                                             >
-                                                                <Link href={`/service-details/${formatServiceNameForFirebase(subservice)}`}>
+                                                                <Link href={`/service-details/${formatServiceNameForFirebase(subservice)}`} className="subservice-link">
                                                                     {subservice}
                                                                 </Link>
                                                             </div>
@@ -95,7 +127,7 @@ export default function Service() {
                                     ))}
                                 </div>
                             ) : (
-                                <p>Selecciona un servicio para ver los subservicios.</p>
+                                <p>No se encontraron subservicios que coincidan con la búsqueda.</p>
                             )}
                         </div>
                     </div>
