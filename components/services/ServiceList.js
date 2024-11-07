@@ -1,13 +1,27 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function ServiceList({ servicesList, activeServiceId, onServiceClick }) {
+    const [searchTerm, setSearchTerm] = useState("");
+
+    // Filtrar la lista de servicios en función del término de búsqueda
+    const filteredServices = servicesList.filter((service) =>
+        service.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="service-sidebar">
             <h3>Servicios</h3>
+            <input
+                type="text"
+                className="search-input"
+                placeholder="Buscar servicio..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <ul className="service-list">
-                {servicesList.map((service) => (
+                {filteredServices.map((service) => (
                     <li key={service.id}>
                         <a
                             onClick={() => onServiceClick(service.id)}
@@ -18,7 +32,7 @@ export default function ServiceList({ servicesList, activeServiceId, onServiceCl
                     </li>
                 ))}
             </ul>
-            
+
             <style jsx>{`
                 .service-sidebar h3 {
                     font-size: 22px;
@@ -30,6 +44,13 @@ export default function ServiceList({ servicesList, activeServiceId, onServiceCl
                     background-color: #f5f5f5;
                     padding: 15px;
                     border-radius: 8px;
+                }
+                .search-input {
+                    width: 100%;
+                    padding: 8px;
+                    margin: 3px 0;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
                 }
                 .service-list {
                     list-style: none;
@@ -58,17 +79,17 @@ export default function ServiceList({ servicesList, activeServiceId, onServiceCl
                     padding: 12px 15px;
                     transition: background 0.3s ease, color 0.3s ease;
                     background-color: #ffffff;
-                    cursor: pointer; /* Cambia el cursor a mano */
+                    cursor: pointer;
                 }
                 .service-link:hover {
                     background-color: #e6e6e6;
                 }
                 .service-link.active {
                     background-color: #007bff;
-                    color: #004080; /* Cambia el texto a un azul oscuro cuando es activo */
+                    color: #004080;
                 }
                 .service-link.active:hover {
-                    color: #004080; /* Asegura que el texto sea azul al pasar el cursor sobre el enlace activo */
+                    color: #004080;
                 }
                 .service-list li:nth-child(odd) .service-link {
                     background-color: #ffffff;
