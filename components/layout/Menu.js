@@ -36,7 +36,7 @@ export default function Menu() {
 
                 {/* Sección "Nosotros" */}
                 <li className="dropdown">
-                    <Link href="/about-us">Nosotros</Link>
+                    <Link href="">Nosotros</Link>
                     <ul className="nosotros-submenu">
                         {/* Excluir Gestión Documental */}
                         <li><Link href="/service-details-2">Gestión Documental</Link></li>

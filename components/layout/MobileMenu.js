@@ -1,28 +1,43 @@
 'use client';
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar }) {
   const [isActive, setIsActive] = useState({
     status: false,
     key: "",
-    subMenuKey: "",
   });
 
-  const handleToggle = (key, subMenuKey = "") => {
-    if (isActive.key === key && isActive.subMenuKey === subMenuKey) {
-      setIsActive({
-        status: false,
-        key: "",
-        subMenuKey: "",
-      });
-    } else {
-      setIsActive({
-        status: true,
-        key,
-        subMenuKey,
-      });
-    }
+  const [nosotrosSubmenu, setNosotrosSubmenu] = useState([]);
+
+  useEffect(() => {
+    const fetchNosotrosSubmenu = async () => {
+      try {
+        const nosotrosRef = collection(db, 'nosotros');
+        const nosotrosSnapshot = await getDocs(nosotrosRef);
+        const submenus = nosotrosSnapshot.docs
+          .map(doc => ({
+            id: doc.id,
+            title: doc.data().nombre
+          }))
+          .filter(submenu => submenu.title.toLowerCase() !== 'gestión documental'); // Excluir "Gestión Documental"
+          
+        setNosotrosSubmenu(submenus);
+      } catch (error) {
+        console.error("Error fetching nosotros submenu:", error);
+      }
+    };
+
+    fetchNosotrosSubmenu();
+  }, []);
+
+  const handleToggle = (key) => {
+    setIsActive(prevState => ({
+      status: prevState.key !== key || !prevState.status,
+      key,
+    }));
   };
 
   return (
@@ -47,9 +62,17 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
 
               {/* Nosotros */}
               <li className={isActive.key === 1 ? "dropdown current" : "dropdown"}>
-                <Link href="/about-us">Nosotros</Link>
+                <Link href="#">Nosotros</Link>
                 <ul style={{ display: `${isActive.key === 1 ? "block" : "none"}` }}>
+                  {/* Excluir Gestión Documental */}
                   <li><Link href="/service-details-2" onClick={handleMobileMenu}>Gestión Documental</Link></li>
+
+                  {/* Renderizar submenús dinámicamente */}
+                  {nosotrosSubmenu.map((submenu) => (
+                    <li key={submenu.id}>
+                      <Link href={`/nosotros/${submenu.id}`} onClick={handleMobileMenu}>{submenu.title}</Link>
+                    </li>
+                  ))}
                 </ul>
                 <div
                   className={isActive.key === 1 ? "dropdown-btn open" : "dropdown-btn"}
@@ -62,15 +85,6 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
               {/* Servicios */}
               <li className={isActive.key === 2 ? "dropdown current" : "dropdown"}>
                 <Link href="/service-details-6">Servicios</Link>
-                {/* <ul style={{ display: `${isActive.key === 2 ? "block" : "none"}` }}>
-                  <li><Link href="/works" onClick={handleMobileMenu}>Servicio de Urgencias</Link></li>
-                  <li><Link href="/hospitalizacion" onClick={handleMobileMenu}>Hospitalización</Link></li>
-                  <li><Link href="/cuidado-critico" onClick={handleMobileMenu}>Cuidado Crítico</Link></li>
-                  <li><Link href="/imagenes-diagnosticas" onClick={handleMobileMenu}>Departamento de Imágenes Diagnósticas</Link></li>
-                  <li><Link href="/laboratorio-patologia" onClick={handleMobileMenu}>Laboratorio de Patología</Link></li>
-                  <li><Link href="/laboratorio-clinico" onClick={handleMobileMenu}>Laboratorio Clínico</Link></li>
-                  <li><Link href="/programas-especiales" onClick={handleMobileMenu}>Programas Especiales</Link></li>
-                </ul> */}
                 <div
                   className={isActive.key === 2 ? "dropdown-btn open" : "dropdown-btn"}
                   onClick={() => handleToggle(2)}
@@ -87,7 +101,6 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
               {/* Equipo */}
               <li className={isActive.key === 3 ? "dropdown current" : "dropdown"}>
                 <Link href="/team">Especialistas</Link>
-                
                 <div
                   className={isActive.key === 3 ? "dropdown-btn open" : "dropdown-btn"}
                   onClick={() => handleToggle(3)}
