@@ -1,6 +1,33 @@
+'use client'
 import Link from "next/link";
+import { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export default function Menu() {
+    const [nosotrosSubmenu, setNosotrosSubmenu] = useState([]);
+
+    useEffect(() => {
+        const fetchNosotrosSubmenu = async () => {
+            try {
+                const nosotrosRef = collection(db, 'nosotros');
+                const nosotrosSnapshot = await getDocs(nosotrosRef);
+                const submenus = nosotrosSnapshot.docs
+                    .map(doc => ({
+                        id: doc.id,
+                        title: doc.data().nombre
+                    }))
+                    .filter(submenu => submenu.title.toLowerCase() !== 'gestión documental'); // Excluir "Gestión Documental"
+
+                setNosotrosSubmenu(submenus);
+            } catch (error) {
+                console.error("Error fetching nosotros submenu:", error);
+            }
+        };
+
+        fetchNosotrosSubmenu();
+    }, []);
+
     return (
         <>
             <ul className="navigation clearfix">
@@ -11,18 +38,15 @@ export default function Menu() {
                 <li className="dropdown">
                     <Link href="/about-us">Nosotros</Link>
                     <ul className="nosotros-submenu">
-                    <li><Link href="/service-details-2">Gestión Documental</Link></li>
-                        <li><Link href="/about-us/mission">Acerca de Nosotros: Misión, Visión, Valores, Historia</Link></li>
-                        <li><Link href="/about-us/social-responsibility">Responsabilidad social y empresarial</Link></li>
-                        <li><Link href="/about-us/strategic-direction">Direccionamiento Estratégico</Link></li>
-                        <li><Link href="/about-us/integrated-management">Sistema Integrado de Gestión</Link></li>
-                        <li><Link href="/about-us/certifications">Certificaciones</Link></li>
-                        <li><Link href="/about-us/sustainability-reports">Informes de Sostenibilidad</Link></li>
-                        <li><Link href="/about-us/legal-framework">Marco Legal</Link></li>
-                        <li><Link href="/about-us/data-policy">Política de tratamiento de datos</Link></li>
-                        <li><Link href="/about-us/payment-info">Información proceso de pagos para proveedores</Link></li>
-                        <li><Link href="/about-us/jobs">Trabaja con nosotros</Link></li>
-                      
+                        {/* Excluir Gestión Documental */}
+                        <li><Link href="/service-details-2">Gestión Documental</Link></li>
+                        
+                        {/* Renderizar submenús dinámicamente */}
+                        {nosotrosSubmenu.map((submenu) => (
+                            <li key={submenu.id}>
+                                <Link href={`/nosotros/${submenu.id}`}>{submenu.title}</Link>
+                            </li>
+                        ))}
                     </ul>
                 </li>
 
