@@ -15,28 +15,28 @@ export default function Documentos() {
             title: 'Seguridad y Salud en el Trabajo',
             description: `CLÍNICA DE LA COSTA, institución dedicada a la prestación de servicios en salud, manifiesta su interés y preocupación por la protección e integridad de sus trabajadores, independiente de su forma de vinculación o contratación, incluidos contratistas, así como usuarios, proveedores y visitantes de forma segura y eficiente, mediante la implementación de un sistema de Gestión de seguridad y salud en el trabajo, el cual va encaminado a velar por el bienestar físico, social y mental de nuestros colaboradores.`,
             documents: [
-                { name: 'Ver más información', file: '/documents/seguridad-salud-en-el-trabajo.pdf' },
+                { name: 'Ver más información', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FDECLARACION%20%20DE%20POLITICA%20SST.pdf?alt=media&token=e31d2c90-c238-4611-9f60-fbc5db750d53' },
             ],
             subcategories: [
                 {
                     title: 'Política de Convivencia Laboral',
                     description: `Clínica de la Costa, reconociendo la importancia de una convivencia y un entorno laboral sano, fomenta el trabajo en equipo, el servicio humanizado, el buen trato, la honestidad y el respeto, siendo valores esenciales como mecanismos de prevención, corrección y control de conductas hostiles que promuevan un ambiente de trabajo ofensivo y discriminatorio.`,
                     documents: [
-                        { name: 'Ver más información', file: '/documents/politica-convivencia-laboral.pdf' },
+                        { name: 'Ver más información', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FDECLARACION%20%20DE%20CONVIVENCIA%20LABORAL.pdf?alt=media&token=14edd11f-3c55-4f41-b2d6-b281bbf4bea2' },
                     ],
                 },
                 {
                     title: 'Política para la Prevención del Consumo de Sustancias Psicoactivas',
                     description: `La CLÍNICA DE LA COSTA, dando cumplimiento a la Resolución 1075 de 1992, la Resolución 1956 de 2008, el decreto único reglamentario del Sector salud y protección social, las demás normas reglamentarias vigentes y la necesidad de prevenir y controlar el uso de alcohol, drogas enervantes y otras sustancias psicoactivas o que generan adicción durante la jornada laboral, establece esta política, la cual está orientada a evitar los daños en la salud individual y colectiva de sus trabajadores, sobre los bienes e intereses de sus clientes, de la empresa, usuarios y de la sociedad en general.`,
                     documents: [
-                        { name: 'Ver más información', file: '/documents/politica-prevencion-sustancias.pdf' },
+                        { name: 'Ver más información', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FDECLARACION%20POLITICA%20PSP.pdf?alt=media&token=3a5cabfc-c6d2-4234-959f-be060486c732' },
                     ],
                 },
                 {
                     title: 'Reglamento de Higiene y Seguridad Industrial',
                     description: `CLÍNICA DE LA COSTA prescribe el presente reglamento contenido en los siguientes términos: ARTÍCULO 1. El presente reglamento tiene por finalidad el desarrollo y fomento de la investigación, estudio y prevención de los accidentes de trabajo y enfermedades laborales, como también la adopción de medidas que garanticen la aplicación de normas de Medicina, Higiene y Seguridad Industrial.`,
                     documents: [
-                        { name: 'Ver más información', file: '/documents/reglamento-higiene-seguridad.pdf' },
+                        { name: 'Ver más información', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FREGLAMENTO%20DE%20HIGIENE%20Y%20SEGURIDAD%20INDUSTRIAL.pdf?alt=media&token=d08da814-bfc8-45a7-899b-9644b02816a8' },
                     ],
                 },
             ],
@@ -45,7 +45,7 @@ export default function Documentos() {
             title: 'Estadísticas en el Marco de la Pandemia COVID-19',
             description: `Con fundamento en los datos y la información antes relacionada y con el propósito de tener una mejor comprensión de los mismos, nos permitimos indicar que durante el marco de la pandemia iniciado el día 21 de marzo de 2020 al día 16 de julio de 2020, en Clínica de la Costa se ha presentado un 10% de casos positivos para el virus COVID-19 en sus colaboradores; de los cuales el 64% se ha recuperado, un 34% aún se encuentra en proceso de recuperación, cumpliendo aislamiento en casa y el 2% de ellos falleció. Cada uno de estos casos ha sido analizado y se ha realizado seguimiento de la evolución de cada uno de los colaboradores con reporte a su ARL correspondiente.`,
             documents: [
-                { name: 'Ver más información', file: '/documents/estadisticas-covid19.pdf' },
+                { name: 'Ver más información', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FAnexo%202%20Registro%20estadistico%20de%20casos%20positivos.pdf?alt=media&token=1d55a909-9af6-4270-938c-a05814c932d3' },
             ],
             subcategories: [
                 {
@@ -61,8 +61,8 @@ export default function Documentos() {
                 {
                     title: 'Actividades Realizadas',
                     documents: [
-                        { name: 'Estrategias implementadas en el marco de la pandemia COVID-19', file: '/documents/actividades/estrategias-implementadas.pdf' },
-                        { name: 'Apoyo brindado por los niños de la IGLESIA ANCLA COMUNIDAD DE FE', file: '/documents/actividades/apoyo-iglesia-ancla.pdf' },
+                        { name: 'Estrategias implementadas en el marco de la pandemia COVID-19', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FESTRATEGIAS.pdf?alt=media&token=29a84f48-03d2-4122-9833-60eb4cbe0d09' },
+                        { name: 'Apoyo brindado por los niños de la IGLESIA ANCLA COMUNIDAD DE FE', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FREPORTE%20DE%20ACTIVIDAD%20DETALLE%20PARA%20PROFESIONALES%20DE%20LA%20SALUD.pdf?alt=media&token=55252a8c-ddab-4556-9a20-2d0fd1c2293b' },
                     ],
                 },
             ],
@@ -70,39 +70,34 @@ export default function Documentos() {
         {
             title: 'Reglamento Interno de Trabajo',
             documents: [
-                { name: 'Descargar', file: '/documents/reglamento-interno-trabajo.pdf' },
+                { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FREGLAMENTO%20INTERNO%20DE%20TRABAJO%20CCOSTA.pdf?alt=media&token=16d301c9-cc2b-4f00-98fa-145a6cd586a6' },
             ],
         },
         {
             title: 'Certificación de Buenas Prácticas Clínicas',
             documents: [
-                { name: 'Descargar', file: '/documents/certificacion-buenas-practicas.pdf' },
+                { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FCERTIFICACION-DE-BUENAS-PRACTICAS-CLINICAS.pdf?alt=media&token=6f9d03ee-8071-4037-b38b-1d64f86a415c' },
             ],
         },
         {
             title: 'Resolución de Habilitación',
             documents: [
-                { name: 'Descargar', file: '/documents/resolucion-habilitacion.pdf' },
+                { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FRESOLUCION-DE-HABILITACION-.pdf?alt=media&token=4942fd35-3cf1-406a-9476-ab5242fca71e' },
             ],
         },
         {
             title: 'Estados Financieros',
             documents: [
-                { name: 'Descargar', file: '/documents/estados-financieros.pdf' },
+                { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FClinicaDeLaCosta-Brochure-1.pdf?alt=media&token=cd401337-eec4-471d-a226-88aecb5c3fbb' },
             ],
         },
         {
             title: 'Portafolio de Servicios',
             documents: [
-                { name: 'Descargar', file: '/documents/portafolio-servicios.pdf' },
+                { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FClinicaDeLaCosta-Brochure-1.pdf?alt=media&token=cd401337-eec4-471d-a226-88aecb5c3fbb' },
             ],
         },
-        {
-            title: 'Services Portfolio',
-            documents: [
-                { name: 'Descargar', file: '/documents/services-portfolio.pdf' },
-            ],
-        },
+       
     ]
 
     const [selectedCategory, setSelectedCategory] = useState(null)
