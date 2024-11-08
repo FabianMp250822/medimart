@@ -13,9 +13,9 @@ export default function Header1({
   handlePopup,
   handleSidebar,
 }) {
-  const { sedesData, selectedSede, selectSede } = useSede(); // Obtener los datos de Firebase y la sede seleccionada
+  const { sedesData, selectedSede, selectSede } = useSede();
 
-  const sedeData = sedesData[selectedSede]; // Obtener la sede seleccionada desde el contexto
+  const sedeData = sedesData[selectedSede];
 
   const whatsappNumber = sedeData?.whatsappNumber || "+573003456789";
   const whatsappMessage =
@@ -25,19 +25,17 @@ export default function Header1({
     whatsappMessage
   )}`;
 
-  // Manejar la selección de una nueva sede desde el selector
   const handleSedeChange = (event) => {
     const nuevaSede = event.target.value;
     if (sedesData[nuevaSede]) {
-      selectSede(nuevaSede); // Actualizar la sede seleccionada en el contexto
-      localStorage.setItem("selectedSede", nuevaSede); // Guardar en localStorage
+      selectSede(nuevaSede);
+      localStorage.setItem("selectedSede", nuevaSede);
     }
   };
 
   return (
     <>
       <header className={`main-header ${scroll ? "fixed-header" : ""}`}>
-        {/* Header Top */}
         <div className="header-top">
           <div className="auto-container">
             <div className="top-inner">
@@ -48,11 +46,11 @@ export default function Header1({
                     {sedeData?.telefono || "+57 (605) 3369973"}
                   </Link>
                 </li>
-                <li>
+                {/* Ocultar este elemento en móvil */}
+                <li className="direccion">
                   <img src="/assets/images/icons/icon-1.png" alt="" />{" "}
                   {sedeData?.direccion || "Cra. 50 #80-149, Sede 3"}
                 </li>
-                {/* Enlace de WhatsApp */}
                 <li>
                   <a
                     href={whatsappLink}
@@ -64,7 +62,6 @@ export default function Header1({
                 </li>
               </ul>
 
-              {/* Selector de sede */}
               <div className="sede-selector">
                 <label htmlFor="sede-select">Seleccionar Sede:</label>
                 <select
@@ -84,7 +81,6 @@ export default function Header1({
           </div>
         </div>
 
-        {/* Header Upper */}
         <div className="header-lower">
           <div className="outer-container">
             <div className="auto-container">
@@ -95,6 +91,7 @@ export default function Header1({
                       <img
                         src="/assets/images/logo.png"
                         alt="Clínica de la Costa"
+                        className="logo-image"
                       />
                     </Link>
                   </figure>
@@ -128,46 +125,17 @@ export default function Header1({
           </div>
         </div>
 
-        {/* Sticky Header */}
-        <div className="sticky-header">
-          <div className="auto-container">
-            <div className="outer-box">
-              <div className="logo-box">
-                <figure className="logo">
-                  <Link href="/">
-                    <img
-                      src="/assets/images/logo.png"
-                      alt="Clínica de la Costa"
-                    />
-                  </Link>
-                </figure>
-              </div>
-
-              <nav className="main-menu navbar-expand-md navbar-light clearfix">
-                <div
-                  className="collapse navbar-collapse show clearfix"
-                  id="navbarSupportedContent"
-                >
-                  <Menu />
-                </div>
-              </nav>
-              <ul className="menu-right-content">
-                <div className="btn-box">
-                  <Link href="/appointment" className="theme-btn btn-one">
-                    <span>Asignar citas</span>
-                  </Link>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </div>
-        {/* Fin del Sticky Menu */}
-
-        {/* Menú Móvil */}
         <MobileMenu handleMobileMenu={handleMobileMenu} />
       </header>
       <style jsx>{`
         /* Estilos generales para escritorio y móvil */
+        .top-inner {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: center;
+        }
+
         .info-list {
           display: flex;
           flex-direction: row;
@@ -235,18 +203,39 @@ export default function Header1({
           background-color: #1e3a8a;
         }
 
-        /* Estilos para íconos */
-        .info-list li i,
-        .info-list li img {
-          margin-right: 5px;
+        .logo-image {
+          max-width: 150px;
+          height: auto;
         }
 
-        /* Estilo responsivo: cambios para pantallas pequeñas */
+        .header-lower {
+          padding: 20px 0;
+        }
+
+        .outer-box {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+        }
+
+        /* Ajustes responsivos */
         @media (max-width: 768px) {
-          .info-list {
+          .top-inner {
             flex-direction: column;
-            gap: 10px;
+            align-items: flex-start;
+            gap: 5px;
+          }
+
+          .info-list {
+            width: 100%;
+            flex-direction: column;
+            gap: 5px;
             padding: 10px 0;
+          }
+
+          .info-list .direccion {
+            display: none;
           }
 
           .info-list li {
@@ -254,10 +243,10 @@ export default function Header1({
           }
 
           .sede-selector {
+            width: 100%;
             flex-direction: column;
             align-items: flex-start;
-            gap: 5px;
-            margin-top: 10px;
+            margin-top: 5px;
           }
 
           .custom-select {
@@ -266,23 +255,31 @@ export default function Header1({
             font-size: 0.9rem;
           }
 
-          .theme-btn.btn-one {
-            padding: 10px 20px;
-            font-size: 0.9rem;
+          .logo-image {
+            max-width: 80px;
           }
 
-          /* Ajustes para el logo y menú en móvil */
-          .header-lower .outer-box {
-            flex-direction: column;
-            align-items: center;
+          .outer-box {
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 10px;
           }
 
           .menu-area {
-            margin-top: 15px;
+            display: flex;
+            justify-content: center;
           }
 
-          .btn-box {
-            margin-top: 15px;
+          .theme-btn.btn-one {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            border-radius: 4px; /* Cambiar a una forma más cuadrada */
+            max-width: 120px; /* Reducir el tamaño del botón */
+          }
+
+          .mobile-nav-toggler {
+            font-size: 1.2rem;
+            margin-top: 5px;
           }
         }
       `}</style>
