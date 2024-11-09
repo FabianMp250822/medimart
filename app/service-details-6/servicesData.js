@@ -32,7 +32,6 @@ const servicesData = [
             "Cuidados Intensivos e Intermedios Adultos",
             "Cuidados Intensivos e Intermedios Neonatales",
             "Cuidados Intensivos e Intermedios Pediátricos",
-            "Teleurgencias",
             "Unidad de Alto Riesgo Obstétrico",
             "Urgencias Adultos",
             "Urgencias Pediátricas"
@@ -50,7 +49,6 @@ const servicesData = [
     {
         title: "Patología y Medicina de Laboratorio",
         subservices: [
-            "Banco de Sangre",
             "Cariotipos en Sangre Periférica y Médula Ósea",
             "Citogenética",
             "Citometría de Flujo",
@@ -60,7 +58,6 @@ const servicesData = [
             "Inmunología de Trasplantes e Inmunogenética",
             "Inmunología e Inmunodeficiencias",
             "Laboratorio Clínico",
-            "Laboratorio de Hemostasia y Hematología Especial",
             "Microbiología",
             "Programa de Point of Care Testing (POCT)",
             "Secuenciación",
@@ -75,18 +72,16 @@ const servicesData = [
             "Cirugía Plástica",
             "Cuidados Intensivos e Intermedios Neonatales",
             "Cuidados Intensivos e Intermedios Pediátricos",
-            "Cuidados Paliativos Pediátricos",
             "Endocrinología Pediátrica",
             "Gastroenterología Pediátrica",
             "Ginecología y Obstetricia",
             "Hemato-Oncología Pediátrica",
             "Hospitalización",
             "Infectología Pediátrica",
-            "Inmunología Clínica Pediátrica",
             "Nefrología Pediátrica",
             "Neumología Pediátrica",
             "Neurología Pediátrica o Neuropediatría",
-            "Oftalmología Pediátrica",
+           
             "Pediatría",
             "Psiquiatría Infantil",
             "Reumatología Pediátrica",
@@ -130,15 +125,15 @@ const servicesData = [
     {
         title: "Clínicas y Programas Especiales",
         subservices: [
-            "Clínica de Acretismo Placentario",
-            "Clínica de Anticoagulación",
+           
+           
             "Clínica de Falla Cardiaca",
-            "Clínica de Género para Niños y Adolescentes",
-            "Clínica de Gliomas de Alto Grado",
+          
+          
             "Clínica de Heridas y Terapia Enterostomal",
-            "Clínica de Infusiones",
-            "Clínica de Menopausia y Climaterio",
-            "Clínica de Tumores del Sistema Nervioso Central",
+           
+          
+         
             "Clínica del Dolor",
             "Programa Soporte Oncológico",
             "Telemedicina-LiliConnect"
@@ -168,7 +163,7 @@ const servicesData = [
             "Hepatología",
             "Infectología",
             "Infectología Pediátrica",
-            "Inmunología clínica pediátrica",
+           
             "Medicina Familiar",
             "Nefrología",
             "Nefrología Pediátrica",

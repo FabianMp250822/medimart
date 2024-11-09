@@ -11,6 +11,7 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
   });
 
   const [nosotrosSubmenu, setNosotrosSubmenu] = useState([]);
+  const [pacientesSubmenu, setPacientesSubmenu] = useState([]);
 
   useEffect(() => {
     const fetchNosotrosSubmenu = async () => {
@@ -30,7 +31,22 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
       }
     };
 
+    const fetchPacientesSubmenu = async () => {
+      try {
+        const pacientesRef = collection(db, 'pacientes');
+        const pacientesSnapshot = await getDocs(pacientesRef);
+        const submenus = pacientesSnapshot.docs.map(doc => ({
+          id: doc.id,
+          title: doc.data().nombre
+        }));
+        setPacientesSubmenu(submenus);
+      } catch (error) {
+        console.error("Error fetching pacientes submenu:", error);
+      }
+    };
+
     fetchNosotrosSubmenu();
+    fetchPacientesSubmenu();
   }, []);
 
   const handleToggle = (key) => {
@@ -68,11 +84,24 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
                   <li><Link href="/service-details-2" onClick={handleMobileMenu}>Gestión Documental</Link></li>
 
                   {/* Renderizar submenús dinámicamente */}
-                  {nosotrosSubmenu.map((submenu) => (
-                    <li key={submenu.id}>
-                      <Link href={`/nosotros/${submenu.id}`} onClick={handleMobileMenu}>{submenu.title}</Link>
-                    </li>
-                  ))}
+                  {nosotrosSubmenu.map((submenu) => {
+                    const title = submenu.title.toLowerCase();
+
+                    // Verificar si el título es "Directorio de Especialidades y Servicios"
+                    if (title === "directorio de especialidades y servicios") {
+                      return (
+                        <li key={submenu.id}>
+                          <Link href="/service-details-6" onClick={handleMobileMenu}>Directorio de Especialidades y Servicios</Link>
+                        </li>
+                      );
+                    }
+
+                    return (
+                      <li key={submenu.id}>
+                        <Link href={`/nosotros/${submenu.id}`} onClick={handleMobileMenu}>{submenu.title}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
                 <div
                   className={isActive.key === 1 ? "dropdown-btn open" : "dropdown-btn"}
@@ -94,16 +123,55 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
               </li>
 
               {/* Pacientes */}
-              <li>
-                <Link href="/pacientes" onClick={handleMobileMenu}>Pacientes</Link>
-              </li>
-
-              {/* Equipo */}
               <li className={isActive.key === 3 ? "dropdown current" : "dropdown"}>
-                <Link href="/team">Especialistas</Link>
+                <Link href="#">Pacientes</Link>
+                <ul style={{ display: `${isActive.key === 3 ? "block" : "none"}` }}>
+                  {pacientesSubmenu.map((submenu) => {
+                    const title = submenu.title.toLowerCase();
+
+                    // Verificar si el título es "Tus Resultados Médicos" o "Solicitar Cita"
+                    if (title === "tus resultados médicos") {
+                      return (
+                          <li key={submenu.id}>
+                              <Link href="/reclamar-resultados">Tus Resultados Médicos</Link>
+                          </li>
+                      );
+                  } else if (title === "solicitar cita" || title === "solicitar cita médica") {
+                      return (
+                          <li key={submenu.id}>
+                              <Link href="/appointment">Solicitar Cita Médica</Link>
+                          </li>
+                      );
+                  } else if (title === "directorio de especialidades y servicios") {
+                      return (
+                          <li key={submenu.id}>
+                              <Link href="/service-details-6">Directorio de Especialidades y Servicios</Link>
+                          </li>
+                      );
+                  }
+
+                    // Para el resto de los elementos, usar la ruta dinámica
+                    return (
+                      <li key={submenu.id}>
+                        <Link href={`/pacientes/${submenu.id}`} onClick={handleMobileMenu}>{submenu.title}</Link>
+                      </li>
+                    );
+                  })}
+                </ul>
                 <div
                   className={isActive.key === 3 ? "dropdown-btn open" : "dropdown-btn"}
                   onClick={() => handleToggle(3)}
+                >
+                  <span className="fa fa-angle-right" />
+                </div>
+              </li>
+
+              {/* Equipo */}
+              <li className={isActive.key === 4 ? "dropdown current" : "dropdown"}>
+                <Link href="/team">Especialistas</Link>
+                <div
+                  className={isActive.key === 4 ? "dropdown-btn open" : "dropdown-btn"}
+                  onClick={() => handleToggle(4)}
                 >
                   <span className="fa fa-angle-right" />
                 </div>

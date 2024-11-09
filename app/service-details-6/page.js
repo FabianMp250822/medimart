@@ -92,7 +92,7 @@ export default function Service() {
                         </div>
 
                         <div className="subservice-list">
-                            <h2>Subservicios</h2>
+                            <h2>Especialidades</h2>
                             <input
                                 type="text"
                                 className="search-bar"
