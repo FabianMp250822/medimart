@@ -140,7 +140,7 @@ export default function ServiceDetails() {
                                 {/* Sección de Cifras */}
                                 {cifras && cifras.length > 0 && (
                                     <div className="statistics-section">
-                                        <h3>Cifras de Trasplantes Realizados</h3>
+                                        <h3>Cifras de {title || "Detalles del Servicio"}</h3>
                                         <div className="statistics-grid">
                                             {cifras.map((item, index) => (
                                                 <div key={index} className="statistic-card">

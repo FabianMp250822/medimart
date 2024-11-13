@@ -1,10 +1,6 @@
 {
-  "/page": "app/page.js",
-  "/appointment/page": "app/appointment/page.js",
   "/service-details-6/page": "app/service-details-6/page.js",
-  "/pacientes/[id]/page": "app/pacientes/[id]/page.js",
   "/service-details/[id]/page": "app/service-details/[id]/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/nosotros/[id]/page": "app/nosotros/[id]/page.js"
+  "/reclamar-resultados/page": "app/reclamar-resultados/page.js",
+  "/page": "app/page.js"
 }
