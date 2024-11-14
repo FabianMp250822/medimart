@@ -1,226 +1,155 @@
 // servicesData.js
 const servicesData = [
     {
-        title: "Medicina Interna",
+        title: "Internación",
         subservices: [
+            "Hospitalización Paciente Crónico Con Ventilador",
+            "Hospitalización Paciente Crónico Sin Ventilador",
+            "Cuidado Intermedio Neonatal",
+            "Cuidado Intermedio Pediátrico",
+            "Cuidado Intermedio Adultos",
+            "Cuidado Intensivo Neonatal",
+            "Cuidado Intensivo Pediátrico",
+            "Cuidado Intensivo Adultos",
+            "Cuidado Básico Neonatal",
+            "Hospitalización Adultos",
+            "Hospitalización Pediátrica"
+        ]
+    },
+    {
+        title: "Quirurgicos",
+        subservices: [
+            "Cirugía De Cabeza Y Cuello",
+            "Cirugía Cardiovascular",
+            "Cirugía General",
+            "Cirugía Ginecológica",
+            "Cirugía Maxilofacial",
+            "Cirugía Oftalmológica",
+            "Cirugía Otorrinolaringología",
+            "Cirugía Oncológica",
+            "Cirugía Oral",
+            "Cirugía Pediátrica",
+            "Cirugía Plástica Y Estética",
+            "Cirugía Plástica Oncológica",
+            "Cirugía De Mama Y Tumores Tejidos Blandos",
+            "Cirugía Vascular Y Angiológica",
+            "Cirugía Urológica",
+            "Otras Cirugías",
+            "Cirugía Endovascular Neurológica",
+            "Cirugía Oncológica Pediátrica",
+            "Cirugía De La Mano",
+            "Cirugía Dermatológica",
+            "Cirugía De Tórax",
+            "Cirugía Ortopédica",
+            "Cirugía Gastrointestinal",
+            "Neurocirugía"
+        ]
+    },
+    {
+        title: "consulta Externa",
+        subservices: [
+            "Anestesia",
             "Cardiología",
-            "Cuidados Paliativos Adultos",
-            "Dermatología",
+            "Cirugía Cardiovascular",
+            "Cirugía General",
+            "Cirugía Pediátrica",
+            "Dolor Y Cuidados Paliativos",
             "Endocrinología",
+            "Endodoncia",
+            "Enfermería",
+            "Estomatología",
             "Gastroenterología",
-            "Geriatría",
-            "Hemato-oncología",
+            "Gastroenterología",
+            "Genética",
+            "Ginecobstetricia",
             "Hematología",
-            "Hepatología",
             "Infectología",
-            "Medicina del Deporte",
+            "Inmunología",
             "Medicina Familiar",
-            "Medicina Física y Rehabilitación - Fisiatría",
+            "Medicina Física Y Rehabilitación",
+            "Medicina General",
             "Medicina Interna",
             "Nefrología",
             "Neumología",
             "Neurología",
-            "Oncología",
-            "Psiquiatría",
-            "Radioterapia",
-            "Reumatología"
-        ]
-    },
-    {
-        title: "Medicina Crítica",
-        subservices: [
-            "Cuidados Intensivos e Intermedios Adultos",
-            "Cuidados Intensivos e Intermedios Neonatales",
-            "Cuidados Intensivos e Intermedios Pediátricos",
-            "Unidad de Alto Riesgo Obstétrico",
-            "Urgencias Adultos",
-            "Urgencias Pediátricas"
-        ]
-    },
-    {
-        title: "Imágenes Diagnósticas",
-        subservices: [
-            "Radiología",
-            "Ultrasonido",
-            "Tomografía Computarizada",
-            "Resonancia Magnética"
-        ]
-    },
-    {
-        title: "Patología y Medicina de Laboratorio",
-        subservices: [
-            "Cariotipos en Sangre Periférica y Médula Ósea",
-            "Citogenética",
-            "Citometría de Flujo",
-            "Genética Molecular",
-            "Gestión Pretransfusional",
-            "Hemostasia y Hematología Especial",
-            "Inmunología de Trasplantes e Inmunogenética",
-            "Inmunología e Inmunodeficiencias",
-            "Laboratorio Clínico",
-            "Microbiología",
-            "Programa de Point of Care Testing (POCT)",
-            "Secuenciación",
-            "Servicio de Patología"
-        ]
-    },
-    {
-        title: "Materno Infantil",
-        subservices: [
-            "Cardiología Pediátrica",
-            "Cirugía Pediátrica",
-            "Cirugía Plástica",
-            "Cuidados Intensivos e Intermedios Neonatales",
-            "Cuidados Intensivos e Intermedios Pediátricos",
-            "Endocrinología Pediátrica",
-            "Gastroenterología Pediátrica",
-            "Ginecología y Obstetricia",
-            "Hemato-Oncología Pediátrica",
-            "Hospitalización",
-            "Infectología Pediátrica",
-            "Nefrología Pediátrica",
-            "Neumología Pediátrica",
-            "Neurología Pediátrica o Neuropediatría",
-           
+            "Nutrición Y Dietética",
+            "Odontología General",
+            "Oncología Clínica",
+            "Ortodoncia",
+            "Ortopedia Y/O Traumatología",
             "Pediatría",
-            "Psiquiatría Infantil",
-            "Reumatología Pediátrica",
-            "Unidad de Alto Riesgo Obstétrico",
-            "Unidad de Cuidado Intensivo Cardiovascular Pediátrico",
-            "Unidad de Recién Nacidos",
-            "Urgencias Pediátricas",
-            "Vacunación"
-        ]
-    },
-    {
-        title: "Cirugía",
-        subservices: [
-            "Anestesiología",
-            "Cirugía Bariátrica y Laparoscópica Avanzada",
-            "Cirugía Cardiovascular Pediátrica",
-            "Cirugía de Cabeza y Cuello",
-            "Cirugía de Colon y Recto",
-            "Cirugía de Tórax",
-            "Cirugía de Trauma y Emergencias",
-            "Cirugía Gastrointestinal",
-            "Cirugía General",
-            "Cirugía Hepatobiliar y Trasplantes",
-            "Cirugía Oncológica",
-            "Cirugía Oral y Maxilofacial",
-            "Cirugía Pediátrica",
-            "Cirugía Plástica, Reconstructiva, Estética y Oncológica",
-            "Cirugía Vascular Periférica",
-            "Electrofisiología",
-            "Mastología",
-            "Neurocirugía",
-            "Neurointervencionismo",
-            "Oftalmología",
-            "Ortopedia y Traumatología",
-            "Otorrinolaringología",
-            "Trasplantes",
-            "Unidad de Intervencionismo Vascular",
-            "Urología"
-        ]
-    },
-    {
-        title: "Clínicas y Programas Especiales",
-        subservices: [
-           
-           
-            "Clínica de Falla Cardiaca",
-          
-          
-            "Clínica de Heridas y Terapia Enterostomal",
-           
-          
-         
-            "Clínica del Dolor",
-            "Programa Soporte Oncológico",
-            "Telemedicina-LiliConnect"
-        ]
-    },
-    {
-        title: "Consulta Externa",
-        subservices: [
-            "Alergología",
-            "Cardiología",
-            "Cardiología Pediátrica",
-            "Clínica de Heridas y Terapia Enterostomal",
-            "Cuidados Paliativos Adultos",
-            "Cuidados Paliativos Pediátricos",
-            "Dermatología",
-            "Diagnóstico Vascular",
-            "Electrofisiología",
-            "Endocrinología",
-            "Endocrinología Pediátrica",
-            "Fonoaudiología",
-            "Gastroenterología",
-            "Geriatría",
-            "Ginecología y Obstetricia",
-            "Hemato-oncología",
-            "Hemato-Oncología Pediátrica",
-            "Hematología",
-            "Hepatología",
-            "Infectología",
-            "Infectología Pediátrica",
-           
-            "Medicina Familiar",
-            "Nefrología",
-            "Nefrología Pediátrica",
-            "Neumología",
-            "Neumología Pediátrica",
-            "Neurointervencionismo",
-            "Neurología",
-            "Neurología Pediátrica o Neuropediatría",
-            "Neuropsicología",
-            "Nutrición y Dietética",
-            "Oftalmología Pediátrica",
-            "Ortopedia y Traumatología",
-            "Pediatría",
-            "Psicología",
+            "Periodoncia",
             "Psiquiatría",
-            "Psiquiatría Infantil",
+            "Rehabilitación Oral",
             "Reumatología",
-            "Reumatología Pediátrica",
-            "Urología"
+            "Toxicología",
+            "Urología",
+            "Otras Consultas De Especialidad",
+            "Cirugía De Cabeza Y Cuello",
+            "Cirugía De Mano",
+            "Cirugía De Mama Y Tumores Tejidos Blandos",
+            "Cirugía Dermatológica",
+            "Cirugía De Tórax",
+            "Cirugía Gastrointestinal",
+            "Cirugía Ginecológica Laparoscópica",
+            "Cirugía Plástica Y Estética",
+            "Cirugía Plástica Oncológica",
+            "Otras Consultas Generales",
+            "Cirugía Vascular",
+            "Cirugía Oncológica",
+            "Coloproctología",
+            "Medicina Nuclear",
+            "Nefrología Pediátrica",
+            "Neonatología",
+            "Neumología Pediátrica",
+            "Neurocirugía",
+            "Neuropediatría",
+            "Oncología Y Hematología Pediátrica",
+            "Urología Oncológica",
+            "Hematología Oncológica",
+            "Radioterapia",
+            "Ortopedia Pediátrica",
+            "Cirugía Oral",
+            "Cirugía Maxilofacial",
+            "Vacunación",
         ]
     },
     {
-        title: "Hospitalización",
+        title: "Apoyo diagnóstico y complementacion terapéutica",
         subservices: [
-            "Hospitalización",
-         
+            "Patología",
+            "Gestión Pre-Transfusional",
+            "Imágenes Diagnosticas - Ionizantes",
+            "Hemodinamia E Intervencionismo",
+            "Diagnóstico Vascular",
+            "Fisioterapia",
+            "Diálisis Peritoneal",
+            "Hemodiálisis",
+            "Laboratorio De Histotecnología",
+            "Terapia Respiratoria",
+            "Laboratorio Citologías Cervico-Uterinas",
+            "Servicio Farmacéutico",
+            "Toma De Muestras De Laboratorio Clínico",
+            "Quimioterapia",
+            "Laboratorio Clínico",
+            "Toma De Muestras De Cuello Uterino Y Ginecológicas",
+            "Imágenes Diagnosticas - No Ionizantes",
+            "Medicina Nuclear",
+            "Radioterapia",
+            "Terapia Ocupacional",
+            "Fonoaudiología Y/O Terapia Del Lenguaje"
         ]
     },
     {
-        title: "Endoscopia",
+        title: "Atención Inmediata",
         subservices: [
-            "Endoscopia",
-            "Neumología (Broncoscopia Básica y Avanzada)"
-         
+            "Atención Del Parto",
+            "Urgencias",
+            "Transporte Asistencial Medicalizado",
+            "Atención Prehospitalaria"
         ]
     },
-    {
-        title: "Medicina Nuclear",
-        subservices: [
-            "Medicina Nuclear Molecular",
-          
-         
-        ]
-    },
-    {
-        title: "Medicina Física y Rehabilitación",
-        subservices: [
-            "Medicina Física y Rehabilitación - Fisiatría",
-        
-        ]
-    },
-    {
-        title: "Vacunación",
-        subservices: [
-            "Vacunación"
-        ]
-    }
+ 
 ];
 
 export default servicesData;
