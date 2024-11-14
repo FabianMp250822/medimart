@@ -149,6 +149,13 @@ const servicesData = [
             "Atención Prehospitalaria"
         ]
     },
+    {
+        title: "Programas de Trasplantes",
+        subservices: [
+            "Trasplantes",
+            
+        ]
+    }, 
  
 ];
 
