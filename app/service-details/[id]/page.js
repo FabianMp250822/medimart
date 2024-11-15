@@ -23,17 +23,14 @@ export default function ServiceDetails() {
                 const services = servicesSnapshot.docs
                     .map(doc => {
                         const rawTitle = doc.data().publicTarget?.title || doc.id;
-                        const formattedTitle = rawTitle
-                            .replace(/-/g, ' ')
-                            .replace(/\b\w/g, char => char.toUpperCase());
-                        return { id: doc.id, title: formattedTitle };
+                        return { id: doc.id, title: rawTitle }; // Sin transformación
                     })
                     .filter(service => !/¿|\?|Objetivo|El Servicio|Acerca|La Sección|Servicios que ofrece|Qué es/i.test(service.title));
                 setServicesList(services);
-
+        
                 const docRef = doc(db, 'serviciosclinica', id);
                 const docSnap = await getDoc(docRef);
-
+        
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     if (data.accordionContent) {
@@ -59,6 +56,7 @@ export default function ServiceDetails() {
                 setLoading(false);
             }
         };
+        
 
         fetchServiceData();
     }, [id]);
@@ -95,7 +93,8 @@ export default function ServiceDetails() {
 
                         <div className="col-lg-9 col-md-8 col-sm-12 content-side">
                             <div className="service-details-content">
-                                <h2>{(title || id).replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}</h2>
+                            <h2>{title || id}</h2>
+
                                 <p>{description || "Descripción no disponible"}</p>
 
                                 {/* Botones de contacto */}

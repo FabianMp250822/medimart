@@ -13,6 +13,7 @@ const servicesData = [
             "Cuidado Intensivo Adultos",
             "Cuidado Básico Neonatal",
             "Hospitalización Adultos",
+            "Hospitalización",
             "Hospitalización Pediátrica"
         ]
     },
