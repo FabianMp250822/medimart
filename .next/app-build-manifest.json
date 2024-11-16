@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/service-details-6/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/service-details-6/page.js"
+      "static/chunks/app/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -21,15 +21,77 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/service-details/[id]/page": [
+    "/nosotros/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/service-details/[id]/page.js"
+      "static/chunks/app/nosotros/[id]/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/_not-found/page.js"
+    ],
+    "/service-details-6/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/service-details-6/page.js"
+    ],
+    "/service-details-3/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/service-details-3/page.js"
+    ],
+    "/appointment/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/appointment/page.css",
+      "static/chunks/app/appointment/page.js"
+    ],
+    "/service-details-2/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/service-details-2/page.css",
+      "static/chunks/app/service-details-2/page.js"
+    ],
+    "/trabaja-con-nosotros/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/trabaja-con-nosotros/page.js"
+    ],
+    "/certificaciones/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/certificaciones/page.js"
+    ],
+    "/responsabilidad-social/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/responsabilidad-social/page.js"
+    ],
+    "/direccionamiento-estrategico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/direccionamiento-estrategico/page.js"
+    ],
+    "/politica-de-datos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/politica-de-datos/page.js"
+    ],
+    "/marco-legal/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/marco-legal/page.js"
+    ],
+    "/informes-de-sostenibilidad/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/informes-de-sostenibilidad/page.js"
+    ],
+    "/sistema-integrado-de-gestion/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/sistema-integrado-de-gestion/page.js"
     ]
   }
 }

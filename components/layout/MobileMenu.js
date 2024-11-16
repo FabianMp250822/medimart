@@ -1,8 +1,7 @@
 'use client';
+
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { useState } from "react";
 
 export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar }) {
   const [isActive, setIsActive] = useState({
@@ -10,47 +9,27 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
     key: "",
   });
 
-  const [nosotrosSubmenu, setNosotrosSubmenu] = useState([]);
-  const [pacientesSubmenu, setPacientesSubmenu] = useState([]);
+  const nosotrosMenuItems = [
+    { title: "Acerca de Nosotros: Misión, Visión, Valores, Historia", link: "/service-details-3" },
+    { title: "Trabaja con nosotros", link: "/trabaja-con-nosotros" },
+    { title: "Gestión Documental", link: "/service-details-2" },
+    { title: "Certificaciones", link: "/certificaciones" },
+    { title: "Responsabilidad social y empresarial", link: "/responsabilidad-social" },
+    { title: "Direccionamiento Estratégico", link: "/direccionamiento-estrategico" },
+    { title: "Marco Legal", link: "/marco-legal" },
+    { title: "Informes de Sostenibilidad", link: "/informes-de-sostenibilidad" },
+    { title: "Sistema Integrado de Gestión", link: "/sistema-integrado-de-gestion" },
+    { title: "Política de tratamiento de datos", link: "/politica-de-datos" },
+  ];
 
-  useEffect(() => {
-    const fetchNosotrosSubmenu = async () => {
-      try {
-        const nosotrosRef = collection(db, 'nosotros');
-        const nosotrosSnapshot = await getDocs(nosotrosRef);
-        const submenus = nosotrosSnapshot.docs
-          .map(doc => ({
-            id: doc.id,
-            title: doc.data().nombre
-          }))
-          .filter(submenu => submenu.title.toLowerCase() !== 'gestión documental'); // Excluir "Gestión Documental"
-          
-        setNosotrosSubmenu(submenus);
-      } catch (error) {
-        console.error("Error fetching nosotros submenu:", error);
-      }
-    };
-
-    const fetchPacientesSubmenu = async () => {
-      try {
-        const pacientesRef = collection(db, 'pacientes');
-        const pacientesSnapshot = await getDocs(pacientesRef);
-        const submenus = pacientesSnapshot.docs.map(doc => ({
-          id: doc.id,
-          title: doc.data().nombre
-        }));
-        setPacientesSubmenu(submenus);
-      } catch (error) {
-        console.error("Error fetching pacientes submenu:", error);
-      }
-    };
-
-    fetchNosotrosSubmenu();
-    fetchPacientesSubmenu();
-  }, []);
+  const pacientesMenuItems = [
+    { title: "Tus Resultados Médicos", link: "/reclamar-resultados" },
+    { title: "Solicitar Cita Médica", link: "/appointment" },
+    { title: "Directorio de Especialidades y Servicios", link: "/service-details-6" },
+  ];
 
   const handleToggle = (key) => {
-    setIsActive(prevState => ({
+    setIsActive((prevState) => ({
       status: prevState.key !== key || !prevState.status,
       key,
     }));
@@ -80,28 +59,13 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
               <li className={isActive.key === 1 ? "dropdown current" : "dropdown"}>
                 <Link href="#">Nosotros</Link>
                 <ul style={{ display: `${isActive.key === 1 ? "block" : "none"}` }}>
-                  {/* Excluir Gestión Documental */}
-                  <li><Link href="/service-details-2" onClick={handleMobileMenu}>Gestión Documental</Link></li>
-
-                  {/* Renderizar submenús dinámicamente */}
-                  {nosotrosSubmenu.map((submenu) => {
-                    const title = submenu.title.toLowerCase();
-
-                    // Verificar si el título es "Directorio de Especialidades y Servicios"
-                    if (title === "directorio de especialidades y servicios") {
-                      return (
-                        <li key={submenu.id}>
-                          <Link href="/service-details-6" onClick={handleMobileMenu}>Directorio de Especialidades y Servicios</Link>
-                        </li>
-                      );
-                    }
-
-                    return (
-                      <li key={submenu.id}>
-                        <Link href={`/nosotros/${submenu.id}`} onClick={handleMobileMenu}>{submenu.title}</Link>
-                      </li>
-                    );
-                  })}
+                  {nosotrosMenuItems.map((item, index) => (
+                    <li key={index}>
+                      <Link href={item.link} onClick={handleMobileMenu}>
+                        {item.title}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
                 <div
                   className={isActive.key === 1 ? "dropdown-btn open" : "dropdown-btn"}
@@ -126,37 +90,13 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
               <li className={isActive.key === 3 ? "dropdown current" : "dropdown"}>
                 <Link href="#">Pacientes</Link>
                 <ul style={{ display: `${isActive.key === 3 ? "block" : "none"}` }}>
-                  {pacientesSubmenu.map((submenu) => {
-                    const title = submenu.title.toLowerCase();
-
-                    // Verificar si el título es "Tus Resultados Médicos" o "Solicitar Cita"
-                    if (title === "tus resultados médicos") {
-                      return (
-                          <li key={submenu.id}>
-                              <Link href="/reclamar-resultados">Tus Resultados Médicos</Link>
-                          </li>
-                      );
-                  } else if (title === "solicitar cita" || title === "solicitar cita médica") {
-                      return (
-                          <li key={submenu.id}>
-                              <Link href="/appointment">Solicitar Cita Médica</Link>
-                          </li>
-                      );
-                  } else if (title === "directorio de especialidades y servicios") {
-                      return (
-                          <li key={submenu.id}>
-                              <Link href="/service-details-6">Directorio de Especialidades y Servicios</Link>
-                          </li>
-                      );
-                  }
-
-                    // Para el resto de los elementos, usar la ruta dinámica
-                    return (
-                      <li key={submenu.id}>
-                        <Link href={`/pacientes/${submenu.id}`} onClick={handleMobileMenu}>{submenu.title}</Link>
-                      </li>
-                    );
-                  })}
+                  {pacientesMenuItems.map((item, index) => (
+                    <li key={index}>
+                      <Link href={item.link} onClick={handleMobileMenu}>
+                        {item.title}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
                 <div
                   className={isActive.key === 3 ? "dropdown-btn open" : "dropdown-btn"}
@@ -179,12 +119,16 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
 
               {/* Preguntas Frecuentes */}
               <li>
-                <Link href="/faq" onClick={handleMobileMenu}>Faq's</Link>
+                <Link href="/faq" onClick={handleMobileMenu}>
+                  Faq's
+                </Link>
               </li>
 
               {/* Contacto */}
               <li>
-                <Link href="/contact" onClick={handleMobileMenu}>Contacto</Link>
+                <Link href="/contact" onClick={handleMobileMenu}>
+                  Contacto
+                </Link>
               </li>
             </ul>
           </div>
@@ -194,21 +138,49 @@ export default function MobileMenu({ isSidebar, handleMobileMenu, handleSidebar 
             <h4>Contáctanos</h4>
             <ul>
               <li>Cra. 50 #80-144, Barranquilla, Colombia</li>
-              <li><Link href="tel:+576053369999">+57 (605) 3369999 Ext 0</Link></li>
-              <li><Link href="mailto:consultaexterna@clinicadelacosta.co">consultaexterna@clinicadelacosta.co</Link></li>
-              <li><Link href="mailto:info@clinicadelacosta.co">info@clinicadelacosta.co</Link></li>
-              <li><Link href="mailto:juridica@clinicadelacosta.co">juridica@clinicadelacosta.co</Link></li>
+              <li>
+                <Link href="tel:+576053369999">+57 (605) 3369999 Ext 0</Link>
+              </li>
+              <li>
+                <Link href="mailto:consultaexterna@clinicadelacosta.co">consultaexterna@clinicadelacosta.co</Link>
+              </li>
+              <li>
+                <Link href="mailto:info@clinicadelacosta.co">info@clinicadelacosta.co</Link>
+              </li>
+              <li>
+                <Link href="mailto:juridica@clinicadelacosta.co">juridica@clinicadelacosta.co</Link>
+              </li>
             </ul>
           </div>
 
           {/* Redes Sociales */}
           <div className="social-links">
             <ul className="clearfix">
-              <li><Link href="/"><span className="fab fa-twitter" /></Link></li>
-              <li><Link href="/"><span className="fab fa-facebook-square" /></Link></li>
-              <li><Link href="/"><span className="fab fa-pinterest-p" /></Link></li>
-              <li><Link href="/"><span className="fab fa-instagram" /></Link></li>
-              <li><Link href="/"><span className="fab fa-youtube" /></Link></li>
+              <li>
+                <Link href="/">
+                  <span className="fab fa-twitter" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/">
+                  <span className="fab fa-facebook-square" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/">
+                  <span className="fab fa-pinterest-p" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/">
+                  <span className="fab fa-instagram" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/">
+                  <span className="fab fa-youtube" />
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>

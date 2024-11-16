@@ -4,6 +4,7 @@ import Layout from "@/components/layout/Layout";
 import { useState, useEffect } from 'react';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import SidebarMenu from '@/components/elements/SidebarMenu';
 
 export default function NosotrosDetails() {
     const { id } = useParams();
@@ -53,22 +54,12 @@ export default function NosotrosDetails() {
                 <div className="auto-container">
                     <div className="row clearfix">
                         {/* Menú de subcategorías */}
-                        <div className="col-lg-3 col-md-4 col-sm-12 sidebar-side">
-                            <div className="menu-list">
-                                <h3>Sobre Nosotros</h3>
-                                <ul>
-                                    {menuList.map((menu, index) => (
-                                        <li
-                                            key={index}
-                                            className={id === menu.id ? 'active' : ''}
-                                            onClick={() => handleMenuClick(menu.id)}
-                                        >
-                                            {menu.title}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                        
+                        <div className="col-12 col-md-3">
+                            <SidebarMenu /> {/* Usamos el componente SidebarMenu */}
                         </div>
+
+                      
 
                         {/* Contenido de la página */}
                         <div className="col-lg-9 col-md-8 col-sm-12 content-side">

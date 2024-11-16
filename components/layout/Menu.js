@@ -1,48 +1,26 @@
 'use client';
+
 import Link from "next/link";
-import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 
 export default function Menu() {
-    const [nosotrosSubmenu, setNosotrosSubmenu] = useState([]);
-    const [pacientesSubmenu, setPacientesSubmenu] = useState([]);
+    const nosotrosMenuItems = [
+        { title: "Acerca de Nosotros: Misión, Visión, Valores, Historia", link: "/service-details-3" },
+        { title: "Trabaja con nosotros", link: "/trabaja-con-nosotros" },
+        { title: "Gestión Documental", link: "/service-details-2" },
+        { title: "Certificaciones", link: "/certificaciones" },
+        { title: "Responsabilidad social y empresarial", link: "/responsabilidad-social" },
+        { title: "Direccionamiento Estratégico", link: "/direccionamiento-estrategico" },
+        { title: "Marco Legal", link: "/marco-legal" },
+        { title: "Informes de Sostenibilidad", link: "/informes-de-sostenibilidad" },
+        { title: "Sistema Integrado de Gestión", link: "/sistema-integrado-de-gestion" },
+        { title: "Política de tratamiento de datos", link: "/politica-de-datos" },
+    ];
 
-    useEffect(() => {
-        const fetchNosotrosSubmenu = async () => {
-            try {
-                const nosotrosRef = collection(db, 'nosotros');
-                const nosotrosSnapshot = await getDocs(nosotrosRef);
-                const submenus = nosotrosSnapshot.docs
-                    .map(doc => ({
-                        id: doc.id,
-                        title: doc.data().nombre
-                    }))
-                    .filter(submenu => submenu.title.toLowerCase() !== 'gestión documental'); // Excluir "Gestión Documental"
-
-                setNosotrosSubmenu(submenus);
-            } catch (error) {
-                console.error("Error fetching nosotros submenu:", error);
-            }
-        };
-
-        const fetchPacientesSubmenu = async () => {
-            try {
-                const pacientesRef = collection(db, 'pacientes');
-                const pacientesSnapshot = await getDocs(pacientesRef);
-                const submenus = pacientesSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    title: doc.data().nombre // Campo que contiene el nombre del submenú
-                }));
-                setPacientesSubmenu(submenus);
-            } catch (error) {
-                console.error("Error fetching pacientes submenu:", error);
-            }
-        };
-
-        fetchNosotrosSubmenu();
-        fetchPacientesSubmenu();
-    }, []);
+    const pacientesMenuItems = [
+        { title: "Tus Resultados Médicos", link: "/reclamar-resultados" },
+        { title: "Solicitar Cita Médica", link: "/appointment" },
+        { title: "Directorio de Especialidades y Servicios", link: "/service-details-6" },
+    ];
 
     return (
         <>
@@ -54,10 +32,9 @@ export default function Menu() {
                 <li className="dropdown">
                     <Link href="#">Nosotros</Link>
                     <ul className="nosotros-submenu">
-                        <li><Link href="/service-details-2">Gestión Documental</Link></li>
-                        {nosotrosSubmenu.map((submenu) => (
-                            <li key={submenu.id}>
-                                <Link href={`/nosotros/${submenu.id}`}>{submenu.title}</Link>
+                        {nosotrosMenuItems.map((item, index) => (
+                            <li key={index}>
+                                <Link href={item.link}>{item.title}</Link>
                             </li>
                         ))}
                     </ul>
@@ -72,37 +49,11 @@ export default function Menu() {
                 <li className="dropdown">
                     <Link href="#">Pacientes</Link>
                     <ul className="pacientes-submenu">
-                        {pacientesSubmenu.map((submenu) => {
-                            const title = submenu.title.toLowerCase();
-
-                            // Verificar si el título es "Tus Resultados Médicos", "Solicitar Cita" o "Directorio de Especialidades y Servicios"
-                            if (title === "tus resultados médicos") {
-                                return (
-                                    <li key={submenu.id}>
-                                        <Link href="/reclamar-resultados">Tus Resultados Médicos</Link>
-                                    </li>
-                                );
-                            } else if (title === "solicitar cita" || title === "solicitar cita médica") {
-                                return (
-                                    <li key={submenu.id}>
-                                        <Link href="/appointment">Solicitar Cita Médica</Link>
-                                    </li>
-                                );
-                            } else if (title === "directorio de especialidades y servicios") {
-                                return (
-                                    <li key={submenu.id}>
-                                        <Link href="/service-details-6">Directorio de Especialidades y Servicios</Link>
-                                    </li>
-                                );
-                            }
-
-                            // Para el resto de los elementos, usar la ruta dinámica
-                            return (
-                                <li key={submenu.id}>
-                                    <Link href={`/pacientes/${submenu.id}`}>{submenu.title}</Link>
-                                </li>
-                            );
-                        })}
+                        {pacientesMenuItems.map((item, index) => (
+                            <li key={index}>
+                                <Link href={item.link}>{item.title}</Link>
+                            </li>
+                        ))}
                     </ul>
                 </li>
 
