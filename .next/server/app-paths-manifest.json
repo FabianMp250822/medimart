@@ -1,8 +1,9 @@
 {
-  "/direccionamiento-estrategico/page": "app/direccionamiento-estrategico/page.js",
-  "/page": "app/page.js",
-  "/politica-de-datos/page": "app/politica-de-datos/page.js",
-  "/marco-legal/page": "app/marco-legal/page.js",
   "/informes-de-sostenibilidad/page": "app/informes-de-sostenibilidad/page.js",
-  "/sistema-integrado-de-gestion/page": "app/sistema-integrado-de-gestion/page.js"
+  "/sistema-integrado-de-gestion/page": "app/sistema-integrado-de-gestion/page.js",
+  "/trabaja-con-nosotros/page": "app/trabaja-con-nosotros/page.js",
+  "/directorio-especialistas/page": "app/directorio-especialistas/page.js",
+  "/reclamar-resultados/page": "app/reclamar-resultados/page.js",
+  "/laboratorio-clinico/page": "app/laboratorio-clinico/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

@@ -17,10 +17,18 @@ export default function Menu() {
     ];
 
     const pacientesMenuItems = [
-        { title: "Tus Resultados Médicos", link: "/reclamar-resultados" },
         { title: "Solicitar Cita Médica", link: "/appointment" },
-        { title: "Directorio de Especialidades y Servicios", link: "/service-details-6" },
+        { title: "Directorio de Especialidades y Servicios", link: "/directorio-especialistas" },
+        { title: "Tus Resultados Médicos", link: "/reclamar-resultados" },
+        { title: "Laboratorio Clínico", link: "/laboratorio-clinico" },
+        { title: "Preparación para Exámenes Médicos", link: "/preparacion-examenes" },
+        { title: "Entidades en Convenio", link: "/entidades-convenio" },
+        { title: "Solicitud de Historia Clínica", link: "/solicitud-historia-clinica" },
+        { title: "Derechos y Deberes del Paciente", link: "/derechos-y-deberes" },
+        { title: "Durante su Visita", link: "/durante-visita" },
+        { title: "Educación al Paciente", link: "/educacion-paciente" },
     ];
+    
 
     return (
         <>

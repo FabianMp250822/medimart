@@ -92,6 +92,21 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/sistema-integrado-de-gestion/page.js"
+    ],
+    "/directorio-especialistas/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/directorio-especialistas/page.js"
+    ],
+    "/reclamar-resultados/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/reclamar-resultados/page.js"
+    ],
+    "/laboratorio-clinico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-clinico/page.js"
     ]
   }
 }
