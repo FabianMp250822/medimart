@@ -1,8 +1,8 @@
 {
-  "/educacion-paciente/page": "app/educacion-paciente/page.js",
-  "/directorio-especialistas/page": "app/directorio-especialistas/page.js",
-  "/preparacion-examenes/page": "app/preparacion-examenes/page.js",
   "/solicitud-historia-clinica/page": "app/solicitud-historia-clinica/page.js",
   "/derechos-y-deberes/page": "app/derechos-y-deberes/page.js",
-  "/durante-visita/page": "app/durante-visita/page.js"
+  "/durante-visita/page": "app/durante-visita/page.js",
+  "/educacion-paciente/page": "app/educacion-paciente/page.js",
+  "/service-details-3/page": "app/service-details-3/page.js",
+  "/responsabilidad-social/page": "app/responsabilidad-social/page.js"
 }

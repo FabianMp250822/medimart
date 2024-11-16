@@ -196,7 +196,7 @@ export default function Service() {
                                             fontSize: '16px',
                                             color: '#F0E7D8',
                                             marginBottom: '10px',
-                                            marginTop: '50px',
+                                            marginTop:"70px"
                                         }}
                                     >
                                         <i className="fas fa-arrow-left mr-2"></i> Todos los Servicios
@@ -209,8 +209,43 @@ export default function Service() {
                                         margin: '20px 0',
                                     }}
                                 >
-                                    {titulo}
+                                    {titulo || 'Cargando...'}
                                 </h1>
+                                <div className="d-flex mb-4" style={{ gap: '10px' }}>
+                                <a
+    href="/appointment"
+    className="d-flex align-items-center"
+    style={{
+        backgroundColor: '#2C2C5B',
+        padding: '10px 20px',
+        borderRadius: '8px',
+        color: '#F0E7D8',
+        fontWeight: 'bold',
+        textDecoration: 'none',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '10px',
+        border: 'none',
+    }}
+>
+    <i className="fas fa-calendar-alt"></i> AGENDA TU CITA
+</a>
+
+                                    <div
+                                        className="d-flex align-items-center"
+                                        style={{
+                                            backgroundColor: '#2C2C5B',
+                                            padding: '10px 20px',
+                                            borderRadius: '8px',
+                                            color: '#F0E7D8',
+                                            fontWeight: 'bold',
+                                            display: 'inline-flex',
+                                            gap: '10px',
+                                        }}
+                                    >
+                                        <i className="fas fa-phone"></i>(605) 3369999 Ext. 1.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

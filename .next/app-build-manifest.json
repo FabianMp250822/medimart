@@ -21,42 +21,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/nosotros/[id]/page": [
+    "/trabaja-con-nosotros/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/nosotros/[id]/page.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
-    ],
-    "/service-details-6/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/service-details-6/page.js"
+      "static/chunks/app/trabaja-con-nosotros/page.js"
     ],
     "/service-details-3/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/service-details-3/page.js"
-    ],
-    "/appointment/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/appointment/page.css",
-      "static/chunks/app/appointment/page.js"
-    ],
-    "/service-details-2/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/service-details-2/page.css",
-      "static/chunks/app/service-details-2/page.js"
-    ],
-    "/trabaja-con-nosotros/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/trabaja-con-nosotros/page.js"
     ],
     "/certificaciones/page": [
       "static/chunks/webpack.js",
@@ -73,11 +46,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/direccionamiento-estrategico/page.js"
     ],
-    "/politica-de-datos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/politica-de-datos/page.js"
-    ],
     "/marco-legal/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -92,6 +60,22 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/sistema-integrado-de-gestion/page.js"
+    ],
+    "/politica-de-datos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/politica-de-datos/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
+    ],
+    "/appointment/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/appointment/page.css",
+      "static/chunks/app/appointment/page.js"
     ],
     "/directorio-especialistas/page": [
       "static/chunks/webpack.js",
@@ -108,16 +92,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/laboratorio-clinico/page.js"
     ],
-    "/educacion-paciente/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/educacion-paciente/page.js"
-    ],
-    "/durante-visita/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/durante-visita/page.js"
-    ],
     "/preparacion-examenes/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -132,6 +106,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/derechos-y-deberes/page.js"
+    ],
+    "/durante-visita/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/durante-visita/page.js"
+    ],
+    "/educacion-paciente/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/educacion-paciente/page.js"
     ]
   }
 }

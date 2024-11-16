@@ -7,6 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import SidebarMenu from "@/components/elements/SidebarMenu";
 import PacienteMenu from "@/components/elements/Pacientemenu";
+import ServiceHeader from "@/components/elements/ServiceHeader";
 
 export default function RightsAndDuties() {
     const [isActive, setIsActive] = useState({
@@ -129,30 +130,7 @@ export default function RightsAndDuties() {
                                     }}
                                 />
                             </div>
-                            <div style={{ flex: '1' }}>
-                                <Link href="/servicios" legacyBehavior>
-                                    <a
-                                        className="text-decoration-none mb-3 d-inline-flex align-items-center"
-                                        style={{
-                                            fontSize: '16px',
-                                            color: '#F0E7D8',
-                                            marginBottom: '10px',
-                                            marginTop: '50px',
-                                        }}
-                                    >
-                                        <i className="fas fa-arrow-left mr-2"></i> Todos los Servicios
-                                    </a>
-                                </Link>
-                                <h1
-                                    style={{
-                                        color: '#F0E7D8',
-                                        fontSize: '32px',
-                                        margin: '20px 0',
-                                    }}
-                                >
-                                    {titulo}
-                                </h1>
-                            </div>
+                            <ServiceHeader titulo={titulo} />
                         </div>
                     </div>
                 </div>
