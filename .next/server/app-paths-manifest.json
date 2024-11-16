@@ -1,9 +1,8 @@
 {
-  "/informes-de-sostenibilidad/page": "app/informes-de-sostenibilidad/page.js",
-  "/sistema-integrado-de-gestion/page": "app/sistema-integrado-de-gestion/page.js",
-  "/trabaja-con-nosotros/page": "app/trabaja-con-nosotros/page.js",
+  "/educacion-paciente/page": "app/educacion-paciente/page.js",
   "/directorio-especialistas/page": "app/directorio-especialistas/page.js",
-  "/reclamar-resultados/page": "app/reclamar-resultados/page.js",
-  "/laboratorio-clinico/page": "app/laboratorio-clinico/page.js",
-  "/_not-found/page": "app/_not-found/page.js"
+  "/preparacion-examenes/page": "app/preparacion-examenes/page.js",
+  "/solicitud-historia-clinica/page": "app/solicitud-historia-clinica/page.js",
+  "/derechos-y-deberes/page": "app/derechos-y-deberes/page.js",
+  "/durante-visita/page": "app/durante-visita/page.js"
 }

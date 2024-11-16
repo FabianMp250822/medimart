@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import SidebarMenu from "@/components/elements/SidebarMenu";
+import PacienteMenu from "@/components/elements/Pacientemenu";
 
 export default function Service() {
     const [isActive, setIsActive] = useState({
@@ -216,7 +217,7 @@ export default function Service() {
                     <div className="container">
                         <div className="row">
                             <div className="col-12 col-md-3">
-                                <SidebarMenu />
+                                <PacienteMenu />
                             </div>
                             <div className="col-12 col-md-9">
                                 <div className="pt-4">

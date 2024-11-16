@@ -4,6 +4,7 @@ import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 import { useState } from "react";
 import SidebarMenu from "@/components/elements/SidebarMenu";
+import PacienteMenu from "@/components/elements/Pacientemenu";
 
 export default function AreasClinica() {
     const [searchQuery, setSearchQuery] = useState(""); // Estado para el buscador
@@ -103,7 +104,7 @@ export default function AreasClinica() {
                     <div className="container">
                         <div className="row">
                             <div className="col-12 col-md-3">
-                                <SidebarMenu />
+                                <PacienteMenu />
                             </div>
                             <div className="col-12 col-md-9">
                                 <div className="pt-4">

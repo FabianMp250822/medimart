@@ -107,6 +107,31 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/laboratorio-clinico/page.js"
+    ],
+    "/educacion-paciente/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/educacion-paciente/page.js"
+    ],
+    "/durante-visita/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/durante-visita/page.js"
+    ],
+    "/preparacion-examenes/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/preparacion-examenes/page.js"
+    ],
+    "/solicitud-historia-clinica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/solicitud-historia-clinica/page.js"
+    ],
+    "/derechos-y-deberes/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/derechos-y-deberes/page.js"
     ]
   }
 }
