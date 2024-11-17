@@ -1,8 +1,9 @@
 {
-  "/solicitud-historia-clinica/page": "app/solicitud-historia-clinica/page.js",
-  "/derechos-y-deberes/page": "app/derechos-y-deberes/page.js",
-  "/durante-visita/page": "app/durante-visita/page.js",
-  "/educacion-paciente/page": "app/educacion-paciente/page.js",
-  "/service-details-3/page": "app/service-details-3/page.js",
-  "/responsabilidad-social/page": "app/responsabilidad-social/page.js"
+  "/cirugia-vascular/page": "app/cirugia-vascular/page.js",
+  "/cirugia-cardiovascular/page": "app/cirugia-cardiovascular/page.js",
+  "/cirugia-general/page": "app/cirugia-general/page.js",
+  "/cirugia-ginecologica/page": "app/cirugia-ginecologica/page.js",
+  "/cirugia-ginecologica-laparoscopica/page": "app/cirugia-ginecologica-laparoscopica/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/cirugia-maxilofacial/page": "app/cirugia-maxilofacial/page.js"
 }

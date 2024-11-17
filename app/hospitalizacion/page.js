@@ -1,169 +1,281 @@
-'use client'; 
-import { useState } from 'react';
+'use client';
+
 import Layout from "@/components/layout/Layout";
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import ServicesMenu from "@/components/elements/ServicesMenu";
+import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function Home() {
-  const [selectedService, setSelectedService] = useState('Hospitalización General');
+export default function Service() {
+    const [sedes, setSedes] = useState([]);
+    const [titulo] = useState('Hospitalización: Servicios de Calidad y Humanización');
+    const [isActive, setIsActive] = useState(null);
 
-  const menuItems = [
-    'Hospitalización General',
-    'Atención Personalizada',
-    'Unidad de Cuidados Especiales',
-    'Apoyo a Urgencias y Cirugías',
-    'Comodidad y Seguridad',
-    'Tecnología Avanzada para el Diagnóstico',
-  ];
+    useEffect(() => {
+        const fetchSedes = async () => {
+            try {
+                const sedesRef = collection(db, "sedes");
+                const sedesSnapshot = await getDocs(sedesRef);
+                const sedesList = sedesSnapshot.docs.map((doc) => {
+                    const nombreCompleto = doc.data().nombre;
+                    return nombreCompleto.replace("Clínica de la Costa - ", ""); // Remover prefijo innecesario
+                });
+                setSedes(sedesList);
+            } catch (error) {
+                console.error("Error al obtener las sedes:", error);
+            }
+        };
+        fetchSedes();
+    }, []);
 
-  const serviceContent = {
-    'Hospitalización General': (
-      <>
-        <p>
-          Nuestra unidad de **Hospitalización** está diseñada para ofrecer una atención integral a cada uno de nuestros pacientes. Contamos con un equipo humano dedicado y comprometido a brindar una atención personalizada y de calidad. Nuestro enfoque es que cada paciente reciba el tratamiento adecuado, de la mano de profesionales con un alto nivel de conocimientos y experiencia.
-        </p>
-        <p>
-          El bienestar del paciente es nuestra principal prioridad, y por eso proporcionamos un ambiente seguro, cómodo y apoyado por tecnología avanzada que garantiza un diagnóstico y tratamiento óptimos. Nuestro personal de enfermería y médicos está siempre disponible para atender las necesidades del paciente de manera oportuna y eficiente.
-        </p>
-      </>
-    ),
-    'Atención Personalizada': (
-      <>
-        <p>
-          En nuestra unidad de hospitalización, creemos en la **atención personalizada** como un pilar fundamental. Cada paciente recibe un trato único, adaptado a sus necesidades específicas. Nuestro equipo de médicos, enfermeras y auxiliares trabaja estrechamente con el paciente y su familia, asegurando que todas sus preocupaciones sean atendidas.
-        </p>
-        <p>
-          Nos enfocamos en brindar un trato humano, cercano y respetuoso, manteniendo una comunicación abierta y constante con el paciente para garantizar que se sienta seguro y bien atendido en todo momento.
-        </p>
-      </>
-    ),
-    'Unidad de Cuidados Especiales': (
-      <>
-        <p>
-          Nuestra **Unidad de Cuidados Especiales** está destinada a aquellos pacientes que requieren una vigilancia más intensiva. Contamos con tecnología de monitoreo avanzada y un equipo de profesionales especializados en el manejo de situaciones críticas, brindando atención inmediata y continua para asegurar la mejor evolución de cada paciente.
-        </p>
-        <p>
-          Los pacientes en cuidados especiales reciben un seguimiento cercano de su estado de salud, con personal capacitado disponible las 24 horas del día, listo para actuar de manera rápida y eficaz ante cualquier cambio en su condición.
-        </p>
-      </>
-    ),
-    'Apoyo a Urgencias y Cirugías': (
-      <>
-        <p>
-          La **Unidad de Hospitalización** trabaja de la mano con los servicios de **Urgencias** y **Cirugías** para asegurar una continuidad en la atención del paciente. Tras recibir atención urgente o ser sometido a una cirugía, los pacientes son trasladados a nuestras unidades de hospitalización, donde un equipo multidisciplinario se encarga de su recuperación.
-        </p>
-        <p>
-          Este enfoque coordinado entre las distintas áreas del hospital garantiza que cada paciente reciba el tratamiento adecuado en cada etapa de su proceso, desde la intervención quirúrgica hasta la fase de recuperación.
-        </p>
-      </>
-    ),
-    'Comodidad y Seguridad': (
-      <>
-        <p>
-          Uno de nuestros principales objetivos es asegurar la **comodidad** y **seguridad** de nuestros pacientes durante su estancia. Contamos con habitaciones amplias, cómodas y perfectamente equipadas, diseñadas para ofrecer un ambiente relajante que favorezca la recuperación del paciente.
-        </p>
-        <p>
-          Cada habitación está equipada con camas ergonómicas, controles de temperatura y sistemas de comunicación directa con el personal médico. La seguridad es un factor clave, por lo que hemos implementado estrictos protocolos de higiene y medidas para prevenir cualquier riesgo durante la hospitalización.
-        </p>
-      </>
-    ),
-    'Tecnología Avanzada para el Diagnóstico': (
-      <>
-        <p>
-          Nuestra unidad de hospitalización está respaldada por **tecnología avanzada** que nos permite realizar diagnósticos precisos y ofrecer el tratamiento adecuado de forma eficiente. Contamos con equipos de monitoreo en tiempo real, laboratorios especializados y sistemas de imagenología que brindan una visión clara de la salud del paciente.
-        </p>
-        <p>
-          Esta infraestructura tecnológica asegura que nuestros médicos cuenten con toda la información necesaria para tomar decisiones informadas y brindar el mejor tratamiento posible.
-        </p>
-      </>
-    ),
-  };
+    const toggleAccordion = (key) => {
+        setIsActive(isActive === key ? null : key);
+    };
 
-  return (
-    <>
-      <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Hospitalización">
-        {/* sidebar-page-container */}
-        <section className="sidebar-page-container sec-pad-2">
-          <div className="auto-container">
-            <div className="row clearfix">
-              {/* Menú lateral con scroll */}
-              <div className="col-lg-4 col-md-12 col-sm-12 sidebar-side">
-                <div className="blog-sidebar default-sidebar mr_10">
-                  <div className="sidebar-widget category-widget">
-                    <div className="widget-title">
-                      <h3>Servicios</h3>
-                    </div>
-                    <div className="widget-content" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                      <ul className="category-list clearfix">
-                        {menuItems.map((item) => (
-                          <li key={item}>
-                            <a
-                              href="#"
-                              className={selectedService === item ? 'active' : ''}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setSelectedService(item);
-                              }}
-                            >
-                              {item}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    return (
+        <>
+            <Layout footerStyle={1}>
+                {/* Banner Principal */}
+                <div
+                    className="d-flex flex-column flex-md-row align-items-center p-4"
+                    style={{
+                        backgroundColor: '#1A1A3B',
+                        borderRadius: '8px',
+                        marginBottom: '10px',
+                        marginTop: '20px',
+                        padding: '20px',
+                    }}
+                >
+                    <div className="container">
+                        <div
+                            className="d-flex flex-column flex-md-row align-items-center"
+                            style={{
+                                gap: '20px',
+                            }}
+                        >
+                            {/* Imagen */}
+                            <div style={{ flex: '1.5' }}>
+                                <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
+                                    alt="Hospitalización"
+                                    style={{
+                                        borderRadius: '8px',
+                                        width: '100%',
+                                        height: 'auto',
+                                        maxHeight: '450px',
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            </div>
 
-              {/* Área de contenido */}
-              <div className="col-lg-8 col-md-12 col-sm-12 content-side">
-                <div className="blog-details-content">
-                  <div className="news-block-one">
-                    <div className="inner-box">
-                      <div className="lower-content">
-                        <h2>{selectedService}</h2>
-                        {serviceContent[selectedService]}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* sidebar-page-container end */}
-
-        {/* subscribe-two */}
-        <section className="subscribe-section">
-          <div className="auto-container">
-            <div className="inner-container">
-              <div className="row align-items-center">
-                <div className="col-lg-6 col-md-12 col-sm-12 text-column">
-                  <div className="text-box">
-                    <h2><span>Subscribe</span> for the exclusive updates!</h2>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-12 col-sm-12 form-column">
-                  <div className="form-inner">
-                    <form method="post" action="contact">
-                      <div className="form-group">
-                        <input type="email" name="email" placeholder="Enter Your Email Address" required />
-                        <button type="submit" className="theme-btn btn-one"><span>Subscribe Now</span></button>
-                      </div>
-                      <div className="form-group">
-                        <div className="check-box">
-                          <input className="check" type="checkbox" id="checkbox1" />
-                          <label htmlFor="checkbox1">I agree to the <Link href="/">Privacy Policy.</Link></label>
+                            {/* Contenido */}
+                            <ServiceHeader titulo={titulo} />
                         </div>
-                      </div>
-                    </form>
-                  </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* subscribe end */}
-      </Layout>
-    </>
-  );
+
+                {/* Contenido Principal */}
+                <div className="service-details pb_110">
+                    <div className="container">
+                        <div className="row">
+                            {/* Menú Lateral */}
+                            <div className="col-12 col-md-3">
+                                <ServicesMenu />
+                            </div>
+
+                            {/* Contenido */}
+                            <div className="col-12 col-md-9">
+                                <div className="pt-4">
+                                    {/* Descripción Principal */}
+                                    <div className="description-section mb-5">
+                                        <h2 className="description-title">Nuestra Filosofía y Objetivos</h2>
+                                        <p>
+                                            Contamos con un equipo humano dedicado y comprometido a servir a los usuarios con una 
+                                            atención personalizada y especializada con calidad y amor, alto nivel de conocimientos 
+                                            y experiencia; apoyados tecnológicamente para el diagnóstico y tratamiento de las 
+                                            enfermedades.
+                                        </p>
+                                        <p>
+                                            Uno de nuestros principales objetivos es la seguridad y comodidad en las instalaciones; 
+                                            por esto contamos con la más amplia capacidad en habitaciones. La Unidad de Hospitalización 
+                                            apoya los servicios de Urgencias, Cirugía y Consulta Externa, con personal idóneo y calificado 
+                                            dentro del marco de la directriz médico–asistencial que nos orienta a la 
+                                            <strong> "Atención integral en salud con oportunidad, eficiencia y calidad”.</strong>
+                                        </p>
+                                    </div>
+                                    <div className="mb-4">
+                                        <img
+                                            src="https://picsum.photos/1200/400?random=2"
+                                            alt="Atención Hospitalaria"
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '8px',
+                                                marginBottom: '15px',
+                                            }}
+                                        />
+                                    </div>
+                                    {/* Acordeón */}
+                                    <div id="accordion" className="accordion">
+                                        {/* Hospitalización Paciente Crónico Con Ventilador */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(1)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 1 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 1 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Hospitalización Paciente Crónico Con Ventilador
+                                            </h2>
+                                            {isActive === 1 && (
+                                                <div className="accordion-body">
+                                                    <p>
+                                                        Este servicio está enfocado en pacientes que requieren soporte ventilatorio constante debido 
+                                                        a condiciones respiratorias críticas. Ofrecemos:
+                                                    </p>
+                                                    <ul className="service-list">
+                                                        <li>Monitoreo continuo de parámetros respiratorios y vitales.</li>
+                                                        <li>Terapias respiratorias personalizadas.</li>
+                                                        <li>Cuidados intensivos las 24 horas, garantizados por un equipo multidisciplinario.</li>
+                                                        <li>Asesoramiento a familiares sobre el manejo y cuidado del paciente.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Hospitalización Paciente Crónico Sin Ventilador */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(2)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 2 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 2 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Hospitalización Paciente Crónico Sin Ventilador
+                                            </h2>
+                                            {isActive === 2 && (
+                                                <div className="accordion-body">
+                                                    <p>
+                                                        Diseñada para pacientes crónicos que necesitan supervisión médica constante pero no 
+                                                        requieren asistencia ventilatoria. Nuestros servicios incluyen:
+                                                    </p>
+                                                    <ul className="service-list">
+                                                        <li>Control de medicación y terapias continuas.</li>
+                                                        <li>Planes de rehabilitación específicos para cada paciente.</li>
+                                                        <li>Habitaciones diseñadas para el confort del paciente y sus acompañantes.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Hospitalización Adultos */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(3)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 3 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 3 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Hospitalización Adultos
+                                            </h2>
+                                            {isActive === 3 && (
+                                                <div className="accordion-body">
+                                                    <p>
+                                                        Ideal para adultos que requieren atención médica especializada. Proveemos servicios 
+                                                        adaptados a condiciones específicas, incluyendo:
+                                                    </p>
+                                                    <ul className="service-list">
+                                                        <li>Recuperación posquirúrgica en un entorno seguro y controlado.</li>
+                                                        <li>Atención para enfermedades agudas y crónicas.</li>
+                                                        <li>Tratamientos oncológicos con apoyo integral.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Hospitalización Pediátrica */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(4)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 4 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 4 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Hospitalización Pediátrica
+                                            </h2>
+                                            {isActive === 4 && (
+                                                <div className="accordion-body">
+                                                    <p>
+                                                        Nuestros espacios pediátricos están diseñados para garantizar la seguridad y comodidad 
+                                                        de los niños. Contamos con:
+                                                    </p>
+                                                    <ul className="service-list">
+                                                        <li>Habitaciones con diseño amigable y colores relajantes.</li>
+                                                        <li>Especialistas pediátricos y tecnología avanzada para diagnósticos rápidos.</li>
+                                                        <li>Apoyo emocional y orientación para padres.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style jsx>{`
+                    .description-title {
+                        font-size: 28px;
+                        font-weight: bold;
+                        color: #1A1A3B;
+                        margin-bottom: 15px;
+                        text-transform: uppercase;
+                    }
+                    .accordion-header:hover {
+                        background-color: #007bff !important;
+                        color: #fff !important;
+                    }
+                    .service-list li:before {
+                        content: "✓";
+                        position: absolute;
+                        left: 0;
+                        color: #007bff;
+                    }
+                `}</style>
+            </Layout>
+        </>
+    );
 }

@@ -15,12 +15,49 @@ export default function Home() {
   const [especialidad, setEspecialidad] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const medicosPerPage = 6;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Función para normalizar cadenas (eliminar acentos y pasar a minúsculas)
+  const normalizeString = (str) => {
+    if (typeof str !== "string") return "";
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  };
+
+  // Función para agrupar especialidades dinámicamente
+  const groupEspecialidades = (especialidadesList) => {
+    const groups = {};
+
+    especialidadesList.forEach((esp) => {
+      const normalizedEsp = normalizeString(esp);
+      const mainKeyword = normalizedEsp.split(" ")[0]; // Tomamos la primera palabra como clave
+
+      if (!groups[mainKeyword]) {
+        groups[mainKeyword] = [];
+      }
+      groups[mainKeyword].push(esp);
+    });
+
+    // Convertimos el objeto en un array de categorías únicas
+    return Object.keys(groups).map((keyword) => {
+      return {
+        keyword,
+        especialidades: groups[keyword],
+      };
+    });
+  };
 
   const fetchMedicos = async () => {
     try {
       if (!sedeData?.nombre) return;
 
-      const q = query(collection(db, "medicos"), where("sede", "==", sedeData.nombre));
+      const q = query(
+        collection(db, "medicos"),
+        where("sede", "==", sedeData.nombre)
+      );
       const querySnapshot = await getDocs(q);
 
       const medicosData = [];
@@ -29,17 +66,25 @@ export default function Home() {
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         if (data && data.nombreCompleto !== "Luis Aurelio Castillo Parodi") {
-          medicosData.push({ ...data, id: doc.id });
+          medicosData.push({
+            ...data,
+            id: doc.id,
+          });
           if (data.especialidad) especialidadesSet.add(data.especialidad);
         }
       });
 
       // Ordenar médicos por nombre completo
-      medicosData.sort((a, b) => a.nombreCompleto.localeCompare(b.nombreCompleto));
+      medicosData.sort((a, b) =>
+        a.nombreCompleto.localeCompare(b.nombreCompleto)
+      );
 
-      // Ordenar especialidades alfabéticamente y actualizar estados
+      // Agrupar especialidades de forma dinámica
+      const groupedEspecialidades = groupEspecialidades([...especialidadesSet]);
+
+      // Actualizar estados
       setMedicos(medicosData);
-      setEspecialidades([...especialidadesSet].sort());
+      setEspecialidades(groupedEspecialidades);
     } catch (error) {
       console.error("Error al obtener médicos:", error);
     }
@@ -53,11 +98,6 @@ export default function Home() {
     setCurrentPage(1);
   }, [searchTerm, especialidad]);
 
-  const normalizeString = (str) => {
-    if (typeof str !== "string") return "";
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-  };
-
   const filteredMedicos = medicos.filter((medico) => {
     const normalizedSearchTerm = normalizeString(searchTerm);
     const nombreCompleto = medico.nombreCompleto || "";
@@ -68,101 +108,191 @@ export default function Home() {
         ? normalizedNombreCompleto.includes(normalizedSearchTerm)
         : true;
 
-    const matchesEspecialidad = especialidad ? medico.especialidad === especialidad : true;
+    // Verificar si la especialidad del médico está en la categoría seleccionada
+    const matchesEspecialidad = especialidad
+      ? normalizeString(medico.especialidad).startsWith(especialidad)
+      : true;
 
     return matchesSearchTerm && matchesEspecialidad;
   });
 
   const indexOfLastMedico = currentPage * medicosPerPage;
   const indexOfFirstMedico = indexOfLastMedico - medicosPerPage;
-  const currentMedicos = filteredMedicos.slice(indexOfFirstMedico, indexOfLastMedico);
+  const currentMedicos = filteredMedicos.slice(
+    indexOfFirstMedico,
+    indexOfLastMedico
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
-      <Layout headerStyle={2} footerStyle={1} breadcrumbTitle={`Equipo Médico - ${sedeData?.nombre || "Sede"}`}>
+      <Layout
+        headerStyle={2}
+        footerStyle={1}
+        breadcrumbTitle={`Equipo Médico - ${sedeData?.nombre || "Sede"}`}
+      >
         <div className="medicos-container">
-          {/* Filtros y búsqueda en una fila */}
-          <section className="search-filter-section">
-            <div className="search-filter-wrapper">
-              <input
-                type="text"
-                placeholder="Buscar por nombre"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
+          {/* Barra de búsqueda */}
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Buscar por nombre"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
 
-              <select
-                value={especialidad}
-                onChange={(e) => setEspecialidad(e.target.value)}
-                className="filter-select"
-              >
-                <option value="">Todas las especialidades</option>
-                {especialidades.map((esp, index) => (
-                  <option key={index} value={esp}>
-                    {esp}
-                  </option>
+          {/* Botón para abrir/cerrar la barra lateral en móvil */}
+          <button
+            className="sidebar-toggle"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            Especialidades
+          </button>
+
+          {/* Contenido principal y barra lateral */}
+          <div className="content-wrapper">
+            {/* Barra lateral */}
+            <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+              <h3>Especialidades</h3>
+              <ul className="specialty-list">
+                <li
+                  className={!especialidad ? "active" : ""}
+                  onClick={() => {
+                    setEspecialidad("");
+                    setSidebarOpen(false);
+                  }}
+                >
+                  Todas las especialidades
+                </li>
+                {especialidades.map((group, index) => (
+                  <li
+                    key={index}
+                    className={
+                      especialidad === group.keyword ? "active" : ""
+                    }
+                    onClick={() => {
+                      setEspecialidad(group.keyword);
+                      setSidebarOpen(false);
+                    }}
+                  >
+                    {group.especialidades[0]}
+                  </li>
                 ))}
-              </select>
+              </ul>
             </div>
-          </section>
 
-          {searchTerm.length > 0 && searchTerm.length < 3 && (
-            <p>Por favor, ingresa al menos 3 caracteres para buscar.</p>
-          )}
+            {/* Overlay para cerrar la barra lateral en móvil */}
+            {sidebarOpen && (
+              <div
+                className="overlay"
+                onClick={() => setSidebarOpen(false)}
+              ></div>
+            )}
 
-          {/* Sección de equipo */}
-          <section className="team-section sec-pad-2">
-            <div className="auto-container">
-              <div className="row clearfix">
-                {currentMedicos.length > 0 ? (
-                  currentMedicos.map((medico, index) => {
-                    const imageUrl = medico.fotoPerfil || medico.profileImage || "https://via.placeholder.com/150";
-                    return (
-                      <div className="col-lg-4 col-md-6 col-sm-12 team-block" key={index}>
-                        <div className="team-block-one" style={{ animationDelay: `${index * 200}ms` }}>
-                          <div className="inner-box">
-                            <div className="image-box">
-                              <figure className="image">
-                                <img src={imageUrl} alt={medico.nombreCompleto} />
-                              </figure>
-                              <ul className="social-links clearfix">
-                                <li><Link href={`/team-details/${medico.id}`}><i className="icon-4"></i></Link></li>
-                                <li><Link href={`/team-details/${medico.id}`}><i className="icon-5"></i></Link></li>
-                              </ul>
-                            </div>
-                            <div className="lower-content">
-                              <h3><Link href={`/team-details/${medico.id}`}>{medico.nombreCompleto}</Link></h3>
-                              <span className="designation">{medico.especialidad}</span>
+            {/* Contenido principal */}
+            <div className="main-content">
+              {searchTerm.length > 0 && searchTerm.length < 3 && (
+                <p>Por favor, ingresa al menos 3 caracteres para buscar.</p>
+              )}
+
+              {/* Sección de equipo */}
+              <section className="team-section sec-pad-2">
+                <div className="auto-container">
+                  <div className="row clearfix">
+                    {currentMedicos.length > 0 ? (
+                      currentMedicos.map((medico, index) => {
+                        const imageUrl =
+                          medico.fotoPerfil ||
+                          medico.profileImage ||
+                          "https://via.placeholder.com/150";
+                        return (
+                          <div
+                            className="col-lg-4 col-md-6 col-sm-12 team-block"
+                            key={index}
+                          >
+                            <div
+                              className="team-block-one"
+                              style={{ animationDelay: `${index * 200}ms` }}
+                            >
+                              <div className="inner-box">
+                                <div className="image-box">
+                                  <figure className="image">
+                                    <img
+                                      src={imageUrl}
+                                      alt={medico.nombreCompleto}
+                                    />
+                                  </figure>
+                                  <ul className="social-links clearfix">
+                                    <li>
+                                      <Link
+                                        href={`/team-details/${medico.id}`}
+                                      >
+                                        <i className="icon-4"></i>
+                                      </Link>
+                                    </li>
+                                    <li>
+                                      <Link
+                                        href={`/team-details/${medico.id}`}
+                                      >
+                                        <i className="icon-5"></i>
+                                      </Link>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <div className="lower-content">
+                                  <h3>
+                                    <Link
+                                      href={`/team-details/${medico.id}`}
+                                    >
+                                      {medico.nombreCompleto}
+                                    </Link>
+                                  </h3>
+                                  <span className="designation">
+                                    {medico.especialidad}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  (searchTerm.length >= 3 || especialidad) ? (
-                    <p>No se encontraron médicos con los criterios de búsqueda aplicados.</p>
-                  ) : null
-                )}
-              </div>
+                        );
+                      })
+                    ) : searchTerm.length >= 3 || especialidad ? (
+                      <p>
+                        No se encontraron médicos con los criterios de búsqueda
+                        aplicados.
+                      </p>
+                    ) : null}
+                  </div>
 
-              {/* Paginación */}
-              <nav className="pagination centred">
-                <ul className="pagination-list">
-                  {Array.from({ length: Math.ceil(filteredMedicos.length / medicosPerPage) }, (_, i) => (
-                    <li key={i} className="page-item">
-                      <a onClick={() => paginate(i + 1)} className="page-link">
-                        {i + 1}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+                  {/* Paginación */}
+                  <nav className="pagination centred">
+                    <ul className="pagination-list">
+                      {Array.from(
+                        {
+                          length: Math.ceil(
+                            filteredMedicos.length / medicosPerPage
+                          ),
+                        },
+                        (_, i) => (
+                          <li key={i} className="page-item">
+                            <a
+                              onClick={() => paginate(i + 1)}
+                              className="page-link"
+                            >
+                              {i + 1}
+                            </a>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </nav>
+                </div>
+              </section>
             </div>
-          </section>
+          </div>
         </div>
       </Layout>
 
@@ -171,21 +301,74 @@ export default function Home() {
         .medicos-container {
           padding: 20px;
           background-color: #f9f9f9;
+          position: relative;
         }
-        .search-filter-section {
-          margin-bottom: 20px;
+        .search-bar {
+          position: absolute;
+          top: 20px;
+          right: 20px;
         }
-        .search-filter-wrapper {
-          display: flex;
-          gap: 20px;
-          justify-content: space-between;
-        }
-        .search-input, .filter-select {
+        .search-input {
           padding: 10px;
-          flex: 1;
           border: 1px solid #ddd;
           border-radius: 5px;
           font-size: 16px;
+          width: 300px;
+        }
+        .sidebar-toggle {
+          display: none;
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          padding: 10px 15px;
+          border-radius: 5px;
+          cursor: pointer;
+          z-index: 1000;
+        }
+        .content-wrapper {
+          display: flex;
+          margin-top: 60px;
+        }
+        .sidebar {
+          width: 400px;
+          background-color: #fff;
+          padding: 20px;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+          max-height: 720px;
+          overflow-y: auto;
+          transition: transform 0.3s ease;
+        }
+        .sidebar h3 {
+          margin-bottom: 15px;
+          font-size: 18px;
+          font-weight: bold;
+          color: #333;
+        }
+        .specialty-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .specialty-list li {
+          padding: 10px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          border-radius: 5px;
+          color: #555;
+        }
+        .specialty-list li:hover {
+          background-color: #f0f0f0;
+        }
+        .specialty-list li.active {
+          background-color: #007bff;
+          color: #fff;
+        }
+        .main-content {
+          flex: 1;
+          margin-left: 20px;
         }
         .team-block-one {
           box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -246,6 +429,50 @@ export default function Home() {
         .page-link:hover {
           background-color: #007bff;
           color: #fff;
+        }
+
+        /* Estilos para móvil */
+        @media (max-width: 768px) {
+          .search-bar {
+            position: static;
+            margin-bottom: 20px;
+          }
+          .search-input {
+            width: 100%;
+          }
+          .sidebar-toggle {
+            display: block;
+          }
+          .content-wrapper {
+            flex-direction: column;
+          }
+          .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            transform: translateX(-100%);
+            z-index: 999;
+          }
+          .sidebar.open {
+            transform: translateX(0);
+          }
+          .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+          }
+          .main-content {
+            margin-left: 0;
+            margin-top: 20px;
+          }
+          .team-block-one {
+            margin-bottom: 20px;
+          }
         }
       `}</style>
     </>

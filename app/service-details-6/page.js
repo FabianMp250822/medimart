@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Layout from "@/components/layout/Layout";
 import servicesData from './servicesData';
-import { formatServiceNameForFirebase } from './utils';
 
 export default function Service() {
-    const [activeService, setActiveService] = useState(null);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [activeService, setActiveService] = useState(null); // Servicio principal seleccionado
+    const [searchTerm, setSearchTerm] = useState(""); // Término de búsqueda
 
     const handleServiceClick = (service) => {
         setActiveService(activeService === service ? null : service);
@@ -21,38 +20,34 @@ export default function Service() {
 
     const getSubservicesToDisplay = () => {
         if (searchTerm) {
-            // Búsqueda en todos los servicios y subservicios
-            return servicesData.flatMap(service => 
+            // Filtrar subservicios según el término de búsqueda
+            return servicesData.flatMap(service =>
                 service.subservices
-                    .filter(subservice => subservice.toLowerCase().includes(searchTerm.toLowerCase()))
+                    .filter(subservice =>
+                        subservice.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    )
                     .map(subservice => ({ serviceTitle: service.title, subservice }))
             );
         }
-        
-        // Si no hay término de búsqueda, mostrar los subservicios del servicio seleccionado
-        return activeService?.subservices.map(subservice => ({ serviceTitle: activeService.title, subservice })) || [];
+
+        // Mostrar los subservicios del servicio principal seleccionado
+        return activeService?.subservices.map(subservice => ({
+            serviceTitle: activeService.title,
+            subservice
+        })) || [];
     };
 
     const groupAndSplitSubservices = (subservices) => {
         const grouped = subservices.reduce((acc, { subservice }) => {
-            if (typeof subservice === 'string' && subservice.length > 0) {
-                const initial = subservice[0].toUpperCase();
-                if (!acc[initial]) acc[initial] = [];
-                acc[initial].push(subservice);
-            }
+            const initial = subservice.name[0].toUpperCase();
+            if (!acc[initial]) acc[initial] = [];
+            acc[initial].push(subservice);
             return acc;
         }, {});
 
         const sortedGrouped = Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b));
         const midIndex = Math.ceil(sortedGrouped.length / 2);
         return [sortedGrouped.slice(0, midIndex), sortedGrouped.slice(midIndex)];
-    };
-
-    const handleSubserviceClick = (subservice) => {
-        const firebaseId = formatServiceNameForFirebase(subservice);
-        
-        console.log(`Subservicio seleccionado: "${subservice}"`);
-        console.log(`ID de documento en Firebase: "${firebaseId}`);
     };
 
     const subservicesToDisplay = getSubservicesToDisplay();
@@ -75,9 +70,14 @@ export default function Service() {
                         .subservice-link { color: #333; text-decoration: none; transition: box-shadow 0.3s ease; }
                         .subservice-link:hover { box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); color: #007bff; }
                         .search-bar { padding: 8px; width: 100%; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; }
+                        .description, .sedes { margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; }
+                        .description h3, .sedes h3 { font-weight: bold; color: #333; margin-bottom: 10px; }
+                        .sedes ul { display: flex; gap: 10px; list-style: none; padding: 0; margin: 0; }
+                        .sedes li { padding: 5px 10px; background-color: #333; color: #fff; border-radius: 20px; font-size: 14px; }
                     `}</style>
 
                     <div className="service-container">
+                        {/* Lista de servicios principales */}
                         <div className="service-list">
                             <h2>Servicios Principales</h2>
                             {servicesData.map((service, index) => (
@@ -91,7 +91,13 @@ export default function Service() {
                             ))}
                         </div>
 
+                        {/* Lista de subservicios */}
+                        
                         <div className="subservice-list">
+                           
+
+
+                            {/* Barra de búsqueda */}
                             <h2>Especialidades</h2>
                             <input
                                 type="text"
@@ -109,14 +115,13 @@ export default function Service() {
                                                     <div className="subservice-letter">{letter}</div>
                                                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                                                         {items.map((subservice, subIndex) => (
-                                                            <div 
-                                                                key={subIndex} 
-                                                                className="subservice-item" 
+                                                            <div
+                                                                key={subIndex}
+                                                                className="subservice-item"
                                                                 style={{ width: '45%' }}
-                                                                onClick={() => handleSubserviceClick(subservice)}
                                                             >
-                                                                <Link href={`/service-details/${formatServiceNameForFirebase(subservice)}`} className="subservice-link">
-                                                                    {subservice}
+                                                                <Link href={subservice.url} className="subservice-link">
+                                                                    {subservice.name}
                                                                 </Link>
                                                             </div>
                                                         ))}

@@ -1,9 +1,7 @@
 'use client';
 
 import Layout from "@/components/layout/Layout";
-import Link from "next/link";
 import { useState } from "react";
-import SidebarMenu from "@/components/elements/SidebarMenu";
 import PacienteMenu from "@/components/elements/Pacientemenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
@@ -16,20 +14,20 @@ export default function AreasClinica() {
     `;
 
     const areas = [
-        { name: "Alergología", phone: "605-123-4567" },
-        { name: "Broncopulmonar", phone: "605-123-4568" },
-        { name: "Cardiología", phone: "605-123-4569" },
-        { name: "Dermatología", phone: "605-123-4570" },
-        { name: "Endocrinología", phone: "605-123-4571" },
-        { name: "Fisiatría", phone: "605-123-4572" },
-        { name: "Gastroenterología", phone: "605-123-4573" },
-        { name: "Hematología", phone: "605-123-4574" },
-        { name: "Infectología", phone: "605-123-4575" },
-        { name: "Neurología", phone: "605-123-4576" },
-        { name: "Oftalmología", phone: "605-123-4577" },
-        { name: "Pediatría", phone: "605-123-4578" },
-        { name: "Reumatología", phone: "605-123-4579" },
-        { name: "Urología", phone: "605-123-4580" },
+        { name: "Alergología", phone: "605-123-4567", email: "alergologia@clinicadelacosta.com" },
+        { name: "Broncopulmonar", phone: "605-123-4568", email: "broncopulmonar@clinicadelacosta.com" },
+        { name: "Cardiología", phone: "605-123-4569", email: "cardiologia@clinicadelacosta.com" },
+        { name: "Dermatología", phone: "605-123-4570", email: "dermatologia@clinicadelacosta.com" },
+        { name: "Endocrinología", phone: "605-123-4571", email: "endocrinologia@clinicadelacosta.com" },
+        { name: "Fisiatría", phone: "605-123-4572", email: "fisiatria@clinicadelacosta.com" },
+        { name: "Gastroenterología", phone: "605-123-4573", email: "gastroenterologia@clinicadelacosta.com" },
+        { name: "Hematología", phone: "605-123-4574", email: "hematologia@clinicadelacosta.com" },
+        { name: "Infectología", phone: "605-123-4575", email: "infectologia@clinicadelacosta.com" },
+        { name: "Neurología", phone: "605-123-4576", email: "neurologia@clinicadelacosta.com" },
+        { name: "Oftalmología", phone: "605-123-4577", email: "oftalmologia@clinicadelacosta.com" },
+        { name: "Pediatría", phone: "605-123-4578", email: "pediatria@clinicadelacosta.com" },
+        { name: "Reumatología", phone: "605-123-4579", email: "reumatologia@clinicadelacosta.com" },
+        { name: "Urología", phone: "605-123-4580", email: "urologia@clinicadelacosta.com" },
     ];
 
     // Filtrar las áreas por el texto del buscador
@@ -60,15 +58,14 @@ export default function AreasClinica() {
                         >
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2Fmisionvision_(1)-transformed.jpeg?alt=media&token=fc787cf2-c0e8-4f7a-a5a4-da0291536d42"
-                                    alt="Áreas de la Clínica"
+                                    src="https://picsum.photos/800/400"
+                                    alt="Recomendaciones para Visitantes"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
                                         height: '100%',
                                         maxHeight: '450px',
                                         objectFit: 'cover',
-                                        marginTop: "50px",
                                     }}
                                 />
                             </div>
@@ -118,8 +115,12 @@ export default function AreasClinica() {
                                                 <div
                                                     className="card"
                                                     style={{
+                                                        height: '100%',
                                                         borderRadius: '8px',
                                                         boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        justifyContent: 'space-between',
                                                     }}
                                                 >
                                                     <div
@@ -141,23 +142,27 @@ export default function AreasClinica() {
                                                         <p style={{ fontSize: '14px', color: '#6c757d' }}>
                                                             Teléfono: {area.phone}
                                                         </p>
-                                                        <button
-                                                            className="btn btn-primary"
+                                                        <p style={{ fontSize: '14px', color: '#6c757d' }}>
+                                                            Correo: <a href={`mailto:${area.email}`} style={{ textDecoration: 'none', color: '#2C2C5B' }}>{area.email}</a>
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className="card-footer"
+                                                        style={{
+                                                            backgroundColor: '#F8F9FA',
+                                                            textAlign: 'center',
+                                                            padding: '10px 0',
+                                                        }}
+                                                    >
+                                                        <a
+                                                            href={`tel:${area.phone.replace(/[^\d+]/g, "")}`}
                                                             style={{
-                                                                backgroundColor: '#2C2C5B',
-                                                                borderColor: '#2C2C5B',
-                                                                borderRadius: '8px',
-                                                                fontSize: '14px',
-                                                                padding: '10px 20px',
+                                                                color: '#1A1A3B',
+                                                                fontSize: '20px',
                                                             }}
-                                                            onClick={() =>
-                                                                alert(
-                                                                    `Llamando a ${area.name} (${area.phone})`
-                                                                )
-                                                            }
                                                         >
-                                                            Llamar
-                                                        </button>
+                                                            <i className="fas fa-phone"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
