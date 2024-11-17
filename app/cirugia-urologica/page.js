@@ -5,7 +5,7 @@ import Layout from "@/components/layout/Layout";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function UrologicSurgeryService() {
+export default function UrologySurgeryService() {
     const [titulo] = useState("Cirugía Urológica en la Clínica de la Costa SAS");
     const [isActive, setIsActive] = useState(null);
 
@@ -69,14 +69,14 @@ export default function UrologicSurgeryService() {
                                 <div className="pt-4">
                                     {/* Descripción Principal */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Tratamiento integral del sistema genital y urinario</h2>
+                                        <h2 className="description-title">Soluciones avanzadas para la salud urológica</h2>
                                         <p>
-                                            La cirugía urológica es una especialidad médica que abarca todas las técnicas quirúrgicas dirigidas al tratamiento de enfermedades del sistema genital y urinario del hombre, y del sistema urinario de la mujer. En la Clínica de la Costa SAS, ofrecemos procedimientos avanzados para abordar tanto patologías benignas como malignas, garantizando resultados efectivos y seguros para nuestros pacientes.
+                                            La cirugía urológica agrupa todas aquellas técnicas quirúrgicas que tratan el sistema genital y urinario del varón y el sistema urinario de la mujer. Incluye procedimientos como la extirpación parcial o total del riñón por cáncer o enfermedades benignas, el tratamiento de piedras renales complejas, cirugías reconstructivas del uréter, cirugía prostática por enfermedades benignas o cáncer, y mucho más.
                                         </p>
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=11"
+                                            src="https://picsum.photos/1200/400?random=27"
                                             alt="Cirugía Urológica"
                                             style={{
                                                 width: '100%',
@@ -87,7 +87,7 @@ export default function UrologicSurgeryService() {
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Procedimientos en Cirugía Urológica */}
+                                        {/* Cirugías y procedimientos */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -103,48 +103,24 @@ export default function UrologicSurgeryService() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Procedimientos en cirugía urológica
+                                                Cirugías y procedimientos
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
-                                                    <h3>1. Cirugía de riñón:</h3>
                                                     <ul className="service-list">
-                                                        <li>Extirpación parcial o total del riñón afectado por cáncer o enfermedades benignas.</li>
+                                                        <li>Extirpación parcial o total del riñón por cáncer o enfermedades benignas.</li>
                                                         <li>Tratamiento de piedras renales grandes y complejas.</li>
-                                                    </ul>
-                                                    <h3>2. Cirugía reconstructiva:</h3>
-                                                    <ul className="service-list">
                                                         <li>Reconstrucción de estrecheces del uréter o de la unión pieloureteral.</li>
-                                                        <li>Cirugía reconstructiva de la vejiga.</li>
-                                                    </ul>
-                                                    <h3>3. Cirugía prostática:</h3>
-                                                    <ul className="service-list">
-                                                        <li>Tratamiento quirúrgico para enfermedades benignas de la próstata.</li>
-                                                        <li>Extirpación de la próstata en casos de cáncer.</li>
-                                                    </ul>
-                                                    <h3>4. Cirugía oncológica:</h3>
-                                                    <ul className="service-list">
+                                                        <li>Cirugía prostática por enfermedades benignas o cáncer.</li>
                                                         <li>Extirpación de tumores malignos de testículo.</li>
-                                                        <li>Tratamiento quirúrgico del cáncer de vejiga y otros órganos del sistema urinario.</li>
-                                                    </ul>
-                                                    <h3>5. Cirugía andrológica:</h3>
-                                                    <ul className="service-list">
-                                                        <li>Vasectomía.</li>
-                                                        <li>Vasovasostomía (reconexión de conductos deferentes tras una vasectomía).</li>
-                                                        <li>Biopsia testicular.</li>
-                                                        <li>Implante de prótesis de pene.</li>
-                                                    </ul>
-                                                    <h3>6. Tratamientos especializados:</h3>
-                                                    <ul className="service-list">
-                                                        <li>Cirugía para tratar estrecheces de la uretra.</li>
-                                                        <li>Manejo de malformaciones congénitas en los genitales o el sistema urinario.</li>
-                                                        <li>Tratamiento quirúrgico de la incontinencia urinaria.</li>
+                                                        <li>Cirugías andrológicas: Vasectomía, vasovasostomía, biopsia testicular, prótesis de pene.</li>
+                                                        <li>Tratamiento de estrecheces de la uretra y malformaciones congénitas del sistema urinario.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Cirugía Laparoscópica */}
+                                        {/* Laparoscopia */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -160,32 +136,24 @@ export default function UrologicSurgeryService() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Cirugía laparoscópica: mínima invasión, máxima eficacia
+                                                Laparoscopia: Técnica avanzada y mínimamente invasiva
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
                                                     <p>
-                                                        En la Clínica de la Costa SAS, hemos incorporado una torre de cirugía laparoscópica de última generación, que permite realizar procedimientos con precisión y eficiencia. La laparoscopía se realiza mediante la introducción de una cámara y pinzas quirúrgicas a través de pequeños accesos en la cavidad abdominal, ofreciendo múltiples ventajas:
+                                                        La laparoscopia es una técnica que utiliza una cámara y herramientas quirúrgicas especializadas introducidas a través de pequeños puertos en la cavidad abdominal. Ofrece múltiples ventajas frente a las técnicas tradicionales:
                                                     </p>
                                                     <ul className="service-list">
                                                         <li>Evita grandes incisiones.</li>
-                                                        <li>Menor dolor postoperatorio.</li>
-                                                        <li>Menor sangrado durante el procedimiento.</li>
-                                                        <li>Recuperación más rápida, con pronta reinserción a las actividades diarias.</li>
-                                                        <li>Reducción del uso de analgésicos.</li>
-                                                    </ul>
-                                                    <h3>Procedimientos laparoscópicos habituales:</h3>
-                                                    <ul className="service-list">
-                                                        <li>Nefrectomía radical y parcial: Extirpación total o parcial del riñón.</li>
-                                                        <li>Plástica de la unión pieloureteral: Reconstrucción del área entre el riñón y el uréter.</li>
-                                                        <li>Cirugía del uréter: Incluyendo litotomías y reimplantes uretero-vesicales.</li>
-                                                        <li>Prostatectomía radical: Extirpación completa de la próstata en casos de cáncer.</li>
+                                                        <li>Menor dolor postoperatorio y menor consumo de analgésicos.</li>
+                                                        <li>Menor sangrado.</li>
+                                                        <li>Menor tiempo de recuperación y pronta reincorporación a las actividades cotidianas.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Nuestro Compromiso */}
+                                        {/* Procedimientos laparoscópicos */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -201,20 +169,45 @@ export default function UrologicSurgeryService() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Nuestro compromiso
+                                                Procedimientos laparoscópicos más frecuentes
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>
-                                                            <strong>Tecnología de punta:</strong> Equipos modernos que aseguran precisión y seguridad.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Equipo médico especializado:</strong> Cirujanos con amplia experiencia en técnicas urológicas avanzadas, incluyendo laparoscopía.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Atención integral:</strong> Desde el diagnóstico hasta el seguimiento postquirúrgico, cuidamos cada detalle para garantizar la salud y bienestar de nuestros pacientes.
-                                                        </li>
+                                                        <li>Nefrectomía radical y parcial.</li>
+                                                        <li>Plástica de la unión pieloureteral.</li>
+                                                        <li>Cirugía del uréter: Litotomías, reimplantes uretero-vesicales.</li>
+                                                        <li>Prostatectomía radical.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Beneficios de la cirugía urológica */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(4)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 4 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 4 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Beneficios de nuestros procedimientos
+                                            </h2>
+                                            {isActive === 4 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>✔ Mínima invasión: Menor daño a los tejidos.</li>
+                                                        <li>✔ Recuperación rápida: Reducción del tiempo de hospitalización.</li>
+                                                        <li>✔ Menor dolor: Técnicas avanzadas que reducen molestias postoperatorias.</li>
+                                                        <li>✔ Resultados efectivos: Tratamientos diseñados para necesidades específicas.</li>
                                                     </ul>
                                                 </div>
                                             )}

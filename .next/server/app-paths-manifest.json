@@ -1,9 +1,7 @@
 {
-  "/cirugia-vascular/page": "app/cirugia-vascular/page.js",
-  "/cirugia-cardiovascular/page": "app/cirugia-cardiovascular/page.js",
-  "/cirugia-general/page": "app/cirugia-general/page.js",
-  "/cirugia-ginecologica/page": "app/cirugia-ginecologica/page.js",
-  "/cirugia-ginecologica-laparoscopica/page": "app/cirugia-ginecologica-laparoscopica/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/cirugia-maxilofacial/page": "app/cirugia-maxilofacial/page.js"
+  "/page": "app/page.js",
+  "/service-details-6/page": "app/service-details-6/page.js",
+  "/urgencias/page": "app/urgencias/page.js",
+  "/hematologia-oncologica/page": "app/hematologia-oncologica/page.js",
+  "/cuidado-intensivo/page": "app/cuidado-intensivo/page.js"
 }

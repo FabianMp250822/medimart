@@ -2,19 +2,10 @@ const servicesData = [
     {
         title: "Internación",
         subservices: [
-            // { name: "Hospitalización Paciente Crónico Con Ventilador", url: "/hospitalizacion-con-ventilador" },
-            // { name: "Hospitalización Paciente Crónico Sin Ventilador", url: "/hospitalizacion-paciente-cronico-sin-ventilador" },
+           
             { name: "Cuidado Intensivo", url: "/cuidado-intensivo" },
-            // { name: "Cuidado Intermedio Neonatal", url: "/cuidado-intermedio-neonatal" },
-            // { name: "Cuidado Intermedio Pediátrico", url: "/cuidado-intermedio-pediatrico" },
-            // { name: "Cuidado Intermedio Adultos", url: "/cuidado-intermedio-adultos" },
-            // { name: "Cuidado Intensivo Neonatal", url: "/cuidado-intensivo-neonatal" },
-            // { name: "Cuidado Intensivo Pediátrico", url: "/cuidado-intensivo-pediatrico" },
-            // { name: "Cuidado Intensivo Adultos", url: "/cuidado-intensivo-adultos" },
-            // { name: "Cuidado Básico Neonatal", url: "/cuidado-basico-neonatal" },
-            // { name: "Hospitalización Adultos", url: "/hospitalizacion-adultos" },
             { name: "Hospitalización", url: "/hospitalizacion" },
-            // { name: "Hospitalización Pediátrica", url: "/hospitalizacion-pediatrica" }
+       
         ]
     },
     {
@@ -36,7 +27,6 @@ const servicesData = [
             { name: "Cirugía De Mama Y Tumores Tejidos Blandos", url: "/cirugia-de-mama-y-tumores-tejidos-blandos" },
             { name: "Cirugía Vascular Y Angiológica", url: "/cirugia-vascular-y-angiologica" },
             { name: "Cirugía Urológica", url: "/cirugia-urologica" },
-            // { name: "Otras Cirugías", url: "/otras-cirugias" },
             { name: "Cirugía Endovascular Neurológica", url: "/cirugia-endovascular-neurologica" },
             { name: "Cirugía Oncológica Pediátrica", url: "/cirugia-oncologica-pediatrica" },
             { name: "Cirugía De La Mano", url: "/cirugia-de-mano" },
@@ -50,11 +40,9 @@ const servicesData = [
     {
         title: "Consulta Externa",
         subservices: [
+            { name: "Consulta Externa", url: "/consulta-externa" },
             { name: "Anestesia", url: "/anestesia" },
             { name: "Cardiología", url: "/cardiologia" },
-            { name: "Cirugía Cardiovascular", url: "/cirugia-cardiovascular" },
-            { name: "Cirugía General", url: "/cirugia-general" },
-            { name: "Cirugía Pediátrica", url: "/cirugia-pediatrica" },
             { name: "Dolor Y Cuidados Paliativos", url: "/dolor-y-cuidados-paliativos" },
             { name: "Endocrinología", url: "/endocrinologia" },
             { name: "Endodoncia", url: "/endodoncia" },
@@ -63,7 +51,7 @@ const servicesData = [
             { name: "Gastroenterología", url: "/gastroenterologia" },
             { name: "Genética", url: "/genetica" },
             { name: "Ginecobstetricia", url: "/ginecobstetricia" },
-            { name: "Hematología", url: "/hematologia" },
+            // { name: "Hematología", url: "/hematologia" },
             { name: "Infectología", url: "/infectologia" },
             { name: "Inmunología", url: "/inmunologia" },
             { name: "Medicina Familiar", url: "/medicina-familiar" },
@@ -86,32 +74,16 @@ const servicesData = [
             { name: "Toxicología", url: "/toxicologia" },
             { name: "Urología", url: "/urologia" },
             { name: "Otras Consultas De Especialidad", url: "/otras-consultas-de-especialidad" },
-            { name: "Cirugía De Cabeza Y Cuello", url: "/cirugia-de-cabeza-y-cuello" },
-            { name: "Cirugía De Mano", url: "/cirugia-de-mano" },
-            { name: "Cirugía De Mama Y Tumores Tejidos Blandos", url: "/cirugia-de-mama-y-tumores-tejidos-blandos" },
-            { name: "Cirugía Dermatológica", url: "/cirugia-dermatologica" },
-            { name: "Cirugía De Tórax", url: "/cirugia-de-torax" },
-            { name: "Cirugía Gastrointestinal", url: "/cirugia-gastrointestinal" },
-            { name: "Cirugía Ginecológica Laparoscópica", url: "/cirugia-ginecologica-laparoscopica" },
-            { name: "Cirugía Plástica Y Estética", url: "/cirugia-plastica-y-estetica" },
-            { name: "Cirugía Plástica Oncológica", url: "/cirugia-plastica-oncologica" },
-            { name: "Otras Consultas Generales", url: "/otras-consultas-generales" },
-            { name: "Cirugía Vascular", url: "/cirugia-vascular" },
-            { name: "Cirugía Oncológica", url: "/cirugia-oncologica" },
-            { name: "Coloproctología", url: "/coloproctologia" },
             { name: "Medicina Nuclear", url: "/medicina-nuclear" },
             { name: "Nefrología Pediátrica", url: "/nefrologia-pediatrica" },
             { name: "Neonatología", url: "/neonatologia" },
             { name: "Neumología Pediátrica", url: "/neumologia-pediatrica" },
-            { name: "Neurocirugía", url: "/neurocirugia" },
             { name: "Neuropediatría", url: "/neuropediatria" },
-            { name: "Oncología Y Hematología Pediátrica", url: "/oncologia-y-hematologia-pediatrica" },
+            // { name: "Oncología Y Hematología Pediátrica", url: "/oncologia-y-hematologia-pediatrica" },
             { name: "Urología Oncológica", url: "/urologia-oncologica" },
             { name: "Hematología Oncológica", url: "/hematologia-oncologica" },
-            { name: "Radioterapia", url: "/radioterapia" },
+            { name: "Radioterapia", url: "/service-details/radioterapia" },
             { name: "Ortopedia Pediátrica", url: "/ortopedia-pediatrica" },
-            { name: "Cirugía Oral", url: "/cirugia-oral" },
-            { name: "Cirugía Maxilofacial", url: "/cirugia-maxilofacial" },
             { name: "Vacunación", url: "/vacunacion" }
         ]
     },
@@ -119,7 +91,9 @@ const servicesData = [
         title: "Apoyo diagnóstico y complementación terapéutica",
         subservices: [
             { name: "Patología", url: "/patologia" },
+            { name: "Laboratorio de Patología", url: "/laboratorio-patologia" },
             { name: "Gestión Pre-Transfusional", url: "/gestion-pre-transfusional" },
+            { name: "Imágenes Diagnósticas", url: "/imagenes-diagnosticas" },
             { name: "Imágenes Diagnósticas - Ionizantes", url: "/imagenes-diagnosticas-ionizantes" },
             { name: "Hemodinamia E Intervencionismo", url: "/hemodinamia-e-intervencionismo" },
             { name: "Diagnóstico Vascular", url: "/diagnostico-vascular" },
@@ -130,7 +104,7 @@ const servicesData = [
             { name: "Terapia Respiratoria", url: "/terapia-respiratoria" },
             { name: "Laboratorio Citologías Cérvico-Uterinas", url: "/laboratorio-citologias-cervico-uterinas" },
             { name: "Servicio Farmacéutico", url: "/servicio-farmaceutico" },
-            { name: "Toma De Muestras De Laboratorio Clínico", url: "/toma-de-muestras-de-laboratorio-clinico" },
+            // { name: "Toma De Muestras De Laboratorio Clínico", url: "/toma-de-muestras-de-laboratorio-clinico" },
             { name: "Quimioterapia", url: "/quimioterapia" },
             { name: "Laboratorio Clínico", url: "/laboratorio-clinico" },
             { name: "Toma De Muestras De Cuello Uterino Y Ginecológicas", url: "/toma-de-muestras-de-cuello-uterino-y-ginecologicas" },
@@ -145,7 +119,7 @@ const servicesData = [
         title: "Atención Inmediata",
         subservices: [
             { name: "Atención Del Parto", url: "/atencion-del-parto" },
-            { name: "Urgencias", url: "/urgencias" },
+            { name: "Urgencias", url: "/urgencia" },
             { name: "Transporte Asistencial Medicalizado", url: "/transporte-asistencial-medicalizado" },
             { name: "Atención Prehospitalaria", url: "/atencion-prehospitalaria" }
         ]
@@ -153,7 +127,7 @@ const servicesData = [
     {
         title: "Programas de Trasplantes",
         subservices: [
-            { name: "Trasplantes", url: "/trasplantes" }
+            { name: "Trasplantes", url: "/service-details/trasplantes" }
         ]
     }
 ];

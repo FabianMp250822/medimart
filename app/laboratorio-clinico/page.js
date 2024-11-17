@@ -1,243 +1,245 @@
 'use client';
 
+import { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import SidebarMenu from "@/components/elements/SidebarMenu";
-import PacienteMenu from "@/components/elements/Pacientemenu";
+import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function Service() {
-    const [isActive, setIsActive] = useState({
-        status: false,
-        key: 1,
-    });
+export default function ClinicalLaboratory() {
+    const [titulo] = useState("Laboratorio Clínico en la Clínica de la Costa SAS");
+    const [isActive, setIsActive] = useState(null);
 
-    const [sedes, setSedes] = useState([]);
-
-    const handleToggle = (key) => {
-        setIsActive((prevState) => ({
-            status: prevState.key !== key || !prevState.status,
-            key,
-        }));
+    const toggleAccordion = (key) => {
+        setIsActive(isActive === key ? null : key);
     };
-
-    useEffect(() => {
-        const fetchSedes = async () => {
-            try {
-                const sedesRef = collection(db, "sedes");
-                const sedesSnapshot = await getDocs(sedesRef);
-                const sedesList = sedesSnapshot.docs.map((doc) => doc.data().nombre.replace("Clínica de la Costa - ", ""));
-                setSedes(sedesList);
-            } catch (error) {
-                console.error("Error al obtener las sedes:", error);
-            }
-        };
-
-        fetchSedes();
-    }, []);
-
-    const titulo = "Servicios de Laboratorio Clínico en la Clínica de la Costa";
-    const descripcion = `
-        En la Clínica de la Costa, contamos con un equipo multidisciplinario de expertos en bacteriología, microbiología, bioanálisis, 
-        patología clínica, inmunología, genética y cito/histotecnología, comprometidos a satisfacer las necesidades de nuestros usuarios. 
-        Ofrecemos un servicio continuo, enfocado en la seguridad del paciente y respaldado por procesos de aseguramiento de calidad con 
-        estándares internacionales.
-    `;
-
-    const sections = [
-        {
-            title: "Equipo de Profesionales al Servicio de la Salud",
-            content: `
-                Nuestro enfoque está alineado con los más altos estándares internacionales y nuestra misión es cumplir con la cuádruple meta en salud:
-                <ul>
-                    <li>Excelencia en desenlaces clínicos.</li>
-                    <li>Experiencias memorables para pacientes y sus familias.</li>
-                    <li>Optimización de costos en la atención.</li>
-                    <li>Satisfacción de todos los grupos de interés.</li>
-                </ul>
-                El 70% de las decisiones médicas hospitalarias se basan en los análisis realizados en laboratorios clínicos, lo que subraya la importancia de garantizar resultados confiables, oportunos y clínicamente útiles.
-            `,
-            images: [
-                "https://picsum.photos/400/300?random=1",
-                "https://picsum.photos/400/300?random=2",
-            ],
-        },
-        {
-            title: "Automatización para la Seguridad del Paciente",
-            content: `
-                Para garantizar la trazabilidad y el manejo eficiente de las muestras, hemos implementado un sistema automatizado que incluye:
-                <ul>
-                    <li>Transporte interno mediante correo neumático, excepto para muestras con contraindicación.</li>
-                    <li>Procesos robotizados para centrifugado, alicuotado y distribución de muestras, alcanzando un 95% de automatización en las operaciones.</li>
-                </ul>
-            `,
-            images: [
-                "https://picsum.photos/400/300?random=3",
-                "https://picsum.photos/400/300?random=4",
-            ],
-        },
-        {
-            title: "Por Qué Escoger los Laboratorios de la Clínica de la Costa",
-            content: `
-                <ul>
-                    <li><strong>Alto Desempeño en Control de Calidad:</strong> Participamos en programas internacionales como CAP, RIQAS y EMQN.</li>
-                    <li><strong>Adherencia a Estándares Internacionales:</strong> Normas del CLSI y Acreditación del SUA reconocido por ISQua.</li>
-                    <li><strong>Soporte Clínico Permanente:</strong> Contamos con patólogos clínicos, inmunólogos y genetistas disponibles para interpretaciones clínicas detalladas.</li>
-                    <li><strong>Tecnología de Vanguardia:</strong> Utilizamos equipos de última generación para garantizar resultados precisos y confiables.</li>
-                </ul>
-            `,
-            images: [
-                "https://picsum.photos/400/300?random=5",
-                "https://picsum.photos/400/300?random=6",
-            ],
-        },
-        {
-            title: "Servicios Especializados de Laboratorio",
-            content: `
-                <p>Nuestros servicios especializados incluyen:</p>
-                <ul>
-                    <li><strong>Laboratorio de Citogenética:</strong> Diagnóstico de enfermedades genéticas mediante análisis cromosómico y FISH.</li>
-                    <li><strong>Laboratorio de Genética Molecular:</strong> Diagnósticos de enfermedades hereditarias y oncológicas mediante paneles genéticos y PCR.</li>
-                    <li><strong>Laboratorio de Hematología Especial y Hemostasia:</strong> Pruebas avanzadas para trastornos hematológicos y de coagulación.</li>
-                    <li><strong>Laboratorio de Microbiología e Inmunología:</strong> Diagnóstico de infecciones mediante MALDI-TOF y cultivos avanzados.</li>
-                    <li><strong>Secuenciación Genómica:</strong> Análisis genéticos avanzados para diagnóstico de enfermedades hereditarias y oncológicas.</li>
-                </ul>
-            `,
-            images: [
-                "https://picsum.photos/400/300?random=7",
-                "https://picsum.photos/400/300?random=8",
-            ],
-        },
-        {
-            title: "Horarios y Sedes",
-            content: `
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Sede</th>
-                            <th>Horario Toma de Muestras</th>
-                            <th>Horario Entrega de Resultados</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Barranquilla</td>
-                            <td>Lunes a viernes: 6:00 am - 5:00 pm</td>
-                            <td>Lunes a viernes: 6:30 am - 6:00 pm</td>
-                        </tr>
-                        <tr>
-                            <td>Santa Marta</td>
-                            <td>Lunes a sábado: 6:00 am - 12:00 m</td>
-                            <td>Lunes a sábado: 6:30 am - 12:30 pm</td>
-                        </tr>
-                        <tr>
-                            <td>Valledupar</td>
-                            <td>Lunes a sábado: 6:00 am - 12:00 m</td>
-                            <td>Lunes a sábado: 6:30 am - 12:30 pm</td>
-                        </tr>
-                        <tr>
-                            <td>Cartagena</td>
-                            <td>Lunes a sábado: 6:00 am - 12:00 m</td>
-                            <td>Lunes a sábado: 6:30 am - 12:30 pm</td>
-                        </tr>
-                    </tbody>
-                </table>
-            `,
-            images: [],
-        },
-    ];
 
     return (
         <>
             <Layout footerStyle={1}>
-                {/* Banner principal */}
-                <div className="d-flex flex-column flex-md-row align-items-center p-4" style={{ backgroundColor: '#1A1A3B', borderRadius: '8px', marginBottom: '10px', marginTop: '20px', padding: '20px' }}>
+                {/* Banner Principal */}
+                <div
+                    className="d-flex flex-column flex-md-row align-items-center p-4"
+                    style={{
+                        backgroundColor: '#1A1A3B',
+                        borderRadius: '8px',
+                        marginBottom: '10px',
+                        marginTop: '20px',
+                        padding: '20px',
+                    }}
+                >
                     <div className="container">
-                        <div className="d-flex flex-column flex-md-row align-items-center" style={{ gap: '20px' }}>
+                        <div
+                            className="d-flex flex-column flex-md-row align-items-center"
+                            style={{
+                                gap: '20px',
+                            }}
+                        >
+                            {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://picsum.photos/800/400"
-                                    alt="Imagen de Servicio"
-                                    style={{ borderRadius: '8px', width: '100%', height: '100%', maxHeight: '450px', objectFit: 'cover' }}
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
+                                    alt="Laboratorio Clínico"
+                                    style={{
+                                        borderRadius: '8px',
+                                        width: '100%',
+                                        height: 'auto',
+                                        maxHeight: '450px',
+                                        objectFit: 'cover',
+                                    }}
                                 />
                             </div>
+
+                            {/* Contenido */}
                             <ServiceHeader titulo={titulo} />
-                            
                         </div>
                     </div>
                 </div>
 
-                {/* Contenido principal */}
+                {/* Contenido Principal */}
                 <div className="service-details pb_110">
                     <div className="container">
                         <div className="row">
+                            {/* Menú Lateral */}
                             <div className="col-12 col-md-3">
-                                <PacienteMenu />
+                                <ServicesMenu />
                             </div>
+
+                            {/* Contenido */}
                             <div className="col-12 col-md-9">
                                 <div className="pt-4">
-                                    <div className="mb-4">
-                                        <p style={{ fontSize: '16px', color: '#3B3B3B', textAlign: 'justify', lineHeight: '1.8' }}>{descripcion}</p>
+                                    {/* Descripción Principal */}
+                                    <div className="description-section mb-5">
+                                        <h2 className="description-title">Diagnósticos confiables con tecnología avanzada</h2>
+                                        <p>
+                                            El Laboratorio Clínico de la Clínica de la Costa SAS está diseñado para proporcionar diagnósticos precisos y confiables, respaldados por tecnología de vanguardia y un equipo altamente capacitado. Nuestro objetivo es garantizar resultados rápidos y certeros que agilicen la detección y tratamiento de cualquier anomalía.
+                                        </p>
                                     </div>
                                     <div className="mb-4">
-    <p className="text-muted text-uppercase mb-2" style={{ color: '#F0E7D8' }}>
-        Disponible en las sedes:
-    </p>
-    <div className="d-flex flex-wrap" style={{ gap: '10px', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-        {sedes.map((sede, index) => (
-            <span
-                key={index}
-                style={{
-                    padding: '5px 15px',
-                    borderRadius: '20px',
-                    backgroundColor: '#3B3B3B',
-                    color: '#F0E7D8',
-                    textAlign: 'center',
-                }}
-            >
-                {sede}
-            </span>
-        ))}
-    </div>
-</div>
-
-                                    <div className="accordion mt-4" id="accordionExample">
-                                        {sections.map(({ title, content, images }, index) => (
-                                            <div className="card" key={index} style={{ border: 'none', borderRadius: '8px', marginBottom: '15px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
-                                                <div className="card-header" style={{ backgroundColor: '#2C2C5B', borderRadius: '8px' }}>
-                                                    <button className="btn btn-link" onClick={() => handleToggle(index)} style={{ color: isActive.key === index ? '#F0E7D8' : '#F0E7D8CC', width: '100%', textAlign: 'left', fontWeight: 'bold' }}>
-                                                        {title}
-                                                    </button>
+                                        <img
+                                            src="https://picsum.photos/1200/400?random=32"
+                                            alt="Laboratorio Clínico"
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '8px',
+                                                marginBottom: '15px',
+                                            }}
+                                        />
+                                    </div>
+                                    {/* Acordeón */}
+                                    <div id="accordion" className="accordion">
+                                        {/* Áreas Especializadas */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(1)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 1 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 1 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Áreas Especializadas
+                                            </h2>
+                                            {isActive === 1 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>Hematología: Diagnóstico de enfermedades de la sangre y sus componentes.</li>
+                                                        <li>Coagulación: Evaluación de trastornos en la coagulación sanguínea.</li>
+                                                        <li>Microbiología: Identificación de microorganismos causantes de infecciones.</li>
+                                                        <li>Biología molecular: Diagnósticos genéticos y análisis de ADN.</li>
+                                                        <li>Citogenética: Evaluación de anomalías cromosómicas.</li>
+                                                    </ul>
                                                 </div>
-                                                
-                                                {isActive.key === index && (
-                                                    <div className="card-body" style={{ padding: '20px', color: '#3B3B3B' }}>
-                                                        <div dangerouslySetInnerHTML={{ __html: content }} />
-                                                        {images.length > 0 && (
-                                                            <div className="mt-4 d-flex justify-content-between">
-                                                                {images.map((img, imgIndex) => (
-                                                                    <img
-                                                                        key={imgIndex}
-                                                                        src={img}
-                                                                        alt={`Imagen ${imgIndex + 1}`}
-                                                                        style={{ width: '48%', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
-                                                                    />
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
+                                            )}
+                                        </div>
+
+                                        {/* Servicios Disponibles */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(2)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 2 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 2 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Servicios Disponibles
+                                            </h2>
+                                            {isActive === 2 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>Química clínica: Evaluación de órganos y sistemas.</li>
+                                                        <li>Inmunohistoquímica: Diagnósticos a nivel celular.</li>
+                                                        <li>TSH: Pruebas de función tiroidea.</li>
+                                                        <li>Pruebas avanzadas de Química Especializada.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Tecnología de Última Generación */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(3)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 3 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 3 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Tecnología de Última Generación
+                                            </h2>
+                                            {isActive === 3 && (
+                                                <div className="accordion-body">
+                                                    <p>
+                                                        En la Clínica de la Costa SAS, utilizamos Genexpert, una herramienta avanzada para el diagnóstico rápido y preciso de tuberculosis y otras pruebas moleculares críticas.
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Servicios de Atención Inmediata */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(4)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 4 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 4 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Servicios de Atención Inmediata
+                                            </h2>
+                                            {isActive === 4 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>Atención del parto.</li>
+                                                        <li>Urgencias.</li>
+                                                        <li>Transporte asistencial medicalizado.</li>
+                                                        <li>Atención prehospitalaria.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <style jsx>{`
+                    .description-title {
+                        font-size: 28px;
+                        font-weight: bold;
+                        color: #1A1A3B;
+                        margin-bottom: 15px;
+                        text-transform: uppercase;
+                    }
+                    .accordion-header:hover {
+                        background-color: #007bff !important;
+                        color: #fff !important;
+                    }
+                    .service-list {
+                        list-style: none;
+                        padding-left: 20px;
+                        position: relative;
+                    }
+                    .service-list li {
+                        position: relative;
+                        margin-bottom: 10px;
+                        padding-left: 25px;
+                    }
+                    .service-list li:before {
+                        content: "✓";
+                        position: absolute;
+                        left: 0;
+                        color: #007bff;
+                    }
+                `}</style>
             </Layout>
         </>
     );

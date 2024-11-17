@@ -1,0 +1,276 @@
+'use client';
+
+import { useState } from "react";
+import Layout from "@/components/layout/Layout";
+import ServicesMenu from "@/components/elements/ServicesMenu";
+import ServiceHeader from "@/components/elements/ServiceHeader";
+
+export default function MaxillofacialSurgeryService() {
+    const [titulo] = useState("Cirugía Maxilofacial en la Clínica de la Costa SAS");
+    const [isActive, setIsActive] = useState(null);
+
+    const toggleAccordion = (key) => {
+        setIsActive(isActive === key ? null : key);
+    };
+
+    return (
+        <>
+            <Layout footerStyle={1}>
+                {/* Banner Principal */}
+                <div
+                    className="d-flex flex-column flex-md-row align-items-center p-4"
+                    style={{
+                        backgroundColor: '#1A1A3B',
+                        borderRadius: '8px',
+                        marginBottom: '10px',
+                        marginTop: '20px',
+                        padding: '20px',
+                    }}
+                >
+                    <div className="container">
+                        <div
+                            className="d-flex flex-column flex-md-row align-items-center"
+                            style={{
+                                gap: '20px',
+                            }}
+                        >
+                            {/* Imagen */}
+                            <div style={{ flex: '1.5' }}>
+                                <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
+                                    alt="Cirugía Maxilofacial"
+                                    style={{
+                                        borderRadius: '8px',
+                                        width: '100%',
+                                        height: 'auto',
+                                        maxHeight: '450px',
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            </div>
+
+                            {/* Contenido */}
+                            <ServiceHeader titulo={titulo} />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Contenido Principal */}
+                <div className="service-details pb_110">
+                    <div className="container">
+                        <div className="row">
+                            {/* Menú Lateral */}
+                            <div className="col-12 col-md-3">
+                                <ServicesMenu />
+                            </div>
+
+                            {/* Contenido */}
+                            <div className="col-12 col-md-9">
+                                <div className="pt-4">
+                                    {/* Descripción Principal */}
+                                    <div className="description-section mb-5">
+                                        <h2 className="description-title">Cuidado avanzado para la salud bucal y facial</h2>
+                                        <p>
+                                            La cirugía maxilofacial es una especialidad quirúrgica que se enfoca en el diagnóstico y tratamiento de enfermedades, lesiones y defectos de la cavidad oral, la cara, la mandíbula y el cuello. En la Clínica de la Costa SAS, contamos con cirujanos maxilofaciales altamente capacitados y tecnología de última generación para ofrecer soluciones integrales y personalizadas, restaurando la funcionalidad y la estética de nuestros pacientes.
+                                        </p>
+                                    </div>
+                                    <div className="mb-4">
+                                        <img
+                                            src="https://picsum.photos/1200/400?random=24"
+                                            alt="Cirugía Maxilofacial"
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '8px',
+                                                marginBottom: '15px',
+                                            }}
+                                        />
+                                    </div>
+                                    {/* Acordeón */}
+                                    <div id="accordion" className="accordion">
+                                        {/* ¿Qué es la cirugía maxilofacial? */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(1)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 1 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 1 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                ¿Qué es la cirugía maxilofacial?
+                                            </h2>
+                                            {isActive === 1 && (
+                                                <div className="accordion-body">
+                                                    <p>
+                                                        Es una disciplina médica que combina conocimientos de odontología y cirugía para tratar una amplia gama de problemas que afectan la estructura facial y bucal, incluyendo anomalías congénitas, traumas faciales y desórdenes funcionales. Nuestro objetivo es restaurar la salud, funcionalidad y armonía estética de la cara y la mandíbula.
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Procedimientos especializados */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(2)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 2 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 2 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Procedimientos especializados
+                                            </h2>
+                                            {isActive === 2 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li><strong>Cirugía ortognática:</strong> Corrección de desórdenes en la alineación de la mandíbula para mejorar mordida, masticación y estética facial.</li>
+                                                        <li><strong>Extracción de muelas del juicio:</strong> Extracción quirúrgica de terceros molares impactados.</li>
+                                                        <li><strong>Cirugía reconstructiva:</strong> Reparación de estructuras faciales dañadas por traumas, tumores o cirugías previas.</li>
+                                                        <li><strong>Tratamiento de trastornos ATM:</strong> Cirugía para aliviar dolor crónico, bloqueo mandibular o desgaste anormal de la articulación temporomandibular.</li>
+                                                        <li><strong>Extirpación de tumores y quistes bucales:</strong> Eliminación de lesiones benignas o malignas en la cavidad oral.</li>
+                                                        <li><strong>Implantes dentales y regeneración ósea:</strong> Colocación de implantes y regeneración ósea para pacientes con pérdida significativa de hueso.</li>
+                                                        <li><strong>Cirugía estética facial:</strong> Procedimientos como aumento o reducción del mentón y rinoplastia funcional.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Beneficios de la cirugía maxilofacial */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(3)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 3 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 3 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Beneficios de la cirugía maxilofacial
+                                            </h2>
+                                            {isActive === 3 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>✔ Mejora funcional y estética: Soluciones que restauran tanto la salud como la apariencia facial.</li>
+                                                        <li>✔ Procedimientos personalizados: Cada intervención es diseñada para las necesidades específicas del paciente.</li>
+                                                        <li>✔ Recuperación efectiva: Uso de técnicas avanzadas para minimizar el tiempo de recuperación y las molestias postoperatorias.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Tecnología de última generación */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(4)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 4 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 4 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Tecnología de última generación
+                                            </h2>
+                                            {isActive === 4 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>Imágenes 3D de alta resolución: Para planificar procedimientos quirúrgicos con detalle.</li>
+                                                        <li>Sistemas de navegación quirúrgica: Para mayor precisión durante las intervenciones.</li>
+                                                        <li>Instrumentación especializada: Diseñada específicamente para procedimientos maxilofaciales.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* ¿Por qué elegir la Clínica de la Costa SAS? */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(5)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 5 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 5 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                ¿Por qué elegir la Clínica de la Costa SAS?
+                                            </h2>
+                                            {isActive === 5 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li><strong>Equipo especializado:</strong> Cirujanos maxilofaciales con amplia experiencia en procedimientos complejos.</li>
+                                                        <li><strong>Tecnología avanzada:</strong> Equipos modernos que garantizan precisión y seguridad en cada intervención.</li>
+                                                        <li><strong>Atención personalizada:</strong> Diseñamos tratamientos adaptados a las necesidades de cada paciente.</li>
+                                                        <li><strong>Cuidado integral:</strong> Desde el diagnóstico hasta la recuperación, aseguramos un acompañamiento completo y profesional.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style jsx>{`
+                    .description-title {
+                        font-size: 28px;
+                        font-weight: bold;
+                        color: #1A1A3B;
+                        margin-bottom: 15px;
+                        text-transform: uppercase;
+                    }
+                    .accordion-header:hover {
+                        background-color: #007bff !important;
+                        color: #fff !important;
+                    }
+                    .service-list {
+                        list-style: none;
+                        padding-left: 20px;
+                        position: relative;
+                    }
+                    .service-list li {
+                        position: relative;
+                        margin-bottom: 10px;
+                        padding-left: 25px;
+                    }
+                    .service-list li:before {
+                        content: "✓";
+                        position: absolute;
+                        left: 0;
+                        color: #007bff;
+                    }
+                `}</style>
+            </Layout>
+        </>
+    );
+}

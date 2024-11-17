@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import ServiceList from '@/components/services/ServiceList';
+import ServicesMenu from '@/components/elements/ServicesMenu';
+import ServiceHeader from '@/components/elements/ServiceHeader';
 
 export default function ServiceDetails() {
     const { id } = useParams();
@@ -16,6 +18,7 @@ export default function ServiceDetails() {
     const router = useRouter();
 
     useEffect(() => {
+        
         const fetchServiceData = async () => {
             try {
                 const servicesRef = collection(db, 'serviciosclinica');
@@ -73,23 +76,51 @@ export default function ServiceDetails() {
     };
 
     return (
-        <Layout headerStyle={2} footerStyle={1} breadcrumbTitle={title || "Detalles del Servicio"}>
-            <section className="service-details pt_120 pb_110">
+        <Layout footerStyle={1}>
+        
+                
+                <div
+                    className="d-flex flex-column flex-md-row align-items-center p-4"
+                    style={{
+                        backgroundColor: '#1A1A3B',
+                        borderRadius: '8px',
+                        marginBottom: '10px',
+                        marginTop: '20px',
+                        padding: '20px',
+                    }}
+                >
+                    <div className="container">
+                        <div
+                            className="d-flex flex-column flex-md-row align-items-center"
+                            style={{
+                                gap: '20px',
+                            }}
+                        >
+                            {/* Imagen */}
+                            <div style={{ flex: '1.5' }}>
+                                <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
+                                    alt="Cirugía Vascular y Angiológica"
+                                    style={{
+                                        borderRadius: '8px',
+                                        width: '100%',
+                                        height: 'auto',
+                                        maxHeight: '450px',
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            </div>
+
+                            {/* Contenido */}
+                            <ServiceHeader titulo={title} />
+                        </div>
+                    </div>
+                </div>
                 <div className="auto-container">
-                    {/* Imagen del banner */}
-                    {banner && (
-                        <div className="banner-image">
-                            <img src={banner} alt="Banner del servicio" />
-                        </div>
-                    )}
                     <div className="row clearfix">
-                        <div className="col-lg-3 col-md-4 col-sm-12 sidebar-side">
-                            <ServiceList 
-                                servicesList={servicesList} 
-                                activeServiceId={id} 
-                                onServiceClick={handleServiceClick} 
-                            />
-                        </div>
+                    <div className="col-12 col-md-3">
+                                <ServicesMenu />
+                            </div>
 
                         <div className="col-lg-9 col-md-8 col-sm-12 content-side">
                             <div className="service-details-content">
@@ -321,7 +352,7 @@ export default function ServiceDetails() {
                         </div>
                     </div>
                 </div>
-            </section>
+          
         </Layout>
     );
 }
