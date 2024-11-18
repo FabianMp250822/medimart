@@ -4,7 +4,9 @@ const servicesData = [
         subservices: [
            
             { name: "Cuidado Intensivo", url: "/cuidado-intensivo" },
+            { name: "Cuidado Crítico", url: "/cuidado-critico" },
             { name: "Hospitalización", url: "/hospitalizacion" },
+            { name: "Atención Integral y Especializada para Pacientes con VIH/SIDA", url: "/atencion-expecializada-pacientes-VIH" },
        
         ]
     },
@@ -41,12 +43,12 @@ const servicesData = [
         title: "Consulta Externa",
         subservices: [
             { name: "Consulta Externa", url: "/consulta-externa" },
-            { name: "Anestesia", url: "/anestesia" },
+           { name: "Cardiologia Pediatrica", url: "/cardiologia-pediatrica" },
             { name: "Cardiología", url: "/cardiologia" },
             { name: "Dolor Y Cuidados Paliativos", url: "/dolor-y-cuidados-paliativos" },
             { name: "Endocrinología", url: "/endocrinologia" },
             { name: "Endodoncia", url: "/endodoncia" },
-            { name: "Enfermería", url: "/enfermeria" },
+            //{ name: "Enfermería", url: "/enfermeria" },
             { name: "Estomatología", url: "/estomatologia" },
             { name: "Gastroenterología", url: "/gastroenterologia" },
             { name: "Genética", url: "/genetica" },
@@ -90,11 +92,11 @@ const servicesData = [
     {
         title: "Apoyo diagnóstico y complementación terapéutica",
         subservices: [
-            { name: "Patología", url: "/patologia" },
+           // { name: "Patología", url: "/patologia" },
             { name: "Laboratorio de Patología", url: "/laboratorio-patologia" },
             { name: "Gestión Pre-Transfusional", url: "/gestion-pre-transfusional" },
             { name: "Imágenes Diagnósticas", url: "/imagenes-diagnosticas" },
-            { name: "Imágenes Diagnósticas - Ionizantes", url: "/imagenes-diagnosticas-ionizantes" },
+          //  { name: "Imágenes Diagnósticas - Ionizantes", url: "/imagenes-diagnosticas-ionizantes" },
             { name: "Hemodinamia E Intervencionismo", url: "/hemodinamia-e-intervencionismo" },
             { name: "Diagnóstico Vascular", url: "/diagnostico-vascular" },
             { name: "Fisioterapia", url: "/fisioterapia" },
@@ -108,9 +110,9 @@ const servicesData = [
             { name: "Quimioterapia", url: "/quimioterapia" },
             { name: "Laboratorio Clínico", url: "/laboratorio-clinico" },
             { name: "Toma De Muestras De Cuello Uterino Y Ginecológicas", url: "/toma-de-muestras-de-cuello-uterino-y-ginecologicas" },
-            { name: "Imágenes Diagnósticas - No Ionizantes", url: "/imagenes-diagnosticas-no-ionizantes" },
+           // { name: "Imágenes Diagnósticas - No Ionizantes", url: "/imagenes-diagnosticas-no-ionizantes" },
             { name: "Medicina Nuclear", url: "/medicina-nuclear" },
-            { name: "Radioterapia", url: "/radioterapia" },
+         //   { name: "Radioterapia", url: "/radioterapia" },
             { name: "Terapia Ocupacional", url: "/terapia-ocupacional" },
             { name: "Fonoaudiología Y/O Terapia Del Lenguaje", url: "/fonoaudiologia-y-terapia-del-lenguaje" }
         ]
@@ -125,9 +127,12 @@ const servicesData = [
         ]
     },
     {
-        title: "Programas de Trasplantes",
-        subservices: [
-            { name: "Trasplantes", url: "/service-details/trasplantes" }
+        title: "Otros Programas", 
+        subservices: [ 
+            { name: "Trasplantes", url: "/service-details/trasplantes" },
+            { name: "Atención de Pacientes con Dolor Torácico", url: "/atencion-de-acientes-con-dolor-toracico" },
+            { name: "PET-CT", url: "/PET-CT" },
+            { name: "Manejo Integral del Paciente Hematoncológico", url: "/manejo-integral-del-paciente-hematoncologico" }
         ]
     }
 ];

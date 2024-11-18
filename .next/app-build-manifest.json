@@ -45,6 +45,141 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/cuidado-intensivo/page.js"
+    ],
+    "/transporte-asistencial-medicalizado/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/transporte-asistencial-medicalizado/page.js"
+    ],
+    "/cirugia-endovascular-neurologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-endovascular-neurologica/page.js"
+    ],
+    "/neurologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neurologia/page.js"
+    ],
+    "/nefrologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/nefrologia/page.js"
+    ],
+    "/gastroenterologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/gastroenterologia/page.js"
+    ],
+    "/atencion-expecializada-pacientes-VIH/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/atencion-expecializada-pacientes-VIH/page.js"
+    ],
+    "/atencion-de-acientes-con-dolor-toracico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/atencion-de-acientes-con-dolor-toracico/page.js"
+    ],
+    "/consulta-externa/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/consulta-externa/page.js"
+    ],
+    "/vacunacion/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/vacunacion/page.js"
+    ],
+    "/hospitalizacion/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/hospitalizacion/page.js"
+    ],
+    "/PET-CT/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/PET-CT/page.js"
+    ],
+    "/quimioterapia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/quimioterapia/page.js"
+    ],
+    "/cuidado-critico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cuidado-critico/page.js"
+    ],
+    "/ortopedia-pediatrica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ortopedia-pediatrica/page.js"
+    ],
+    "/service-details/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/service-details/[id]/page.js"
+    ],
+    "/urologia-oncologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/urologia-oncologica/page.js"
+    ],
+    "/neuropediatria/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neuropediatria/page.js"
+    ],
+    "/neonatologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neonatologia/page.js"
+    ],
+    "/imagenes-diagnosticas/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/imagenes-diagnosticas/page.js"
+    ],
+    "/laboratorio-patologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-patologia/page.js"
+    ],
+    "/laboratorio-clinico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-clinico/page.js"
+    ],
+    "/cirugia-cardiovascular/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-cardiovascular/page.js"
+    ],
+    "/cardiologia-pediatrica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cardiologia-pediatrica/page.js"
+    ],
+    "/cardiologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cardiologia/page.js"
+    ],
+    "/manejo-integral-del-paciente-hematoncologico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/manejo-integral-del-paciente-hematoncologico/page.js"
+    ],
+    "/gestion-pre-transfusional/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/gestion-pre-transfusional/page.js"
+    ],
+    "/atencion-prehospitalaria/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/atencion-prehospitalaria/page.js"
     ]
   }
 }

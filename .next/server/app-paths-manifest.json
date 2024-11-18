@@ -1,7 +1,8 @@
 {
-  "/page": "app/page.js",
-  "/service-details-6/page": "app/service-details-6/page.js",
-  "/urgencias/page": "app/urgencias/page.js",
-  "/hematologia-oncologica/page": "app/hematologia-oncologica/page.js",
-  "/cuidado-intensivo/page": "app/cuidado-intensivo/page.js"
+  "/gestion-pre-transfusional/page": "app/gestion-pre-transfusional/page.js",
+  "/atencion-prehospitalaria/page": "app/atencion-prehospitalaria/page.js",
+  "/atencion-de-acientes-con-dolor-toracico/page": "app/atencion-de-acientes-con-dolor-toracico/page.js",
+  "/laboratorio-clinico/page": "app/laboratorio-clinico/page.js",
+  "/hospitalizacion/page": "app/hospitalizacion/page.js",
+  "/service-details-6/page": "app/service-details-6/page.js"
 }

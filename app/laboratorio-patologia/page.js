@@ -5,7 +5,7 @@ import Layout from "@/components/layout/Layout";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function PathologyLab() {
+export default function LaboratorioPatologia() {
     const [titulo] = useState("Laboratorio de Patología en la Clínica de la Costa SAS");
     const [isActive, setIsActive] = useState(null);
 
@@ -37,7 +37,7 @@ export default function PathologyLab() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Flaboratorio-patologia.jpg?alt=media"
                                     alt="Laboratorio de Patología"
                                     style={{
                                         borderRadius: '8px',
@@ -69,15 +69,15 @@ export default function PathologyLab() {
                                 <div className="pt-4">
                                     {/* Descripción Principal */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Diagnóstico seguro y preciso para una atención integral</h2>
+                                        <h2 className="description-title">Diagnósticos precisos para un manejo efectivo de la salud</h2>
                                         <p>
-                                            El Laboratorio de Patología de la Clínica de la Costa SAS ofrece servicios especializados para garantizar diagnósticos precisos y seguros. Nuestro propósito es determinar el plan de manejo más adecuado para cada paciente, ya sea para prevenir enfermedades o brindar tratamientos efectivos. Estamos comprometidos con la comunidad médica y científica de la región Caribe, ofreciendo herramientas avanzadas como la citometría de flujo para el diagnóstico de neoplasias hematológicas.
+                                            El Laboratorio de Patología de la Clínica de la Costa SAS es un centro de referencia que ofrece servicios de alta calidad para garantizar diagnósticos confiables y oportunos. Nuestro propósito es brindar un diagnóstico seguro que permita determinar el plan de manejo más adecuado para cada paciente, ya sea para prevenir enfermedades o proporcionar un tratamiento efectivo.
                                         </p>
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=31"
-                                            alt="Laboratorio de Patología"
+                                            src="https://picsum.photos/1200/400?random=27"
+                                            alt="Cirugía Urológica"
                                             style={{
                                                 width: '100%',
                                                 borderRadius: '8px',
@@ -87,7 +87,7 @@ export default function PathologyLab() {
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Servicios del Laboratorio */}
+                                        {/* Servicios Especializados */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -103,17 +103,17 @@ export default function PathologyLab() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Servicios del Laboratorio
+                                                Servicios especializados
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>Inmunohistoquímica.</li>
-                                                        <li>Inmunofluorescencia (criotasto).</li>
-                                                        <li>Microscopía electrónica.</li>
-                                                        <li>Citopatología.</li>
-                                                        <li>Biopsias por congelación.</li>
-                                                        <li>Citometría de flujo.</li>
+                                                        <li>Inmunohistoquímica: Diagnóstico mediante detección de antígenos en tejidos.</li>
+                                                        <li>Inmunofluorescencia: Análisis avanzado con técnicas de fluorescencia.</li>
+                                                        <li>Microscopía electrónica: Examen detallado de estructuras celulares.</li>
+                                                        <li>Citopatología: Diagnóstico basado en análisis de células individuales.</li>
+                                                        <li>Biopsias por congelación: Diagnósticos intraoperatorios rápidos.</li>
+                                                        <li>Citometría de flujo: Análisis avanzado para diagnóstico clínico e investigación.</li>
                                                     </ul>
                                                 </div>
                                             )}
@@ -135,24 +135,24 @@ export default function PathologyLab() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Citometría de Flujo: Innovación en el diagnóstico
+                                                Citometría de flujo: Innovación en diagnóstico
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
                                                     <p>
-                                                        La citometría de flujo es una técnica multiparamétrica que permite analizar características estructurales o particulares de células en suspensión al atravesar una fuente de luz láser. Es una herramienta invaluable en el diagnóstico clínico y la investigación biomédica.
+                                                        La citometría de flujo es una técnica multiparamétrica que utiliza un láser para analizar características estructurales y funcionales de células individuales. Contamos con un citómetro modelo NAVIOS de BECKMAN COULTER, capaz de realizar:
                                                     </p>
                                                     <ul className="service-list">
-                                                        <li>Diagnóstico preciso de leucemias agudas, linfomas y mieloides.</li>
+                                                        <li>Diagnósticos de leucemias agudas (linfoides y mieloides).</li>
                                                         <li>Identificación de enfermedades linfoproliferativas crónicas.</li>
-                                                        <li>Determinación de enfermedad mínima residual en leucemias y mielomas múltiples.</li>
-                                                        <li>Estudios de subpoblaciones leucocitarias.</li>
+                                                        <li>Evaluación de enfermedad mínima residual en leucemias y mieloma múltiple.</li>
+                                                        <li>Análisis de subpoblaciones leucocitarias.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Servicios Específicos */}
+                                        {/* Beneficios */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -168,21 +168,24 @@ export default function PathologyLab() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Servicios Específicos
+                                                Beneficios de elegirnos
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>Detección temprana de subpoblaciones celulares mediante inmunofenotipo.</li>
-                                                        <li>Conteo de linfocitos CD4/CD8 en pacientes VIH positivos.</li>
-                                                        <li>Análisis de linfocitos B, T y células NK en inmunodeficiencias.</li>
-                                                        <li>Estudio de líquido cefalorraquídeo para la detección de blastos en leucemia aguda.</li>
-                                                        <li>Diagnóstico de hemoglobinuria paroxística nocturna (HPN).</li>
+                                                        <li>Tecnología de punta: Equipos automatizados que garantizan precisión en los resultados.</li>
+                                                        <li>Rapidez en los diagnósticos: Procesos eficientes que minimizan los tiempos de espera.</li>
+                                                        <li>Amplias aplicaciones clínicas y de investigación.</li>
+                                                        <li>Equipo especializado: Profesionales capacitados en cada área del laboratorio.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
+
+                                    <p>
+                                        El Laboratorio de Patología de la Clínica de la Costa SAS está comprometido con ofrecer diagnósticos confiables y resultados rápidos, asegurando la atención oportuna y efectiva de nuestros pacientes.
+                                    </p>
                                 </div>
                             </div>
                         </div>

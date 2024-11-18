@@ -1,140 +1,225 @@
-'use client'; 
-import { useState } from 'react';
+'use client';
+
+import { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import Link from "next/link";
+import ServicesMenu from "@/components/elements/ServicesMenu";
+import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function Home() {
-  const [selectedService, setSelectedService] = useState('Medicina Crítica y Unidades de Cuidado Especializado');
+export default function CuidadoCritico() {
+    const [titulo] = useState("Cuidado Crítico: Medicina Crítica y Unidades de Cuidado Especializado en la Clínica de la Costa SAS");
+    const [isActive, setIsActive] = useState(null);
 
-  const menuItems = [
-    'Medicina Crítica y Unidades de Cuidado Especializado',
-    'Departamento de Medicina Crítica',
-    'Unidad Coronaria',
-    'Unidad de Cuidados Intensivos Adultos',
-    'UCI Neonatal y Pediátrica',
-  ];
+    const toggleAccordion = (key) => {
+        setIsActive(isActive === key ? null : key);
+    };
 
-  const serviceContent = {
-    'Medicina Crítica y Unidades de Cuidado Especializado': (
-      <>
-        <p>
-          Contamos con una unidad de cuidados intensivos con 48 camas, soporte vital a cuidados coronarios y cuidados especiales en el paciente adulto, con enfermedad coronaria, paciente neonatal y pediátrico.
-        </p>
-        <p>
-          Las unidades están dotadas con tecnología de punta para monitoreo de pacientes y es atendida las 24 horas del día por un equipo interdisciplinario entrenado para manejar pacientes en estado crítico.
-        </p>
-      </>
-    ),
-    'Departamento de Medicina Crítica': (
-      <p>
-        Esta unidad especializada brinda cuidados críticos de un grupo interdisciplinario de internistas, cardiólogo, neumólogo y nefrólogo intensivista.
-      </p>
-    ),
-    'Unidad Coronaria': (
-      <p>
-        Es una unidad enfocada hacia una de las patologías más comunes en la actualidad a nivel mundial como lo es la enfermedad coronaria.
-      </p>
-    ),
-    'Unidad de Cuidados Intensivos Adultos': (
-      <p>
-        Nuestra unidad de cuidados intensivos cuenta con catorce camas, soporte vital a cuidados coronarios y cuidados especiales. La unidad está dotada con tecnología de punta para monitoreo de pacientes y es atendida las 24 horas del día por un equipo interdisciplinario entrenado para manejar pacientes en estado crítico.
-      </p>
-    ),
-    'UCI Neonatal y Pediátrica': (
-      <p>
-        La unidad de cuidados intensivos neonatal y pediátrica es atendida las 24 horas del día por un equipo altamente calificado de intensivistas neonatales, médicos generales y enfermeras entrenados en el manejo de este tipo de pacientes.
-      </p>
-    ),
-  };
+    return (
+        <>
+            <Layout footerStyle={1}>
+                {/* Banner Principal */}
+                <div
+                    className="d-flex flex-column flex-md-row align-items-center p-4"
+                    style={{
+                        backgroundColor: '#1A1A3B',
+                        borderRadius: '8px',
+                        marginBottom: '10px',
+                        marginTop: '20px',
+                        padding: '20px',
+                    }}
+                >
+                    <div className="container">
+                        <div
+                            className="d-flex flex-column flex-md-row align-items-center"
+                            style={{
+                                gap: '20px',
+                            }}
+                        >
+                            {/* Imagen */}
+                            <div style={{ flex: '1.5' }}>
+                                <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fcuidado-critico.jpg?alt=media"
+                                    alt="Cuidado Crítico y Medicina Crítica"
+                                    style={{
+                                        borderRadius: '8px',
+                                        width: '100%',
+                                        height: 'auto',
+                                        maxHeight: '450px',
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            </div>
 
-  return (
-    <>
-      <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Cuidado Crítico">
-        {/* sidebar-page-container */}
-        <section className="sidebar-page-container sec-pad-2">
-          <div className="auto-container">
-            <div className="row clearfix">
-              {/* Menú lateral */}
-              <div className="col-lg-4 col-md-12 col-sm-12 sidebar-side">
-                <div className="blog-sidebar default-sidebar mr_10">
-                  <div className="sidebar-widget category-widget">
-                    <div className="widget-title">
-                      <h3>Servicios</h3>
-                    </div>
-                    <div className="widget-content">
-                      <ul className="category-list clearfix">
-                        {menuItems.map((item) => (
-                          <li key={item}>
-                            <a
-                              href="#"
-                              className={selectedService === item ? 'active' : ''}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setSelectedService(item);
-                              }}
-                            >
-                              {item}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  {/* Puedes agregar más widgets aquí si lo deseas */}
-                </div>
-              </div>
-
-              {/* Área de contenido */}
-              <div className="col-lg-8 col-md-12 col-sm-12 content-side">
-                <div className="blog-details-content">
-                  <div className="news-block-one">
-                    <div className="inner-box">
-                      <div className="lower-content">
-                        <h2>{selectedService}</h2>
-                        {serviceContent[selectedService]}
-                      </div>
-                    </div>
-                  </div>
-                  {/* Puedes agregar más bloques de contenido aquí si lo deseas */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* sidebar-page-container end */}
-
-        {/* subscribe-two */}
-        <section className="subscribe-section">
-          <div className="auto-container">
-            <div className="inner-container">
-              <div className="row align-items-center">
-                <div className="col-lg-6 col-md-12 col-sm-12 text-column">
-                  <div className="text-box">
-                    <h2><span>Subscribe</span> for the exclusive updates!</h2>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-12 col-sm-12 form-column">
-                  <div className="form-inner">
-                    <form method="post" action="contact">
-                      <div className="form-group">
-                        <input type="email" name="email" placeholder="Enter Your Email Address" required />
-                        <button type="submit" className="theme-btn btn-one"><span>Subscribe Now</span></button>
-                      </div>
-                      <div className="form-group">
-                        <div className="check-box">
-                          <input className="check" type="checkbox" id="checkbox1" />
-                          <label htmlFor="checkbox1">I agree to the <Link href="/">Privacy Policy.</Link></label>
+                            {/* Contenido */}
+                            <ServiceHeader titulo={titulo} />
                         </div>
-                      </div>
-                    </form>
-                  </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* subscribe end */}
-      </Layout>
-    </>
-  );
+
+                {/* Contenido Principal */}
+                <div className="service-details pb_110">
+                    <div className="container">
+                        <div className="row">
+                            {/* Menú Lateral */}
+                            <div className="col-12 col-md-3">
+                                <ServicesMenu />
+                            </div>
+
+                            {/* Contenido */}
+                            <div className="col-12 col-md-9">
+                                <div className="pt-4">
+                                    {/* Descripción Principal */}
+                                    <div className="description-section mb-5">
+                                        <h2 className="description-title">Atención integral para pacientes en estado crítico</h2>
+                                        <p>
+                                            En la Clínica de la Costa SAS, contamos con un servicio especializado en Medicina Crítica y Unidades de Cuidado Intensivo (UCI) que abarca atención a pacientes adultos, pediátricos y neonatales en estado crítico. Nuestras unidades están equipadas con tecnología de punta y son atendidas por un equipo interdisciplinario capacitado para garantizar una atención integral y de calidad las 24 horas del día.
+                                        </p>
+                                    </div>
+                                    <div className="mb-4">
+                                        <img
+                                            src="https://picsum.photos/1200/400?random=27"
+                                            alt="Cirugía Urológica"
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '8px',
+                                                marginBottom: '15px',
+                                            }}
+                                        />
+                                    </div>
+                                    {/* Detalle de Unidades */}
+                                    <div id="accordion" className="accordion">
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(1)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 1 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 1 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Unidades de Cuidado Intensivo (UCI)
+                                            </h2>
+                                            {isActive === 1 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>
+                                                            <strong>Unidad Coronaria:</strong> 14 camas con monitoreo continuo, soporte vital avanzado, y tecnología de punta para pacientes con enfermedades coronarias.
+                                                        </li>
+                                                        <li>
+                                                            <strong>UCI Adultos:</strong> Atención integral a pacientes críticos con patologías complejas como insuficiencia renal, neurológica y postquirúrgica.
+                                                        </li>
+                                                        <li>
+                                                            <strong>UCI Neonatal y Pediátrica:</strong> Monitoreo avanzado y programas personalizados para recién nacidos y niños en estado crítico.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Personal Especializado */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(2)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 2 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 2 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Personal altamente capacitado
+                                            </h2>
+                                            {isActive === 2 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>Formación continua en educación médica.</li>
+                                                        <li>Capacitación en ACLS (Advanced Cardiac Life Support).</li>
+                                                        <li>Especialización en áreas como neurocirugía, nefrointensivismo y trauma.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Servicios Ginecología y Maternidad */}
+                                        <div className="accordion-item">
+                                            <h2
+                                                className="accordion-header"
+                                                onClick={() => toggleAccordion(3)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    backgroundColor: isActive === 3 ? '#1A1A3B' : '#f9f9f9',
+                                                    color: isActive === 3 ? '#fff' : '#1A1A3B',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    marginBottom: '5px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Ginecología, Obstetricia y Maternidad
+                                            </h2>
+                                            {isActive === 3 && (
+                                                <div className="accordion-body">
+                                                    <ul className="service-list">
+                                                        <li>Atención de embarazo normal y de alto riesgo.</li>
+                                                        <li>Control prenatal con monitoreo avanzado.</li>
+                                                        <li>Diagnósticos como perfil biofísico fetal y amniocentesis.</li>
+                                                        <li>Cirugías ginecológicas especializadas.</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <p>
+                                        En la Clínica de la Costa SAS, nuestra prioridad es ofrecer una atención integral, humanizada y de alta calidad, asegurando que cada paciente reciba el cuidado necesario para superar condiciones críticas con éxito.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style jsx>{`
+                    .description-title {
+                        font-size: 28px;
+                        font-weight: bold;
+                        color: #1A1A3B;
+                        margin-bottom: 15px;
+                        text-transform: uppercase;
+                    }
+                    .accordion-header:hover {
+                        background-color: #007bff !important;
+                        color: #fff !important;
+                    }
+                    .service-list {
+                        list-style: none;
+                        padding-left: 20px;
+                        position: relative;
+                    }
+                    .service-list li {
+                        position: relative;
+                        margin-bottom: 10px;
+                        padding-left: 25px;
+                    }
+                    .service-list li:before {
+                        content: "✓";
+                        position: absolute;
+                        left: 0;
+                        color: #007bff;
+                    }
+                `}</style>
+            </Layout>
+        </>
+    );
 }
