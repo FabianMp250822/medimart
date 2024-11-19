@@ -35,6 +35,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/directorio-especialistas/page.js"
+    ],
+    "/service-details-3/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/service-details-3/page.js"
+    ],
+    "/trabaja-con-nosotros/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/trabaja-con-nosotros/page.js"
     ]
   }
 }

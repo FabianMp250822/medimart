@@ -4,7 +4,7 @@ import React from 'react';
 export default function ChooseUs() {
   return (
     <section className="chooseus-section">
-      <div className="bg-layer" style={{ backgroundImage: 'url(assets/images/background/whois.jpg)' }}></div>
+      <div className="bg-layer" style={{ backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FDSC01586.JPG?alt=media&token=1d94c05b-d45a-4f99-9f58-b28f64a8d368)' }}></div>
       <div className="pattern-layer" style={{ backgroundImage: 'url(assets/images/shape/shape-12.png)' }}></div>
       <div className="auto-container">
         <div className="row clearfix">

@@ -1,5 +1,7 @@
 {
   "/page": "app/page.js",
   "/blog-details/[id]/page": "app/blog-details/[id]/page.js",
-  "/directorio-especialistas/page": "app/directorio-especialistas/page.js"
+  "/directorio-especialistas/page": "app/directorio-especialistas/page.js",
+  "/service-details-3/page": "app/service-details-3/page.js",
+  "/trabaja-con-nosotros/page": "app/trabaja-con-nosotros/page.js"
 }

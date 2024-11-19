@@ -17,7 +17,7 @@ export default function Service() {
                 <div className="image-box">
                   <figure className="image">
                     <Link href="service-details-3">
-                      <img src="assets/images/service/servicio1.jpg" alt="Neurocirugía" />
+                      <img src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM(1).jpeg?alt=media&token=a0535648-1f07-4a43-87c1-8901f530dd94" alt="Neurocirugía" />
                     </Link>
                   </figure>
                   <div className="icon-box"><i className="icon-15"></i></div>
@@ -36,7 +36,7 @@ export default function Service() {
                 <div className="image-box">
                   <figure className="image">
                     <Link href="service-details-6">
-                      <img src="assets/images/service/servicio3.jpg" alt="Laboratorio Moderno" />
+                      <img src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM.jpeg?alt=media&token=0073f503-653b-4326-907b-665688257340" alt="Laboratorio Moderno" />
                     </Link>
                   </figure>
                   <div className="icon-box"><i className="icon-16"></i></div>
@@ -55,7 +55,7 @@ export default function Service() {
                 <div className="image-box">
                   <figure className="image">
                     <Link href="service-details">
-                      <img src="assets/images/service/servicio3.jpg" alt="Médicos Experimentados" />
+                      <img src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%205.16.32%20PM.jpeg?alt=media&token=e4b6c4cb-586f-49e9-b5f9-9d73d30a01f8" alt="Médicos Experimentados" />
                     </Link>
                   </figure>
                   <div className="icon-box"><i className="icon-17"></i></div>
