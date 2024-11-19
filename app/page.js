@@ -13,6 +13,7 @@ import WhyChooseUs from "@/components/sections/home1/WhyChooseUs";
 import Process from "@/components/sections/home1/Process";
 import Team from "@/components/sections/home1/Team";
 import { useSede } from "@/app/context/SedeContext";
+import News from "@/components/sections/home1/News";
 
 export default function Home() {
   const { selectedSede, selectSede, sedesData } = useSede(); // Obtener las sedes desde el contexto
@@ -168,6 +169,7 @@ export default function Home() {
             <Process />
             <Testimonial />
             <Team />
+            <News />
           </>
         )}
       </Layout>

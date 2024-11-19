@@ -1,8 +1,5 @@
 {
-  "/gestion-pre-transfusional/page": "app/gestion-pre-transfusional/page.js",
-  "/atencion-prehospitalaria/page": "app/atencion-prehospitalaria/page.js",
-  "/atencion-de-acientes-con-dolor-toracico/page": "app/atencion-de-acientes-con-dolor-toracico/page.js",
-  "/laboratorio-clinico/page": "app/laboratorio-clinico/page.js",
-  "/hospitalizacion/page": "app/hospitalizacion/page.js",
-  "/service-details-6/page": "app/service-details-6/page.js"
+  "/page": "app/page.js",
+  "/blog-details/[id]/page": "app/blog-details/[id]/page.js",
+  "/directorio-especialistas/page": "app/directorio-especialistas/page.js"
 }

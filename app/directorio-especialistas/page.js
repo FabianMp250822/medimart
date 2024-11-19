@@ -14,20 +14,20 @@ export default function AreasClinica() {
     `;
 
     const areas = [
-        { name: "Alergología", phone: "605-123-4567", email: "alergologia@clinicadelacosta.com" },
-        { name: "Broncopulmonar", phone: "605-123-4568", email: "broncopulmonar@clinicadelacosta.com" },
-        { name: "Cardiología", phone: "605-123-4569", email: "cardiologia@clinicadelacosta.com" },
-        { name: "Dermatología", phone: "605-123-4570", email: "dermatologia@clinicadelacosta.com" },
-        { name: "Endocrinología", phone: "605-123-4571", email: "endocrinologia@clinicadelacosta.com" },
-        { name: "Fisiatría", phone: "605-123-4572", email: "fisiatria@clinicadelacosta.com" },
-        { name: "Gastroenterología", phone: "605-123-4573", email: "gastroenterologia@clinicadelacosta.com" },
-        { name: "Hematología", phone: "605-123-4574", email: "hematologia@clinicadelacosta.com" },
-        { name: "Infectología", phone: "605-123-4575", email: "infectologia@clinicadelacosta.com" },
-        { name: "Neurología", phone: "605-123-4576", email: "neurologia@clinicadelacosta.com" },
-        { name: "Oftalmología", phone: "605-123-4577", email: "oftalmologia@clinicadelacosta.com" },
-        { name: "Pediatría", phone: "605-123-4578", email: "pediatria@clinicadelacosta.com" },
-        { name: "Reumatología", phone: "605-123-4579", email: "reumatologia@clinicadelacosta.com" },
-        { name: "Urología", phone: "605-123-4580", email: "urologia@clinicadelacosta.com" },
+        { name: "Call center", phone: "3369999 ext: 0", email: "n/a" },
+        { name: "Atención presencial (carrera 50 # 80 - 149)", phone: "n/a", email: "n/a" },
+        { name: "Consulta externa", phone: "3369999 ext 133-132", email: "consultaexterna@clinicadelacosta.co" },
+        { name: "Citas médicas", phone: "n/a", email: "citasmedicas@clinicadelacosta.co" },
+        { name: "Resonancia (carrera 50 # 80 – 144)", phone: "3369999 ext 137", email: "resonancia@clinicadelacosta.co" },
+        { name: "Neurofisiología (carrera 50 # 80 - 90 tercer piso)", phone: "3369999 ext 110", email: "neurofisiologia@clinicadelacosta.co" },
+        { name: "Enfermería cirugía (carrera 50 # 80 - 90 primer piso)", phone: "3369999 ext 106", email: "enfermeriacirugia@clinicadelacosta.co" },
+        { name: "Radioterapia (carrera 50 # 80 - 90 primer piso)", phone: "3369999 ext 141", email: "radioterapia@clinicadelacosta.co" },
+        { name: "Unidad endoscópica (carrera 50 # 80 - 90 segundo piso)", phone: "3369999 ext 214", email: "unidadendoscopica@clinicadelacosta.co" },
+        { name: "Hemodinamia (carrera 50 # 80 - 90 segundo piso)", phone: "3369999 ext 372", email: "hemodinamia@clinicadelacosta.co" },
+        { name: "Diagnóstico vascular (carrera 50 # 80 - 90 tercer piso)", phone: "3369999 ext 370", email: "cardiologia@clinicadelacosta.co" },
+        { name: "Laboratorio clínico (carrera 50 # 80 - 90 quinto piso)", phone: "3369999 ext 472", email: "laboratorio@clinicadelacosta.co" },
+        { name: "Laboratorio de patología (carrera 50 # 80 - 90 quinto piso)", phone: "3369999 ext 203", email: "patologia@clinicadelacosta.co" },
+        { name: "Atención al usuario", phone: "3369999 ext 112", email: "trabajosocial@clinicadelacosta.co" },
     ];
 
     // Filtrar las áreas por el texto del buscador
@@ -139,12 +139,16 @@ export default function AreasClinica() {
                                                         >
                                                             {area.name}
                                                         </h5>
-                                                        <p style={{ fontSize: '14px', color: '#6c757d' }}>
-                                                            Teléfono: {area.phone}
-                                                        </p>
-                                                        <p style={{ fontSize: '14px', color: '#6c757d' }}>
-                                                            Correo: <a href={`mailto:${area.email}`} style={{ textDecoration: 'none', color: '#2C2C5B' }}>{area.email}</a>
-                                                        </p>
+                                                        {area.phone !== "n/a" && (
+                                                            <p style={{ fontSize: '14px', color: '#6c757d' }}>
+                                                                Teléfono: {area.phone}
+                                                            </p>
+                                                        )}
+                                                        {area.email !== "n/a" && (
+                                                            <p style={{ fontSize: '14px', color: '#6c757d' }}>
+                                                                Correo: <a href={`mailto:${area.email}`} style={{ textDecoration: 'none', color: '#2C2C5B' }}>{area.email}</a>
+                                                            </p>
+                                                        )}
                                                     </div>
                                                     <div
                                                         className="card-footer"
@@ -154,15 +158,17 @@ export default function AreasClinica() {
                                                             padding: '10px 0',
                                                         }}
                                                     >
-                                                        <a
-                                                            href={`tel:${area.phone.replace(/[^\d+]/g, "")}`}
-                                                            style={{
-                                                                color: '#1A1A3B',
-                                                                fontSize: '20px',
-                                                            }}
-                                                        >
-                                                            <i className="fas fa-phone"></i>
-                                                        </a>
+                                                        {area.phone !== "n/a" && (
+                                                            <a
+                                                                href={`tel:${area.phone.replace(/[^\d+]/g, "")}`}
+                                                                style={{
+                                                                    color: '#1A1A3B',
+                                                                    fontSize: '20px',
+                                                                }}
+                                                            >
+                                                                <i className="fas fa-phone"></i>
+                                                            </a>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

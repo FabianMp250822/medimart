@@ -17,7 +17,7 @@ export default function About() {
             <div className="image_block_one">
               <div className="image-box">
                 <div className="shape float-bob-x" style={{ backgroundImage: 'url(assets/images/shape/shape-7.png)' }}></div>
-                <figure className="image"><img src="assets/images/resource/pacientesatendidos.webp" alt="Equipo médico de la Clínica de la Costa" /></figure>
+                <figure className="image"><img src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641" alt="Equipo médico de la Clínica de la Costa" /></figure>
                 <div className="icon-one"><i className="icon-13"></i></div>
                 <div className="icon-two"><i className="icon-14"></i></div>
                 <div className="text-box">
