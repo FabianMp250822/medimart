@@ -76,7 +76,7 @@ export default function ClinicalLaboratory() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_144953972_HDR.jpg?alt=media&token=c06b242d-11a5-4cd7-a0a9-7997adb71b72"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%203.09.32%20PM.jpeg?alt=media&token=c6184254-a0ef-45a2-b305-16bcbe93be0d"
                                             alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',

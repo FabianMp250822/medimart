@@ -1,7 +1,7 @@
 {
-  "/page": "app/page.js",
-  "/service-details-6/page": "app/service-details-6/page.js",
+  "/cuidado-critico/page": "app/cuidado-critico/page.js",
   "/hospitalizacion/page": "app/hospitalizacion/page.js",
-  "/cuidado-intensivo/page": "app/cuidado-intensivo/page.js",
-  "/atencion-prehospitalaria/page": "app/atencion-prehospitalaria/page.js"
+  "/atencion-expecializada-pacientes-VIH/page": "app/atencion-expecializada-pacientes-VIH/page.js",
+  "/cirugia/page": "app/cirugia/page.js",
+  "/laboratorio-clinico/page": "app/laboratorio-clinico/page.js"
 }
