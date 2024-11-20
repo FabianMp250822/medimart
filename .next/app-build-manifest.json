@@ -166,6 +166,21 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/quimioterapia/page.js"
+    ],
+    "/cirugia-endovascular-neurologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-endovascular-neurologica/page.js"
+    ],
+    "/laboratorio-clinico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-clinico/page.js"
+    ],
+    "/laboratorio-patologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-patologia/page.js"
     ]
   }
 }

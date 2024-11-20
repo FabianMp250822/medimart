@@ -1,8 +1,7 @@
 {
-  "/cuidado-intensivo/page": "app/cuidado-intensivo/page.js",
   "/service-details-2/page": "app/service-details-2/page.js",
-  "/medicina-nuclear/page": "app/medicina-nuclear/page.js",
-  "/atencion-expecializada-pacientes-VIH/page": "app/atencion-expecializada-pacientes-VIH/page.js",
   "/quimioterapia/page": "app/quimioterapia/page.js",
-  "/vacunacion/page": "app/vacunacion/page.js"
+  "/cirugia-endovascular-neurologica/page": "app/cirugia-endovascular-neurologica/page.js",
+  "/laboratorio-clinico/page": "app/laboratorio-clinico/page.js",
+  "/laboratorio-patologia/page": "app/laboratorio-patologia/page.js"
 }

@@ -37,7 +37,7 @@ export default function ClinicalLaboratory() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM.jpeg?alt=media&token=0073f503-653b-4326-907b-665688257340"
                                     alt="Laboratorio Clínico"
                                     style={{
                                         borderRadius: '8px',
