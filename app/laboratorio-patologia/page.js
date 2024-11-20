@@ -37,7 +37,7 @@ export default function LaboratorioPatologia() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_142759911_HDR.jpg?alt=media&token=6dd027b5-69f4-49b5-9d5d-b98adae9fef6"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%2011.11.25%20AM.jpeg?alt=media&token=24ac4be7-062b-4021-9c78-42888530cd04"
                                     alt="Laboratorio de Patología"
                                     style={{
                                         borderRadius: '8px',
@@ -76,7 +76,7 @@ export default function LaboratorioPatologia() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_142951674_HDR.jpg?alt=media&token=7710d1f6-b3d9-4e8d-ad3a-9ac34519b48c"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%2011.11.26%20AM.jpeg?alt=media&token=4e6890dd-c42a-4f65-b6ef-76760af54a04"
                                             alt="Laboratorio de patologia"
                                             style={{
                                                 width: '100%',

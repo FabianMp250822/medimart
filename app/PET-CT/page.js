@@ -37,7 +37,7 @@ export default function PETCTService() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_154822432_HDR.jpg?alt=media&token=a04a8e9a-f84d-4e5c-986b-529f906f2696"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%2011.08.31%20AM.jpeg?alt=media&token=7eec6b5f-7446-4fb8-8dfd-e9e9485f8efc"
                                     alt="Servicio PET-CT"
                                     style={{
                                         borderRadius: '8px',
@@ -76,7 +76,7 @@ export default function PETCTService() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                             src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_154842311_HDR.jpg?alt=media&token=138b9fb6-4b00-4d25-915b-18ddfd53e6a0"
+                                             src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%2011.08.00%20AM.jpeg?alt=media&token=96fee803-e634-4a08-a5a7-ca948304986e"
                                             alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',

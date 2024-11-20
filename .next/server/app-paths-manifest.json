@@ -1,7 +1,7 @@
 {
-  "/laboratorio-citologias-cervico-uterinas/page": "app/laboratorio-citologias-cervico-uterinas/page.js",
-  "/cuidado-critico/page": "app/cuidado-critico/page.js",
   "/cuidado-intensivo/page": "app/cuidado-intensivo/page.js",
+  "/cuidado-critico/page": "app/cuidado-critico/page.js",
   "/PET-CT/page": "app/PET-CT/page.js",
-  "/medicina-nuclear/page": "app/medicina-nuclear/page.js"
+  "/medicina-nuclear/page": "app/medicina-nuclear/page.js",
+  "/laboratorio-patologia/page": "app/laboratorio-patologia/page.js"
 }
