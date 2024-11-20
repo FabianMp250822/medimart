@@ -26,65 +26,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/service-details-6/page.js"
     ],
-    "/vacunacion/page": [
+    "/hospitalizacion/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/vacunacion/page.js"
+      "static/chunks/app/hospitalizacion/page.js"
     ],
     "/cuidado-intensivo/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/cuidado-intensivo/page.js"
     ],
-    "/service-details/[id]/page": [
+    "/atencion-prehospitalaria/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/service-details/[id]/page.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
-    ],
-    "/manejo-integral-del-paciente-hematoncologico/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/manejo-integral-del-paciente-hematoncologico/page.js"
-    ],
-    "/laboratorio-clinico/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/laboratorio-clinico/page.js"
-    ],
-    "/laboratorio-patologia/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/laboratorio-patologia/page.js"
-    ],
-    "/laboratorio-de-histotecnologia/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/laboratorio-de-histotecnologia/page.js"
-    ],
-    "/laboratorio-citologias-cervico-uterinas/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/laboratorio-citologias-cervico-uterinas/page.js"
-    ],
-    "/cuidado-critico/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/cuidado-critico/page.js"
-    ],
-    "/PET-CT/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/PET-CT/page.js"
-    ],
-    "/medicina-nuclear/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/medicina-nuclear/page.js"
+      "static/chunks/app/atencion-prehospitalaria/page.js"
     ]
   }
 }

@@ -1,33 +1,13 @@
 'use client';
 
+import { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function Service() {
-    const [sedes, setSedes] = useState([]);
-    const [titulo] = useState('Hospitalización: Servicios de Calidad y Humanización');
+export default function UnidadNutricionDietetica() {
+    const [titulo] = useState("Unidad de Nutrición y Dietética en la Clínica de la Costa SAS");
     const [isActive, setIsActive] = useState(null);
-
-    useEffect(() => {
-        const fetchSedes = async () => {
-            try {
-                const sedesRef = collection(db, "sedes");
-                const sedesSnapshot = await getDocs(sedesRef);
-                const sedesList = sedesSnapshot.docs.map((doc) => {
-                    const nombreCompleto = doc.data().nombre;
-                    return nombreCompleto.replace("Clínica de la Costa - ", ""); // Remover prefijo innecesario
-                });
-                setSedes(sedesList);
-            } catch (error) {
-                console.error("Error al obtener las sedes:", error);
-            }
-        };
-        fetchSedes();
-    }, []);
 
     const toggleAccordion = (key) => {
         setIsActive(isActive === key ? null : key);
@@ -57,8 +37,8 @@ export default function Service() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.31.54%20PM.jpeg?alt=media&token=128385f5-0c3a-452c-9183-439023b2c3a0"
-                                    alt="Hospitalización"
+                                    src="https://via.placeholder.com/1200x400" // Reemplaza con la URL de tu imagen de la Unidad de Nutrición y Dietética
+                                    alt="Unidad de Nutrición y Dietética"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -89,38 +69,27 @@ export default function Service() {
                                 <div className="pt-4">
                                     {/* Descripción Principal */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Nuestra Filosofía y Objetivos</h2>
+                                        <h2 className="description-title">Promoviendo la salud integral</h2>
                                         <p>
-                                            Contamos con un equipo humano dedicado y comprometido a servir a los usuarios con una 
-                                            atención personalizada y especializada con calidad y amor, alto nivel de conocimientos 
-                                            y experiencia; apoyados tecnológicamente para el diagnóstico y tratamiento de las 
-                                            enfermedades.
-                                        </p>
-                                        <p>
-                                            Uno de nuestros principales objetivos es la seguridad y comodidad en las instalaciones; 
-                                            por esto contamos con la más amplia capacidad en habitaciones. La Unidad de Hospitalización 
-                                            apoya los servicios de Urgencias, Cirugía y Consulta Externa, con personal idóneo y calificado 
-                                            dentro del marco de la directriz médico–asistencial que nos orienta a la 
-                                            <strong> "Atención integral en salud con oportunidad, eficiencia y calidad”.</strong>
+                                            La Unidad de Nutrición y Dietética de la Clínica de la Costa SAS es un servicio especializado que combina ciencia, tecnología y un enfoque humano para ofrecer orientación y tratamientos dietéticos personalizados, diseñados para mejorar la calidad de vida de nuestros pacientes.
                                         </p>
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                             src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%203.09.31%20PM.jpeg?alt=media&token=e9ddd974-a65a-43ba-b24b-413c926ff44f"
-                                            alt="Atención Hospitalaria"
+                                            src="https://via.placeholder.com/1200x400" // Reemplaza con otra imagen relevante
+                                            alt="Unidad de Nutrición"
                                             style={{
                                                 width: '100%',
                                                 height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
                                                 marginBottom: '10px',
-                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
+                                                objectFit: 'cover',
                                             }}
                                         />
-                                        {/* Texto debajo de la imagen */}
-                                        <p style={{ 
-                                            color: '#000', 
-                                            fontSize: '18px', 
-                                            textAlign: 'center', 
+                                        <p style={{
+                                            color: '#000',
+                                            fontSize: '18px',
+                                            textAlign: 'center',
                                             marginTop: '5px',
                                         }}>
                                             {titulo}
@@ -128,7 +97,7 @@ export default function Service() {
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Hospitalización Paciente Crónico Con Ventilador */}
+                                        {/* Evaluación Nutricional */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -144,25 +113,20 @@ export default function Service() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Hospitalización Paciente Crónico Con Ventilador
+                                                Evaluación y Planificación Nutricional
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
-                                                    <p>
-                                                        Este servicio está enfocado en pacientes que requieren soporte ventilatorio constante debido 
-                                                        a condiciones respiratorias críticas. Ofrecemos:
-                                                    </p>
                                                     <ul className="service-list">
-                                                        <li>Monitoreo continuo de parámetros respiratorios y vitales.</li>
-                                                        <li>Terapias respiratorias personalizadas.</li>
-                                                        <li>Cuidados intensivos las 24 horas, garantizados por un equipo multidisciplinario.</li>
-                                                        <li>Asesoramiento a familiares sobre el manejo y cuidado del paciente.</li>
+                                                        <li>Análisis del estado nutricional de los pacientes.</li>
+                                                        <li>Diseño de planes alimenticios personalizados.</li>
+                                                        <li>Atención especializada para condiciones médicas específicas.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Hospitalización Paciente Crónico Sin Ventilador */}
+                                        {/* Servicios Hospitalarios */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -178,24 +142,20 @@ export default function Service() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Hospitalización Paciente Crónico Sin Ventilador
+                                                Servicios Hospitalarios
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
-                                                    <p>
-                                                        Diseñada para pacientes crónicos que necesitan supervisión médica constante pero no 
-                                                        requieren asistencia ventilatoria. Nuestros servicios incluyen:
-                                                    </p>
                                                     <ul className="service-list">
-                                                        <li>Control de medicación y terapias continuas.</li>
-                                                        <li>Planes de rehabilitación específicos para cada paciente.</li>
-                                                        <li>Habitaciones diseñadas para el confort del paciente y sus acompañantes.</li>
+                                                        <li>Soporte nutricional para pacientes críticos.</li>
+                                                        <li>Alimentación enteral y parenteral.</li>
+                                                        <li>Evaluación y seguimiento en casos de desnutrición y obesidad.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Hospitalización Adultos */}
+                                        {/* Educación Nutricional */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -211,56 +171,21 @@ export default function Service() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Hospitalización Adultos
+                                                Promoción de Hábitos Saludables
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
                                                     <p>
-                                                        Ideal para adultos que requieren atención médica especializada. Proveemos servicios 
-                                                        adaptados a condiciones específicas, incluyendo:
+                                                        Ofrecemos talleres y programas educativos dirigidos a pacientes y sus familias para fomentar hábitos alimenticios saludables, empoderándolos para tomar decisiones informadas sobre su alimentación.
                                                     </p>
-                                                    <ul className="service-list">
-                                                        <li>Recuperación posquirúrgica en un entorno seguro y controlado.</li>
-                                                        <li>Atención para enfermedades agudas y crónicas.</li>
-                                                        <li>Tratamientos oncológicos con apoyo integral.</li>
-                                                    </ul>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Hospitalización Pediátrica */}
-                                        <div className="accordion-item">
-                                            <h2
-                                                className="accordion-header"
-                                                onClick={() => toggleAccordion(4)}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    backgroundColor: isActive === 4 ? '#1A1A3B' : '#f9f9f9',
-                                                    color: isActive === 4 ? '#fff' : '#1A1A3B',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    marginBottom: '5px',
-                                                    fontSize: '18px',
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                Hospitalización Pediátrica
-                                            </h2>
-                                            {isActive === 4 && (
-                                                <div className="accordion-body">
-                                                    <p>
-                                                        Nuestros espacios pediátricos están diseñados para garantizar la seguridad y comodidad 
-                                                        de los niños. Contamos con:
-                                                    </p>
-                                                    <ul className="service-list">
-                                                        <li>Habitaciones con diseño amigable y colores relajantes.</li>
-                                                        <li>Especialistas pediátricos y tecnología avanzada para diagnósticos rápidos.</li>
-                                                        <li>Apoyo emocional y orientación para padres.</li>
-                                                    </ul>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
+
+                                    <p>
+                                        En la Clínica de la Costa SAS, la Unidad de Nutrición y Dietética combina tecnología de punta y un enfoque humano para garantizar una atención nutricional integral que promueve la salud y el bienestar de cada paciente.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -278,6 +203,16 @@ export default function Service() {
                     .accordion-header:hover {
                         background-color: #007bff !important;
                         color: #fff !important;
+                    }
+                    .service-list {
+                        list-style: none;
+                        padding-left: 20px;
+                        position: relative;
+                    }
+                    .service-list li {
+                        position: relative;
+                        margin-bottom: 10px;
+                        padding-left: 25px;
                     }
                     .service-list li:before {
                         content: "✓";

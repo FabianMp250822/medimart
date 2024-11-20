@@ -1,7 +1,7 @@
 {
+  "/page": "app/page.js",
+  "/service-details-6/page": "app/service-details-6/page.js",
+  "/hospitalizacion/page": "app/hospitalizacion/page.js",
   "/cuidado-intensivo/page": "app/cuidado-intensivo/page.js",
-  "/cuidado-critico/page": "app/cuidado-critico/page.js",
-  "/PET-CT/page": "app/PET-CT/page.js",
-  "/medicina-nuclear/page": "app/medicina-nuclear/page.js",
-  "/laboratorio-patologia/page": "app/laboratorio-patologia/page.js"
+  "/atencion-prehospitalaria/page": "app/atencion-prehospitalaria/page.js"
 }

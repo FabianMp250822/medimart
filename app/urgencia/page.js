@@ -37,7 +37,7 @@ export default function EmergencyService() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Furgencias.jpg?alt=media"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641"
                                     alt="Servicio de Urgencias"
                                     style={{
                                         borderRadius: '8px',
@@ -76,7 +76,7 @@ export default function EmergencyService() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=34"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241118_152245576_HDR.jpg?alt=media&token=98fd5cc0-b855-4a1a-8725-5958fc91ce51"
                                             alt="Urgencias Médicas"
                                             style={{
                                                 width: '100%',
