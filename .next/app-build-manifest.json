@@ -156,6 +156,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/imagenes-diagnosticas/page.js"
+    ],
+    "/cirugia-oncologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-oncologica/page.js"
+    ],
+    "/quimioterapia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/quimioterapia/page.js"
     ]
   }
 }

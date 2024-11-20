@@ -37,7 +37,7 @@ export default function VaccinationService() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241118_150558832_HDR%201.jpg?alt=media&token=e838986f-3a89-4329-aa81-13340cb5dd0a"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2010.21.42%20PM.jpeg?alt=media&token=d3d6929d-318f-46d0-aa74-289d073beda8"
                                     alt="Servicio de Vacunación"
                                     style={{
                                         borderRadius: '8px',

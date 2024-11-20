@@ -1,9 +1,8 @@
 {
   "/cuidado-intensivo/page": "app/cuidado-intensivo/page.js",
   "/service-details-2/page": "app/service-details-2/page.js",
-  "/imagenes-diagnosticas/page": "app/imagenes-diagnosticas/page.js",
-  "/vacunacion/page": "app/vacunacion/page.js",
-  "/hospitalizacion/page": "app/hospitalizacion/page.js",
-  "/service-details/[id]/page": "app/service-details/[id]/page.js",
-  "/_not-found/page": "app/_not-found/page.js"
+  "/medicina-nuclear/page": "app/medicina-nuclear/page.js",
+  "/atencion-expecializada-pacientes-VIH/page": "app/atencion-expecializada-pacientes-VIH/page.js",
+  "/quimioterapia/page": "app/quimioterapia/page.js",
+  "/vacunacion/page": "app/vacunacion/page.js"
 }
