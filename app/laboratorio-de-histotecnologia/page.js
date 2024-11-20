@@ -5,10 +5,10 @@ import Layout from "@/components/layout/Layout";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function CuidadoCritico() {
-    const [titulo] = useState("Cuidado Crítico: Medicina Crítica y Unidades de Cuidado Especializado en la Clínica de la Costa SAS");
+export default function HistotechnologyLaboratory() {
+    const [titulo] = useState("Laboratorio de Histotecnología en la Clínica de la Costa");
     const [isActive, setIsActive] = useState(null);
-    const imageUrl = 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.31.54%20PM.jpeg?alt=media&token=128385f5-0c3a-452c-9183-439023b2c3a0';
+
     const toggleAccordion = (key) => {
         setIsActive(isActive === key ? null : key);
     };
@@ -37,8 +37,8 @@ export default function CuidadoCritico() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src={imageUrl}
-                                    alt="Hospitalización"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM.jpeg?alt=media&token=0073f503-653b-4326-907b-665688257340"
+                                    alt="Laboratorio de Histotecnología"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -69,25 +69,23 @@ export default function CuidadoCritico() {
                                 <div className="pt-4">
                                     {/* Descripción Principal */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Atención integral para pacientes en estado crítico</h2>
+                                        <h2 className="description-title">¿Qué es el Laboratorio de Histotecnología?</h2>
                                         <p>
-                                            En la Clínica de la Costa SAS, contamos con un servicio especializado en Medicina Crítica y Unidades de Cuidado Intensivo (UCI) que abarca atención a pacientes adultos, pediátricos y neonatales en estado crítico. Nuestras unidades están equipadas con tecnología de punta y son atendidas por un equipo interdisciplinario capacitado para garantizar una atención integral y de calidad las 24 horas del día.
+                                            El Laboratorio de Histotecnología de la Clínica de la Costa es un espacio especializado en la preparación y análisis de tejidos, esencial para el diagnóstico de diversas enfermedades, incluyendo el cáncer. Con tecnología avanzada y un equipo capacitado, este laboratorio garantiza resultados rápidos y precisos.
                                         </p>
                                     </div>
-                                   {/* Imagen Recortada con Título Debajo */}
-                                   <div className="mb-4">
+                                    <div className="mb-4">
                                         <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%209.10.01%20AM.jpeg?alt=media&token=89506541-c55f-44f6-8d77-b64301cf8550"
-                                            alt="Atención Hospitalaria"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_144030133_HDR.jpg?alt=media&token=2948f2ab-0d0b-4029-8c3d-6ea255f22cef"
+                                            alt="Laboratorio de Histotecnología"
                                             style={{
                                                 width: '100%',
-                                                height: '400px', // Ajusta la altura a 400px
+                                                height: '400px',
                                                 borderRadius: '8px',
                                                 marginBottom: '10px',
-                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
+                                                objectFit: 'cover',
                                             }}
                                         />
-                                        {/* Texto debajo de la imagen */}
                                         <p style={{ 
                                             color: '#000', 
                                             fontSize: '18px', 
@@ -97,8 +95,9 @@ export default function CuidadoCritico() {
                                             {titulo}
                                         </p>
                                     </div>
-                                    {/* Detalle de Unidades */}
+                                    {/* Acordeón */}
                                     <div id="accordion" className="accordion">
+                                        {/* Proceso y Tecnología */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -114,26 +113,21 @@ export default function CuidadoCritico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Unidades de Cuidado Intensivo (UCI)
+                                                Proceso y Tecnología
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>
-                                                            <strong>Unidad Coronaria:</strong> 14 camas con monitoreo continuo, soporte vital avanzado, y tecnología de punta para pacientes con enfermedades coronarias.
-                                                        </li>
-                                                        <li>
-                                                            <strong>UCI Adultos:</strong> Atención integral a pacientes críticos con patologías complejas como insuficiencia renal, neurológica y postquirúrgica.
-                                                        </li>
-                                                        <li>
-                                                            <strong>UCI Neonatal y Pediátrica:</strong> Monitoreo avanzado y programas personalizados para recién nacidos y niños en estado crítico.
-                                                        </li>
+                                                        <li>Fijación y deshidratación de tejidos.</li>
+                                                        <li>Inclusión en parafina y microtomía.</li>
+                                                        <li>Tinciones avanzadas, como inmunohistoquímica.</li>
+                                                        <li>Uso de sistemas automatizados de alta precisión.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Personal Especializado */}
+                                        {/* Servicios Disponibles */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -149,20 +143,21 @@ export default function CuidadoCritico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Personal altamente capacitado
+                                                Servicios Disponibles
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>Formación continua en educación médica.</li>
-                                                        <li>Capacitación en ACLS (Advanced Cardiac Life Support).</li>
-                                                        <li>Especialización en áreas como neurocirugía, nefrointensivismo y trauma.</li>
+                                                        <li>Preparación de biopsias para diagnóstico.</li>
+                                                        <li>Detección de marcadores tumorales.</li>
+                                                        <li>Estudios de enfermedades inflamatorias.</li>
+                                                        <li>Evaluación de márgenes quirúrgicos.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Servicios Ginecología y Maternidad */}
+                                        {/* Importancia en la Clínica */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -178,24 +173,17 @@ export default function CuidadoCritico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Ginecología, Obstetricia y Maternidad
+                                                Importancia en la Clínica de la Costa
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
-                                                    <ul className="service-list">
-                                                        <li>Atención de embarazo normal y de alto riesgo.</li>
-                                                        <li>Control prenatal con monitoreo avanzado.</li>
-                                                        <li>Diagnósticos como perfil biofísico fetal y amniocentesis.</li>
-                                                        <li>Cirugías ginecológicas especializadas.</li>
-                                                    </ul>
+                                                    <p>
+                                                        Este laboratorio garantiza diagnósticos precisos y oportunos para pacientes de toda la región Caribe. Su tecnología avanzada reduce los tiempos de espera y mejora la calidad de los tratamientos oncológicos y quirúrgicos.
+                                                    </p>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
-
-                                    <p>
-                                        En la Clínica de la Costa SAS, nuestra prioridad es ofrecer una atención integral, humanizada y de alta calidad, asegurando que cada paciente reciba el cuidado necesario para superar condiciones críticas con éxito.
-                                    </p>
                                 </div>
                             </div>
                         </div>

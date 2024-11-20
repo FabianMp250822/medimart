@@ -76,14 +76,25 @@ export default function ClinicalLaboratory() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=32"
-                                            alt="Laboratorio Clínico"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_144953972_HDR.jpg?alt=media&token=c06b242d-11a5-4cd7-a0a9-7997adb71b72"
+                                            alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',
+                                                height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
-                                                marginBottom: '15px',
+                                                marginBottom: '10px',
+                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
+                                        {/* Texto debajo de la imagen */}
+                                        <p style={{ 
+                                            color: '#000', 
+                                            fontSize: '18px', 
+                                            textAlign: 'center', 
+                                            marginTop: '5px',
+                                        }}>
+                                            {titulo}
+                                        </p>
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">

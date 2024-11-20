@@ -37,7 +37,7 @@ export default function MedicinaNuclear() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_155722961_HDR.jpg?alt=media&token=be2a5263-46e9-44ec-adff-b14be63a92e4"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%209.31.29%20AM.jpeg?alt=media&token=328a483e-a5ad-43da-aba7-397182223a5d"
                                     alt="Medicina Nuclear"
                                     style={{
                                         borderRadius: '8px',
@@ -76,7 +76,7 @@ export default function MedicinaNuclear() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_155747583_HDR.jpg?alt=media&token=a1650220-c928-4554-ac2f-3aad97aa7b41"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%2010.19.22%20AM.jpeg?alt=media&token=82f15339-9614-4e44-8644-348739824bd2"
                                             alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',

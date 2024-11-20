@@ -37,7 +37,7 @@ export default function QuimioterapiaService() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fquimioterapia.jpg?alt=media"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%209.05.39%20AM.jpeg?alt=media&token=a5096045-8ae8-438c-ac4c-45877a0e8d84"
                                     alt="Unidad de Quimioterapia"
                                     style={{
                                         borderRadius: '8px',
@@ -74,7 +74,7 @@ export default function QuimioterapiaService() {
                                             La Unidad de Quimioterapia de la Clínica de la Costa SAS está diseñada para atender tanto a pacientes ambulatorios como hospitalizados, brindando un servicio integral para el manejo de patologías hematológicas y oncológicas. Contamos con un equipo multidisciplinario altamente capacitado, dedicado exclusivamente a ofrecer un cuidado especializado, seguro y humanizado.
                                         </p>
                                     </div>
-                                    <div className="mb-4">
+                                    {/* <div className="mb-4">
                                         <img
                                             src="https://picsum.photos/1200/400?random=27"
                                             alt="Cirugía Urológica"
@@ -84,7 +84,7 @@ export default function QuimioterapiaService() {
                                                 marginBottom: '15px',
                                             }}
                                         />
-                                    </div>
+                                    </div> */}
                                     {/* Infraestructura Moderna */}
                                     <div id="accordion" className="accordion">
                                         <div className="accordion-item">
