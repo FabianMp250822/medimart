@@ -16,7 +16,7 @@ export default function ServiceDetails() {
     const [activeIndex, setActiveIndex] = useState(null);
     const [contactInfo, setContactInfo] = useState({ tel: '', cel: '' });
     const router = useRouter();
-
+    const [titulo] = useState('Unidades de Cuidado Intensivo: Atención Especializada para Cada Necesidad');
     useEffect(() => {
         
         const fetchServiceData = async () => {
@@ -98,18 +98,20 @@ export default function ServiceDetails() {
                         >
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
-                                <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
-                                    alt="Cirugía Vascular y Angiológica"
-                                    style={{
-                                        borderRadius: '8px',
-                                        width: '100%',
-                                        height: 'auto',
-                                        maxHeight: '450px',
-                                        objectFit: 'cover',
-                                    }}
-                                />
-                            </div>
+    <img
+        src={serviceData?.superior || 'https://via.placeholder.com/800x450'} // Usa el campo 'superior' o un placeholder
+        alt={title || 'Imagen del Servicio'} // Usa el título como texto alternativo
+        style={{
+            borderRadius: '8px',
+            width: '100%',
+            height: 'auto',
+            maxHeight: '450px',
+            objectFit: 'cover',
+        }}
+    />
+</div>
+
+
 
                             {/* Contenido */}
                             <ServiceHeader titulo={title} />
@@ -160,12 +162,28 @@ export default function ServiceDetails() {
                                     </div>
                                 )}
 
-                                {/* Nueva imagen de banner en lugar de las dos imágenes */}
-                                {banner2 && (
-                                    <div className="full-width-banner">
-                                        <img src={banner2} alt="Imagen adicional del servicio" />
+<div className="mb-4">
+                                        <img
+                                              src={serviceData?.Banner2 || 'https://via.placeholder.com/800x450'} 
+                                            alt="Atención Hospitalaria"
+                                            style={{
+                                                width: '100%',
+                                                height: '400px', // Ajusta la altura a 400px
+                                                borderRadius: '8px',
+                                                marginBottom: '10px',
+                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
+                                            }}
+                                        />
+                                        {/* Texto debajo de la imagen */}
+                                        <p style={{ 
+                                            color: '#000', 
+                                            fontSize: '18px', 
+                                            textAlign: 'center', 
+                                            marginTop: '5px',
+                                        }}>
+                                            {title || id}
+                                        </p>
                                     </div>
-                                )}
 
                                 {/* Sección de Cifras */}
                                 {cifras && cifras.length > 0 && (

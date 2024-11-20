@@ -8,7 +8,7 @@ import ServiceHeader from "@/components/elements/ServiceHeader";
 export default function CuidadoCritico() {
     const [titulo] = useState("Cuidado Crítico: Medicina Crítica y Unidades de Cuidado Especializado en la Clínica de la Costa SAS");
     const [isActive, setIsActive] = useState(null);
-
+    const imageUrl = 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.31.54%20PM.jpeg?alt=media&token=128385f5-0c3a-452c-9183-439023b2c3a0';
     const toggleAccordion = (key) => {
         setIsActive(isActive === key ? null : key);
     };
@@ -37,8 +37,8 @@ export default function CuidadoCritico() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fcuidado-critico.jpg?alt=media"
-                                    alt="Cuidado Crítico y Medicina Crítica"
+                                    src={imageUrl}
+                                    alt="Hospitalización"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -74,16 +74,28 @@ export default function CuidadoCritico() {
                                             En la Clínica de la Costa SAS, contamos con un servicio especializado en Medicina Crítica y Unidades de Cuidado Intensivo (UCI) que abarca atención a pacientes adultos, pediátricos y neonatales en estado crítico. Nuestras unidades están equipadas con tecnología de punta y son atendidas por un equipo interdisciplinario capacitado para garantizar una atención integral y de calidad las 24 horas del día.
                                         </p>
                                     </div>
-                                    <div className="mb-4">
+                                   {/* Imagen Recortada con Título Debajo */}
+                                   <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=27"
-                                            alt="Cirugía Urológica"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241114_162235674_HDR.jpg?alt=media&token=21829567-a24a-473c-a7d6-639c59346d13"
+                                            alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',
+                                                height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
-                                                marginBottom: '15px',
+                                                marginBottom: '10px',
+                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
+                                        {/* Texto debajo de la imagen */}
+                                        <p style={{ 
+                                            color: '#000', 
+                                            fontSize: '18px', 
+                                            textAlign: 'center', 
+                                            marginTop: '5px',
+                                        }}>
+                                            {titulo}
+                                        </p>
                                     </div>
                                     {/* Detalle de Unidades */}
                                     <div id="accordion" className="accordion">

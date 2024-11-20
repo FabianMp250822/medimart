@@ -4,7 +4,7 @@ export default function Testimonial() {
     return (
         <>
             <section className="testimonial-section sec-pad bg-color-1">
-                <div className="bg-layer" style={{ backgroundImage: 'url(assets/images/background/vision.jpg)' }}></div>
+                <div className="bg-layer" style={{ backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.02.22%20PM.jpeg?alt=media&token=d493e491-0d1b-484a-a35a-8d6a8a6d7e13)' }}></div>
                 <div className="pattern-layer" style={{ backgroundImage: 'url(assets/images/shape/shape-21.png)' }}></div>
                 <div className="auto-container">
                     <div className="row clearfix">

@@ -12,6 +12,24 @@ export default function Service() {
     const [sedes, setSedes] = useState([]);
     const [titulo] = useState('Clínica de la Costa: Servicios Quirúrgicos y Cirugía Ambulatoria');
     const [isActive, setIsActive] = useState(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    // Lista de imágenes para el carrusel
+    const bannerImages = [
+        "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-18%20at%202.35.13%20PM.jpeg?alt=media&token=6aae6289-d76f-4b36-b1be-59ad722a2551",
+        "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM(1).jpeg?alt=media&token=a0535648-1f07-4a43-87c1-8901f530dd94",
+   
+    ];
+
+    useEffect(() => {
+        // Cambia la imagen cada 10 segundos
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
+        }, 10000);
+
+        // Limpia el intervalo cuando el componente se desmonta
+        return () => clearInterval(interval);
+    }, [bannerImages.length]);
 
     useEffect(() => {
         const fetchSedes = async () => {
@@ -55,11 +73,11 @@ export default function Service() {
                                 gap: '20px',
                             }}
                         >
-                            {/* Imagen */}
+                            {/* Imagen Dinámica */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
-                                    alt="Servicios Quirúrgicos"
+                                    src={bannerImages[currentImageIndex]}
+                                    alt={`Banner ${currentImageIndex + 1}`}
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -75,6 +93,7 @@ export default function Service() {
                         </div>
                     </div>
                 </div>
+
 
                 {/* Contenido Principal */}
                 <div className="service-details pb_110">
@@ -114,7 +133,7 @@ export default function Service() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=2"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fpixelcut-export.png?alt=media&token=f93b787b-59f1-474f-bf7b-47fb74ae38f7"
                                             alt="Servicios Quirúrgicos"
                                             style={{
                                                 width: '100%',

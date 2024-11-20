@@ -1,7 +1,9 @@
 {
-  "/page": "app/page.js",
-  "/blog-details/[id]/page": "app/blog-details/[id]/page.js",
-  "/directorio-especialistas/page": "app/directorio-especialistas/page.js",
-  "/service-details-3/page": "app/service-details-3/page.js",
-  "/trabaja-con-nosotros/page": "app/trabaja-con-nosotros/page.js"
+  "/cuidado-intensivo/page": "app/cuidado-intensivo/page.js",
+  "/service-details-2/page": "app/service-details-2/page.js",
+  "/imagenes-diagnosticas/page": "app/imagenes-diagnosticas/page.js",
+  "/vacunacion/page": "app/vacunacion/page.js",
+  "/hospitalizacion/page": "app/hospitalizacion/page.js",
+  "/service-details/[id]/page": "app/service-details/[id]/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

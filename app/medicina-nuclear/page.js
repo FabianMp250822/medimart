@@ -5,8 +5,8 @@ import Layout from "@/components/layout/Layout";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function DiagnosticImagingDepartment() {
-    const [titulo] = useState("Departamento de Imágenes Diagnósticas en la Clínica de la Costa SAS");
+export default function MedicinaNuclear() {
+    const [titulo] = useState("Medicina Nuclear en la Clínica de la Costa");
     const [isActive, setIsActive] = useState(null);
 
     const toggleAccordion = (key) => {
@@ -37,8 +37,8 @@ export default function DiagnosticImagingDepartment() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241118_152844501_HDR.jpg?alt=media&token=2720bd8e-ddda-40d2-ae68-04e11e9339db"
-                                    alt="Departamento de Imágenes Diagnósticas"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%205.39.18%20PM.jpeg?alt=media&token=f5430294-929e-4089-be48-1ee6674b1d1f"
+                                    alt="Medicina Nuclear"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -69,36 +69,25 @@ export default function DiagnosticImagingDepartment() {
                                 <div className="pt-4">
                                     {/* Descripción Principal */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Diagnóstico preciso con tecnología avanzada</h2>
+                                        <h2 className="description-title">Diagnóstico y Tratamiento Avanzado</h2>
                                         <p>
-                                            En la Clínica de la Costa SAS, nuestro Departamento de Imágenes Diagnósticas está equipado con tecnología de última generación para realizar estudios no invasivos, indoloros y de alta precisión. Nuestros servicios están diseñados para apoyar diagnósticos oportunos y tratamientos efectivos en diversas áreas médicas, con la atención y el profesionalismo que caracteriza a nuestro equipo especializado.
+                                            La Medicina Nuclear en la Clínica de la Costa combina tecnología de punta y experiencia médica para diagnosticar y tratar enfermedades de manera precisa y segura. Usamos radiofármacos para obtener imágenes detalladas y terapias dirigidas que mejoran significativamente la calidad de vida de nuestros pacientes.
                                         </p>
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                             src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FIMG_20241118_152929619_HDR.jpg?alt=media&token=2e6c468b-1a57-4bff-a686-95f47042d99a"
-                                            alt="Atención Hospitalaria"
+                                            src="https://picsum.photos/1200/400?random=42"
+                                            alt="Medicina Nuclear"
                                             style={{
                                                 width: '100%',
-                                                height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
-                                                marginBottom: '10px',
-                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
+                                                marginBottom: '15px',
                                             }}
                                         />
-                                        {/* Texto debajo de la imagen */}
-                                        <p style={{ 
-                                            color: '#000', 
-                                            fontSize: '18px', 
-                                            textAlign: 'center', 
-                                            marginTop: '5px',
-                                        }}>
-                                            {titulo}
-                                        </p>
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Radiología Convencional */}
+                                        {/* Diagnóstico por Imágenes */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -114,18 +103,20 @@ export default function DiagnosticImagingDepartment() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Radiología Convencional
+                                                Diagnóstico por Imágenes
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
-                                                    <p>
-                                                        Tórax, Extremidades, Pelvis, Columna, Test de escoliosis, Cráneo y Rostro.
-                                                    </p>
+                                                    <ul className="service-list">
+                                                        <li>PET/CT para diagnóstico de cáncer y evaluación de metástasis.</li>
+                                                        <li>Gammagrafías óseas para identificar fracturas ocultas o infecciones.</li>
+                                                        <li>Pruebas de función tiroidea utilizando yodo radiactivo.</li>
+                                                    </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Ecografía */}
+                                        {/* Terapias Dirigidas */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -141,18 +132,20 @@ export default function DiagnosticImagingDepartment() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Ecografía
+                                                Terapias Dirigidas
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
-                                                    <p>
-                                                        Abdominal total, Pélvica, Mamas, Transvaginal, Partes blandas, Osteoarticular, Cuello, Testicular, Doppler hepático y renal, Biopsias guiadas (próstata, mama, hígado, riñón), drenajes de colecciones y nefrostomías percutáneas.
-                                                    </p>
+                                                    <ul className="service-list">
+                                                        <li>Tratamiento con yodo radiactivo para hipertiroidismo y cáncer de tiroides.</li>
+                                                        <li>Alivio del dolor óseo causado por metástasis.</li>
+                                                        <li>Terapias avanzadas para tumores neuroendocrinos.</li>
+                                                    </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Tomografía */}
+                                        {/* Beneficios de la Medicina Nuclear */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -168,71 +161,23 @@ export default function DiagnosticImagingDepartment() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Tomografía
+                                                Beneficios de la Medicina Nuclear
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
-                                                    <p>
-                                                        Multicorte, reconstrucción 3D, estudios de cráneo, columna, tórax, abdomen, y más.
-                                                    </p>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Resonancia Magnética */}
-                                        <div className="accordion-item">
-                                            <h2
-                                                className="accordion-header"
-                                                onClick={() => toggleAccordion(4)}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    backgroundColor: isActive === 4 ? '#1A1A3B' : '#f9f9f9',
-                                                    color: isActive === 4 ? '#fff' : '#1A1A3B',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    marginBottom: '5px',
-                                                    fontSize: '18px',
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                Resonancia Magnética
-                                            </h2>
-                                            {isActive === 4 && (
-                                                <div className="accordion-body">
-                                                    <p>
-                                                        Estudios cardíacos, de cerebro, columna, abdomen, mama, pelvis, músculo esquelético, colangioresonancia, y angioresonancia cerebral.
-                                                    </p>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Radiología Intervencionista */}
-                                        <div className="accordion-item">
-                                            <h2
-                                                className="accordion-header"
-                                                onClick={() => toggleAccordion(5)}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    backgroundColor: isActive === 5 ? '#1A1A3B' : '#f9f9f9',
-                                                    color: isActive === 5 ? '#fff' : '#1A1A3B',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    marginBottom: '5px',
-                                                    fontSize: '18px',
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                Radiología Intervencionista
-                                            </h2>
-                                            {isActive === 5 && (
-                                                <div className="accordion-body">
-                                                    <p>
-                                                        Biopsias (tiroides, mamaria, ganglionar, tejidos blandos, pulmón, prostática), drenajes, y procedimientos avanzados como embolización y colocación de stents.
-                                                    </p>
+                                                    <ul className="service-list">
+                                                        <li>Diagnósticos precisos y personalizados.</li>
+                                                        <li>Tratamientos seguros y dirigidos a áreas específicas del cuerpo.</li>
+                                                        <li>Monitoreo eficaz de la efectividad de los tratamientos.</li>
+                                                    </ul>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
+
+                                    <p>
+                                        En la Clínica de la Costa, la Medicina Nuclear es sinónimo de innovación y compromiso con tu salud. Nuestro equipo médico está listo para ofrecerte la mejor atención en cada etapa de tu tratamiento.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -250,6 +195,22 @@ export default function DiagnosticImagingDepartment() {
                     .accordion-header:hover {
                         background-color: #007bff !important;
                         color: #fff !important;
+                    }
+                    .service-list {
+                        list-style: none;
+                        padding-left: 20px;
+                        position: relative;
+                    }
+                    .service-list li {
+                        position: relative;
+                        margin-bottom: 10px;
+                        padding-left: 25px;
+                    }
+                    .service-list li:before {
+                        content: "✓";
+                        position: absolute;
+                        left: 0;
+                        color: #007bff;
                     }
                 `}</style>
             </Layout>

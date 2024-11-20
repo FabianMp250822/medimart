@@ -1,7 +1,8 @@
 'use client';
+
 import Layout from "@/components/layout/Layout";
 import Link from "next/link";
-import { useSede } from "../context/SedeContext"; 
+import { useSede } from "../context/SedeContext";
 
 export default function Home() {
   // Utiliza el hook useSede para obtener los datos del contexto
@@ -26,13 +27,11 @@ export default function Home() {
                       <div className="icon-box"><i className="icon-2"></i></div>
                       <p>
                         Teléfono: <br />
-                        {contactosData?.["atencion-usuario"] ? (
-                          <Link href={`tel:${contactosData["atencion-usuario"]}`}>
-                            {contactosData["atencion-usuario"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
+                        <Link href={`tel:3369999`}>3369999 ext: 112</Link>
+                      </p>
+                      <p>
+                        Correo electrónico: <br />
+                        <Link href="mailto:trabajosocial@clinicadelacosta.co">trabajosocial@clinicadelacosta.co</Link>
                       </p>
                     </div>
                   </div>
@@ -45,13 +44,11 @@ export default function Home() {
                       <div className="icon-box"><i className="icon-2"></i></div>
                       <p>
                         Teléfono: <br />
-                        {contactosData?.["contrataciones"] ? (
-                          <Link href={`tel:${contactosData["contrataciones"]}`}>
-                            {contactosData["contrataciones"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
+                        <Link href={`tel:3369999`}>3369999 ext: 137</Link>
+                      </p>
+                      <p>
+                        Correo electrónico: <br />
+                        <Link href="mailto:resonancia@clinicadelacosta.co">resonancia@clinicadelacosta.co</Link>
                       </p>
                     </div>
                   </div>
@@ -65,23 +62,12 @@ export default function Home() {
                         <img src="assets/images/icons/icon-2.png" alt="" />
                       </div>
                       <p>
-                        Teléfono:{" "}
-                        {contactosData?.["coordinacion"] ? (
-                          <Link href={`tel:${contactosData["coordinacion"]}`}>
-                            {contactosData["coordinacion"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
-                        <br />
-                        Correo electrónico:{" "}
-                        {contactosData?.["correo-contratacion"] ? (
-                          <Link href={`mailto:${contactosData["correo-contratacion"]}`}>
-                            {contactosData["correo-contratacion"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
+                        Teléfono: <br />
+                        <Link href={`tel:3369999`}>3369999 ext: 110</Link>
+                      </p>
+                      <p>
+                        Correo electrónico: <br />
+                        <Link href="mailto:neurofisiologia@clinicadelacosta.co">neurofisiologia@clinicadelacosta.co</Link>
                       </p>
                     </div>
                   </div>
@@ -96,23 +82,12 @@ export default function Home() {
                     <div className="inner-box">
                       <div className="icon-box"><i className="icon-2"></i></div>
                       <p>
-                        Teléfono:{" "}
-                        {contactosData?.["auditoria"] ? (
-                          <Link href={`tel:${contactosData["auditoria"]}`}>
-                            {contactosData["auditoria"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
-                        <br />
-                        Correo electrónico:{" "}
-                        {contactosData?.["correo-auditoria"] ? (
-                          <Link href={`mailto:${contactosData["correo-auditoria"]}`}>
-                            {contactosData["correo-auditoria"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
+                        Teléfono: <br />
+                        <Link href={`tel:3369999`}>3369999 ext: 203</Link>
+                      </p>
+                      <p>
+                        Correo electrónico: <br />
+                        <Link href="mailto:patologia@clinicadelacosta.co">patologia@clinicadelacosta.co</Link>
                       </p>
                     </div>
                   </div>
@@ -124,23 +99,12 @@ export default function Home() {
                     <div className="inner-box">
                       <div className="icon-box"><i className="icon-2"></i></div>
                       <p>
-                        Teléfono:{" "}
-                        {contactosData?.["enfermera-coordinadora"] ? (
-                          <Link href={`tel:${contactosData["enfermera-coordinadora"]}`}>
-                            {contactosData["enfermera-coordinadora"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
-                        <br />
-                        Correo electrónico:{" "}
-                        {contactosData?.["correo-enfermeria"] ? (
-                          <Link href={`mailto:${contactosData["correo-enfermeria"]}`}>
-                            {contactosData["correo-enfermeria"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
+                        Teléfono: <br />
+                        <Link href={`tel:3369999`}>3369999 ext: 106</Link>
+                      </p>
+                      <p>
+                        Correo electrónico: <br />
+                        <Link href="mailto:enfermeriacirugia@clinicadelacosta.co">enfermeriacirugia@clinicadelacosta.co</Link>
                       </p>
                     </div>
                   </div>
@@ -152,64 +116,58 @@ export default function Home() {
                     <div className="inner-box">
                       <div className="icon-box"><i className="icon-2"></i></div>
                       <p>
-                        Correo electrónico:{" "}
-                        {contactosData?.["correo-atencion"] ? (
-                          <Link href={`mailto:${contactosData["correo-atencion"]}`}>
-                            {contactosData["correo-atencion"]}
-                          </Link>
-                        ) : (
-                          "No disponible"
-                        )}
+                        Correo electrónico: <br />
+                        <Link href="mailto:citasmedicas@clinicadelacosta.co">citasmedicas@clinicadelacosta.co</Link>
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-
-            
             </div>
           </section>
+
+          {/* Formulario de Contacto */}
           <section className="contact-style-three pt_90 pb_120">
-                        <div className="auto-container">
-                            <div className="row clearfix">
-                                <div className="col-lg-8 col-md-12 col-sm-12 form-column">
-                                    <div className="form-inner mr_40">
-                                        <div className="sec-title mb_50">
-                                            <h2>Enviar un Mensaje</h2>
-                                        </div>
-                                        <form method="post" action="sendemail.php" id="contact-form" className="default-form">
-                                            <div className="row clearfix">
-                                                <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                    <input type="text" name="username" placeholder="Nombre" required />
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                    <input type="text" name="lname" placeholder="Apellido" required />
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                    <input type="email" name="email" placeholder="Correo Electrónico" required />
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                    <input type="text" name="phone" required placeholder="Teléfono" />
-                                                </div>
-                                                <div className="col-lg-12 col-md-12 col-sm-12 form-group">
-                                                    <input type="text" name="subject" required placeholder="Asunto" />
-                                                </div>
-                                                <div className="col-lg-12 col-md-12 col-sm-12 form-group">
-                                                    <textarea name="message" placeholder="Mensaje"></textarea>
-                                                </div>
-                                                <div className="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                                                    <button className="theme-btn btn-one" type="submit" name="submit-form"><span>Enviar Mensaje</span></button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div className="col-lg-4 col-md-12 col-sm-12 image-column">
-                                    <figure className="image-box"><img src="assets/images/banner/contacto.webp" alt="" /></figure>
-                                </div>
-                            </div>
+            <div className="auto-container">
+              <div className="row clearfix">
+                <div className="col-lg-8 col-md-12 col-sm-12 form-column">
+                  <div className="form-inner mr_40">
+                    <div className="sec-title mb_50">
+                      <h2>Enviar un Mensaje</h2>
+                    </div>
+                    <form method="post" action="sendemail.php" id="contact-form" className="default-form">
+                      <div className="row clearfix">
+                        <div className="col-lg-6 col-md-6 col-sm-12 form-group">
+                          <input type="text" name="username" placeholder="Nombre" required />
                         </div>
-                    </section>
+                        <div className="col-lg-6 col-md-6 col-sm-12 form-group">
+                          <input type="text" name="lname" placeholder="Apellido" required />
+                        </div>
+                        <div className="col-lg-6 col-md-6 col-sm-12 form-group">
+                          <input type="email" name="email" placeholder="Correo Electrónico" required />
+                        </div>
+                        <div className="col-lg-6 col-md-6 col-sm-12 form-group">
+                          <input type="text" name="phone" required placeholder="Teléfono" />
+                        </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 form-group">
+                          <input type="text" name="subject" required placeholder="Asunto" />
+                        </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 form-group">
+                          <textarea name="message" placeholder="Mensaje"></textarea>
+                        </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
+                          <button className="theme-btn btn-one" type="submit" name="submit-form"><span>Enviar Mensaje</span></button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-12 col-sm-12 image-column">
+                  <figure className="image-box"><img src="assets/images/banner/contacto.webp" alt="" /></figure>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </Layout>
     </>

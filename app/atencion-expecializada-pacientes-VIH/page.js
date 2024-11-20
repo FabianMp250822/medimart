@@ -37,8 +37,8 @@ export default function HIVCareProgram() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fvih.jpg?alt=media"
-                                    alt="Atención VIH/SIDA"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.31.54%20PM.jpeg?alt=media&token=128385f5-0c3a-452c-9183-439023b2c3a0"
+                                    alt="Hospitalización"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -74,7 +74,7 @@ export default function HIVCareProgram() {
                                             La Clínica de la Costa SAS ofrece un servicio integral con altos estándares de calidad, enfocado en la atención, prevención y control del VIH/SIDA. Con un equipo multidisciplinario altamente capacitado, este programa busca mejorar la calidad de vida de los pacientes y sus familias, a través de un enfoque humano y profesional.
                                         </p>
                                     </div>
-                                    <div className="mb-4">
+                                    {/* <div className="mb-4">
                                         <img
                                             src="https://picsum.photos/1200/400?random=12"
                                             alt="Transporte Asistencial"
@@ -84,7 +84,7 @@ export default function HIVCareProgram() {
                                                 marginBottom: '15px',
                                             }}
                                         />
-                                    </div>
+                                    </div> */}
                                     {/* Servicios y Beneficios */}
                                     <div id="accordion" className="accordion">
                                         {/* Servicios Disponibles */}
