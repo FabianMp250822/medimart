@@ -5,8 +5,8 @@ import Layout from "@/components/layout/Layout";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function Fonoaudiologia() {
-    const [titulo] = useState("Fonoaudiología y Terapia del Lenguaje en la Clínica de la Costa SAS");
+export default function Hemodialisis() {
+    const [titulo] = useState("Hemodiálisis en la Clínica de la Costa: Cuidado Integral para Pacientes Renales");
     const [isActive, setIsActive] = useState(null);
 
     const toggleAccordion = (key) => {
@@ -37,8 +37,8 @@ export default function Fonoaudiologia() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fbd15702bca40e0c61fa009390630c831_XL.jpg?alt=media&token=176b8278-7d45-498c-a82f-15b24c83bdca"
-                                    alt="Fonoaudiología y Terapia del Lenguaje"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-21%20at%2012.53.20%20PM.jpeg?alt=media&token=f55f93d9-efa3-46c2-b65c-b5ec5b848b40"
+                                    alt="Hemodiálisis en la Clínica de la Costa"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -67,17 +67,21 @@ export default function Fonoaudiologia() {
                             {/* Contenido */}
                             <div className="col-12 col-md-9">
                                 <div className="pt-4">
-                                    {/* Descripción Principal */}
+                                    {/* Introducción */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Comunicación y bienestar para todas las etapas de la vida</h2>
+                                        <h2 className="description-title">¿Qué es la Hemodiálisis?</h2>
                                         <p>
-                                            En la Clínica de la Costa SAS, ofrecemos servicios especializados de fonoaudiología y terapia del lenguaje para diagnosticar, tratar y rehabilitar dificultades en la comunicación, el habla, la voz, el lenguaje y la deglución. Nuestro objetivo es mejorar la calidad de vida de pacientes de todas las edades.
+                                            La hemodiálisis es un procedimiento médico que utiliza una máquina para filtrar la sangre y eliminar desechos, toxinas y exceso de líquidos. 
+                                            Este tratamiento es esencial para personas con insuficiencia renal crónica o enfermedades renales terminales, y ayuda a mantener el equilibrio 
+                                            químico y físico del cuerpo.
                                         </p>
                                     </div>
+
+                                    {/* Imagen Secundaria */}
                                     <div className="mb-4">
                                         <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%206.51.25%20PM.jpeg?alt=media&token=72ce5a52-b391-435a-ae35-9bdf6339e919"
-                                            alt="Atención Hospitalaria"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%209.05.39%20AM.jpeg?alt=media&token=a5096045-8ae8-438c-ac4c-45877a0e8d84"
+                                            alt="Paciente recibiendo Hemodiálisis"
                                             style={{
                                                 width: '100%',
                                                 height: '400px', // Ajusta la altura a 400px
@@ -86,19 +90,21 @@ export default function Fonoaudiologia() {
                                                 objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
-                                        {/* Texto debajo de la imagen */}
-                                        <p style={{ 
-                                            color: '#000', 
-                                            fontSize: '18px', 
-                                            textAlign: 'center', 
-                                            marginTop: '5px',
-                                        }}>
+                                        <p
+                                            style={{
+                                                color: '#000',
+                                                fontSize: '18px',
+                                                textAlign: 'center',
+                                                marginTop: '5px',
+                                            }}
+                                        >
                                             {titulo}
                                         </p>
                                     </div>
+
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Evaluación y diagnóstico */}
+                                        {/* ¿Cómo Funciona la Hemodiálisis? */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -114,20 +120,28 @@ export default function Fonoaudiologia() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Evaluación y diagnóstico
+                                                ¿Cómo Funciona la Hemodiálisis?
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>Evaluación integral del lenguaje para niños y adultos.</li>
-                                                        <li>Diagnóstico de trastornos como dislalias, disfemia, afasia y disartria.</li>
-                                                        <li>Estudios especializados para identificar disfagia en pacientes pediátricos y adultos.</li>
+                                                        <li>
+                                                            <strong>Acceso al torrente sanguíneo:</strong> Se utiliza una fístula arteriovenosa, catéter o injerto 
+                                                            para conectar el flujo sanguíneo a la máquina de hemodiálisis.
+                                                        </li>
+                                                        <li>
+                                                            <strong>Filtración de la sangre:</strong> La sangre pasa por un dializador que elimina toxinas, líquidos en exceso y 
+                                                            otros desechos.
+                                                        </li>
+                                                        <li>
+                                                            <strong>Duración del tratamiento:</strong> Cada sesión dura entre 3 a 5 horas, con una frecuencia de varias veces a la semana.
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Terapias especializadas */}
+                                        {/* Beneficios de la Hemodiálisis */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -143,21 +157,21 @@ export default function Fonoaudiologia() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Terapias especializadas
+                                                Beneficios de la Hemodiálisis
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>Terapia del lenguaje: Desarrollo del lenguaje oral y escrito en niños.</li>
-                                                        <li>Terapia del habla: Tratamiento de problemas de pronunciación, fluidez y articulación.</li>
-                                                        <li>Rehabilitación vocal: Mejoras en la calidad de la voz para pacientes con disfonía o afonía.</li>
-                                                        <li>Terapia de deglución: Rehabilitación de pacientes con disfagia.</li>
+                                                        <li>Elimina desechos tóxicos como la urea y la creatinina.</li>
+                                                        <li>Mantiene el equilibrio de electrolitos como potasio y sodio.</li>
+                                                        <li>Previene complicaciones graves como insuficiencia cardíaca o hipertensión.</li>
+                                                        <li>Mejora la calidad de vida del paciente.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Atención a poblaciones específicas */}
+                                        {/* ¿Por Qué Elegir la Clínica de la Costa? */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -173,23 +187,28 @@ export default function Fonoaudiologia() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Atención a poblaciones específicas
+                                                ¿Por Qué Elegir la Clínica de la Costa?
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>Niños: Intervenciones para trastornos como dislexia y TEA.</li>
-                                                        <li>Adultos: Rehabilitación tras ACV o traumas cerebrales.</li>
-                                                        <li>Pacientes con enfermedades crónicas: Terapias para Parkinson, esclerosis múltiple y más.</li>
+                                                        <li>
+                                                            <strong>Instalaciones de vanguardia:</strong> Máquinas modernas y áreas confortables para los pacientes.
+                                                        </li>
+                                                        <li>
+                                                            <strong>Equipo especializado:</strong> Profesionales capacitados en nefrología y diálisis.
+                                                        </li>
+                                                        <li>
+                                                            <strong>Protocolos de seguridad:</strong> Cumplimos con los más altos estándares de higiene y manejo de equipos.
+                                                        </li>
+                                                        <li>
+                                                            <strong>Atención personalizada:</strong> Planes de tratamiento adaptados a cada paciente.
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
-
-                                    <p>
-                                        En la Clínica de la Costa SAS, trabajamos para superar barreras en la comunicación y garantizar una mejora significativa en las habilidades funcionales y la calidad de vida de nuestros pacientes.
-                                    </p>
                                 </div>
                             </div>
                         </div>

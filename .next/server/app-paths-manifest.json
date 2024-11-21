@@ -3,7 +3,5 @@
   "/atencion-de-acientes-con-dolor-toracico/page": "app/atencion-de-acientes-con-dolor-toracico/page.js",
   "/gestion-pre-transfusional/page": "app/gestion-pre-transfusional/page.js",
   "/laboratorio-citologias-cervico-uterinas/page": "app/laboratorio-citologias-cervico-uterinas/page.js",
-  "/fonoaudiologia-y-terapia-del-lenguaje/page": "app/fonoaudiologia-y-terapia-del-lenguaje/page.js",
-  "/servicio-farmaceutico/page": "app/servicio-farmaceutico/page.js",
   "/diagnostico-vascular/page": "app/diagnostico-vascular/page.js"
 }

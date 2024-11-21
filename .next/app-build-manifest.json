@@ -120,6 +120,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/diagnostico-vascular/page.js"
+    ],
+    "/hemodialisis/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/hemodialisis/page.js"
     ]
   }
 }
