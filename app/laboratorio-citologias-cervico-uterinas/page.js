@@ -38,7 +38,7 @@ export default function CytologyLaboratory() {
                             <div style={{ flex: '1.5' }}>
                                 <img
                                     src="https://example.com/laboratorio-citologias.jpg"
-                                    alt="Laboratorio de Citologías Cérvico-Uterinas"
+                                    // alt="Laboratorio de Citologías Cérvico-Uterinas"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -74,7 +74,7 @@ export default function CytologyLaboratory() {
                                             El laboratorio de citologías cérvico-uterinas es una unidad especializada en la detección temprana y prevención del cáncer de cuello uterino. A través de técnicas avanzadas como el Papanicolaou y la citología en base líquida, permite identificar alteraciones en las células cervicales que podrían evolucionar a lesiones precancerosas o cáncer.
                                         </p>
                                     </div>
-                                    <div className="mb-4">
+                                    {/* <div className="mb-4">
                                         <img
                                             src="https://example.com/citologia-proceso.jpg"
                                             alt="Procesos en el Laboratorio"
@@ -94,7 +94,7 @@ export default function CytologyLaboratory() {
                                         }}>
                                             Diagnóstico temprano para el cuidado de la salud femenina.
                                         </p>
-                                    </div>
+                                    </div> */}
 
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">

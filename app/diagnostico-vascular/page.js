@@ -78,7 +78,7 @@ export default function DiagnosticoVascular() {
                                     </div>
 
                                     {/* Imagen Secundaria */}
-                                    <div className="mb-4">
+                                    {/* <div className="mb-4">
                                         <img
                                             src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fdiagnostico-vascular2.jpg?alt=media"
                                             alt="Procedimientos de Diagnóstico Vascular"
@@ -90,7 +90,7 @@ export default function DiagnosticoVascular() {
                                                 objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
-                                        {/* Texto debajo de la imagen */}
+                                       
                                         <p
                                             style={{
                                                 color: '#000',
@@ -101,7 +101,7 @@ export default function DiagnosticoVascular() {
                                         >
                                             {titulo}
                                         </p>
-                                    </div>
+                                    </div> */}
 
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">

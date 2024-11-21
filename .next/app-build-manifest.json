@@ -45,6 +45,21 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/fisioterapia/page.js"
+    ],
+    "/consulta-externa/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/consulta-externa/page.js"
+    ],
+    "/cardiologia-pediatrica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cardiologia-pediatrica/page.js"
+    ],
+    "/cardiologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cardiologia/page.js"
     ]
   }
 }

@@ -38,7 +38,7 @@ export default function Fisioterapia() {
                             <div style={{ flex: '1.5' }}>
                                 <img
                                     src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Ffisioterapia.jpg?alt=media"
-                                    alt="Fisioterapia en la Clínica de la Costa"
+                                   // alt="Fisioterapia en la Clínica de la Costa"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -78,7 +78,7 @@ export default function Fisioterapia() {
                                     </div>
 
                                     {/* Imagen Secundaria */}
-                                    <div className="mb-4">
+                                    {/* <div className="mb-4">
                                         <img
                                             src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Ffisioterapia-paciente.jpg?alt=media"
                                             alt="Sesión de fisioterapia"
@@ -100,7 +100,7 @@ export default function Fisioterapia() {
                                         >
                                             {titulo}
                                         </p>
-                                    </div>
+                                    </div> */}
 
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">

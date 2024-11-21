@@ -1,7 +1,7 @@
 {
-  "/service-details-6/page": "app/service-details-6/page.js",
   "/diagnostico-vascular/page": "app/diagnostico-vascular/page.js",
-  "/atencion-de-acientes-con-dolor-toracico/page": "app/atencion-de-acientes-con-dolor-toracico/page.js",
   "/laboratorio-citologias-cervico-uterinas/page": "app/laboratorio-citologias-cervico-uterinas/page.js",
-  "/fisioterapia/page": "app/fisioterapia/page.js"
+  "/fisioterapia/page": "app/fisioterapia/page.js",
+  "/cardiologia-pediatrica/page": "app/cardiologia-pediatrica/page.js",
+  "/cardiologia/page": "app/cardiologia/page.js"
 }
