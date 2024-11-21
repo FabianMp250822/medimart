@@ -1,3 +1,7 @@
 {
-  "/manejo-integral-del-paciente-hematoncologico/page": "app/manejo-integral-del-paciente-hematoncologico/page.js"
+  "/service-details-6/page": "app/service-details-6/page.js",
+  "/atencion-del-parto/page": "app/atencion-del-parto/page.js",
+  "/atencion-prehospitalaria/page": "app/atencion-prehospitalaria/page.js",
+  "/urgencia/page": "app/urgencia/page.js",
+  "/transporte-asistencial-medicalizado/page": "app/transporte-asistencial-medicalizado/page.js"
 }

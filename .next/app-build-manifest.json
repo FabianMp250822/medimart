@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/service-details-6/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/service-details-6/page.js"
+      "static/chunks/app/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -21,10 +21,35 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/manejo-integral-del-paciente-hematoncologico/page": [
+    "/service-details-3/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/manejo-integral-del-paciente-hematoncologico/page.js"
+      "static/chunks/app/service-details-3/page.js"
+    ],
+    "/service-details-6/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/service-details-6/page.js"
+    ],
+    "/atencion-del-parto/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/atencion-del-parto/page.js"
+    ],
+    "/atencion-prehospitalaria/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/atencion-prehospitalaria/page.js"
+    ],
+    "/urgencia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/urgencia/page.js"
+    ],
+    "/transporte-asistencial-medicalizado/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/transporte-asistencial-medicalizado/page.js"
     ]
   }
 }

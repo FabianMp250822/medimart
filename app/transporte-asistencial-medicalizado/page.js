@@ -37,7 +37,7 @@ export default function UnitsAndPrograms() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Funidades.jpg?alt=media"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-21%20at%2010.23.11%20AM.jpeg?alt=media&token=7d9bb9bf-9c9b-4ed5-9015-3cef847871ff"
                                     alt="Unidades y Programas de Atención"
                                     style={{
                                         borderRadius: '8px',
@@ -77,15 +77,26 @@ export default function UnitsAndPrograms() {
 
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=12"
-                                            alt="Transporte Asistencial"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-21%20at%2010.41.08%20AM.jpeg?alt=media&token=74bbca1e-5b72-441b-a54a-e80765a00245"
+                                            alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',
+                                                height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
-                                                marginBottom: '15px',
+                                                marginBottom: '10px',
+                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
-                                    </div>
+                                        {/* Texto debajo de la imagen */}
+                                        <p style={{ 
+                                            color: '#000', 
+                                            fontSize: '18px', 
+                                            textAlign: 'center', 
+                                            marginTop: '5px',
+                                        }}>
+                                            {titulo}
+                                        </p>
+                                    </div> 
 
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
