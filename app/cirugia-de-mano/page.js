@@ -74,16 +74,28 @@ export default function HandSurgeryService() {
                                             La cirugía de la mano es una especialidad médica que se enfoca en el diagnóstico, tratamiento y rehabilitación de lesiones, deformidades y enfermedades que afectan la mano, muñeca y antebrazo. En la Clínica de la Costa SAS, contamos con un equipo de cirujanos expertos y tecnología avanzada para garantizar resultados efectivos y personalizados, ayudando a nuestros pacientes a recuperar su funcionalidad y calidad de vida.
                                         </p>
                                     </div>
+                                    {/* Imagen Recortada con Título Debajo */}
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=16"
-                                            alt="Cirugía de la Mano"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM(1).jpeg?alt=media&token=a0535648-1f07-4a43-87c1-8901f530dd94"
+                                            alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',
+                                                height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
-                                                marginBottom: '15px',
+                                                marginBottom: '10px',
+                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
+                                        {/* Texto debajo de la imagen */}
+                                        <p style={{ 
+                                            color: '#000', 
+                                            fontSize: '18px', 
+                                            textAlign: 'center', 
+                                            marginTop: '5px',
+                                        }}>
+                                            {titulo}
+                                        </p>
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">

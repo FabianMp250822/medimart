@@ -36,9 +36,9 @@ export default function DermatologicSurgeryService() {
                         >
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
-                                <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
-                                    alt="Cirugía Dermatológica"
+                            <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-18%20at%202.35.13%20PM.jpeg?alt=media&token=6aae6289-d76f-4b36-b1be-59ad722a2551"
+                                    alt="Cirugía Gastrointestinal"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -76,14 +76,25 @@ export default function DermatologicSurgeryService() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=15"
-                                            alt="Cirugía Dermatológica"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.31.54%20PM.jpeg?alt=media&token=128385f5-0c3a-452c-9183-439023b2c3a0"
+                                            alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',
+                                                height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
-                                                marginBottom: '15px',
+                                                marginBottom: '10px',
+                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
+                                        {/* Texto debajo de la imagen */}
+                                        <p style={{ 
+                                            color: '#000', 
+                                            fontSize: '18px', 
+                                            textAlign: 'center', 
+                                            marginTop: '5px',
+                                        }}>
+                                            {titulo}
+                                        </p>
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">

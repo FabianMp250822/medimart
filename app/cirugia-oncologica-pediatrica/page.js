@@ -74,16 +74,28 @@ export default function PediatricOncologicSurgeryService() {
                                             La cirugía oncológica pediátrica es una rama de la medicina que combina la cirugía y la oncología para tratar a niños con tumores malignos y otras condiciones relacionadas con el cáncer. En la Clínica de la Costa SAS, contamos con cirujanos pediátricos especializados y tecnología avanzada para abordar estas complejas patologías, siempre con un enfoque humanizado y adaptado a las necesidades únicas de los pacientes pediátricos y sus familias.
                                         </p>
                                     </div>
+                                    {/* Imagen Recortada con Título Debajo */}
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=17"
-                                            alt="Cirugía Oncológica Pediátrica"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-18%20at%202.35.13%20PM.jpeg?alt=media&token=6aae6289-d76f-4b36-b1be-59ad722a2551"
+                                            alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',
+                                                height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
-                                                marginBottom: '15px',
+                                                marginBottom: '10px',
+                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
+                                        {/* Texto debajo de la imagen */}
+                                        <p style={{ 
+                                            color: '#000', 
+                                            fontSize: '18px', 
+                                            textAlign: 'center', 
+                                            marginTop: '5px',
+                                        }}>
+                                            {titulo}
+                                        </p>
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
