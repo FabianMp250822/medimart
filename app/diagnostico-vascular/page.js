@@ -37,7 +37,7 @@ export default function DiagnosticoVascular() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fdiagnostico-vascular.jpg?alt=media"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Funnamed%20(1).png?alt=media&token=eb087a7c-4318-42fd-ae8d-3194774bc622"
                                     alt="Diagnóstico Vascular en la Clínica de la Costa"
                                     style={{
                                         borderRadius: '8px',

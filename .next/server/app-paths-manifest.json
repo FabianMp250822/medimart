@@ -3,6 +3,5 @@
   "/diagnostico-vascular/page": "app/diagnostico-vascular/page.js",
   "/atencion-de-acientes-con-dolor-toracico/page": "app/atencion-de-acientes-con-dolor-toracico/page.js",
   "/laboratorio-citologias-cervico-uterinas/page": "app/laboratorio-citologias-cervico-uterinas/page.js",
-  "/fisioterapia/page": "app/fisioterapia/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/fisioterapia/page": "app/fisioterapia/page.js"
 }
