@@ -37,7 +37,7 @@ export default function AtencionPrehospitalaria() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fatencion-prehospitalaria.jpg?alt=media"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%203.40.56%20PM.jpeg?alt=media&token=58c3d9c0-c8e4-4252-8899-af7c2692bdec"
                                     alt="Atención Prehospitalaria"
                                     style={{
                                         borderRadius: '8px',
@@ -74,7 +74,7 @@ export default function AtencionPrehospitalaria() {
                                             La Atención Prehospitalaria de la Clínica de la Costa SAS está diseñada para brindar asistencia médica inmediata en el lugar donde ocurre una emergencia, estabilizando al paciente antes de su traslado a un centro hospitalario. Nuestro servicio combina rapidez, eficiencia y un equipo altamente capacitado para garantizar una atención integral en situaciones críticas.
                                         </p>
                                     </div>
-                                    <div className="mb-4">
+                                    {/* <div className="mb-4">
                                         <img
                                             src="https://picsum.photos/1200/400?random=27"
                                             alt="Cirugía Urológica"
@@ -84,7 +84,7 @@ export default function AtencionPrehospitalaria() {
                                                 marginBottom: '15px',
                                             }}
                                         />
-                                    </div>
+                                    </div> */}
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
                                         {/* Respuesta inmediata */}

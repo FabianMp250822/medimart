@@ -11,7 +11,7 @@ export default function Menu() {
         { title: "Responsabilidad social y empresarial", link: "/responsabilidad-social" },
         { title: "Direccionamiento Estratégico", link: "/direccionamiento-estrategico" },
         { title: "Marco Legal", link: "/marco-legal" },
-        { title: "Informes de Sostenibilidad", link: "/informes-de-sostenibilidad" },
+        //{ title: "Informes de Sostenibilidad", link: "/informes-de-sostenibilidad" },
         { title: "Sistema Integrado de Gestión", link: "/sistema-integrado-de-gestion" },
         { title: "Política de tratamiento de datos", link: "/politica-de-datos" },
     ];

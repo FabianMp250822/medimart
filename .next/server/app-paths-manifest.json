@@ -1,7 +1,9 @@
 {
-  "/cuidado-critico/page": "app/cuidado-critico/page.js",
-  "/hospitalizacion/page": "app/hospitalizacion/page.js",
-  "/atencion-expecializada-pacientes-VIH/page": "app/atencion-expecializada-pacientes-VIH/page.js",
-  "/cirugia/page": "app/cirugia/page.js",
-  "/laboratorio-clinico/page": "app/laboratorio-clinico/page.js"
+  "/cirugia-plastica-y-estetica/page": "app/cirugia-plastica-y-estetica/page.js",
+  "/cirugia-de-cabeza-y-cuello/page": "app/cirugia-de-cabeza-y-cuello/page.js",
+  "/cirugia-oral/page": "app/cirugia-oral/page.js",
+  "/direccionamiento-estrategico/page": "app/direccionamiento-estrategico/page.js",
+  "/neonatologia/page": "app/neonatologia/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/urgencia/page": "app/urgencia/page.js"
 }

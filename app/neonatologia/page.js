@@ -37,7 +37,7 @@ export default function Neonatologia() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fneonatologia.jpg?alt=media"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%206.51.25%20PM.jpeg?alt=media&token=72ce5a52-b391-435a-ae35-9bdf6339e919"
                                     alt="Neonatología"
                                     style={{
                                         borderRadius: '8px',
@@ -76,14 +76,25 @@ export default function Neonatologia() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://picsum.photos/1200/400?random=27"
-                                            alt="Cirugía Urológica"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%207.40.07%20PM.jpeg?alt=media&token=dd444583-361a-4086-be8f-020e30ed7418"
+                                            alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',
+                                                height: '400px', // Ajusta la altura a 400px
                                                 borderRadius: '8px',
-                                                marginBottom: '15px',
+                                                marginBottom: '10px',
+                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
                                             }}
                                         />
+                                        {/* Texto debajo de la imagen */}
+                                        <p style={{ 
+                                            color: '#000', 
+                                            fontSize: '18px', 
+                                            textAlign: 'center', 
+                                            marginTop: '5px',
+                                        }}>
+                                            {titulo}
+                                        </p>
                                     </div>
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">

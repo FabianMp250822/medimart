@@ -1,13 +1,16 @@
 'use client';
 
-import { useState } from "react";
 import Layout from "@/components/layout/Layout";
+import { useState } from "react";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function EmergencyService() {
-    const [titulo] = useState("Servicio de Urgencias en la Clínica de la Costa SAS");
+export default function Service() {
+    const [titulo] = useState('Cirugía Oral: Servicios Especializados en la Clínica de la Costa');
     const [isActive, setIsActive] = useState(null);
+
+    // URL de la imagen destacada
+    const imageUrl = 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fcirugia-oral.jpg?alt=media';
 
     const toggleAccordion = (key) => {
         setIsActive(isActive === key ? null : key);
@@ -37,8 +40,8 @@ export default function EmergencyService() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641"
-                                    alt="Servicio de Urgencias"
+                                    src={imageUrl}
+                                    alt="Cirugía Oral"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -67,38 +70,20 @@ export default function EmergencyService() {
                             {/* Contenido */}
                             <div className="col-12 col-md-9">
                                 <div className="pt-4">
-                                    {/* Descripción Principal */   }
+                                    {/* Introducción */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Atención inmediata y especializada las 24 horas</h2>
+                                        <h2 className="description-title">¿Qué es la Cirugía Oral?</h2>
                                         <p>
-                                            En la Clínica de la Costa SAS, contamos con un servicio de urgencias de alta calidad, diseñado para atender de manera eficiente cualquier emergencia médica. Nuestro equipo de especialistas está disponible las 24 horas del día, brindando una atención integral y rápida para garantizar los mejores resultados en cada caso.
+                                            La cirugía oral es una especialidad enfocada en el diagnóstico y tratamiento quirúrgico
+                                            de problemas complejos en los dientes, encías, maxilares y tejidos relacionados. En la 
+                                            Clínica de la Costa, ofrecemos servicios de cirugía oral avanzados para mejorar tu salud
+                                            bucal y calidad de vida.
                                         </p>
                                     </div>
-                                    <div className="mb-4">
-                                        <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%207.56.46%20PM.jpeg?alt=media&token=066a53e8-f8e3-4566-aedb-07a3a96fbc7c"
-                                            alt="Atención Hospitalaria"
-                                            style={{
-                                                width: '100%',
-                                                height: '400px', // Ajusta la altura a 400px
-                                                borderRadius: '8px',
-                                                marginBottom: '10px',
-                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
-                                            }}
-                                        />
-                                        {/* Texto debajo de la imagen */}
-                                        <p style={{ 
-                                            color: '#000', 
-                                            fontSize: '18px', 
-                                            textAlign: 'center', 
-                                            marginTop: '5px',
-                                        }}>
-                                            {titulo}
-                                        </p>
-                                    </div>
+
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Equipo Médico Altamente Capacitado */}
+                                        {/* Extracción de Muelas del Juicio */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -114,21 +99,20 @@ export default function EmergencyService() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Equipo Médico Altamente Capacitado
+                                                Extracción de Muelas del Juicio
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
-                                                    <ul className="service-list">
-                                                        <li>Especialistas en Medicina Interna, Ginecología, Pediatría y Medicina General.</li>
-                                                        <li>Enfermeros certificados en soporte vital básico y avanzado.</li>
-                                                        <li>Personal idóneo en Terapia Respiratoria.</li>
-                                                        <li>Médicos disponibles en todas las especialidades clínicas y quirúrgicas.</li>
-                                                    </ul>
+                                                    <p>
+                                                        Realizamos la extracción quirúrgica de muelas del juicio, ya sea por molestias,
+                                                        infecciones recurrentes o problemas de espacio. Utilizamos técnicas avanzadas 
+                                                        para garantizar un procedimiento seguro y una recuperación rápida.
+                                                    </p>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Servicios Disponibles en Urgencias */}
+                                        {/* Implantes Dentales */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -144,22 +128,20 @@ export default function EmergencyService() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Servicios Disponibles en Urgencias
+                                                Implantes Dentales
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
-                                                    <ul className="service-list">
-                                                        <li>Imágenes diagnósticas con equipos de última generación.</li>
-                                                        <li>Laboratorio clínico para resultados confiables y rápidos.</li>
-                                                        <li>Apoyo terapéutico, incluyendo terapias respiratorias.</li>
-                                                        <li>Atención quirúrgica inmediata para emergencias.</li>
-                                                        <li>Unidad transfusional con disponibilidad las 24 horas.</li>
-                                                    </ul>
+                                                    <p>
+                                                        Ofrecemos la colocación de implantes dentales para restaurar dientes perdidos,
+                                                        devolviendo la funcionalidad y estética de tu sonrisa. Nuestros implantes son 
+                                                        soluciones duraderas y estables.
+                                                    </p>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* ¿Qué nos hace diferentes? */}
+                                        {/* Cirugía Ortognática */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -175,16 +157,14 @@ export default function EmergencyService() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                ¿Qué nos hace diferentes?
+                                                Cirugía Ortognática
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
-                                                    <ul className="service-list">
-                                                        <li>Atención integral desde el diagnóstico hasta el tratamiento.</li>
-                                                        <li>Tecnología avanzada para agilizar diagnósticos y procedimientos.</li>
-                                                        <li>Equipo altamente capacitado en soporte vital y emergencias complejas.</li>
-                                                        <li>Disponibilidad las 24 horas, los 7 días de la semana.</li>
-                                                    </ul>
+                                                    <p>
+                                                        Corrige deformidades en los maxilares para mejorar la mordida, funcionalidad 
+                                                        y estética facial. Trabajamos en conjunto con ortodoncistas para resultados óptimos.
+                                                    </p>
                                                 </div>
                                             )}
                                         </div>
@@ -193,37 +173,18 @@ export default function EmergencyService() {
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <style jsx>{`
-                    .description-title {
-                        font-size: 28px;
-                        font-weight: bold;
-                        color: #1A1A3B;
-                        margin-bottom: 15px;
-                        text-transform: uppercase;
-                    }
-                    .accordion-header:hover {
-                        background-color: #007bff !important;
-                        color: #fff !important;
-                    }
-                    .service-list {
-                        list-style: none;
-                        padding-left: 20px;
-                        position: relative;
-                    }
-                    .service-list li {
-                        position: relative;
-                        margin-bottom: 10px;
-                        padding-left: 25px;
-                    }
-                    .service-list li:before {
-                        content: "✓";
-                        position: absolute;
-                        left: 0;
-                        color: #007bff;
-                    }
-                `}</style>
+                    <style jsx>{`
+                        .description-title {
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #1A1A3B;
+                            margin-bottom: 15px;
+                            border-bottom: 2px solid #ddd;
+                            padding-bottom: 5px;
+                        }
+                    `}</style>
+                </div>
             </Layout>
         </>
     );

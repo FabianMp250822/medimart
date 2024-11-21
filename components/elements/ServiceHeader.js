@@ -27,7 +27,9 @@ export default function ServiceHeader({ titulo }) {
         "/marco-legal": "(605) 3369999  Ext. 17", // Marco Legal
         "/informes-de-sostenibilidad": "(605) 3369999  Ext. 18", // Informes de Sostenibilidad
         "/sistema-integrado-de-gestion": "(605) 3369999  Ext. 19", // Sistema Integrado de Gestión
-        "/politica-de-datos": "(605) 3369999  Ext. 1", // Política de Datos
+        "/politica-de-datos": "(605) 3369999  Ext. 1", // Política de Datos 3369999 Ext 133-132
+        "/neonatologia": "3369999 Ext 133-132",//neurocirugia
+        "/neurocirugia": "3369999 Ext 133-132"
     };
 
     // Verificar que pathname esté disponible antes de usarlo

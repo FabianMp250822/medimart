@@ -65,6 +65,141 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/laboratorio-clinico/page.js"
+    ],
+    "/atencion-prehospitalaria/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/atencion-prehospitalaria/page.js"
+    ],
+    "/cirugia-de-cabeza-y-cuello/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-de-cabeza-y-cuello/page.js"
+    ],
+    "/neurocirugia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neurocirugia/page.js"
+    ],
+    "/cirugia-gastrointestinal/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-gastrointestinal/page.js"
+    ],
+    "/cirugia-ortopedica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-ortopedica/page.js"
+    ],
+    "/cirugia-de-torax/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-de-torax/page.js"
+    ],
+    "/cirugia-dermatologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-dermatologica/page.js"
+    ],
+    "/cirugia-de-mano/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-de-mano/page.js"
+    ],
+    "/cirugia-oncologica-pediatrica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-oncologica-pediatrica/page.js"
+    ],
+    "/cirugia-endovascular-neurologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-endovascular-neurologica/page.js"
+    ],
+    "/cirugia-urologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-urologica/page.js"
+    ],
+    "/cirugia-vascular-y-angiologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-vascular-y-angiologica/page.js"
+    ],
+    "/cirugia-de-mama-y-tumores-tejidos-blandos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-de-mama-y-tumores-tejidos-blandos/page.js"
+    ],
+    "/cirugia-plastica-oncologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-plastica-oncologica/page.js"
+    ],
+    "/cirugia-plastica-y-estetica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-plastica-y-estetica/page.js"
+    ],
+    "/cirugia-pediatrica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-pediatrica/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
+    ],
+    "/cirugia-oncologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-oncologica/page.js"
+    ],
+    "/cirugia-otorrinolaringologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-otorrinolaringologia/page.js"
+    ],
+    "/cirugia-oftalmologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-oftalmologica/page.js"
+    ],
+    "/cirugia-maxilofacial/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-maxilofacial/page.js"
+    ],
+    "/cirugia-ginecologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-ginecologica/page.js"
+    ],
+    "/cirugia-general/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-general/page.js"
+    ],
+    "/cirugia-cardiovascular/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-cardiovascular/page.js"
+    ],
+    "/neonatologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neonatologia/page.js"
+    ],
+    "/cirugia-oral/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cirugia-oral/page.js"
+    ],
+    "/direccionamiento-estrategico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/direccionamiento-estrategico/page.js"
     ]
   }
 }
