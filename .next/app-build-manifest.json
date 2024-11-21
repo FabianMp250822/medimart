@@ -60,6 +60,62 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/cardiologia/page.js"
+    ],
+    "/vacunacion/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/vacunacion/page.js"
+    ],
+    "/urologia-oncologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/urologia-oncologica/page.js"
+    ],
+    "/service-details/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/service-details/[id]/page.js"
+    ],
+    "/ortopedia-pediatrica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ortopedia-pediatrica/page.js"
+    ],
+    "/neuropediatria/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neuropediatria/page.js"
+    ],
+    "/neonatologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neonatologia/page.js"
+    ],
+    "/nutricion-y-dietetica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/nutricion-y-dietetica/page.js"
+    ],
+    "/neurologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neurologia/page.js"
+    ],
+    "/nefrologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/nefrologia/page.js"
+    ],
+    "/neumologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neumologia/page.js"
+    ],
+    "/service-details-2/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/service-details-2/page.css",
+      "static/chunks/app/service-details-2/page.js"
     ]
   }
 }

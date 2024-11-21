@@ -37,7 +37,7 @@ export default function NephrologyProgram() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fnefrologia.jpg?alt=media"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fnefro.webp?alt=media&token=ca179fa3-0784-45b6-b2f1-c48ebed387d2"
                                     alt="Programa de Nefrología"
                                     style={{
                                         borderRadius: '8px',
@@ -76,7 +76,7 @@ export default function NephrologyProgram() {
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-18%20at%202.35.13%20PM.jpeg?alt=media&token=6aae6289-d76f-4b36-b1be-59ad722a2551"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%203.40.56%20PM.jpeg?alt=media&token=58c3d9c0-c8e4-4252-8899-af7c2692bdec"
                                             alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',

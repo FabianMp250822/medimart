@@ -1,7 +1,10 @@
 {
-  "/diagnostico-vascular/page": "app/diagnostico-vascular/page.js",
-  "/laboratorio-citologias-cervico-uterinas/page": "app/laboratorio-citologias-cervico-uterinas/page.js",
-  "/fisioterapia/page": "app/fisioterapia/page.js",
-  "/cardiologia-pediatrica/page": "app/cardiologia-pediatrica/page.js",
-  "/cardiologia/page": "app/cardiologia/page.js"
+  "/service-details-6/page": "app/service-details-6/page.js",
+  "/urologia-oncologica/page": "app/urologia-oncologica/page.js",
+  "/ortopedia-pediatrica/page": "app/ortopedia-pediatrica/page.js",
+  "/neuropediatria/page": "app/neuropediatria/page.js",
+  "/nutricion-y-dietetica/page": "app/nutricion-y-dietetica/page.js",
+  "/neurologia/page": "app/neurologia/page.js",
+  "/nefrologia/page": "app/nefrologia/page.js",
+  "/service-details-2/page": "app/service-details-2/page.js"
 }
