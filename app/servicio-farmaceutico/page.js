@@ -5,8 +5,8 @@ import Layout from "@/components/layout/Layout";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function ManejoIntegralHematoncologico() {
-    const [titulo] = useState("Manejo Integral del Paciente Hematoncológico en la Clínica de la Costa SAS");
+export default function Farmatologia() {
+    const [titulo] = useState("Farmatología en la Clínica de la Costa: Un Servicio Integral para tu Salud");
     const [isActive, setIsActive] = useState(null);
 
     const toggleAccordion = (key) => {
@@ -37,8 +37,8 @@ export default function ManejoIntegralHematoncologico() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fimage%20(1).jpg?alt=media&token=477643ba-d800-498a-9bf8-c0c7a737fcf0"
-                                    alt="Manejo Integral Hematoncológico"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-21%20at%2012.26.21%20PM.jpeg?alt=media&token=ee93f024-d8cd-47ae-ba60-1385161fc709"
+                                    alt="Farmatología en la Clínica de la Costa"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -67,16 +67,22 @@ export default function ManejoIntegralHematoncologico() {
                             {/* Contenido */}
                             <div className="col-12 col-md-9">
                                 <div className="pt-4">
-                                    {/* Descripción Principal */}
+                                    {/* Introducción */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Cuidado integral para pacientes hematoncológicos</h2>
+                                        <h2 className="description-title">¿Qué es la Farmatología?</h2>
                                         <p>
-                                            En la Clínica de la Costa SAS, contamos con un programa especializado en el manejo integral del paciente hematoncológico, diseñado para garantizar una atención oportuna, accesible y de alta calidad. Este programa está respaldado por un equipo multidisciplinario y los más altos niveles de excelencia académica e investigación, abarcando tanto población adulta como pediátrica.
+                                            La farmatología es la rama de la farmacia clínica que se ocupa de gestionar los medicamentos utilizados en los hospitales y clínicas. 
+                                            En la Clínica de la Costa, este servicio juega un papel clave al:
                                         </p>
+                                        <ul className="service-list">
+                                            <li>Asegurar la correcta administración de medicamentos durante los procedimientos médicos.</li>
+                                            <li>Reducir riesgos asociados con errores de medicación.</li>
+                                            <li>Ofrecer apoyo constante a médicos y enfermeras con los tratamientos farmacológicos.</li>
+                                        </ul>
                                     </div>
                                     <div className="mb-4">
                                         <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%203.09.31%20PM.jpeg?alt=media&token=e9ddd974-a65a-43ba-b24b-413c926ff44f"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-21%20at%2012.47.17%20PM.jpeg?alt=media&token=02a60e60-5419-4e97-989f-a1a8107f22e8"
                                             alt="Atención Hospitalaria"
                                             style={{
                                                 width: '100%',
@@ -95,10 +101,10 @@ export default function ManejoIntegralHematoncologico() {
                                         }}>
                                             {titulo}
                                         </p>
-                                    </div>
+                                    </div> 
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Equipo Multidisciplinario */}
+                                        {/* Preparación Personalizada de Medicamentos */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -114,29 +120,23 @@ export default function ManejoIntegralHematoncologico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Equipo Multidisciplinario
+                                                Preparación Personalizada de Medicamentos
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
+                                                    <p>
+                                                        Nuestro equipo de farmatología prepara los medicamentos de acuerdo con las necesidades específicas de cada paciente, asegurando:
+                                                    </p>
                                                     <ul className="service-list">
-                                                        <li>Hematología – Oncológica (Adulto y Pediátrica).</li>
-                                                        <li>Cirugía Oncológica.</li>
-                                                        <li>Oncología Clínica.</li>
-                                                        <li>Ginecología Oncológica.</li>
-                                                        <li>Urología Oncológica.</li>
-                                                        <li>Ortopedia Oncológica.</li>
-                                                        <li>Enfermería especializada.</li>
-                                                        <li>Psicología y Trabajo Social.</li>
-                                                        <li>Nutrición.</li>
-                                                        <li>Químico farmacéutico.</li>
-                                                        <li>Radioterapia y Medicina Nuclear.</li>
-                                                        <li>Patología Oncológica.</li>
+                                                        <li>Dosificación precisa según el tratamiento prescrito.</li>
+                                                        <li>Cumplimiento de los más altos estándares de seguridad y calidad.</li>
+                                                        <li>Supervisión estricta en el manejo de medicamentos sensibles o de alto riesgo.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Beneficios del Programa */}
+                                        {/* Suministro de Medicamentos para Procedimientos Quirúrgicos */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -152,20 +152,23 @@ export default function ManejoIntegralHematoncologico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Beneficios del Programa
+                                                Suministro de Medicamentos para Procedimientos Quirúrgicos
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
+                                                    <p>
+                                                        Antes, durante y después de cualquier intervención quirúrgica, nuestro servicio de farmatología asegura que los medicamentos estén disponibles para:
+                                                    </p>
                                                     <ul className="service-list">
-                                                        <li>Atención integral especializada.</li>
-                                                        <li>Tratamiento oportuno y personalizado.</li>
-                                                        <li>Soporte informativo y educativo para el paciente y su familia.</li>
+                                                        <li>Controlar el dolor postoperatorio.</li>
+                                                        <li>Manejar infecciones con antibióticos específicos.</li>
+                                                        <li>Facilitar la recuperación mediante terapia farmacológica adecuada.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Servicios Especializados */}
+                                        {/* Atención Farmacéutica en Urgencias */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -181,29 +184,22 @@ export default function ManejoIntegralHematoncologico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Servicios Especializados
+                                                Atención Farmacéutica en Urgencias
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
+                                                    <p>
+                                                        En situaciones de emergencia, la rapidez y precisión son esenciales. Nuestro equipo está preparado para:
+                                                    </p>
                                                     <ul className="service-list">
-                                                        <li>
-                                                            <strong>Hospitalización Oncológica:</strong> Dos pabellones con 16 camas cada uno para atención especializada pediátrica y adulta.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Sala de Quimioterapia:</strong> Ubicada en el tercer piso del bloque oncológico, diseñada bajo las normas del Ministerio de Salud para atender pacientes ambulatorios y hospitalizados.
-                                                        </li>
-                                                        <li>
-                                                            Personal multidisciplinario con entrenamiento y dedicación exclusiva para la atención de pacientes con patologías hematológicas y oncológicas.
-                                                        </li>
+                                                        <li>Entregar medicamentos en tiempo récord para estabilizar pacientes críticos.</li>
+                                                        <li>Asistir al personal médico con información sobre interacciones o reacciones adversas.</li>
+                                                        <li>Garantizar la disponibilidad continua de medicamentos esenciales.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
-
-                                    <p>
-                                        En la Clínica de la Costa SAS, nuestro compromiso es ofrecer un cuidado integral, seguro y humanizado para pacientes con enfermedades hematoncológicas, asegurando resultados positivos y mejorando su calidad de vida.
-                                    </p>
                                 </div>
                             </div>
                         </div>

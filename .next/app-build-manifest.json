@@ -50,6 +50,76 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/transporte-asistencial-medicalizado/page.js"
+    ],
+    "/atencion-de-acientes-con-dolor-toracico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/atencion-de-acientes-con-dolor-toracico/page.js"
+    ],
+    "/manejo-integral-del-paciente-hematoncologico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/manejo-integral-del-paciente-hematoncologico/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
+    ],
+    "/gestion-pre-transfusional/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/gestion-pre-transfusional/page.js"
+    ],
+    "/quimioterapia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/quimioterapia/page.js"
+    ],
+    "/medicina-nuclear/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/medicina-nuclear/page.js"
+    ],
+    "/laboratorio-citologias-cervico-uterinas/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-citologias-cervico-uterinas/page.js"
+    ],
+    "/laboratorio-clinico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-clinico/page.js"
+    ],
+    "/laboratorio-patologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-patologia/page.js"
+    ],
+    "/laboratorio-de-histotecnologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/laboratorio-de-histotecnologia/page.js"
+    ],
+    "/fonoaudiologia-y-terapia-del-lenguaje/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/fonoaudiologia-y-terapia-del-lenguaje/page.js"
+    ],
+    "/imagenes-diagnosticas/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/imagenes-diagnosticas/page.js"
+    ],
+    "/servicio-farmaceutico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/servicio-farmaceutico/page.js"
+    ],
+    "/diagnostico-vascular/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/diagnostico-vascular/page.js"
     ]
   }
 }

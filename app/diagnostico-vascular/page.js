@@ -5,8 +5,8 @@ import Layout from "@/components/layout/Layout";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
-export default function ManejoIntegralHematoncologico() {
-    const [titulo] = useState("Manejo Integral del Paciente Hematoncológico en la Clínica de la Costa SAS");
+export default function DiagnosticoVascular() {
+    const [titulo] = useState("Diagnóstico Vascular en la Clínica de la Costa: Precisión y Tecnología Avanzada");
     const [isActive, setIsActive] = useState(null);
 
     const toggleAccordion = (key) => {
@@ -37,8 +37,8 @@ export default function ManejoIntegralHematoncologico() {
                             {/* Imagen */}
                             <div style={{ flex: '1.5' }}>
                                 <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fimage%20(1).jpg?alt=media&token=477643ba-d800-498a-9bf8-c0c7a737fcf0"
-                                    alt="Manejo Integral Hematoncológico"
+                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fdiagnostico-vascular.jpg?alt=media"
+                                    alt="Diagnóstico Vascular en la Clínica de la Costa"
                                     style={{
                                         borderRadius: '8px',
                                         width: '100%',
@@ -67,17 +67,21 @@ export default function ManejoIntegralHematoncologico() {
                             {/* Contenido */}
                             <div className="col-12 col-md-9">
                                 <div className="pt-4">
-                                    {/* Descripción Principal */}
+                                    {/* Introducción */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Cuidado integral para pacientes hematoncológicos</h2>
+                                        <h2 className="description-title">¿Qué es el Diagnóstico Vascular?</h2>
                                         <p>
-                                            En la Clínica de la Costa SAS, contamos con un programa especializado en el manejo integral del paciente hematoncológico, diseñado para garantizar una atención oportuna, accesible y de alta calidad. Este programa está respaldado por un equipo multidisciplinario y los más altos niveles de excelencia académica e investigación, abarcando tanto población adulta como pediátrica.
+                                            El diagnóstico vascular es un conjunto de pruebas médicas que evalúan el estado de las arterias y venas del cuerpo. 
+                                            Estas pruebas permiten identificar problemas como obstrucciones, aneurismas o insuficiencia venosa. En la Clínica de 
+                                            la Costa, utilizamos tecnología avanzada para garantizar diagnósticos precisos y rápidos.
                                         </p>
                                     </div>
+
+                                    {/* Imagen Secundaria */}
                                     <div className="mb-4">
                                         <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%203.09.31%20PM.jpeg?alt=media&token=e9ddd974-a65a-43ba-b24b-413c926ff44f"
-                                            alt="Atención Hospitalaria"
+                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fdiagnostico-vascular2.jpg?alt=media"
+                                            alt="Procedimientos de Diagnóstico Vascular"
                                             style={{
                                                 width: '100%',
                                                 height: '400px', // Ajusta la altura a 400px
@@ -87,18 +91,21 @@ export default function ManejoIntegralHematoncologico() {
                                             }}
                                         />
                                         {/* Texto debajo de la imagen */}
-                                        <p style={{ 
-                                            color: '#000', 
-                                            fontSize: '18px', 
-                                            textAlign: 'center', 
-                                            marginTop: '5px',
-                                        }}>
+                                        <p
+                                            style={{
+                                                color: '#000',
+                                                fontSize: '18px',
+                                                textAlign: 'center',
+                                                marginTop: '5px',
+                                            }}
+                                        >
                                             {titulo}
                                         </p>
                                     </div>
+
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Equipo Multidisciplinario */}
+                                        {/* Métodos de Diagnóstico */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -114,29 +121,25 @@ export default function ManejoIntegralHematoncologico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Equipo Multidisciplinario
+                                                Métodos de Diagnóstico Vascular
                                             </h2>
                                             {isActive === 1 && (
                                                 <div className="accordion-body">
+                                                    <h3>Principales pruebas:</h3>
                                                     <ul className="service-list">
-                                                        <li>Hematología – Oncológica (Adulto y Pediátrica).</li>
-                                                        <li>Cirugía Oncológica.</li>
-                                                        <li>Oncología Clínica.</li>
-                                                        <li>Ginecología Oncológica.</li>
-                                                        <li>Urología Oncológica.</li>
-                                                        <li>Ortopedia Oncológica.</li>
-                                                        <li>Enfermería especializada.</li>
-                                                        <li>Psicología y Trabajo Social.</li>
-                                                        <li>Nutrición.</li>
-                                                        <li>Químico farmacéutico.</li>
-                                                        <li>Radioterapia y Medicina Nuclear.</li>
-                                                        <li>Patología Oncológica.</li>
+                                                        <li><strong>Ecografía Doppler Vascular:</strong> Evalúa el flujo sanguíneo en arterias y venas.</li>
+                                                        <li><strong>Angiografía por Tomografía:</strong> Visualiza en detalle las arterias con medio de contraste.</li>
+                                                        <li><strong>Índice Tobillo-Brazo:</strong> Detecta problemas en la circulación periférica.</li>
                                                     </ul>
+                                                    <p>
+                                                        Estas pruebas no invasivas ofrecen resultados rápidos y confiables, permitiendo a nuestros especialistas 
+                                                        detectar problemas de manera temprana.
+                                                    </p>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Beneficios del Programa */}
+                                        {/* Enfermedades Diagnosticadas */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -152,20 +155,25 @@ export default function ManejoIntegralHematoncologico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Beneficios del Programa
+                                                Enfermedades Diagnosticadas
                                             </h2>
                                             {isActive === 2 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>Atención integral especializada.</li>
-                                                        <li>Tratamiento oportuno y personalizado.</li>
-                                                        <li>Soporte informativo y educativo para el paciente y su familia.</li>
+                                                        <li>Insuficiencia venosa crónica y varices.</li>
+                                                        <li>Trombosis venosa profunda.</li>
+                                                        <li>Enfermedades arteriales periféricas.</li>
+                                                        <li>Aneurismas y obstrucciones arteriales.</li>
                                                     </ul>
+                                                    <p>
+                                                        Gracias a nuestro enfoque multidisciplinario, garantizamos una atención integral, desde el diagnóstico 
+                                                        hasta el tratamiento.
+                                                    </p>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Servicios Especializados */}
+                                        {/* Beneficios del Diagnóstico Vascular */}
                                         <div className="accordion-item">
                                             <h2
                                                 className="accordion-header"
@@ -181,29 +189,20 @@ export default function ManejoIntegralHematoncologico() {
                                                     fontWeight: 'bold',
                                                 }}
                                             >
-                                                Servicios Especializados
+                                                Beneficios del Diagnóstico Vascular en la Clínica de la Costa
                                             </h2>
                                             {isActive === 3 && (
                                                 <div className="accordion-body">
                                                     <ul className="service-list">
-                                                        <li>
-                                                            <strong>Hospitalización Oncológica:</strong> Dos pabellones con 16 camas cada uno para atención especializada pediátrica y adulta.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Sala de Quimioterapia:</strong> Ubicada en el tercer piso del bloque oncológico, diseñada bajo las normas del Ministerio de Salud para atender pacientes ambulatorios y hospitalizados.
-                                                        </li>
-                                                        <li>
-                                                            Personal multidisciplinario con entrenamiento y dedicación exclusiva para la atención de pacientes con patologías hematológicas y oncológicas.
-                                                        </li>
+                                                        <li><strong>Precisión:</strong> Resultados detallados y confiables.</li>
+                                                        <li><strong>Rapidez:</strong> Diagnósticos en tiempo récord.</li>
+                                                        <li><strong>Equipo especializado:</strong> Profesionales altamente capacitados en angiología y diagnóstico vascular.</li>
+                                                        <li><strong>Atención personalizada:</strong> Soluciones adaptadas a las necesidades de cada paciente.</li>
                                                     </ul>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
-
-                                    <p>
-                                        En la Clínica de la Costa SAS, nuestro compromiso es ofrecer un cuidado integral, seguro y humanizado para pacientes con enfermedades hematoncológicas, asegurando resultados positivos y mejorando su calidad de vida.
-                                    </p>
                                 </div>
                             </div>
                         </div>
