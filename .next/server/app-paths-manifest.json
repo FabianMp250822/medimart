@@ -1,7 +1,3 @@
 {
-  "/cirugia-plastica-y-estetica/page": "app/cirugia-plastica-y-estetica/page.js",
-  "/cirugia-de-cabeza-y-cuello/page": "app/cirugia-de-cabeza-y-cuello/page.js",
-  "/cirugia-oral/page": "app/cirugia-oral/page.js",
-  "/urgencia/page": "app/urgencia/page.js",
-  "/cirugia-plastica-oncologica/page": "app/cirugia-plastica-oncologica/page.js"
+  "/manejo-integral-del-paciente-hematoncologico/page": "app/manejo-integral-del-paciente-hematoncologico/page.js"
 }
