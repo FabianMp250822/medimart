@@ -1,24 +1,59 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import Layout from "@/components/layout/Layout";
 import ServicesMenu from "@/components/elements/ServicesMenu";
 import ServiceHeader from "@/components/elements/ServiceHeader";
 
 export default function ChestPainProgram() {
-    const [titulo] = useState("Programa de Atención de Pacientes con Dolor Torácico en la Clínica de la Costa SAS");
-    const [isActive, setIsActive] = useState(null);
+    const [data, setData] = useState(null); // Estado para almacenar los datos de Firebase
+    const [isActive, setIsActive] = useState(null); // Control del acordeón
+    const [loading, setLoading] = useState(true); // Estado de carga
+    const [imageLoaded, setImageLoaded] = useState(true); // Controla la carga de la imagen en el header
+    const [contentImageLoaded, setContentImageLoaded] = useState(true); // Controla la carga de la imagen en el contenido
+
+    // Función para cargar datos desde Firebase
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const docRef = doc(db, "especialidades", "KK3Ijy9Wa43TzDVwLuxj");
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    setData(docSnap.data());
+                } else {
+                    console.error("El documento no existe");
+                }
+            } catch (error) {
+                console.error("Error obteniendo el documento:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const toggleAccordion = (key) => {
         setIsActive(isActive === key ? null : key);
     };
+
+    if (loading) {
+        return <p>Cargando...</p>; // Muestra un mensaje mientras los datos se cargan
+    }
+
+    if (!data) {
+        return <p>Error al cargar los datos.</p>; // Muestra un mensaje si no hay datos
+    }
 
     return (
         <>
             <Layout footerStyle={1}>
                 {/* Banner Principal */}
                 <div
-                    className="d-flex flex-column flex-md-row align-items-center p-4"
+                    className={`d-flex flex-column ${imageLoaded ? 'flex-md-row' : ''} align-items-center p-4`}
                     style={{
                         backgroundColor: '#1A1A3B',
                         borderRadius: '8px',
@@ -29,28 +64,31 @@ export default function ChestPainProgram() {
                 >
                     <div className="container">
                         <div
-                            className="d-flex flex-column flex-md-row align-items-center"
+                            className={`d-flex flex-column ${imageLoaded ? 'flex-md-row' : ''} align-items-center`}
                             style={{
                                 gap: '20px',
                             }}
                         >
                             {/* Imagen */}
-                            <div style={{ flex: '1.5' }}>
-                                <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fdolor-toracico.jpg?alt=media"
-                                    alt="Programa Dolor Torácico"
-                                    style={{
-                                        borderRadius: '8px',
-                                        width: '100%',
-                                        height: 'auto',
-                                        maxHeight: '450px',
-                                        objectFit: 'cover',
-                                    }}
-                                />
-                            </div>
+                            {imageLoaded && data.banner && (
+                                <div style={{ flex: '1.5' }}>
+                                    <img
+                                        src={data.banner.image}
+                                        alt={data.banner.alt || "Banner"}
+                                        onError={() => setImageLoaded(false)} // Maneja el error de carga
+                                        style={{
+                                            borderRadius: '8px',
+                                            width: '100%',
+                                            height: 'auto',
+                                            maxHeight: '450px',
+                                            objectFit: 'cover',
+                                        }}
+                                    />
+                                </div>
+                            )}
 
                             {/* Contenido */}
-                            <ServiceHeader titulo={titulo} />
+                            <ServiceHeader titulo={data.title} />
                         </div>
                     </div>
                 </div>
@@ -69,146 +107,73 @@ export default function ChestPainProgram() {
                                 <div className="pt-4">
                                     {/* Descripción Principal */}
                                     <div className="description-section mb-5">
-                                        <h2 className="description-title">Atención especializada y oportuna para emergencias cardíacas</h2>
-                                        <p>
-                                            El Programa de Atención de Pacientes con Dolor Torácico en la Clínica de la Costa SAS está diseñado para ofrecer una respuesta inmediata, integral y especializada. Nuestro objetivo es garantizar una evaluación precisa, diagnósticos oportunos y un tratamiento efectivo para mejorar el estado del paciente y prevenir complicaciones graves.
-                                        </p>
+                                        <h2 className="description-title">{data.description.title}</h2>
+                                        <p>{data.description.content}</p>
                                     </div>
-                                    <div className="mb-4">
-                                        <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-18%20at%202.35.13%20PM.jpeg?alt=media&token=6aae6289-d76f-4b36-b1be-59ad722a2551"
-                                            alt="Atención Hospitalaria"
-                                            style={{
-                                                width: '100%',
-                                                height: '400px', // Ajusta la altura a 400px
-                                                borderRadius: '8px',
-                                                marginBottom: '10px',
-                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
-                                            }}
-                                        />
-                                        {/* Texto debajo de la imagen */}
-                                        <p style={{ 
-                                            color: '#000', 
-                                            fontSize: '18px', 
-                                            textAlign: 'center', 
-                                            marginTop: '5px',
-                                        }}>
-                                            {titulo}
-                                        </p>
-                                    </div>
-                                    {/* Servicios y Beneficios */}
+
+                                    {/* Imagen dentro del contenido */}
+                                    {contentImageLoaded && data.content_image && (
+                                        <div className="mb-4">
+                                            <img
+                                                src={data.content_image.image}
+                                                alt={data.content_image.alt || "Contenido"}
+                                                onError={() => setContentImageLoaded(false)} // Maneja el error de carga
+                                                style={{
+                                                    width: '100%',
+                                                    height: '400px',
+                                                    borderRadius: '8px',
+                                                    marginBottom: '10px',
+                                                    objectFit: 'cover',
+                                                }}
+                                            />
+                                            {/* Texto debajo de la imagen */}
+                                            <p
+                                                style={{
+                                                    color: '#000',
+                                                    fontSize: '18px',
+                                                    textAlign: 'center',
+                                                    marginTop: '5px',
+                                                }}
+                                            >
+                                                {data.title}
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {/* Acordeón */}
                                     <div id="accordion" className="accordion">
-                                        {/* Servicios Disponibles */}
-                                        <div className="accordion-item">
-                                            <h2
-                                                className="accordion-header"
-                                                onClick={() => toggleAccordion(1)}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    backgroundColor: isActive === 1 ? '#1A1A3B' : '#f9f9f9',
-                                                    color: isActive === 1 ? '#fff' : '#1A1A3B',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    marginBottom: '5px',
-                                                    fontSize: '18px',
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                Servicios Destacados
-                                            </h2>
-                                            {isActive === 1 && (
-                                                <div className="accordion-body">
-                                                    <ul className="service-list">
-                                                        <li>
-                                                            <strong>Valoración por medicina interna:</strong> Atención las 24 horas para identificar causas del dolor torácico y coordinar protocolos de atención.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Atención especializada por cardiología:</strong> Evaluación inmediata de cardiólogos para diagnosticar y tratar condiciones como angina, infarto agudo de miocardio y arritmias.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Servicio de hemodinamia 24 horas:</strong>
-                                                            Procedimientos como cateterismo cardíaco, angioplastia y colocación de stents para emergencias cardíacas.
-                                                        </li>
-                                                    </ul>
+                                        {data.accordion &&
+                                            data.accordion.map((item, index) => (
+                                                <div className="accordion-item" key={index}>
+                                                    <h2
+                                                        className="accordion-header"
+                                                        onClick={() => toggleAccordion(index)}
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                            backgroundColor: isActive === index ? '#1A1A3B' : '#f9f9f9',
+                                                            color: isActive === index ? '#fff' : '#1A1A3B',
+                                                            padding: '10px 15px',
+                                                            borderRadius: '5px',
+                                                            marginBottom: '5px',
+                                                            fontSize: '18px',
+                                                            fontWeight: 'bold',
+                                                        }}
+                                                    >
+                                                        {item.title}
+                                                    </h2>
+                                                    {isActive === index && (
+                                                        <div className="accordion-body">
+                                                            <ul className="service-list">
+                                                                {item.content.map((subItem, subIndex) => (
+                                                                    <li key={subIndex}>
+                                                                        <strong>{subItem.title}</strong>: {subItem.description}
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            )}
-                                        </div>
-
-                                        {/* Beneficios */}
-                                        <div className="accordion-item">
-                                            <h2
-                                                className="accordion-header"
-                                                onClick={() => toggleAccordion(2)}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    backgroundColor: isActive === 2 ? '#1A1A3B' : '#f9f9f9',
-                                                    color: isActive === 2 ? '#fff' : '#1A1A3B',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    marginBottom: '5px',
-                                                    fontSize: '18px',
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                Beneficios del Programa
-                                            </h2>
-                                            {isActive === 2 && (
-                                                <div className="accordion-body">
-                                                    <ul className="service-list">
-                                                        <li>
-                                                            <strong>Respuesta inmediata:</strong> Protocolos diseñados para reducir los tiempos críticos en emergencias cardíacas.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Diagnóstico preciso:</strong> Uso de tecnología avanzada y personal experimentado para garantizar resultados confiables.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Prevención de complicaciones:</strong> Atención integral para minimizar el riesgo de eventos cardíacos mayores.
-                                                        </li>
-                                                        <li>
-                                                            <strong>Atención personalizada:</strong> Planes de tratamiento adaptados a las necesidades específicas de cada paciente.
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Compromiso */}
-                                        <div className="accordion-item">
-                                            <h2
-                                                className="accordion-header"
-                                                onClick={() => toggleAccordion(3)}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                    backgroundColor: isActive === 3 ? '#1A1A3B' : '#f9f9f9',
-                                                    color: isActive === 3 ? '#fff' : '#1A1A3B',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    marginBottom: '5px',
-                                                    fontSize: '18px',
-                                                    fontWeight: 'bold',
-                                                }}
-                                            >
-                                                Nuestro Compromiso
-                                            </h2>
-                                            {isActive === 3 && (
-                                                <div className="accordion-body">
-                                                    <p>
-                                                        En la Clínica de la Costa SAS, entendemos la importancia de actuar rápidamente ante síntomas de dolor torácico. Por eso, nuestro enfoque incluye:
-                                                    </p>
-                                                    <ul className="service-list">
-                                                        <li>
-                                                            Coordinación multidisciplinaria entre médicos internistas, cardiólogos y especialistas en hemodinamia.
-                                                        </li>
-                                                        <li>
-                                                            Uso de tecnología de última generación para diagnósticos y tratamientos efectivos.
-                                                        </li>
-                                                        <li>
-                                                            Enfoque en el bienestar del paciente, garantizando una atención humanizada y personalizada.
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            )}
-                                        </div>
+                                            ))}
                                     </div>
                                 </div>
                             </div>

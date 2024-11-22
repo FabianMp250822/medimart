@@ -45,15 +45,9 @@ const servicesData = [
             { name: "Consulta Externa", url: "/consulta-externa" },
            { name: "Cardiologia Pediatrica", url: "/cardiologia-pediatrica" },
             { name: "Cardiología", url: "/cardiologia" },
-           // { name: "Dolor Y Cuidados Paliativos", url: "/dolor-y-cuidados-paliativos" },
-          //  { name: "Endocrinología", url: "/endocrinologia" },
-           // { name: "Endodoncia", url: "/endodoncia" },
-            //{ name: "Enfermería", url: "/enfermeria" },
-           // { name: "Estomatología", url: "/estomatologia" },
+        
             { name: "Gastroenterología", url: "/gastroenterologia" },
-           // { name: "Genética", url: "/genetica" },
-          //  { name: "Ginecobstetricia", url: "/ginecobstetricia" },
-            // { name: "Hematología", url: "/hematologia" },
+       
             { name: "Infectología", url: "/infectologia" },
             { name: "Inmunología", url: "/inmunologia" },
             { name: "Medicina Familiar", url: "/medicina-familiar" },
@@ -75,13 +69,13 @@ const servicesData = [
             { name: "Reumatología", url: "/reumatologia" },
             { name: "Toxicología", url: "/toxicologia" },
             { name: "Urología", url: "/urologia" },
-           // { name: "Otras Consultas De Especialidad", url: "/otras-consultas-de-especialidad" },
+         
             { name: "Medicina Nuclear", url: "/medicina-nuclear" },
             { name: "Nefrología Pediátrica", url: "/nefrologia-pediatrica" },
             { name: "Neonatología", url: "/neonatologia" },
             { name: "Neumología Pediátrica", url: "/neumologia-pediatrica" },
             { name: "Neuropediatría", url: "/neuropediatria" },
-            // { name: "Oncología Y Hematología Pediátrica", url: "/oncologia-y-hematologia-pediatrica" },
+         
             { name: "Urología Oncológica", url: "/urologia-oncologica" },
             { name: "Hematología Oncológica", url: "/hematologia-oncologica" },
             { name: "Radioterapia", url: "/service-details/radioterapia" },
@@ -92,28 +86,26 @@ const servicesData = [
     {
         title: "Apoyo diagnóstico y complementación terapéutica",
         subservices: [
-           // { name: "Patología", url: "/patologia" },
+        
             { name: "Laboratorio de Patología", url: "/laboratorio-patologia" },
             { name: "Gestión Pre-Transfusional", url: "/gestion-pre-transfusional" },
             { name: "Imágenes Diagnósticas", url: "/imagenes-diagnosticas" },
-          //  { name: "Imágenes Diagnósticas - Ionizantes", url: "/imagenes-diagnosticas-ionizantes" },
+        
             { name: "Hemodinamia E Intervencionismo", url: "/hemodinamia-e-intervencionismo" },
             { name: "Diagnóstico Vascular", url: "/diagnostico-vascular" },
             { name: "Fisioterapia", url: "/fisioterapia" },
-           // { name: "Diálisis Peritoneal", url: "/dialisis-peritoneal" },
+          
             { name: "Hemodiálisis", url: "/hemodialisis" },
             { name: "Laboratorio De Histotecnología", url: "/laboratorio-de-histotecnologia" },
-           // { name: "Terapia Respiratoria", url: "/terapia-respiratoria" },
+          
             { name: "Laboratorio Citologías Cérvico-Uterinas", url: "/laboratorio-citologias-cervico-uterinas" },
             { name: "Servicio Farmacéutico", url: "/servicio-farmaceutico" },
-            // { name: "Toma De Muestras De Laboratorio Clínico", url: "/toma-de-muestras-de-laboratorio-clinico" },
+           
             { name: "Quimioterapia", url: "/quimioterapia" },
             { name: "Laboratorio Clínico", url: "/laboratorio-clinico" },
-           // { name: "Toma De Muestras De Cuello Uterino Y Ginecológicas", url: "/toma-de-muestras-de-cuello-uterino-y-ginecologicas" },
-           // { name: "Imágenes Diagnósticas - No Ionizantes", url: "/imagenes-diagnosticas-no-ionizantes" },
+          
             { name: "Medicina Nuclear", url: "/medicina-nuclear" },
-         //   { name: "Radioterapia", url: "/radioterapia" },
-          //  { name: "Terapia Ocupacional", url: "/terapia-ocupacional" },
+      
             { name: "Fonoaudiología Y/O Terapia Del Lenguaje", url: "/fonoaudiologia-y-terapia-del-lenguaje" }
         ]
     },

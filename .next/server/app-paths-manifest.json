@@ -1,7 +1,7 @@
 {
   "/service-details-6/page": "app/service-details-6/page.js",
-  "/medicina-fisica-y-rehabilitacion/page": "app/medicina-fisica-y-rehabilitacion/page.js",
-  "/medicina-familiar/page": "app/medicina-familiar/page.js",
-  "/inmunologia/page": "app/inmunologia/page.js",
-  "/infectologia/page": "app/infectologia/page.js"
+  "/infectologia/page": "app/infectologia/page.js",
+  "/page": "app/page.js",
+  "/carga-Servicios/page": "app/carga-Servicios/page.js",
+  "/atencion-de-acientes-con-dolor-toracico/page": "app/atencion-de-acientes-con-dolor-toracico/page.js"
 }
