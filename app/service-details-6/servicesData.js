@@ -75,7 +75,7 @@ const servicesData = [
             { name: "Reumatología", url: "/reumatologia" },
             { name: "Toxicología", url: "/toxicologia" },
             { name: "Urología", url: "/urologia" },
-            { name: "Otras Consultas De Especialidad", url: "/otras-consultas-de-especialidad" },
+           // { name: "Otras Consultas De Especialidad", url: "/otras-consultas-de-especialidad" },
             { name: "Medicina Nuclear", url: "/medicina-nuclear" },
             { name: "Nefrología Pediátrica", url: "/nefrologia-pediatrica" },
             { name: "Neonatología", url: "/neonatologia" },

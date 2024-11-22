@@ -1,10 +1,12 @@
 {
   "/service-details-6/page": "app/service-details-6/page.js",
   "/urologia-oncologica/page": "app/urologia-oncologica/page.js",
-  "/ortopedia-pediatrica/page": "app/ortopedia-pediatrica/page.js",
-  "/neuropediatria/page": "app/neuropediatria/page.js",
-  "/nutricion-y-dietetica/page": "app/nutricion-y-dietetica/page.js",
-  "/neurologia/page": "app/neurologia/page.js",
-  "/nefrologia/page": "app/nefrologia/page.js",
-  "/service-details-2/page": "app/service-details-2/page.js"
+  "/medicina-nuclear/page": "app/medicina-nuclear/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/hematologia-oncologica/page": "app/hematologia-oncologica/page.js",
+  "/gastroenterologia/page": "app/gastroenterologia/page.js",
+  "/cardiologia/page": "app/cardiologia/page.js",
+  "/consulta-externa/page": "app/consulta-externa/page.js",
+  "/cardiologia-pediatrica/page": "app/cardiologia-pediatrica/page.js",
+  "/urologia/page": "app/urologia/page.js"
 }

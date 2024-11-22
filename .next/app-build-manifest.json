@@ -116,6 +116,91 @@
       "static/chunks/main-app.js",
       "static/css/app/service-details-2/page.css",
       "static/chunks/app/service-details-2/page.js"
+    ],
+    "/nefrologia-pediatrica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/nefrologia-pediatrica/page.js"
+    ],
+    "/manejo-integral-del-paciente-hematoncologico/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/manejo-integral-del-paciente-hematoncologico/page.js"
+    ],
+    "/neumologia-pediatrica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/neumologia-pediatrica/page.js"
+    ],
+    "/odontologia-general/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/odontologia-general/page.js"
+    ],
+    "/oncologia-clinica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/oncologia-clinica/page.js"
+    ],
+    "/ortopedia-y-traumatologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ortopedia-y-traumatologia/page.js"
+    ],
+    "/ortodoncia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ortodoncia/page.js"
+    ],
+    "/periodoncia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/periodoncia/page.js"
+    ],
+    "/pediatria/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/pediatria/page.js"
+    ],
+    "/psiquiatria/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/psiquiatria/page.js"
+    ],
+    "/reumatologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/reumatologia/page.js"
+    ],
+    "/rehabilitacion-oral/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/rehabilitacion-oral/page.js"
+    ],
+    "/toxicologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/toxicologia/page.js"
+    ],
+    "/urologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/urologia/page.js"
+    ],
+    "/medicina-nuclear/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/medicina-nuclear/page.js"
+    ],
+    "/hematologia-oncologica/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/hematologia-oncologica/page.js"
+    ],
+    "/gastroenterologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/gastroenterologia/page.js"
     ]
   }
 }

@@ -9,6 +9,10 @@ export default function ManejoIntegralHematoncologico() {
     const [titulo] = useState("Manejo Integral del Paciente Hematoncológico en la Clínica de la Costa SAS");
     const [isActive, setIsActive] = useState(null);
 
+    // Inicializamos los estados de las imágenes en 'false'
+    const [imageLoaded, setImageLoaded] = useState(false); // Controla la carga de la imagen en el header
+    const [contentImageLoaded, setContentImageLoaded] = useState(false); // Controla la carga de la imagen en el contenido
+
     const toggleAccordion = (key) => {
         setIsActive(isActive === key ? null : key);
     };
@@ -18,7 +22,7 @@ export default function ManejoIntegralHematoncologico() {
             <Layout footerStyle={1}>
                 {/* Banner Principal */}
                 <div
-                    className="d-flex flex-column flex-md-row align-items-center p-4"
+                    className={`d-flex flex-column ${imageLoaded ? 'flex-md-row' : ''} align-items-center p-4`}
                     style={{
                         backgroundColor: '#1A1A3B',
                         borderRadius: '8px',
@@ -29,25 +33,29 @@ export default function ManejoIntegralHematoncologico() {
                 >
                     <div className="container">
                         <div
-                            className="d-flex flex-column flex-md-row align-items-center"
+                            className={`d-flex flex-column ${imageLoaded ? 'flex-md-row' : ''} align-items-center`}
                             style={{
                                 gap: '20px',
                             }}
                         >
                             {/* Imagen */}
-                            <div style={{ flex: '1.5' }}>
-                                <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fimage%20(1).jpg?alt=media&token=477643ba-d800-498a-9bf8-c0c7a737fcf0"
-                                    alt="Manejo Integral Hematoncológico"
-                                    style={{
-                                        borderRadius: '8px',
-                                        width: '100%',
-                                        height: 'auto',
-                                        maxHeight: '450px',
-                                        objectFit: 'cover',
-                                    }}
-                                />
-                            </div>
+                            {imageLoaded && (
+                                <div style={{ flex: '1.5' }}>
+                                    <img
+                                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fimage%20(1).jpg?alt=media&token=477643ba-d800-498a-9bf8-c0c7a737fcf0"
+                                        alt="Manejo Integral Hematoncológico"
+                                        onLoad={() => setImageLoaded(true)}
+                                        onError={() => setImageLoaded(false)}
+                                        style={{
+                                            borderRadius: '8px',
+                                            width: '100%',
+                                            height: 'auto',
+                                            maxHeight: '450px',
+                                            objectFit: 'cover',
+                                        }}
+                                    />
+                                </div>
+                            )}
 
                             {/* Contenido */}
                             <ServiceHeader titulo={titulo} />
@@ -74,28 +82,35 @@ export default function ManejoIntegralHematoncologico() {
                                             En la Clínica de la Costa SAS, contamos con un programa especializado en el manejo integral del paciente hematoncológico, diseñado para garantizar una atención oportuna, accesible y de alta calidad. Este programa está respaldado por un equipo multidisciplinario y los más altos niveles de excelencia académica e investigación, abarcando tanto población adulta como pediátrica.
                                         </p>
                                     </div>
-                                    <div className="mb-4">
-                                        <img
-                                            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%203.09.31%20PM.jpeg?alt=media&token=e9ddd974-a65a-43ba-b24b-413c926ff44f"
-                                            alt="Atención Hospitalaria"
-                                            style={{
-                                                width: '100%',
-                                                height: '400px', // Ajusta la altura a 400px
-                                                borderRadius: '8px',
-                                                marginBottom: '10px',
-                                                objectFit: 'cover', // Recorta la imagen para que se ajuste al contenedor
-                                            }}
-                                        />
-                                        {/* Texto debajo de la imagen */}
-                                        <p style={{ 
-                                            color: '#000', 
-                                            fontSize: '18px', 
-                                            textAlign: 'center', 
-                                            marginTop: '5px',
-                                        }}>
-                                            {titulo}
-                                        </p>
-                                    </div>
+
+                                    {/* Imagen dentro del contenido */}
+                                    {contentImageLoaded && (
+                                        <div className="mb-4">
+                                            <img
+                                                src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-20%20at%203.09.31%20PM.jpeg?alt=media&token=e9ddd974-a65a-43ba-b24b-413c926ff44f"
+                                                alt="Atención Hospitalaria"
+                                                onLoad={() => setContentImageLoaded(true)}
+                                                onError={() => setContentImageLoaded(false)}
+                                                style={{
+                                                    width: '100%',
+                                                    borderRadius: '8px',
+                                                    marginBottom: '10px',
+                                                    objectFit: 'cover',
+                                                }}
+                                            />
+                                            {/* Texto debajo de la imagen */}
+                                            <p
+                                                style={{
+                                                    color: '#000',
+                                                    fontSize: '18px',
+                                                    textAlign: 'center',
+                                                    marginTop: '5px',
+                                                }}
+                                            >
+                                                {titulo}
+                                            </p>
+                                        </div>
+                                    )}
                                     {/* Acordeón */}
                                     <div id="accordion" className="accordion">
                                         {/* Equipo Multidisciplinario */}
@@ -208,37 +223,37 @@ export default function ManejoIntegralHematoncologico() {
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <style jsx>{`
-                    .description-title {
-                        font-size: 28px;
-                        font-weight: bold;
-                        color: #1A1A3B;
-                        margin-bottom: 15px;
-                        text-transform: uppercase;
-                    }
-                    .accordion-header:hover {
-                        background-color: #007bff !important;
-                        color: #fff !important;
-                    }
-                    .service-list {
-                        list-style: none;
-                        padding-left: 20px;
-                        position: relative;
-                    }
-                    .service-list li {
-                        position: relative;
-                        margin-bottom: 10px;
-                        padding-left: 25px;
-                    }
-                    .service-list li:before {
-                        content: "✓";
-                        position: absolute;
-                        left: 0;
-                        color: #007bff;
-                    }
-                `}</style>
+                    <style jsx>{`
+                        .description-title {
+                            font-size: 28px;
+                            font-weight: bold;
+                            color: #1A1A3B;
+                            margin-bottom: 15px;
+                            text-transform: uppercase;
+                        }
+                        .accordion-header:hover {
+                            background-color: #007bff !important;
+                            color: #fff !important;
+                        }
+                        .service-list {
+                            list-style: none;
+                            padding-left: 20px;
+                            position: relative;
+                        }
+                        .service-list li {
+                            position: relative;
+                            margin-bottom: 10px;
+                            padding-left: 25px;
+                        }
+                        .service-list li:before {
+                            content: "✓";
+                            position: absolute;
+                            left: 0;
+                            color: #007bff;
+                        }
+                    `}</style>
+                </div>
             </Layout>
         </>
     );
