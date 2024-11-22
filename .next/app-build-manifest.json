@@ -201,6 +201,36 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/gastroenterologia/page.js"
+    ],
+    "/medicina-general/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/medicina-general/page.js"
+    ],
+    "/medicina-interna/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/medicina-interna/page.js"
+    ],
+    "/medicina-fisica-y-rehabilitacion/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/medicina-fisica-y-rehabilitacion/page.js"
+    ],
+    "/medicina-familiar/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/medicina-familiar/page.js"
+    ],
+    "/inmunologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/inmunologia/page.js"
+    ],
+    "/infectologia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/infectologia/page.js"
     ]
   }
 }

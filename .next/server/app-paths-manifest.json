@@ -1,12 +1,7 @@
 {
   "/service-details-6/page": "app/service-details-6/page.js",
-  "/urologia-oncologica/page": "app/urologia-oncologica/page.js",
-  "/medicina-nuclear/page": "app/medicina-nuclear/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/hematologia-oncologica/page": "app/hematologia-oncologica/page.js",
-  "/gastroenterologia/page": "app/gastroenterologia/page.js",
-  "/cardiologia/page": "app/cardiologia/page.js",
-  "/consulta-externa/page": "app/consulta-externa/page.js",
-  "/cardiologia-pediatrica/page": "app/cardiologia-pediatrica/page.js",
-  "/urologia/page": "app/urologia/page.js"
+  "/medicina-fisica-y-rehabilitacion/page": "app/medicina-fisica-y-rehabilitacion/page.js",
+  "/medicina-familiar/page": "app/medicina-familiar/page.js",
+  "/inmunologia/page": "app/inmunologia/page.js",
+  "/infectologia/page": "app/infectologia/page.js"
 }
