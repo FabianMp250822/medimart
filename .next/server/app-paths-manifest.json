@@ -1,7 +1,5 @@
 {
-  "/service-details-6/page": "app/service-details-6/page.js",
-  "/infectologia/page": "app/infectologia/page.js",
   "/page": "app/page.js",
-  "/carga-Servicios/page": "app/carga-Servicios/page.js",
-  "/atencion-de-acientes-con-dolor-toracico/page": "app/atencion-de-acientes-con-dolor-toracico/page.js"
+  "/derechos-y-deberes/page": "app/derechos-y-deberes/page.js",
+  "/procedimientos/page": "app/procedimientos/page.js"
 }

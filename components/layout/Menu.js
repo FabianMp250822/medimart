@@ -18,6 +18,7 @@ export default function Menu() {
 
     const pacientesMenuItems = [
         { title: "Solicitar Cita Médica", link: "/appointment" },
+        { title: "Preparación Para procediminetos", link: "/procedimientos" },
         { title: "Directorio de Especialidades y Servicios", link: "/directorio-especialistas" },
         { title: "Tus Resultados Médicos", link: "/reclamar-resultados" },
         { title: "Laboratorio Clínico", link: "/laboratorio-clinico" },

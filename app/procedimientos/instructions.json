@@ -1,0 +1,260 @@
+{
+    "instructions": [
+        {
+            "section": "INSTRUCTIVO DE PREPARACION PARA REALIZAR UN CATETERISMO CARDIACO IZ + VTG AORTOGRAMA.",
+            "details": []
+        },
+        {
+            "section": "PREPARACION DE PACIENTE AMBULATORIO",
+            "details": [
+                "El día de la cita debe traer los siguientes documentos:",
+                "Fotocopia de la orden  del servicio incluida la original",
+                "Fotocopia de la cedula de ciudadanía",
+                "Fotocopia del carnet de afiliación vigente",
+                "Fotocopia de la orden medica",
+                "Verifique que todos los exámenes de laboratorio estén completos y exámenes de Diagnósticos.",
+                "Para realizarle el Cateterismo Cardiaco. Usted acudirá al servicio de Hemodinamia. Esta se encuentra en el tercer piso de",
+                "Esta prueba consiste en  de un catéter a través de una vena o arteria de la pierna o el brazo, que permite, mediante la introducción de contraste yodado, visualizar las arterias coronarias y las cavidades cardiacas. La hora de cita es aproximada, ya que la hora de realización de la prueba está sujeta a las prioridades medicas de la sala.",
+                "Deberá traer todos los informes y pruebas de los que disponga, así como el informe donde conste la medicación que está tomando.",
+                "Recibirá anestesia local en la ingle o en el brazo y permanecerá consciente y colaborando con la prueba. Tras la realización de la prueba, dependiendo del tipo de procedimiento (diagnostico o terapéutico y de si se realiza por el brazo o por la pierna), deberá permanecer en observación hasta última hora de la mañana o quedar ingresado.",
+                "No debe ingerir sólidos ni líquidos desde la media noche del día anterior a la prueba. Tampoco deben fumar ni consumir bebidas alcohólicas de ninguna clase.",
+                "Suspenda todos los anticoagulantes 48 horas antes del cateterismo cardiaco previa valoración por su médico remisor (coaumadin,, Warfarina).",
+                "Al ingresar haga una lista de todas las drogas o medicamentos que hayan Estado tomando.",
+                "Por favor informe sobre cualquier ALERGIA que tenga y como lo afecta",
+                "Por favor comunique si tiene tendencias a SANGRAR excesivamente",
+                "Su estudio puede suspenderse debido a cualquier condición médica, por ejemplo, gripe, resfriado, infección, fiebre, diarreas.",
+                "Debe venir acompañado de un adulto responsable, a quien puede llamar en cualquier momento después de la prueba.",
+                "Acudirá duchado y con las dos ingles rasuradas (afeitadas), hasta la mitad del muslo.",
+                "Debe tomar sus medicamentos de la hipertensión el día de la prueba a las 5 AM con poca agua.",
+                "No llevar anillos, cadenas, pendientes, ningún tipo de maquillaje o esmaltes de uñas, ni usar perfumes ni cremas, antes de entrar a la sala de hemodinamia retirar las prótesis dentales",
+                "El consentimiento informado se lo darán en la sala de hemodinamia y debe ser firmado por el paciente y un testigo o por el padre o un adulto responsable."
+            ]
+        },
+        {
+            "section": "INSTRUCTIVO DE PREPARACION DE ANGIOGRAFIA VERTEBRAL, ANGIOGRAFÍA DE CABEZA, ANGIOGRAFIA CAROTIDEO AMBULATORIO",
+            "details": [
+                "PREPARACION PARA EL EXAMEN:",
+                "El día de la cita debe traer los siguientes documentos:",
+                "Fotocopia de orden del servicio incluida la original",
+                "Fotocopia de la cedula de ciudadanía",
+                "Fotocopia de la orden medica",
+                "Verifique que los exámenes de laboratorio estén completos y exámenes de Diagnostico, (Hemograma Completo, Hemoclasificación, Función Renal, TP, TPTTVIH, ANTIGENOS HEPATICOS A-B-C- , Tomografía o Resonancia magnética).y los informes que usted disponga.",
+                "Para realizarle , usted acudirá al servicio de Hemodinamia el cual se encuentra en el tercer piso de , usted será recibido por un miembro de nuestro personal y este le registrará para el procedimiento, luego será llevado   a una sala de observación quien la atenderá una enfermera. quien lo preparara para el procedimiento, la hora de la cita es aproximada, ya que la hora de la realización de la prueba está sujeta a prioridades medicas de la sala.",
+                "Las razones porque se realiza la prueba para identificar o confirmar problemas con los vasos sanguíneos en el cerebro.",
+                "No debe ingerir sólidos ni líquidos desde la media noche del día anterior a la prueba. Tampoco deben fumar ni consumir bebidas alcohólicas de ninguna clase.",
+                "Si está tomando Warfarina, Asawin, Aspirineta, Debe suspenderse 7 días antes.",
+                "Traiga anotado todos los medicamentos que usted toma.",
+                "Rasurar regiones inguinales derecha e izquierda hasta el muslo",
+                "El paciente no debe traer dinero, ni usar cremas, ni perfumes, ni maquillajes, ni joyas. Retirar esmaltes de uñas.",
+                "El paciente debe venir en compañía de un adulto responsable, a quien puede llamar en cualquier momento después de la prueba, Si el paciente o el familiar no está en condiciones para firmar el consentimiento informado se le recogerá la huella del dedo índice junto con el # de Identificación.",
+                "El médico le explicara el procedimiento y le ofrecerá la oportunidad  de formular las preguntas que tenga a el respecto.",
+                "Canalizar en el Miembro Superior Izquierdo con Abocath nº 24,22,18 o 20  SSN al 0.9 % 500 CC",
+                "Informe sobre cualquier ALERGIA que tenga y como lo afecta.",
+                "Comunique si tiene tendencia SANGRAR excesivamente.",
+                "Su estudio puede ser cancelado debido a cualquier condición médica como Fiebre, Diarrea, Infecciones, Tiempos Prolongados, gripe, resfriados, avise con anterioridad",
+                "Se Canalizara  en el Miembro Superior Izquierdo con Cloruro de Sodio al 0.9%  y usar un catéter de Venopunción de acuerdo al calibre de la vena.",
+                "Recibirá anestesia local en la ingle o en el brazo y permanecerá colaborando con la prueba. Tras la realización de la prueba, dependiendo del tipo de procedimiento (diagnostico o terapéutico y de si se realiza por el brazo o la pierna). Deberá permanecer en observación hasta la última hora de la mañana o quedar ingresado.",
+                "Una vez Finalizado el procedimiento el médico le informara del resultado.",
+                "Una vez trasladado el paciente debe tener reposo en el miembro que se punciono el área quedara cubierto con un apósito compresivo que se retirara al día siguiente durante el baño. y se le hará curación con Solución yodada.",
+                "Al día siguiente del alta si su médico lo permite, no debe conducir automóvil, debe continuar en reposo en su casa.",
+                "UNIDAD ENDOSCOPICA:"
+            ]
+        },
+        {
+            "section": "COLANGIO PANCREATOGRAFIA ENDOSCOPICA (C.P.R.E)",
+            "details": [
+                "Es un procedimiento para examinar los conductos biliares y se realiza a través de un endoscopio. Los conductos biliares son las vías que llevan la bilis desde el hígado hasta la vesícula y el intestino delgado.",
+                "Se le colocará una vía intravenosa (IV) en el brazo. Usted se acostará boca abajo o sobre el lado izquierdo para el examen.",
+                "Se le administrarán medicamentos para relajarlo o sedarlo a través de la vía intravenosa.",
+                "Este se pasará a través del esófago y el estómago hasta que llegue al duodeno (la parte del intestino delgado que está más cerca del estómago). Puede tener náuseas mientras la sonda baja por el esófago. Se pasará una sonda delgada (catéter) a través del endoscopio y se introducirá en los tubos (conductos) que van al páncreas y a la vesícula biliar. Se inyectará un tinte especial en estos conductos y se tomarán radiografías. Esto le ayudará al médico a ver cálculos, tumores y cualquier área que se haya estrechado.",
+                "Firmará un  consentimiento que indica que comprende  y autoriza la realización del estudio. Este es el momento adecuado para hacer preguntas  acerca de su prueba.",
+                "Se le verificara Historia Clínica, Resultados de Laboratorios TP, TPTT, HEMOGRAMA, VIH, ELECTROCARDIOGRAMA.",
+                "Debe asistir a cita con su médico general días previos al procedimiento si está tomando medicamentos para la coagulación (Asa, Cardioaspirina, Clopidogrel, Warfarina), para consultar su previa suspensión.",
+                "Debe informar si es Alérgico algún medicamento.",
+                "Debe venir acompañado de un familiar o una persona adulta.",
+                "Debe asistir sin esmalte en las uñas."
+            ]
+        },
+        {
+            "section": "COLONOSCOPIA PROGRAMACIÓN EN HORAS DE LA TARDE",
+            "details": [
+                "La Colonoscopía es un procedimiento que permite, examinar el recubrimiento de la parte baja de su tracto digestivo, el colon o intestino grueso, usando un tubo delgado y flexible, que contiene una cámara y una luz en el extremo distal, además de canales para instrumentación. También permite tomar muestras de la mucosa o recubrimiento de su tracto digestivo para estudios de patología, biopsias y extraer pequeños tumores llamados pólipos.",
+                "¿Qué preparación se requiere?",
+                "Para que se pueda hacer un examen adecuado y seguro, es muy importante que el colon o intestino grueso este completamente vacío, o sea, sin materia fecal en su interior. Por lo tanto, se le va a indicar una dieta líquida especial y algún purgante más adelante para lograr este propósito.",
+                "Su preparación iniciara 24 Horas antes del estudio:",
+                "El día anterior del estudio, debe desayunar, almorzar y cenar solo líquidos claros, como: jugos sin leches, ni bebidas negras, ni colorantes, caldos (solo el agua, no verduras ni carnes), agua natural.",
+                "A las 8:00 pm, vaciar el contenido de DOS sobres de POLIETILENGLICOL 3350 110.1gramos + ELECTROLITOS PARA COLONOSCOPIA, diluirlos en UN LITRO de agua fría o jugo de naranja si no se padece de Diabetes Mellitus, beber esta solución en un lapso de UNA HORA (un vaso de 250 ml cada 15 minutos).",
+                "A las 5:00 am vaciar el contenido de DOS sobres de POLIETILENGLICOL 3350 110.1gramos + ELECTROLITOS PARA COLONOSCOPIA, diluirlos en UN LITRO de agua fría o jugo de naranja si no se padece de Diabetes Mellitus, beber esta solución en un lapso de UNA HORA (Un vaso de 250 ml cada 15 minutos)."
+            ]
+        },
+        {
+            "section": "COLONOSCOPIA PROGRAMACIÓN HORARIO DIURNO",
+            "details": [
+                "La Colonoscopía es un procedimiento que permite, examinar el recubrimiento de la parte baja de su tracto digestivo, el colon o intestino grueso, usando un tubo delgado y flexible, que contiene una cámara y una luz en el extremo distal, además de canales para instrumentación. También permite tomar muestras de la mucosa o recubrimiento de su tracto digestivo para estudios de patología, biopsias y extraer pequeños tumores llamados pólipos.",
+                "¿Qué preparación se requiere?",
+                "Para que se pueda hacer un examen adecuado y seguro, es muy importante que el colon o intestino grueso este completamente vacío, o sea, sin materia fecal en su interior. Por lo tanto, se le va a indicar una dieta líquida especial y algún purgante más adelante para lograr este propósito.",
+                "Su preparación iniciara 48 Horas antes del estudio:",
+                "El primer día de la preparación, puede desayunar y almorzar de manera normal, la cena solo serán líquidos claros, como: jugos sin leches, ni bebidas negras, ni colorantes, caldos (solo el agua, no verduras ni carnes), agua natural.",
+                "El segundo día de la preparación continuar la dieta líquida hasta la hora de la cena, a las 8:00pm debe iniciar la preparación con POLIETILENGLICOL 3350 110.1gramos + ELECTROLITOS PARA COLONOSCOPIA , cada caja contiene 4 sobres, el cual va a diluir en agua fría o jugo de naranja si no ha sido diagnosticado con Diabetes Mellitus, se deberá tomar los 4 sobre de la siguiente manera:",
+                "A las 8:00 pm, vaciar el contenido de DOS sobres en UN LITRO de agua fría o jugo de naranja, beber esta solución en un lapso de UNA HORA (un vaso de 250 ml cada 15 minutos).",
+                "A las 12:00 am vaciar el contenido de DOS sobres de POLIETILENGLICOL 3350 110.1gramos + ELECTROLITOS PARA COLONOSCOPIA  en UN LITRO de agua fría o jugo de naranja, beber esta solución en un lapso de UNA HORA (Un vaso de 250 ml cada 15 minutos).",
+                "El día que se encuentra programado su estudio debe asistir completamente en ayunas.",
+                "Si usted no ingiere los 4 sobres ni realiza la dieta adecuada no obtendrá una buena preparación para realizar el estudio, se recomienda tomar abundante agua.",
+                "Firmará un consentimiento que indica que comprende y autoriza la realización del estudio. Este es el momento adecuado para hacer preguntas acerca de su prueba.",
+                "Se le verificara Historia Clínica, Resultados de Laboratorios TP, TPTT, HEMOGRAMA, VIH, ELECTROCARDIOGRAMA.",
+                "Los medicamentos estrictamente necesarios se deben mantener. Por ejemplo: Medicinas para diabetes e HTA (Solo con un pequeño sorbo de agua)",
+                "Debe asistir a cita con su médico general días previos al procedimiento si está tomando medicamentos para la coagulación (Asa, Cardioaspirina, Clopidogrel, Warfarina), para consultar su previa suspensión.",
+                "Debe informar si es Alérgico algún medicamento.",
+                "Debe venir acompañado de un familiar o una persona adulta.",
+                "Debe asistir sin esmalte en las uñas"
+            ]
+        },
+        {
+            "section": "ENDOSCOPIA DE VIAS DIGESTIVAS",
+            "details": [
+                "La endoscopia es una técnica diagnostica, utilizada en medicina que consiste en la introducción de una cámara o lente dentro de un tubo o endoscopio a  través de un orificio natural (boca). Mediante este procedimiento habitualmente se accede a través de la boca al esófago, el estómago y la primera porción del intestino delgado (duodeno), lo que es posible explorar estos órganos.",
+                "Firmará un  consentimiento que indica que comprende  y autoriza la realización del estudio. Este es el momento adecuado para hacer preguntas  acerca de su prueba.",
+                "Se le verificara Historia Clínica, Resultados de Laboratorios TP, TPTT, HEMOGRAMA, VIH, ELECTROCARDIOGRAMA.",
+                "Debe asistir a cita con su médico general días previos al procedimiento si está tomando medicamentos para la coagulación (Asa, Cardioaspirina, Clopidogrel, Warfarina), para consultar su previa suspensión.",
+                "Debe informar si es Alérgico algún medicamento.",
+                "Debe venir acompañado de un familiar o una persona adulta.",
+                "Debe asistir sin esmalte en las uñas.",
+                "RESONANCIA MAGNETICA:"
+            ]
+        },
+        {
+            "section": "INSTRUCCIONES DE PREPARACIÓN PARA RESONANCIA",
+            "details": [
+                "La resonancia magnética es una técnica de diagnostico por la imagen mas moderna y sin efectos nocivo que no utiliza elementos radioactivos ni RX. Funciona con un potente imán y ondas de radio que permite visualizar estructuras a través de un monitor.",
+                "En que consiste: Un tecnólogo en imágenes diagnosticas lo colocara en una mesa móvil que se sitúa al interior del equipo. La prueba tiene una duración de 30 a 45 minutos y en todo momento estará controlada por los médicos y tecnólogos de la sala de control, desde donde le hablaran y vigilaran a través del monitor.",
+                "El día de la Cita",
+                "El técnico le explicará en que consiste el estudio y usted firmara un consentimiento informado para la realización de la misma en caso de requerir contraste.",
+                "Se trasladara a la sala de Vestier y preparación.",
+                "En caso de llevar prótesis dental le pediremos retirarla.",
+                "Se acostara en la camilla y se le canalizará una vena si su estudio es con contraste endovenoso.",
+                "Se trasladara a la sala de imágenes según sea el estudio.",
+                "Deberá permanecer muy quieto mientras se realiza el estudio.",
+                "Dispondrá de un timbre para que realice llamado si es necesario.",
+                "Con el fin de disminuir el ruido generado por el equipo y que es inevitable, se colocara protección acústica."
+            ]
+        },
+        {
+            "section": "INFORMACIÓN SOBRE EL CONTRASTE ENDOVENOSO",
+            "details": [
+                "Es una sustancia liquida que permite obtener una mayor información en las imágenes realizadas.",
+                "Esta sustancia es generalmente bien tolerada, pero en algunos casos puede provocar reacciones alérgicas en su mayoría leves, aunque pueden llegar a ser severas. En cualquier caso, nuestro personal asistencial esta bien entregado y vigilara en todo momento su seguridad.",
+                "No dude en preguntar si tiene alguna duda antes o después de la prueba.",
+                "Si se requiere administración de contraste endovenoso:",
+                "Es indispensable acudir con un ayuno de 6 horas.",
+                "Le pediremos un examen de creatina en sangre no superior a 20 días.",
+                "Nos informará el tipo de medicamentos que tiene prescritos. En algunos casos es necesario suspenderlos.",
+                "Debe venir acompañado.",
+                "Es importante informar si ha tenido reacciones alérgicas previas, asma o de otras enfermedades que indiquen preparación previa al estudio.",
+                "PRECAUCIÓN: Deberá comunicar en caso de embarazo o en caso de duda expresarla al personal del servicio."
+            ]
+        },
+        {
+            "section": "INSTRUCTIVO DE PREPARACÓN PARA ESTUDIOS DE TOMOGRAFIA  AXIAL COMPUTARIZADA.",
+            "details": [
+                "La tomografía computarizada (TAC) es una prueba de diagnóstico por imágenes utilizada para crear imágenes detalladas de los órganos internos, los huesos, los tejidos blandos y los vasos sanguíneos.",
+                "El dia de la cita es necesario traer los siguientes documentos:",
+                "Orden médica.",
+                "Autorización vigente del estadio ordenado.",
+                "Fotocopia del documento de identidad.",
+                "Es importante aportar datos clínicos completos. Traer historia clínica.",
+                "INSTRUCCIONES:",
+                "El día de la Cita",
+                "El técnico le explicará en que consiste el estudio y usted firmará un consentimiento informado para la realización de la misma en caso de requerir contraste.",
+                "Si su estudio es abdominal se le pedirá que ingiera un poco de agua o de contraste oral 20 minutos antes de la prueba.",
+                "Se trasladará a la sala de Vestier y preparación.",
+                "En caso de llevar prótesis dental le pediremos retirarla.",
+                "Se acostará en la camilla y se le canalizará una vena si su estudio es con contraste endovenoso.",
+                "Se trasladará a la sala de imágenes según sea el estudio",
+                "Deberá permanecer muy quieto mientras se realiza el estudio."
+            ]
+        },
+        {
+            "section": "INFORMACIÓN SOBRE EL CONTRASTE ENDOVENOSO",
+            "details": [
+                "Es una sustancia liquida que permite obtener una mayor información en las imágenes realizadas.",
+                "Esta sustancia es generalmente bien tolerada, pero en algunos casos puede provocar reacciones alérgicas en su mayoría leves, aunque pueden llegar a ser severas. En cualquier caso, nuestro personal asistencial esta bien entregado y vigilara en todo momento su seguridad.",
+                "No dude en preguntar si tiene alguna duda antes o después de la prueba.",
+                "Si se requiere administración de contraste endovenoso:",
+                "Es indispensable acudir con un ayuno de 6 horas.",
+                "Le pediremos un examen de creatina en sangre no superior a 20 días.",
+                "Nos informará el tipo de medicamentos que tiene prescritos. En algunos casos es necesario suspenderlos.",
+                "Debe venir acompañado.",
+                "Es importante informar si ha tenido reacciones alérgicas previas, asma o de otras enfermedades que indiquen preparación previa al estudio.",
+                "PRECAUCIÓN: Deberá comunicar si se encuentra en  embarazo o en caso de duda expresarla al personal del servicio."
+            ]
+        },
+        {
+            "section": "INSTRUCTIVO DE PREPARACÓN PARA ESTUDIOS DE MAMOGRAFIA",
+            "details": [
+                "Una mamografía es una imagen de la mama tomada con rayos X. Los médicos usan las mamografías para buscar signos de cáncer de mama en sus etapas iniciales. Las mamografías habituales son las mejores pruebas con que cuentan los médicos para detectar el cáncer de mama en sus etapas iniciales, a veces hasta tres años antes de que se pueda sentir."
+            ]
+        },
+        {
+            "section": "INSTRUCCIONES",
+            "details": [
+                "Intente no hacerse una mamografía la semana previa a su menstruación o mientras la tenga. Las mamas pueden estar sensibles al tacto o hinchadas en esos momentos.",
+                "El día de la mamografía, no se pongan desodorante, perfume ni talco. Estos productos pueden aparecer en la radiografía como manchas blancas.",
+                "Algunas mujeres prefieren usar una blusa con falda o pantalón en vez de un vestido. Tendrá que desvestirse de la cintura para arriba para hacerse la mamografía.",
+                "Cómo se hace una mamografía?",
+                "Usted se colocará de pie frente a una máquina especial de rayos X. Una tecnóloga colocará su mama sobre una placa de plástico. Después cubrirá esa mama con otra placa, presionando firmemente. Las placas aplanarán la mama y la mantendrán inmóvil mientras se toma la radiografía. Usted sentirá algo de presión. Los pasos se repiten para tomar una imagen del costado de la mama. Posteriormente, le sacarán una radiografía a la otra mama de la misma forma. Deberá esperar a que la tecnóloga revise las radiografías para asegurarse de que no haya necesidad de volver a tomarlas. Tenga presente que la tecnóloga no puede decirle los resultados de su mamografía. Las mamografías de cada mujer pueden verse un poco distintas porque no hay mujeres con mamas idénticas."
+            ]
+        },
+        {
+            "section": "EL DIA DE LA CITA ES NECESARIO TRAER LOS SIGUIENTEES DOCUMENTOS",
+            "details": [
+                "Orden medica.",
+                "Autorización vigente del estadio ordenado.",
+                "Fotocopia del documento de identidad.",
+                "Es importante aportar datos clínicos completos. Traer historia clínica."
+            ]
+        },
+        {
+            "section": "INSTRUCTIVO DE PREPARACÓN PARA ESTUDIOS DE DENSITOMETRIA",
+            "details": [
+                "La densitometría es una prueba diagnóstica que mide el grado de mineralización del hueso y que se aplica tanto en el diagnóstico precoz de la osteoporosis ."
+            ]
+        },
+        {
+            "section": "EL DIA DE LA CITA ES NECESARIO TRAER LOS SIGUIENTEES DOCUMENTOS",
+            "details": [
+                "Orden medica.",
+                "Autorización vigente del estadio ordenado.",
+                "Fotocopia del documento de identidad.",
+                "Es importante aportar datos clínicos completos. Traer historia clínica.",
+                "INSTRUCCIONES:",
+                "No ingerir suplementos de calcio (de todas las presentaciones orales sea tableta, capsula o polvo para diluir) mínimo 72 horas antes del examen.",
+                "No se requiere ayuno, puede consumir sus alimentos y medicamentos con normalidad.",
+                "No debe haberse practicado exámenes con medio de contraste 2 semanas antes del examen (Urografía, Colon Por enema, Tac de abdomen con contraste, Esofagograma y vías digestivas altas. Excepto: Exámenes de Medicina Nuclear como por ejemplo gammagrafía Ósea, gammagrafía de tiroides y PEC- PET, Resonancia Magnética con contraste).",
+                "Debe asistir con ropa cómoda libre de ganchos y accesorios metálicos o plásticos, como cremalleras, cinturones y apliques. (Para las mujeres preferiblemente utilizar brasier sin broches o top. Para los hombres preferiblemente usar pantaloneta y camiseta).",
+                "Traer resultados de densitometrías anteriores en caso de tenerlas.",
+                "Si el paciente es mayor de 65 años o tiene dificultad en la movilidad en lo posible venir con acompañante.",
+                "Debes llegar 30 minutos antes para el trámite administrativo."
+            ]
+        },
+        {
+            "section": "INFORMACIÓN SOBRE EL ESTUDIO",
+            "details": [
+                "Sera sometido a Irradiación por radiaciones ionizantes. En este estudio las dosis utilizadas son bajas y los pacientes presentan mínimos riesgos por su exposición, que incluyen daño de tejidos. Este riesgo es variable y no predecible, y no se puede eliminar a pesar de las medidas de protección radiológica disponibles y que serán utilizadas con usted.",
+                "Debe informar su condición de embarazo o riesgo de el previo a la realización del estudio. Adicionalmente se practicará un cuestionario previo, para certificar si cumple con los requisitos mínimos para la realización de este examen.",
+                "El no realizar el procedimiento puede retardar el diagnostico de enfermedades como Osteoporosis Opciones alternativas a este procedimiento: Otras imágenes diagnosticas como Rayos x convencionales o tomografía.",
+                "NEUROFISIOLOGIA:"
+            ]
+        },
+        {
+            "section": "ELECTROENCEFALOGRAMA  ( EEG)",
+            "details": [
+                "Es un examen de  Neurofisiología que nos proporciona una imagen de la actividad eléctrica cerebral global y de sus hemisferios; se trata de una sucesión de ondas de diferentes frecuencias y amplitudes.  permite evidenciar la actividad eléctrica cerebral.",
+                "PREPARACION:",
+                "El paciente debe venir con el cabello limpio, sin acondicionador, bálsamo ni cremas de peinar.",
+                "No se requiere ayuno.",
+                "No debe suspender tratamiento médico excepto por orden de su médico tratante.",
+                "El resultado del examen se entrega en 24 horas."
+            ]
+        }
+    ]
+}
