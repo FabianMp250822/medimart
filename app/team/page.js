@@ -5,11 +5,13 @@ import { db } from "@/lib/firebase";
 import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 import { useSede } from "../context/SedeContext";
+import './team.css';
 
 export default function Home() {
   const [medicos, setMedicos] = useState([]);
   const [especialidades, setEspecialidades] = useState([]);
   const { sedeData } = useSede();
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [especialidad, setEspecialidad] = useState("");
@@ -26,29 +28,111 @@ export default function Home() {
       .toLowerCase()
       .trim();
   };
-
-  // Función para agrupar especialidades dinámicamente
-  const groupEspecialidades = (especialidadesList) => {
-    const groups = {};
-
-    especialidadesList.forEach((esp) => {
-      const normalizedEsp = normalizeString(esp);
-      const mainKeyword = normalizedEsp.split(" ")[0]; // Tomamos la primera palabra como clave
-
-      if (!groups[mainKeyword]) {
-        groups[mainKeyword] = [];
-      }
-      groups[mainKeyword].push(esp);
-    });
-
-    // Convertimos el objeto en un array de categorías únicas
-    return Object.keys(groups).map((keyword) => {
-      return {
-        keyword,
-        especialidades: groups[keyword],
-      };
-    });
+  const toggleCategory = (category) => {
+    setExpandedCategory((prev) => (prev === category ? null : category));
   };
+  
+  const groupEspecialidades = () => {
+    return [
+      {
+        keyword: "Medicina Crítica y Cuidados Intensivos",
+        especialidades: [
+          "Medicina Crítica",
+          "Pediatra y Coordinador UCI Pediátrica",
+          "Infectólogo Pediatra",
+          "Perfusión Cardiovascular",
+          "Coordinadora de Cirugía",
+        ],
+      },
+      {
+        keyword: "Cirugía General y Subespecialidades",
+        especialidades: [
+          "Cirugía General",
+          "Cirugía Cardiovascular",
+          "Neurocirugía",
+          "Cirugía - Clínica",
+          "Cirujano Cardiovascular",
+          "Transplante",
+          "Coloproctología",
+          "Instrumentadora",
+        ],
+      },
+      {
+        keyword: "Ginecología y Medicina de la Mujer",
+        especialidades: [
+          "Ginecología - Obstetricia",
+          "Endocrinología y Medicina Interna",
+          "Endocrinóloga Pediatra",
+          "Alergología Clínica",
+          "Nutrición Clínica",
+        ],
+      },
+      {
+        keyword: "Oncología y Tratamientos Relacionados",
+        especialidades: [
+          "Radioterapia y Oncología",
+          "Oncología Clínica",
+          "Hemodinámica",
+          "Cardiología",
+          "Genética",
+        ],
+      },
+      {
+        keyword: "Ortopedia y Traumatología",
+        especialidades: [
+          "Médico Ortopedista y Traumatólogo",
+          "Ortopedista y Traumatólogo",
+          "MD. Internista - Hepatólogo",
+          "Coloproctología",
+        ],
+      },
+      {
+        keyword: "Dermatología y Estética",
+        especialidades: [
+          "Dermatología Clínica, Quirúrgica y Estética",
+          "Dermatóloga",
+          "Odontóloga General con Enfoque en Estética Dental",
+          "Ortodoncista",
+        ],
+      },
+      {
+        keyword: "Diagnóstico y Radiología",
+        especialidades: [
+          "Especialista en Radiología e Imágenes Diagnósticas",
+          "Radiología",
+          "Tecnólogo en Rx",
+        ],
+      },
+      {
+        keyword: "Psiquiatría y Salud Mental",
+        especialidades: [
+          "Psiquiatría",
+          "Psiquiatra Especialista en Niños y Adolescentes",
+          "Trabajadora Social",
+        ],
+      },
+      {
+        keyword: "Gastroenterología y Nutrición",
+        especialidades: [
+          "Gastroenterología",
+          "Nutricionista",
+          "Oftalmología",
+        ],
+      },
+      {
+        keyword: "Enfermería y Apoyo Clínico",
+        especialidades: [
+          "Enfermera Jefe",
+          "Electrofisiología",
+          "Coordinadora de Cirugía",
+          "Instrumentadora",
+        ],
+      },
+    ];
+  };
+  
+  // Función para agrupar especialidades dinámicamente
+
 
   const fetchMedicos = async () => {
     try {
@@ -156,33 +240,54 @@ export default function Home() {
           <div className="content-wrapper">
             {/* Barra lateral */}
             <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
-              <h3>Especialidades</h3>
-              <ul className="specialty-list">
-                <li
-                  className={!especialidad ? "active" : ""}
-                  onClick={() => {
-                    setEspecialidad("");
-                    setSidebarOpen(false);
-                  }}
-                >
-                  Todas las especialidades
-                </li>
-                {especialidades.map((group, index) => (
-                  <li
-                    key={index}
-                    className={
-                      especialidad === group.keyword ? "active" : ""
-                    }
-                    onClick={() => {
-                      setEspecialidad(group.keyword);
-                      setSidebarOpen(false);
-                    }}
-                  >
-                    {group.especialidades[0]}
-                  </li>
-                ))}
-              </ul>
-            </div>
+  <h3>Especialidades</h3>
+  <ul className="specialty-list">
+    <li
+      className={!especialidad ? "active" : ""}
+      onClick={() => {
+        setEspecialidad("");
+        setSidebarOpen(false);
+      }}
+    >
+      Todas las especialidades
+    </li>
+    {especialidades.map((category, index) => (
+      <li key={index} className="category">
+        <div
+          className={`category-header ${
+            expandedCategory === category.keyword ? "active" : ""
+          }`}
+          onClick={() => toggleCategory(category.keyword)}
+        >
+          {category.keyword}
+          <span className="toggle-icon">
+            {expandedCategory === category.keyword ? "-" : "+"}
+          </span>
+        </div>
+        {expandedCategory === category.keyword && (
+          <ul className="subspecialty-list">
+            {category.especialidades.map((subEspecialidad, subIndex) => (
+              <li
+                key={subIndex}
+                className={
+                  especialidad === normalizeString(subEspecialidad)
+                    ? "active"
+                    : ""
+                }
+                onClick={() => {
+                  setEspecialidad(normalizeString(subEspecialidad));
+                  setSidebarOpen(false);
+                }}
+              >
+                {subEspecialidad}
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+</div>
 
             {/* Overlay para cerrar la barra lateral en móvil */}
             {sidebarOpen && (
