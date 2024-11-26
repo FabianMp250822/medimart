@@ -63,7 +63,7 @@ const sedesData = {
     mensaje: "En la Clínica de la Costa Santa Marta, nos comprometemos a brindarte un cuidado integral, centrado en tus necesidades. Nuestro equipo médico ofrece un servicio personalizado y humano, garantizando que te sientas en un entorno de confianza, seguro y acogedor durante tu tratamiento."
   },
   Rioacha: {
-    nombre: "Clínica de la Costa - Rioacha",
+    nombre: "Clínica de la Costa - Riohacha",
     direccion: "Calle 51 N 4/15 kL 2 salida valle dupar",
     telefono: "+57 3218085712",
     whatsappNumber: "+573218085712",

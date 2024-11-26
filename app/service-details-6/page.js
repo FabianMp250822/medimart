@@ -6,12 +6,12 @@ import Layout from "@/components/layout/Layout";
 import servicesData from './servicesData';
 
 export default function Service() {
-    const [activeService, setActiveService] = useState(null); // Servicio principal seleccionado
-    const [searchTerm, setSearchTerm] = useState(""); // Término de búsqueda
+    const [activeService, setActiveService] = useState(null); 
+    const [searchTerm, setSearchTerm] = useState(""); 
 
     const handleServiceClick = (service) => {
         setActiveService(activeService === service ? null : service);
-        setSearchTerm(""); // Limpiar el campo de búsqueda al cambiar de servicio
+        setSearchTerm(""); 
     };
 
     const handleSearchChange = (e) => {
@@ -20,7 +20,7 @@ export default function Service() {
 
     const getSubservicesToDisplay = () => {
         if (searchTerm) {
-            // Filtrar subservicios según el término de búsqueda
+          
             return servicesData.flatMap(service =>
                 service.subservices
                     .filter(subservice =>
@@ -30,7 +30,6 @@ export default function Service() {
             );
         }
 
-        // Mostrar los subservicios del servicio principal seleccionado
         return activeService?.subservices.map(subservice => ({
             serviceTitle: activeService.title,
             subservice
