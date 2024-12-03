@@ -45,6 +45,15 @@ export default function Home() {
         ],
       },
       {
+        keyword: "Nefrología y Enfermedades Crónicas",
+        especialidades: [
+          "Nefrología",
+          "Diálisis y Trasplante Renal",
+          "Medicina Interna"
+        ],
+      },
+      
+      {
         keyword: "Cirugía General y Subespecialidades",
         especialidades: [
           "Cirugía General",
