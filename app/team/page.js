@@ -5,7 +5,7 @@ import { db } from "@/lib/firebase";
 import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 import { useSede } from "../context/SedeContext";
-import './team.css';
+import "./team.css";
 
 export default function Home() {
   const [medicos, setMedicos] = useState([]);
@@ -28,10 +28,11 @@ export default function Home() {
       .toLowerCase()
       .trim();
   };
+
   const toggleCategory = (category) => {
     setExpandedCategory((prev) => (prev === category ? null : category));
   };
-  
+
   const groupEspecialidades = () => {
     return [
       {
@@ -46,18 +47,8 @@ export default function Home() {
       },
       {
         keyword: "Medicina Interna",
-        especialidades: [
-          "Nefrología",
-          "Cardiología",
-          "Hematología",
-          "Reumatología",
-          "Infectología",
-          "Neumología",
-          "Gastroenterólogo",
-        ],
+        especialidades: ["Nefrología", "Cardiología", "Infectología", "Neumología"],
       },
-     
-      
       {
         keyword: "Cirugía General y Subespecialidades",
         especialidades: [
@@ -127,11 +118,7 @@ export default function Home() {
       },
       {
         keyword: "Gastroenterología y Nutrición",
-        especialidades: [
-          "Gastroenterología",
-          "Nutricionista",
-          "Oftalmología",
-        ],
+        especialidades: ["Gastroenterología", "Nutricionista", "Oftalmología"],
       },
       {
         keyword: "Enfermería y Apoyo Clínico",
@@ -144,9 +131,6 @@ export default function Home() {
       },
     ];
   };
-  
-  // Función para agrupar especialidades dinámicamente
-
 
   const fetchMedicos = async () => {
     try {
@@ -172,10 +156,48 @@ export default function Home() {
         }
       });
 
-      // Ordenar médicos por nombre completo
-      medicosData.sort((a, b) =>
-        a.nombreCompleto.localeCompare(b.nombreCompleto)
-      );
+      // Función para obtener el nombre de archivo de la URL
+      const getFilenameFromURL = (url) => {
+        try {
+          const decodedURL = decodeURIComponent(url);
+          const urlObj = new URL(decodedURL);
+          const path = urlObj.pathname;
+          const parts = path.split("/");
+          const filenameWithExt = parts[parts.length - 1];
+          return filenameWithExt;
+        } catch (error) {
+          return "";
+        }
+      };
+
+      // Función para verificar si la imagen es una de las imágenes por defecto
+      const isDefaultImage = (url) => {
+        const defaultFilenames = [
+          "1-dra.jpg",
+          "1-dr.jpg",
+          "icono-de-perfil-médico-con-signo-estetoscopio-ilustración-símbolo-eps-vectoriales-editable-183153126.jpg",
+        ];
+
+        const filename = getFilenameFromURL(url);
+
+        return defaultFilenames.includes(filename);
+      };
+
+      // Ordenar médicos: los que tienen imágenes por defecto al final
+      medicosData.sort((a, b) => {
+        const aDefault = isDefaultImage(a.fotoPerfil || a.profileImage || "");
+        const bDefault = isDefaultImage(b.fotoPerfil || b.profileImage || "");
+
+        if (aDefault && !bDefault) {
+          return 1;
+        } else if (!aDefault && bDefault) {
+          return -1;
+        } else {
+          // Ambos tienen imagen por defecto o ambos tienen imagen personalizada
+          // Ordenar por nombre completo
+          return a.nombreCompleto.localeCompare(b.nombreCompleto);
+        }
+      });
 
       // Agrupar especialidades de forma dinámica
       const groupedEspecialidades = groupEspecialidades([...especialidadesSet]);
@@ -254,54 +276,59 @@ export default function Home() {
           <div className="content-wrapper">
             {/* Barra lateral */}
             <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
-  <h3>Especialidades</h3>
-  <ul className="specialty-list">
-    <li
-      className={!especialidad ? "active" : ""}
-      onClick={() => {
-        setEspecialidad("");
-        setSidebarOpen(false);
-      }}
-    >
-      Todas las especialidades
-    </li>
-    {especialidades.map((category, index) => (
-      <li key={index} className="category">
-        <div
-          className={`category-header ${
-            expandedCategory === category.keyword ? "active" : ""
-          }`}
-          onClick={() => toggleCategory(category.keyword)}
-        >
-          {category.keyword}
-          <span className="toggle-icon">
-            {expandedCategory === category.keyword ? "-" : "+"}
-          </span>
-        </div>
-        {expandedCategory === category.keyword && (
-          <ul className="subspecialty-list">
-            {category.especialidades.map((subEspecialidad, subIndex) => (
-              <li
-                key={subIndex}
-                className={
-                  especialidad === normalizeString(subEspecialidad)
-                    ? "active"
-                    : ""
-                }
-                onClick={() => {
-                  setEspecialidad(normalizeString(subEspecialidad));
-                  setSidebarOpen(false);
-                }}
-              >
-                {subEspecialidad}
-              </li>
-            ))}
-          </ul>
-        )}
-      </li>
-    ))}
-  </ul>
-</div>
+              <h3>Especialidades</h3>
+              <ul className="specialty-list">
+                <li
+                  className={!especialidad ? "active" : ""}
+                  onClick={() => {
+                    setEspecialidad("");
+                    setSidebarOpen(false);
+                  }}
+                >
+                  Todas las especialidades
+                </li>
+                {especialidades.map((category, index) => (
+                  <li key={index} className="category">
+                    <div
+                      className={`category-header ${
+                        expandedCategory === category.keyword ? "active" : ""
+                      }`}
+                      onClick={() => toggleCategory(category.keyword)}
+                    >
+                      {category.keyword}
+                      <span className="toggle-icon">
+                        {expandedCategory === category.keyword ? "-" : "+"}
+                      </span>
+                    </div>
+                    {expandedCategory === category.keyword && (
+                      <ul className="subspecialty-list">
+                        {category.especialidades.map(
+                          (subEspecialidad, subIndex) => (
+                            <li
+                              key={subIndex}
+                              className={
+                                especialidad ===
+                                normalizeString(subEspecialidad)
+                                  ? "active"
+                                  : ""
+                              }
+                              onClick={() => {
+                                setEspecialidad(
+                                  normalizeString(subEspecialidad)
+                                );
+                                setSidebarOpen(false);
+                              }}
+                            >
+                              {subEspecialidad}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             {/* Overlay para cerrar la barra lateral en móvil */}
             {sidebarOpen && (
@@ -346,16 +373,12 @@ export default function Home() {
                                   </figure>
                                   <ul className="social-links clearfix">
                                     <li>
-                                      <Link
-                                        href={`/team-details/${medico.id}`}
-                                      >
+                                      <Link href={`/team-details/${medico.id}`}>
                                         <i className="icon-4"></i>
                                       </Link>
                                     </li>
                                     <li>
-                                      <Link
-                                        href={`/team-details/${medico.id}`}
-                                      >
+                                      <Link href={`/team-details/${medico.id}`}>
                                         <i className="icon-5"></i>
                                       </Link>
                                     </li>
@@ -363,9 +386,7 @@ export default function Home() {
                                 </div>
                                 <div className="lower-content">
                                   <h3>
-                                    <Link
-                                      href={`/team-details/${medico.id}`}
-                                    >
+                                    <Link href={`/team-details/${medico.id}`}>
                                       {medico.nombreCompleto}
                                     </Link>
                                   </h3>
