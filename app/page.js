@@ -15,6 +15,7 @@ import Team from "@/components/sections/home1/Team";
 import { useSede } from "@/app/context/SedeContext";
 import News from "@/components/sections/home1/News";
 import Recognitions from "@/components/sections/home1/reconicimientos";
+import InvestigationGroup from "@/components/sections/home1/InvestigationGroup";
 
 export default function Home() {
   const { selectedSede, selectSede, sedesData } = useSede(); // Obtener las sedes desde el contexto
@@ -165,6 +166,7 @@ export default function Home() {
             <Features />
             <About />
             <Services />
+            <InvestigationGroup />
             <WhyChooseUs />
             <Funfacts />
             <Process />

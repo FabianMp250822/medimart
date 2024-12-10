@@ -1,7 +1,4 @@
 {
-  "/reclamar-resultados/page": "app/reclamar-resultados/page.js",
-  "/laboratorio-clinico/page": "app/laboratorio-clinico/page.js",
-  "/cirugia/page": "app/cirugia/page.js",
-  "/team/page": "app/team/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }
