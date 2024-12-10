@@ -135,16 +135,16 @@ export default function Home() {
   const fetchMedicos = async () => {
     try {
       if (!sedeData?.nombre) return;
-
+  
       const q = query(
         collection(db, "medicos"),
         where("sede", "==", sedeData.nombre)
       );
       const querySnapshot = await getDocs(q);
-
+  
       const medicosData = [];
       const especialidadesSet = new Set();
-
+  
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         if (data && data.nombreCompleto !== "Luis Aurelio Castillo Parodi") {
@@ -155,7 +155,7 @@ export default function Home() {
           if (data.especialidad) especialidadesSet.add(data.especialidad);
         }
       });
-
+  
       // Función para obtener el nombre de archivo de la URL
       const getFilenameFromURL = (url) => {
         try {
@@ -169,7 +169,7 @@ export default function Home() {
           return "";
         }
       };
-
+  
       // Función para verificar si la imagen es una de las imágenes por defecto
       const isDefaultImage = (url) => {
         const defaultFilenames = [
@@ -177,31 +177,42 @@ export default function Home() {
           "1-dr.jpg",
           "icono-de-perfil-médico-con-signo-estetoscopio-ilustración-símbolo-eps-vectoriales-editable-183153126.jpg",
         ];
-
+  
         const filename = getFilenameFromURL(url);
-
+  
         return defaultFilenames.includes(filename);
       };
-
-      // Ordenar médicos: los que tienen imágenes por defecto al final
+  
+      // Ordenar médicos: Priorizar Gustavo Aroca y Andres Angelo al inicio, luego por imágenes y nombre
       medicosData.sort((a, b) => {
-        const aDefault = isDefaultImage(a.fotoPerfil || a.profileImage || "");
-        const bDefault = isDefaultImage(b.fotoPerfil || b.profileImage || "");
-
-        if (aDefault && !bDefault) {
-          return 1;
-        } else if (!aDefault && bDefault) {
+        const isPriorityA =
+          a.nombreCompleto === "Gustavo Aroca Martínez" ||
+          a.nombreCompleto === "Andres Angelo Cadena Bonfanti";
+        const isPriorityB =
+          b.nombreCompleto === "Gustavo Aroca Martínez" ||
+          b.nombreCompleto === "Andres Angelo Cadena Bonfanti";
+  
+        if (isPriorityA && !isPriorityB) {
           return -1;
+        } else if (!isPriorityA && isPriorityB) {
+          return 1;
         } else {
-          // Ambos tienen imagen por defecto o ambos tienen imagen personalizada
-          // Ordenar por nombre completo
-          return a.nombreCompleto.localeCompare(b.nombreCompleto);
+          const aDefault = isDefaultImage(a.fotoPerfil || a.profileImage || "");
+          const bDefault = isDefaultImage(b.fotoPerfil || b.profileImage || "");
+  
+          if (aDefault && !bDefault) {
+            return 1;
+          } else if (!aDefault && bDefault) {
+            return -1;
+          } else {
+            return a.nombreCompleto.localeCompare(b.nombreCompleto);
+          }
         }
       });
-
+  
       // Agrupar especialidades de forma dinámica
       const groupedEspecialidades = groupEspecialidades([...especialidadesSet]);
-
+  
       // Actualizar estados
       setMedicos(medicosData);
       setEspecialidades(groupedEspecialidades);
@@ -209,6 +220,7 @@ export default function Home() {
       console.error("Error al obtener médicos:", error);
     }
   };
+  
 
   useEffect(() => {
     fetchMedicos();
