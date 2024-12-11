@@ -166,7 +166,7 @@ export default function Home() {
             <Features />
             <About />
             <Services />
-            <InvestigationGroup />
+            {/* //<InvestigationGroup /> */}
             <WhyChooseUs />
             <Funfacts />
             <Process />
