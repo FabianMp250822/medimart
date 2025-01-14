@@ -144,7 +144,6 @@ export default function PostularmeModal({ show, onClose, oferta }) {
             }
         }
 
-        // Crear objeto de postulación
         const postulacion = {
             id: postulacionId, // Añadir el ID a la postulación
             ofertaId: oferta.id,
