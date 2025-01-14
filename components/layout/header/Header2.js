@@ -116,8 +116,8 @@ export default function Header2({
                 </div>
 
                 <div className="btn-box">
-                  <Link href="/reclamar-resultados" className="theme-btn btn-one">
-                    <span>Reclamar Resultados</span>
+                <Link href="/empleos" className="theme-btn btn-one">
+                    <span>Trabaje con nosotros</span>
                   </Link>
                 </div>
               </div>
