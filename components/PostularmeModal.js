@@ -3,9 +3,9 @@ import Modal from "@/components/Modal"; // Asegúrate de tener tu componente Mod
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase"; // Asegúrate de que tu configuración de Firebase incluya Storage
 import { db } from "@/lib/firebase"; // Importa la instancia de la base de datos desde tu archivo de configuración
-import { collection, addDoc, Timestamp, doc, updateDoc, increment, setDoc } from "firebase/firestore";
+import { collection, addDoc, Timestamp, doc, updateDoc, increment, setDoc, query, where, getDocs } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
-
+import Swal from 'sweetalert2';
 export default function PostularmeModal({ show, onClose, oferta }) {
     // Información Personal
     const [nombresApellidos, setNombresApellidos] = useState("");
@@ -19,7 +19,10 @@ export default function PostularmeModal({ show, onClose, oferta }) {
     const [telefonoFijo, setTelefonoFijo] = useState("");
     const [telefonoCelular, setTelefonoCelular] = useState("");
     const [correoElectronico, setCorreoElectronico] = useState("");
-
+    const [referencias, setReferencias] = useState([]);
+    const [tempNombreRef, setTempNombreRef] = useState("");
+const [tempTelefonoRef, setTempTelefonoRef] = useState("");
+const [tempRelacionRef, setTempRelacionRef] = useState("");
     // Información Académica
     const [tituloMedico, setTituloMedico] = useState("");
     const [universidad, setUniversidad] = useState("");
@@ -120,11 +123,30 @@ export default function PostularmeModal({ show, onClose, oferta }) {
     const handleEliminarCertificacion = (index) => {
         setCertificaciones(certificaciones.filter((_, i) => i !== index));
     };
-
-    const handleSubmit = async (e) => {
+    const handleAgregarReferencia = () => {
+        setReferencias([
+          ...referencias,
+          {
+            nombre: tempNombreRef,
+            telefono: tempTelefonoRef,
+            relacion: tempRelacionRef,
+            // ... otros campos
+          },
+        ]);
+        // Limpiar campos temporales
+        setTempNombreRef("");
+        setTempTelefonoRef("");
+        setTempRelacionRef("");
+        // ... limpiar otros campos
+      };
+      const handleEliminarReferencia = (index) => {
+        setReferencias(referencias.filter((_, i) => i !== index));
+      };
+  
+      const handleSubmit = async (e) => {
         e.preventDefault();
         const postulacionId = uuidv4();
-
+    
         // Subir CV
         let cvUrl = "";
         if (cvFile) {
@@ -132,7 +154,7 @@ export default function PostularmeModal({ show, onClose, oferta }) {
             const cvSnapshot = await uploadBytes(cvRef, cvFile);
             cvUrl = await getDownloadURL(cvSnapshot.ref);
         }
-
+    
         // Subir Certificados
         let certificadosUrls = [];
         if (certificadosFiles.length > 0) {
@@ -143,9 +165,9 @@ export default function PostularmeModal({ show, onClose, oferta }) {
                 certificadosUrls.push(certUrl);
             }
         }
-
+    
         const postulacion = {
-            id: postulacionId, // Añadir el ID a la postulación
+            id: postulacionId,
             ofertaId: oferta.id,
             ofertaTitulo: oferta.titulo,
             fechaPostulacion: Timestamp.now(),
@@ -190,53 +212,136 @@ export default function PostularmeModal({ show, onClose, oferta }) {
                 perteneceMinoria,
                 aspiracionSalarial,
                 disponibilidadViajar,
-                referenciasPersonales,
+                referencias,
             },
             archivos: {
                 cvUrl,
                 certificadosUrls,
             },
         };
-
+    
         try {
-            // Guardar en Firestore
+            // Verificar si el correo ya existe en la oferta
             const postulacionesRef = collection(db, "postulaciones");
-            await setDoc(doc(postulacionesRef, postulacionId), postulacion); // Usar setDoc con el ID
-
+            const q = query(postulacionesRef, where("ofertaId", "==", oferta.id), where("informacionPersonal.correoElectronico", "==", correoElectronico));
+            const querySnapshot = await getDocs(q);
+    
+            if (!querySnapshot.empty) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ya te has postulado a esta oferta con este correo electrónico.',
+                    confirmButtonText: 'Aceptar'
+                });
+                return; // Detener la ejecución
+            }
+    
+            // Guardar en Firestore
+            await setDoc(doc(postulacionesRef, postulacionId), postulacion);
+    
             // Actualizar el contador de postulaciones en la oferta
             const ofertaRef = doc(db, "ofertasEmpleos", oferta.id);
             await updateDoc(ofertaRef, {
                 postulaciones: increment(1)
             });
-
+    
             console.log("Postulación enviada con éxito");
-
+    
             // Enviar el correo de confirmación
             const response = await fetch('https://us-central1-clinica-de-la-costa.cloudfunctions.net/enviarCorreoPostulacion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ postulacion: postulacion }), // Enviar el objeto postulacion completo
+                body: JSON.stringify({ postulacion: postulacion }),
             });
-
+    
             if (response.ok) {
                 console.log("Correo de confirmación enviado con éxito");
             } else {
                 console.error("Error al enviar el correo de confirmación");
             }
-
-            onClose(); // Cerrar el modal
-            // Mostrar una alerta o un mensaje de éxito
+    
+            // Mostrar mensaje de éxito con SweetAlert2
+            Swal.fire({
+                icon: 'success',
+                title: '¡Postulación enviada!',
+                text: 'Tu postulación se ha enviado correctamente. Pronto nos pondremos en contacto contigo.',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                // Limpiar el formulario
+                setNombresApellidos("");
+                setTipoDocumento("Cédula de Ciudadanía");
+                setNumeroDocumento("");
+                setFechaNacimiento("");
+                setLugarNacimiento("");
+                setGenero("Masculino");
+                setEstadoCivil("Soltero");
+                setDireccionResidencia("");
+                setTelefonoFijo("");
+                setTelefonoCelular("");
+                setCorreoElectronico("");
+                setReferencias([]);
+                setTempNombreRef("");
+                setTempTelefonoRef("");
+                setTempRelacionRef("");
+                setTituloMedico("");
+                setUniversidad("");
+                setFechaGrado("");
+                setPaisTitulo("");
+                setTituloConvalidado("No");
+                setNumeroResolucion("");
+                setEspecializacion("");
+                setUniversidadEspecializacion("");
+                setFechaInicioEspecializacion("");
+                setFechaFinEspecializacion("");
+                setOtraInfoAcademica("");
+                setExperiencias([]);
+                setTempEntidad("");
+                setTempCargo("");
+                setTempFechaInicio("");
+                setTempFechaFin("");
+                setTempFunciones("");
+                setCertificaciones([]);
+                setTempNombreCertificacion("");
+                setTempEntidadCertificadora("");
+                setTempFechaExpedicion("");
+                setTieneTarjetaProfesional("No");
+                setNumeroTarjetaProfesional("");
+                setCursosAdicionales("");
+                setIdiomas("");
+                setHabilidadesInformaticas("");
+                setTieneDiscapacidad("No");
+                setPerteneceMinoria("No");
+                setAspiracionSalarial("");
+                setDisponibilidadViajar("No");
+                setReferenciasPersonales("");
+                setCvFile(null);
+                setCertificadosFiles([]);
+    
+                // Limpiar los inputs de archivos
+                cvFileInput.current.value = null;
+                certificadosFileInput.current.value = null;
+    
+                onClose(); // Cerrar el modal
+            });
+    
         } catch (error) {
             console.error("Error al enviar la postulación:", error);
-            // Mostrar una alerta o un mensaje de error
+            // Mostrar mensaje de error con SweetAlert2
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un error al enviar la postulación. Por favor, inténtalo de nuevo más tarde.',
+                confirmButtonText: 'Aceptar'
+            });
         }
     };
     return (
         <Modal show={show} onClose={onClose}>
-            <div className="postularme-modal">
+            <div className="postularme-modal" > 
                 <h2 className="modal-title">Postularme a {oferta.titulo}</h2>
+                
                 <form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-md-6">
@@ -408,21 +513,16 @@ export default function PostularmeModal({ show, onClose, oferta }) {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="paisTitulo">País donde Obtuvo el Título:</label>
-                                <select
-                                    id="paisTitulo"
-                                    className="form-control"
-                                    value={paisTitulo}
-                                    onChange={(e) => setPaisTitulo(e.target.value)}
-                                    required
-                                >
-                                    {/* Aquí deberías incluir una lista de países */}
-                                    <option>Colombia</option>
-                                    <option>Venezuela</option>
-                                    <option>Estados Unidos</option>
-                                    {/* ... */}
-                                </select>
-                            </div>
+  <label htmlFor="paisTitulo">País donde Obtuvo el Título:</label>
+  <input
+    type="text"
+    id="paisTitulo"
+    className="form-control"
+    value={paisTitulo}
+    onChange={(e) => setPaisTitulo(e.target.value)}
+    required
+  />
+</div>
                             <div className="form-group">
                                 <label htmlFor="tituloConvalidado">¿Título Convalidado en Colombia?</label>
                                 <select
@@ -649,7 +749,7 @@ export default function PostularmeModal({ show, onClose, oferta }) {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="idiomas">Idiomas:</label>
-                                <textarea
+                                <input type="text"
                                     id="idiomas"
                                     className="form-control"
                                     value={idiomas}
@@ -658,7 +758,7 @@ export default function PostularmeModal({ show, onClose, oferta }) {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="habilidadesInformaticas">Habilidades Informáticas:</label>
-                                <textarea
+                                <input type="text"
                                     id="habilidadesInformaticas"
                                     className="form-control"
                                     value={habilidadesInformaticas}
@@ -716,14 +816,59 @@ export default function PostularmeModal({ show, onClose, oferta }) {
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="referenciasPersonales">Referencias Personales:</label>
-                                <textarea
-                                    id="referenciasPersonales"
-                                    className="form-control"
-                                    value={referenciasPersonales}
-                                    onChange={(e) => setReferenciasPersonales(e.target.value)}
-                                />
-                            </div>
+  <label htmlFor="referenciasPersonales">Referencias Personales:</label>
+  {/* Campos para una nueva referencia */}
+  <div className="form-group">
+    <label htmlFor="tempNombreRef">Nombre:</label>
+    <input
+      type="text"
+      id="tempNombreRef"
+      className="form-control"
+      value={tempNombreRef}
+      onChange={(e) => setTempNombreRef(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="tempTelefonoRef">Teléfono:</label>
+    <input
+      type="text"
+      id="tempTelefonoRef"
+      className="form-control"
+      value={tempTelefonoRef}
+      onChange={(e) => setTempTelefonoRef(e.target.value)}
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="tempRelacionRef">Relación:</label>
+    <input
+      type="text"
+      id="tempRelacionRef"
+      className="form-control"
+      value={tempRelacionRef}
+      onChange={(e) => setTempRelacionRef(e.target.value)}
+    />
+  </div>
+
+  <button type="button" className="btn btn-secondary" onClick={handleAgregarReferencia}>
+    Agregar Referencia
+  </button>
+
+  {/* Mostrar las referencias agregadas */}
+  {referencias.map((ref, index) => (
+    <div key={index} className="referencia-item">
+      <p>
+        <strong>Nombre:</strong> {ref.nombre} - <strong>Teléfono:</strong> {ref.telefono}
+      </p>
+      <p>
+        <strong>Relación:</strong> {ref.relacion}
+      </p>
+      
+      <button type="button" className="btn btn-danger" onClick={() => handleEliminarReferencia(index)}>
+        Eliminar
+      </button>
+    </div>
+  ))}
+</div>
 
                             <div className="form-group">
                                 <label htmlFor="cvFile">Subir CV (PDF, DOC, DOCX):</label>
@@ -750,6 +895,13 @@ export default function PostularmeModal({ show, onClose, oferta }) {
 
                         </div>
                     </div>
+                    <div className="instrucciones">
+                <p><strong>¡Importante!</strong></p>
+                <ul>
+                    <li>Asegúrate de que tu currículum esté actualizado e incluya una fotografía reciente.</li>
+                    <li>Las certificaciones obligatorias para esta postulación deben estar vigentes.</li>
+                </ul>
+            </div> 
                     <div className="text-center mt-3">
                         <button type="submit" className="btn btn-primary">
                             Enviar Postulación
@@ -758,105 +910,122 @@ export default function PostularmeModal({ show, onClose, oferta }) {
                 </form>
             </div>
             <style jsx>{`
-            .postularme-modal {
-                background-color: #fff;
-                border-radius: 5px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-                max-width: 90%; /* Ajusta el ancho máximo del modal */
-                width: 100%;
-                max-height: 90vh; /* Ajusta la altura máxima del modal */
-                overflow-y: auto;
-                padding: 20px;
-            }
+          .postularme-modal {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  max-width: 90%; 
+  width: 100%;
+  max-height: 90vh; 
+  overflow-y: auto;
+  padding: 20px;
+  position: fixed; /* Para posicionar el modal relativo a la ventana */
+  top: 100px;   /* Ajusta este valor para controlar la distancia desde la parte superior */
+  left: 50%;
+  transform: translateX(-50%); /* Centra horizontalmente */
+  z-index: 1050; /* Asegura que el modal esté por encima de otros elementos */
+}
 
-            @media (min-width: 768px) {
-                .postularme-modal {
-                    max-width: 800px; /* Ancho máximo en pantallas más grandes */
-                }
-            }
+@media (min-width: 768px) {
+  .postularme-modal {
+    max-width: 800px; /* Ancho máximo en pantallas más grandes */
+  }
+}
 
-            .modal-title {
-                color: #333;
-                font-size: 1.5rem;
-                margin-bottom: 20px;
-            }
+.modal-title {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  position: relative; /* Para posicionar el botón de cerrar */
+}
 
-            .section-title {
-                color: #007bff;
-                font-size: 1.25rem;
-                margin-top: 30px;
-                margin-bottom: 15px;
-            }
+.modal-title .close-button { /* Estilos para el botón de cerrar */
+  position: absolute;
+  top: -10px; /* Ajusta la posición vertical */
+ 
+   right: -20px; /* Ajusta este valor para que se extienda hacia la derecha */
+  padding: 10px 20px; /* Agrega un padding para que el botón sea más grande */
+  background-color: #dc3545; /* Color de fondo rojo */
+  color: white; /* Color del texto blanco */
+  border-radius: 50%;
+}
 
-            .form-group {
-                margin-bottom: 15px;
-            }
+.section-title {
+  color: #007bff;
+  font-size: 1.25rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
 
-            .form-group label {
-                display: block;
-                margin-bottom: 5px;
-                color: #555;
-                font-weight: 600;
-            }
+.form-group {
+  margin-bottom: 15px;
+}
 
-            .form-control, .form-control-file {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ced4da;
-                border-radius: 4px;
-                font-size: 1rem;
-                color: #495057;
-            }
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: 600;
+}
 
-            .form-control:focus {
-                border-color: #80bdff;
-                outline: 0;
-                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-            }
+.form-control, .form-control-file {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #495057;
+}
 
-            textarea.form-control {
-                min-height: 120px;
-                resize: vertical;
-            }
+.form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
 
-            .btn {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 4px;
-                font-size: 1rem;
-                cursor: pointer;
-            }
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
 
-            .btn-primary {
-                background-color: #007bff;
-                color: #fff;
-            }
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
-            .btn-secondary {
-                background-color: #6c757d;
-                color: #fff;
-            }
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
 
-            .btn-danger {
-                background-color: #dc3545;
-                color: #fff;
-            }
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
 
-            .experiencia-item, .certificacion-item {
-                background-color: #f8f9fa;
-                border: 1px solid #ced4da;
-                border-radius: 4px;
-                padding: 10px;
-                margin-bottom: 10px;
-            }
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
 
-            .experiencia-item p, .certificacion-item p {
-                margin: 0 0 5px;
-            }
+.experiencia-item, .certificacion-item {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
-            .experiencia-item strong, .certificacion-item strong {
-                color: #007bff;
-            }
+.experiencia-item p, .certificacion-item p {
+  margin: 0 0 5px;
+}
+
+.experiencia-item strong, .certificacion-item strong {
+  color: #007bff;
+}
             `}</style>
         </Modal>
     );
