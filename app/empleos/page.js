@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Link from "next/link";
+import PostularmeModal from "@/components/PostularmeModal"; 
 
 export default function OfertasEmpleo() {
   const [ofertas, setOfertas] = useState([]);
@@ -17,16 +18,17 @@ export default function OfertasEmpleo() {
     experiencia: "",
     estudios: "",
   });
-  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
-  const [currentPage, setCurrentPage] = useState(1); // Estado para la página actual
-  const ofertasPerPage = 6; // Número de ofertas por página
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const ofertasPerPage = 6; 
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchOfertas = async () => {
       try {
         let q = collection(db, "ofertasEmpleos");
 
-        // Aplicar filtros a la consulta
         if (filtros.sueldo) {
           q = query(q, where("sueldo", "==", filtros.sueldo));
         }
@@ -50,7 +52,6 @@ export default function OfertasEmpleo() {
         }
 
         const ofertasSnapshot = await getDocs(q);
-
         const ofertasData = ofertasSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -63,7 +64,7 @@ export default function OfertasEmpleo() {
     };
 
     fetchOfertas();
-  }, [filtros]); // Ejecutar cada vez que cambien los filtros
+  }, [filtros]); 
 
   const handleFiltroChange = (e) => {
     const { name, value } = e.target;
@@ -73,7 +74,6 @@ export default function OfertasEmpleo() {
     });
   };
 
-  // Obtener opciones únicas para los filtros dinámicos
   const opcionesSueldo = [...new Set(ofertas.map((oferta) => oferta.sueldo))];
   const opcionesUbicacion = [...new Set(ofertas.map((oferta) => oferta.ubicacion))];
   const opcionesFechaPublicacion = [...new Set(ofertas.map((oferta) => oferta.fechaPublicacion))];
@@ -82,14 +82,12 @@ export default function OfertasEmpleo() {
   const opcionesExperiencia = [...new Set(ofertas.map((oferta) => oferta.experiencia))];
   const opcionesEstudios = [...new Set(ofertas.map((oferta) => oferta.estudios))];
 
-  // Filtrar ofertas por término de búsqueda
   const filteredOfertas = ofertas.filter((oferta) => {
     const normalizedTitulo = oferta.titulo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const normalizedSearchTerm = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return normalizedTitulo.includes(normalizedSearchTerm);
   });
 
-  // Paginación
   const indexOfLastOferta = currentPage * ofertasPerPage;
   const indexOfFirstOferta = indexOfLastOferta - ofertasPerPage;
   const currentOfertas = filteredOfertas.slice(indexOfFirstOferta, indexOfLastOferta);
@@ -102,9 +100,7 @@ export default function OfertasEmpleo() {
         <section className="results-section py-5">
           <div className="container">
             <div className="ofertas-container">
-              {/* Sidebar */}
-             {/* Sidebar */}
-             <div className="sidebar">
+              <div className="sidebar">
                 <h3>Filtros</h3>
                 <div className="filtro">
                   <label htmlFor="sueldo">Sueldo:</label>
@@ -118,7 +114,6 @@ export default function OfertasEmpleo() {
                   </select>
                 </div>
 
-                {/* Filtro Ubicación */}
                 <div className="filtro">
                   <label htmlFor="ubicacion">Ubicación:</label>
                   <select name="ubicacion" id="ubicacion" value={filtros.ubicacion} onChange={handleFiltroChange}>
@@ -131,8 +126,7 @@ export default function OfertasEmpleo() {
                   </select>
                 </div>
 
-                               {/* Filtro Tipo de Contrato */}
-                 <div className="filtro">
+                <div className="filtro">
                   <label htmlFor="tipoContrato">Tipo de Contrato:</label>
                   <select name="tipoContrato" id="tipoContrato" value={filtros.tipoContrato} onChange={handleFiltroChange}>
                     <option value="">Todos</option>
@@ -144,7 +138,6 @@ export default function OfertasEmpleo() {
                   </select>
                 </div>
 
-                {/* Filtro Jornada */}
                 <div className="filtro">
                   <label htmlFor="jornada">Jornada:</label>
                   <select name="jornada" id="jornada" value={filtros.jornada} onChange={handleFiltroChange}>
@@ -157,9 +150,6 @@ export default function OfertasEmpleo() {
                   </select>
                 </div>
 
-              
-
-                {/* Filtro Estudios */}
                 <div className="filtro">
                   <label htmlFor="estudios">Estudios:</label>
                   <select name="estudios" id="estudios" value={filtros.estudios} onChange={handleFiltroChange}>
@@ -173,10 +163,16 @@ export default function OfertasEmpleo() {
                 </div>
               </div>
 
-              {/* Contenido principal */}
               <div className="main-content">
-                <h2>Trabaja con Nosotros</h2> {/* Título mejorado con SEO */}
-                {/* Barra de búsqueda */}
+                <h2>Trabaja con Nosotros</h2> 
+
+                <div className="tarjeta-curriculum">
+                  <p>Si no encuentras una oferta que se ajuste a tu perfil, ¡no te preocupes! Puedes dejarnos tu currículum para futuras oportunidades.</p>
+                  <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+                    Deja tu currículum
+                  </button>
+                </div>
+
                 <div className="search-bar">
                   <input
                     type="text"
@@ -204,12 +200,14 @@ export default function OfertasEmpleo() {
                       </div>
                     ))
                   ) : (
-                    <p className="no-ofertas">
-                      No se encontraron ofertas de empleo que coincidan con los filtros y la búsqueda.
-                    </p>
+                    <div className="no-ofertas">
+                      <p>
+                        No se encontraron ofertas de empleo que coincidan con los filtros y la búsqueda.
+                      </p>
+                    </div>
                   )}
                 </div>
-                {/* Paginación */}
+
                 <div className="pagination">
                   <ul>
                     {Array.from({ length: Math.ceil(filteredOfertas.length / ofertasPerPage) }, (_, i) => (
@@ -226,6 +224,15 @@ export default function OfertasEmpleo() {
           </div>
         </section>
       </Layout>
+
+      {showModal && (
+        <PostularmeModal 
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          oferta={{ id: "", titulo: 'Sin Oferta' }} 
+        />
+      )}
+
       <style jsx>{`
         .ofertas-container {
           display: flex;
@@ -354,6 +361,14 @@ export default function OfertasEmpleo() {
           background-color: #007bff;
           color: #fff;
           border-color: #007bff;
+        }
+
+        .tarjeta-curriculum {
+          background-color: #f9f9f9;
+          border-radius: 8px;
+          padding: 20px;
+          margin-bottom: 20px; 
+          text-align: center;
         }
       `}</style>
     </>

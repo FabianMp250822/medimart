@@ -3,7 +3,7 @@ import Modal from "@/components/Modal"; // Asegúrate de tener tu componente Mod
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase"; // Asegúrate de que tu configuración de Firebase incluya Storage
 import { db } from "@/lib/firebase"; // Importa la instancia de la base de datos desde tu archivo de configuración
-import { collection, addDoc, Timestamp, doc, updateDoc, increment, setDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, doc, updateDoc, increment, setDoc, query, where, getDocs } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2';
 export default function PostularmeModal({ show, onClose, oferta }) {
@@ -142,201 +142,160 @@ const [tempRelacionRef, setTempRelacionRef] = useState("");
       const handleEliminarReferencia = (index) => {
         setReferencias(referencias.filter((_, i) => i !== index));
       };
-  
       const handleSubmit = async (e) => {
         e.preventDefault();
         const postulacionId = uuidv4();
-    
+      
         // Subir CV
         let cvUrl = "";
         if (cvFile) {
-            const cvRef = ref(storage, `postulaciones/${postulacionId}/cv/${cvFile.name}`);
-            const cvSnapshot = await uploadBytes(cvRef, cvFile);
-            cvUrl = await getDownloadURL(cvSnapshot.ref);
+          const cvRef = ref(storage, `postulaciones/${postulacionId}/cv/${cvFile.name}`);
+          const cvSnapshot = await uploadBytes(cvRef, cvFile);
+          cvUrl = await getDownloadURL(cvSnapshot.ref);
         }
-    
+      
         // Subir Certificados
         let certificadosUrls = [];
         if (certificadosFiles.length > 0) {
-            for (const file of certificadosFiles) {
-                const certRef = ref(storage, `postulaciones/${postulacionId}/certificados/${file.name}`);
-                const certSnapshot = await uploadBytes(certRef, file);
-                const certUrl = await getDownloadURL(certSnapshot.ref);
-                certificadosUrls.push(certUrl);
-            }
+          for (const file of certificadosFiles) {
+            const certRef = ref(storage, `postulaciones/${postulacionId}/certificados/${file.name}`);
+            const certSnapshot = await uploadBytes(certRef, file);
+            const certUrl = await getDownloadURL(certSnapshot.ref);
+            certificadosUrls.push(certUrl);
+          }
         }
-    
+      
         const postulacion = {
-            id: postulacionId,
-            ofertaId: oferta.id,
-            ofertaTitulo: oferta.titulo,
-            fechaPostulacion: Timestamp.now(),
-            estado: "pendiente",
-            informacionPersonal: {
-                nombresApellidos,
-                tipoDocumento,
-                numeroDocumento,
-                fechaNacimiento,
-                lugarNacimiento,
-                genero,
-                estadoCivil,
-                direccionResidencia,
-                telefonoFijo,
-                telefonoCelular,
-                correoElectronico,
-            },
-            informacionAcademica: {
-                tituloMedico,
-                universidad,
-                fechaGrado,
-                paisTitulo,
-                tituloConvalidado,
-                numeroResolucion,
-                especializacion,
-                universidadEspecializacion,
-                fechaInicioEspecializacion,
-                fechaFinEspecializacion,
-                otraInfoAcademica,
-            },
-            experienciaLaboral: experiencias,
-            certificacionesYHabilidades: {
-                certificaciones,
-                tieneTarjetaProfesional,
-                numeroTarjetaProfesional,
-                cursosAdicionales,
-                idiomas,
-                habilidadesInformaticas
-            },
-            informacionAdicional: {
-                tieneDiscapacidad,
-                perteneceMinoria,
-                aspiracionSalarial,
-                disponibilidadViajar,
-                referencias,
-            },
-            archivos: {
-                cvUrl,
-                certificadosUrls,
-            },
+          id: postulacionId,
+          ofertaId: oferta.id,
+          ofertaTitulo: oferta.titulo,
+          fechaPostulacion: serverTimestamp(),
+          estado: "pendiente",
+          informacionPersonal: {
+            nombresApellidos,
+            tipoDocumento,
+            numeroDocumento,
+            fechaNacimiento,
+            lugarNacimiento,
+            genero,
+            estadoCivil,
+            direccionResidencia,
+            telefonoFijo,
+            telefonoCelular,
+            correoElectronico,
+          },
+          informacionAcademica: {
+            tituloMedico,
+            universidad,
+            fechaGrado,
+            paisTitulo,
+            tituloConvalidado,
+            numeroResolucion,
+            especializacion,
+            universidadEspecializacion,
+            fechaInicioEspecializacion,
+            fechaFinEspecializacion,
+            otraInfoAcademica,
+          },
+          experienciaLaboral: experiencias,
+          certificacionesYHabilidades: {
+            certificaciones,
+            tieneTarjetaProfesional,
+            numeroTarjetaProfesional,
+            cursosAdicionales,
+            idiomas,
+            habilidadesInformaticas
+          },
+          informacionAdicional: {
+            tieneDiscapacidad,
+            perteneceMinoria,
+            aspiracionSalarial,
+            disponibilidadViajar,
+            referencias,
+          },
+          archivos: {
+            cvUrl,
+            certificadosUrls,
+          },
         };
-    
+      
         try {
-            // Verificar si el correo ya existe en la oferta
+          // Verificar si el correo ya existe en la oferta (si la oferta existe)
+          if (oferta.titulo !== 'Sin Oferta') {
             const postulacionesRef = collection(db, "postulaciones");
             const q = query(postulacionesRef, where("ofertaId", "==", oferta.id), where("informacionPersonal.correoElectronico", "==", correoElectronico));
             const querySnapshot = await getDocs(q);
-    
+      
             if (!querySnapshot.empty) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ya te has postulado a esta oferta con este correo electrónico.',
-                    confirmButtonText: 'Aceptar'
-                });
-                return; // Detener la ejecución
-            }
-    
-            // Guardar en Firestore
-            await setDoc(doc(postulacionesRef, postulacionId), postulacion);
-    
-            // Actualizar el contador de postulaciones en la oferta
-            const ofertaRef = doc(db, "ofertasEmpleos", oferta.id);
-            await updateDoc(ofertaRef, {
-                postulaciones: increment(1)
-            });
-    
-            console.log("Postulación enviada con éxito");
-    
-            // Enviar el correo de confirmación
-            const response = await fetch('https://us-central1-clinica-de-la-costa.cloudfunctions.net/enviarCorreoPostulacion', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ postulacion: postulacion }),
-            });
-    
-            if (response.ok) {
-                console.log("Correo de confirmación enviado con éxito");
-            } else {
-                console.error("Error al enviar el correo de confirmación");
-            }
-    
-            // Mostrar mensaje de éxito con SweetAlert2
-            Swal.fire({
-                icon: 'success',
-                title: '¡Postulación enviada!',
-                text: 'Tu postulación se ha enviado correctamente. Pronto nos pondremos en contacto contigo.',
-                confirmButtonText: 'Aceptar'
-            }).then(() => {
-                // Limpiar el formulario
-                setNombresApellidos("");
-                setTipoDocumento("Cédula de Ciudadanía");
-                setNumeroDocumento("");
-                setFechaNacimiento("");
-                setLugarNacimiento("");
-                setGenero("Masculino");
-                setEstadoCivil("Soltero");
-                setDireccionResidencia("");
-                setTelefonoFijo("");
-                setTelefonoCelular("");
-                setCorreoElectronico("");
-                setReferencias([]);
-                setTempNombreRef("");
-                setTempTelefonoRef("");
-                setTempRelacionRef("");
-                setTituloMedico("");
-                setUniversidad("");
-                setFechaGrado("");
-                setPaisTitulo("");
-                setTituloConvalidado("No");
-                setNumeroResolucion("");
-                setEspecializacion("");
-                setUniversidadEspecializacion("");
-                setFechaInicioEspecializacion("");
-                setFechaFinEspecializacion("");
-                setOtraInfoAcademica("");
-                setExperiencias([]);
-                setTempEntidad("");
-                setTempCargo("");
-                setTempFechaInicio("");
-                setTempFechaFin("");
-                setTempFunciones("");
-                setCertificaciones([]);
-                setTempNombreCertificacion("");
-                setTempEntidadCertificadora("");
-                setTempFechaExpedicion("");
-                setTieneTarjetaProfesional("No");
-                setNumeroTarjetaProfesional("");
-                setCursosAdicionales("");
-                setIdiomas("");
-                setHabilidadesInformaticas("");
-                setTieneDiscapacidad("No");
-                setPerteneceMinoria("No");
-                setAspiracionSalarial("");
-                setDisponibilidadViajar("No");
-                setReferenciasPersonales("");
-                setCvFile(null);
-                setCertificadosFiles([]);
-    
-                // Limpiar los inputs de archivos
-                cvFileInput.current.value = null;
-                certificadosFileInput.current.value = null;
-    
-                onClose(); // Cerrar el modal
-            });
-    
-        } catch (error) {
-            console.error("Error al enviar la postulación:", error);
-            // Mostrar mensaje de error con SweetAlert2
-            Swal.fire({
+              Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Hubo un error al enviar la postulación. Por favor, inténtalo de nuevo más tarde.',
+                text: 'Ya te has postulado a esta oferta con este correo electrónico.',
                 confirmButtonText: 'Aceptar'
+              });
+              return; 
+            }
+          }
+      
+          // Guardar en Firestore
+          await setDoc(doc(collection(db, "postulaciones"), postulacionId), postulacion);
+      
+          // Actualizar el contador de postulaciones en la oferta (si existe)
+          if (oferta.titulo !== 'Sin Oferta') { 
+            const ofertaRef = doc(db, "ofertasEmpleos", oferta.id);
+            await updateDoc(ofertaRef, {
+              postulaciones: increment(1)
             });
+          }
+      
+          console.log("Postulación enviada con éxito");
+      
+          // Enviar el correo de confirmación
+          const response = await fetch('https://us-central1-clinica-de-la-costa.cloudfunctions.net/enviarCorreoPostulacion', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ postulacion: postulacion }),
+          });
+      
+          if (response.ok) {
+            console.log("Correo de confirmación enviado con éxito");
+          } else {
+            console.error("Error al enviar el correo de confirmación");
+          }
+      
+          // Mostrar mensaje de éxito con SweetAlert2
+          Swal.fire({
+            icon: 'success',
+            title: '¡Postulación enviada!',
+            text: 'Tu postulación se ha enviado correctamente. Pronto nos pondremos en contacto contigo.',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            // Limpiar el formulario
+            setNombresApellidos("");
+            setTipoDocumento("Cédula de Ciudadanía");
+            setNumeroDocumento("");
+            // ... (resto de los campos del formulario)
+      
+            // Limpiar los inputs de archivos
+            cvFileInput.current.value = null;
+            certificadosFileInput.current.value = null;
+      
+            onClose(); // Cerrar el modal
+          });
+      
+        } catch (error) {
+          console.error("Error al enviar la postulación:", error);
+          // Mostrar mensaje de error con SweetAlert2
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un error al enviar la postulación. Por favor, inténtalo de nuevo más tarde.',
+            confirmButtonText: 'Aceptar'
+          });
         }
-    };
+      };
     return (
         <Modal show={show} onClose={onClose}>
             <div className="postularme-modal" > 

@@ -1,5 +1,6 @@
 {
+  "/empleos/page": "app/empleos/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/empleos-details/[id]/page": "app/empleos-details/[id]/page.js",
-  "/empleos/page": "app/empleos/page.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }
