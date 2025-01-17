@@ -56,7 +56,7 @@ const [tempRelacionRef, setTempRelacionRef] = useState("");
     const [cursosAdicionales, setCursosAdicionales] = useState("");
     const [idiomas, setIdiomas] = useState("");
     const [habilidadesInformaticas, setHabilidadesInformaticas] = useState("");
-
+    const [tieneRethus, setTieneRethus] = useState("No"); // Valor inicial "No"
     // Información Adicional
     const [tieneDiscapacidad, setTieneDiscapacidad] = useState("No");
     const [perteneceMinoria, setPerteneceMinoria] = useState("No");
@@ -212,6 +212,7 @@ const [tempRelacionRef, setTempRelacionRef] = useState("");
             aspiracionSalarial,
             disponibilidadViajar,
             referencias,
+            tieneRethus
           },
           archivos: {
             cvUrl,
@@ -435,11 +436,51 @@ const [tempRelacionRef, setTempRelacionRef] = useState("");
                                     required
                                 />
                             </div>
+
+                            <div className="form-group">
+                            <label htmlFor="tipoDocumento">Seleccione Tarjeta o Resolución:</label>
+  <label htmlFor="tipoDocumento">Tipo de Documento:</label>
+  <select
+    id="tipoDocumento"
+    className="form-control"
+    value={tipoDocumento}
+    onChange={(e) => {
+      setTipoDocumento(e.target.value);
+      setNumeroDocumento(""); // Limpiar el número al cambiar el tipo de documento
+    }}
+  >
+    <option value="tarjeta">Tarjeta Profesional</option>
+    <option value="resolucion">Resolución</option>
+  </select>
+</div>
+<div className="form-group">
+  <label htmlFor="numeroDocumento">Número de {tipoDocumento === "tarjeta" ? "Tarjeta Profesional" : "Resolución"}:</label>
+  <input
+    type="text"
+    id="numeroDocumento"
+    className="form-control"
+    value={numeroDocumento}
+    onChange={(e) => setNumeroDocumento(e.target.value)}
+    disabled={tipoDocumento === ""} // Deshabilitar si no se ha seleccionado un tipo de documento
+  />
+</div>
+<div className="form-group">
+  <label htmlFor="tieneRethus">¿Tiene RETHUS?</label>
+  <select
+    id="tieneRethus"
+    className="form-control"
+    value={tieneRethus}
+    onChange={(e) => setTieneRethus(e.target.value)}
+  >
+    <option>Sí</option>
+    <option>No</option>
+  </select>
+</div>
                         </div>
                         <div className="col-md-6">
                             <h3 className="section-title">Información Académica</h3>
                             <div className="form-group">
-                                <label htmlFor="tituloMedico">Título de Médico:</label>
+                                <label htmlFor="tituloMedico">Título Obtenido:</label>
                                 <input
                                     type="text"
                                     id="tituloMedico"
@@ -674,29 +715,6 @@ const [tempRelacionRef, setTempRelacionRef] = useState("");
                                     </button>
                                 </div>
                             ))}
-                            <div className="form-group">
-                                <label htmlFor="tieneTarjetaProfesional">¿Tiene Tarjeta Profesional?</label>
-                                <select
-                                    id="tieneTarjetaProfesional"
-                                    className="form-control"
-                                    value={tieneTarjetaProfesional}
-                                    onChange={(e) => setTieneTarjetaProfesional(e.target.value)}
-                                >
-                                    <option>Sí</option>
-                                    <option>No</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="numeroTarjetaProfesional">Número de Tarjeta Profesional:</label>
-                                <input
-                                    type="text"
-                                    id="numeroTarjetaProfesional"
-                                    className="form-control"
-                                    value={numeroTarjetaProfesional}
-                                    onChange={(e) => setNumeroTarjetaProfesional(e.target.value)}
-                                    disabled={tieneTarjetaProfesional === "No"}
-                                />
-                            </div>
                             <div className="form-group">
                                 <label htmlFor="cursosAdicionales">Cursos Adicionales:</label>
                                 <textarea
