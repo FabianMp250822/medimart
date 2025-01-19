@@ -12,9 +12,10 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@google-cloud/vertexai": "^1.9.2",
     "@mui/material": "^6.1.5",
     "bootstrap-touchspin": "^4.7.3",
-    "firebase": "^11.0.1",
+    "firebase": "^10.10.0",
     "isotope-layout": "^3.0.6",
     "lightgallery": "^2.7.2",
     "next": "^14.0.4-canary.36",

@@ -20,30 +20,38 @@ const RecaptchaWidget = () => {
         script.async = true;
         script.defer = true;
         document.body.appendChild(script);
+
+        // Optional: Add an event listener to handle script load errors
+        script.onerror = (error) => {
+          console.error("Error loading reCAPTCHA script:", error);
+        };
       }
     };
 
     loadRecaptchaScript();
+  }, []);
 
-    // Obtener el token de App Check una vez que el script esté cargado
+  useEffect(() => {
+    // Obtener el token de App Check
     const getAppCheckToken = async () => {
-        try {
-          const appCheckTokenResponse = await getToken(appCheck);
-          setAppCheckToken(appCheckTokenResponse.token);
-          console.log("App Check Token:", appCheckTokenResponse.token);
-        } catch (error) {
-          console.error("Error al obtener el token de App Check:", error);
-        }
-      };
-    
-      getAppCheckToken();
-    }, []);
+      try {
+        const appCheckTokenResponse = await getToken(appCheck);
+        setAppCheckToken(appCheckTokenResponse.token);
+        console.log("App Check Token:", appCheckTokenResponse.token);
+      } catch (error) {
+        console.error("Error al obtener el token de App Check:", error);
+      }
+    };
+
+    getAppCheckToken();
+  }, []);
 
   useEffect(() => {
     const handleRecaptcha = async () => {
       if (
         typeof window !== "undefined" &&
-        window.grecaptcha &&
+        typeof window.grecaptcha !== "undefined" &&
+        typeof window.grecaptcha.enterprise !== "undefined" &&
         appCheckToken &&
         !recaptchaExecuted
       ) {
@@ -61,6 +69,15 @@ const RecaptchaWidget = () => {
         }
       } else if (recaptchaExecuted) {
         console.log("reCAPTCHA ya se ha ejecutado.");
+      } else if (
+        !appCheckToken &&
+        typeof window !== "undefined" &&
+        window.grecaptcha
+      ) {
+        console.log("App Check Token is not available yet.");
+      } else {
+        // The reCAPTCHA script hasn't loaded yet, wait for a short period and try again
+        setTimeout(handleRecaptcha, 500);
       }
     };
 
