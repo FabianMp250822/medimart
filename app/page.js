@@ -1,4 +1,4 @@
-"use client"; // Asegúrate de que este componente se ejecute en el cliente
+"use client";
 
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
@@ -16,35 +16,38 @@ import { useSede } from "@/app/context/SedeContext";
 import News from "@/components/sections/home1/News";
 import Recognitions from "@/components/sections/home1/reconicimientos";
 import InvestigationGroup from "@/components/sections/home1/InvestigationGroup";
-import RecaptchaWidget from "@/components/slider/RecaptchaWidget";
+import dynamic from 'next/dynamic';
 
+// Carga dinámica de RecaptchaWidget
+const RecaptchaWidget = dynamic(() => import('@/components/slider/RecaptchaWidget'), {
+  ssr: false, // Importante: Desactiva la renderización en el servidor
+});
 
 export default function Home() {
-  const { selectedSede, selectSede, sedesData } = useSede(); // Obtener las sedes desde el contexto
+  const { selectedSede, selectSede, sedesData } = useSede();
 
   useEffect(() => {
     const storedSede = localStorage.getItem("selectedSede");
 
     if (!storedSede || !sedesData[storedSede]) {
-      // Si no hay sede o la sede almacenada no es válida, abre el modal
       openSedeModal();
     } else {
-      selectSede(storedSede); // Cargar la sede almacenada en el contexto
+      selectSede(storedSede);
     }
-  }, [sedesData, selectSede]); // Ejecutar cada vez que las sedes o el selectSede cambien
+  }, [sedesData, selectSede]);
 
   const handleSedeSelect = (sede) => {
     if (sedesData[sede]) {
-      selectSede(sede); // Actualiza la sede en el contexto global
-      localStorage.setItem("selectedSede", sede); // Guardar la sede seleccionada en localStorage
-      Swal.close(); // Cerrar el modal de SweetAlert2
+      selectSede(sede);
+      localStorage.setItem("selectedSede", sede);
+      Swal.close();
     } else {
       console.error("Sede seleccionada no válida");
     }
   };
 
   const openSedeModal = () => {
-    if (!sedesData || Object.keys(sedesData).length === 0) return; // Evitar mostrar el modal si los datos aún no están listos
+    if (!sedesData || Object.keys(sedesData).length === 0) return;
 
     Swal.fire({
       title: 'Selecciona una Sede',
@@ -60,7 +63,7 @@ export default function Home() {
             align-items: center;
           }
           .swal2-title {
-            font-size: 2rem; /* Reduce el tamaño del título para móviles */
+            font-size: 2rem;
             margin-bottom: 20px;
             font-weight: bold;
             color: #333;
@@ -79,14 +82,14 @@ export default function Home() {
             cursor: pointer;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 150px; /* Ajusta el ancho para móviles */
+            width: 150px;
             background-color: transparent;
           }
           .sede-item:hover {
             transform: scale(1.05);
           }
           .sede-item img {
-            width: 100px; /* Ajusta el tamaño de la imagen para móviles */
+            width: 100px;
             height: 100px;
             border-radius: 50%;
             object-fit: cover;
@@ -99,7 +102,7 @@ export default function Home() {
           }
           .sede-item h2 {
             margin-top: 10px;
-            font-size: 1.2rem; /* Reduce el tamaño del texto */
+            font-size: 1.2rem;
             font-weight: 700;
             color: #333;
             transition: color 0.3s ease, background-size 0.3s ease;
@@ -168,7 +171,6 @@ export default function Home() {
             <Features />
             <About />
             <Services />
-            {/* //<InvestigationGroup /> */}
             <WhyChooseUs />
             <Funfacts />
             <Process />
@@ -176,7 +178,7 @@ export default function Home() {
             <Recognitions />
             <Team />
             <News />
-            <RecaptchaWidget/> {/* Agrega el componente RecaptchaWidget aquí */}
+            <RecaptchaWidget />
           </>
         )}
       </Layout>
