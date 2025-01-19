@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
+import dynamic from "next/dynamic";
 import Layout from "@/components/layout/Layout";
 import About from "@/components/sections/home1/About";
 import Banner from "@/components/sections/home1/Banner";
@@ -16,12 +16,15 @@ import { useSede } from "@/app/context/SedeContext";
 import News from "@/components/sections/home1/News";
 import Recognitions from "@/components/sections/home1/reconicimientos";
 import InvestigationGroup from "@/components/sections/home1/InvestigationGroup";
-import dynamic from 'next/dynamic';
 
+const Swal = dynamic(() => import("sweetalert2"), { ssr: false });
 // Carga dinámica de RecaptchaWidget
-const RecaptchaWidget = dynamic(() => import('@/components/slider/RecaptchaWidget'), {
-  ssr: false, // Importante: Desactiva la renderización en el servidor
-});
+const RecaptchaWidget = dynamic(
+  () => import("@/components/slider/RecaptchaWidget"),
+  {
+    ssr: false, // Importante: Desactiva la renderización en el servidor
+  }
+);
 
 export default function Home() {
   const { selectedSede, selectSede, sedesData } = useSede();
@@ -40,7 +43,12 @@ export default function Home() {
     if (sedesData[sede]) {
       selectSede(sede);
       localStorage.setItem("selectedSede", sede);
-      Swal.close();
+      Swal.then((result) => {
+        if (result.isConfirmed) {
+          // Aquí puedes manejar la lógica de selección de sede
+          // ya que Swal se ha cargado correctamente
+        }
+      });
     } else {
       console.error("Sede seleccionada no válida");
     }
@@ -49,8 +57,18 @@ export default function Home() {
   const openSedeModal = () => {
     if (!sedesData || Object.keys(sedesData).length === 0) return;
 
+    Swal.then((result) => {
+      if (result.isConfirmed) {
+        Object.keys(sedesData).forEach((sedeKey) => {
+          document
+            .getElementById(`sede-${sedeKey}`)
+            .addEventListener("click", () => handleSedeSelect(sedeKey));
+        });
+      }
+    });
+
     Swal.fire({
-      title: 'Selecciona una Sede',
+      title: "Selecciona una Sede",
       html: `
         <style>
           .swal2-popup {
@@ -143,7 +161,7 @@ export default function Home() {
                 </div>
               `
             )
-            .join('')}
+            .join("")}
         </div>
       `,
       showConfirmButton: false,
@@ -153,14 +171,14 @@ export default function Home() {
       backdrop: true,
       didOpen: () => {
         Object.keys(sedesData).forEach((sedeKey) => {
-          document
-            .getElementById(`sede-${sedeKey}`)
-            .addEventListener("click", () => handleSedeSelect(sedeKey));
+          const sedeElement = document.getElementById(`sede-${sedeKey}`);
+          if (sedeElement) {
+            sedeElement.addEventListener("click", () => handleSedeSelect(sedeKey));
+          }
         });
       },
     });
   };
-  
 
   return (
     <>

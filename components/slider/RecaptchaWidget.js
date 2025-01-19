@@ -1,65 +1,75 @@
 "use client";
-import { useEffect } from 'react';
-import { getAppCheck, getToken } from 'firebase/app-check';
-import { appCheck } from '@/lib/firebase'; // Ajusta la ruta según sea necesario
+
+import { useEffect, useState } from "react";
+import { getToken } from "firebase/app-check";
+import { appCheck } from "@/lib/firebase";
 
 const RecaptchaWidget = () => {
+  const [recaptchaExecuted, setRecaptchaExecuted] = useState(false);
+  const [appCheckToken, setAppCheckToken] = useState(null);
+
   useEffect(() => {
-    const renderRecaptcha = async () => {
-      if (typeof window !== 'undefined' && window.grecaptcha) {
+    const loadRecaptchaScript = () => {
+      if (
+        typeof window !== "undefined" &&
+        !document.getElementById("recaptcha-script")
+      ) {
+        const script = document.createElement("script");
+        script.id = "recaptcha-script";
+        script.src = `https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY}`;
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+      }
+    };
+
+    loadRecaptchaScript();
+
+    // Obtener el token de App Check una vez que el script esté cargado
+    const getAppCheckToken = async () => {
         try {
           const appCheckTokenResponse = await getToken(appCheck);
-          const token = appCheckTokenResponse.token;
-
-          window.grecaptcha.enterprise.execute(process.env.NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY, { action: 'homepage' })
-            .then((token) => {
-              console.log("reCAPTCHA token:", token);
-              // Aquí puedes enviar el token a tu backend si es necesario
-            });
-
+          setAppCheckToken(appCheckTokenResponse.token);
+          console.log("App Check Token:", appCheckTokenResponse.token);
         } catch (error) {
           console.error("Error al obtener el token de App Check:", error);
         }
+      };
+    
+      getAppCheckToken();
+    }, []);
+
+  useEffect(() => {
+    const handleRecaptcha = async () => {
+      if (
+        typeof window !== "undefined" &&
+        window.grecaptcha &&
+        appCheckToken &&
+        !recaptchaExecuted
+      ) {
+        try {
+          window.grecaptcha.enterprise.ready(async () => {
+            const token = await window.grecaptcha.enterprise.execute(
+              process.env.NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY,
+              { action: "homepage" }
+            );
+            console.log("reCAPTCHA token:", token);
+            setRecaptchaExecuted(true);
+          });
+        } catch (error) {
+          console.error("Error en reCAPTCHA:", error);
+        }
+      } else if (recaptchaExecuted) {
+        console.log("reCAPTCHA ya se ha ejecutado.");
       }
     };
 
-    if (!document.getElementById('recaptcha-script')) {
-      const script = document.createElement('script');
-      script.id = 'recaptcha-script';
-      script.src = `https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY}`;
-      script.async = true;
-      script.defer = true;
-      document.body.appendChild(script);
+    if (appCheckToken) {
+      handleRecaptcha();
     }
+  }, [appCheckToken, recaptchaExecuted]);
 
-    // Ejecuta la función cuando el script se haya cargado
-    if (typeof window !== 'undefined' && window.grecaptcha) {
-        renderRecaptcha();
-    } else {
-        window.onRecaptchaLoad = renderRecaptcha;
-    }
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        delete window.onRecaptchaLoad;
-      }
-      const script = document.getElementById('recaptcha-script');
-      if (script) {
-        document.body.removeChild(script);
-      }
-    };
-  }, []);
-
-  return (
-    <div style={{
-        position: 'fixed', // Posiciona el badge de forma fija
-        bottom: '14px', // 14px desde la parte inferior
-        right: '14px', // 14px desde la derecha
-        boxShadow: '0px 0px 5px #888888', // Sombra para que se destaque
-        zIndex: 1000 // Asegura que esté por encima de otros elementos
-    }}>
-    </div>
-  );
+  return null; // No renderizar nada, reCAPTCHA maneja el badge
 };
 
 export default RecaptchaWidget;
