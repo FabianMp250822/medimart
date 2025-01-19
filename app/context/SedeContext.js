@@ -91,7 +91,7 @@ export const SedeProvider = ({ children }) => {
     });
   }, [selectedSede, sedeData, sedesData, contactos, loading]);
 
-  // Devolver el estado de carga junto con los datos
+  
   return (
     <SedeContext.Provider value={{ selectedSede, sedeData, sedesData, contactos, selectSede, loading }}>
       {children}
