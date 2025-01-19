@@ -16,6 +16,8 @@ import { useSede } from "@/app/context/SedeContext";
 import News from "@/components/sections/home1/News";
 import Recognitions from "@/components/sections/home1/reconicimientos";
 import InvestigationGroup from "@/components/sections/home1/InvestigationGroup";
+import RecaptchaWidget from "@/components/slider/RecaptchaWidget";
+
 
 export default function Home() {
   const { selectedSede, selectSede, sedesData } = useSede(); // Obtener las sedes desde el contexto
@@ -174,6 +176,7 @@ export default function Home() {
             <Recognitions />
             <Team />
             <News />
+            <RecaptchaWidget/> {/* Agrega el componente RecaptchaWidget aquí */}
           </>
         )}
       </Layout>
