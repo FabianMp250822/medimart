@@ -1,14 +1,14 @@
 {
+  "app/page.js -> @/components/modal/SedeModal": {
+    "id": "app/page.js -> @/components/modal/SedeModal",
+    "files": [
+      "static/chunks/_app-pages-browser_components_modal_SedeModal_js.js"
+    ]
+  },
   "app/page.js -> @/components/slider/RecaptchaWidget": {
     "id": "app/page.js -> @/components/slider/RecaptchaWidget",
     "files": [
       "static/chunks/_app-pages-browser_components_slider_RecaptchaWidget_js.js"
-    ]
-  },
-  "app/page.js -> sweetalert2": {
-    "id": "app/page.js -> sweetalert2",
-    "files": [
-      "static/chunks/_app-pages-browser_node_modules_sweetalert2_dist_sweetalert2_all_js.js"
     ]
   },
   "components/layout/Layout.js -> wowjs/dist/wow": {
