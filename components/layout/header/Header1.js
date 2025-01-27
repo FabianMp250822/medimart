@@ -1,9 +1,12 @@
-"use client"; // Asegúrate de que este componente sea un Client Component
+"use client";
 
 import Link from "next/link";
 import Menu from "../Menu";
 import MobileMenu from "../MobileMenu";
 import { useSede } from "@/app/context/SedeContext";
+
+// 1. Importa 'Script' desde 'next/script'
+import Script from "next/script";
 
 export default function Header1({
   scroll,
@@ -16,7 +19,6 @@ export default function Header1({
   const { sedesData, selectedSede, selectSede } = useSede();
 
   const sedeData = sedesData[selectedSede];
-
   const whatsappNumber = sedeData?.whatsappNumber || "+573003456789";
   const whatsappMessage =
     sedeData?.whatsappMessage ||
@@ -35,20 +37,55 @@ export default function Header1({
 
   return (
     <>
+      {/*
+        2. Agrega el script principal de Google Tag Manager (GTM).
+           Esto insertará <script> con la estrategia de carga "afterInteractive".
+      */}
+      <Script id="gtm-init" strategy="afterInteractive">
+        {`
+          (function(w,d,s,l,i){
+              w[l] = w[l] || [];
+              w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+              var f = d.getElementsByTagName(s)[0],
+                  j = d.createElement(s),
+                  dl = l != 'dataLayer' ? '&l=' + l : '';
+              j.async = true;
+              j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+              f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-5MZSVT7Q');
+        `}
+      </Script>
+
+      {/*
+        3. Agrega el bloque <noscript> con el iframe de GTM.
+           Para evitar problemas de JSX con <noscript>, puedes hacerlo de 2 maneras:
+             - Usar 'dangerouslySetInnerHTML'
+             - Insertarlo directamente como JSX (Next.js lo respeta).
+      */}
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-5MZSVT7Q"
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+        />
+      </noscript>
+
       <header className={`main-header ${scroll ? "fixed-header" : ""}`}>
         <div className="header-top">
           <div className="auto-container">
             <div className="top-inner">
               <ul className="info-list clearfix">
                 <li>
-                  <i className="icon-1"></i>Atención:
+                  <i className="icon-1"></i>
+                  Atención:
                   <Link href={`tel:${sedeData?.telefono}`}>
                     {sedeData?.telefono || "+57 (605) 3369973"}
                   </Link>
                 </li>
                 {/* Ocultar este elemento en móvil */}
                 <li className="direccion">
-                  <img src="/assets/images/icons/icon-1.png" alt="" />{" "}
+                  <img src="/assets/images/icons/icon-1.png" alt="Icono" />
                   {sedeData?.direccion || "Cra. 50 #80-149, Sede 3"}
                 </li>
                 <li>
@@ -57,7 +94,7 @@ export default function Header1({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <i className="fab fa-whatsapp"></i> WhatsApp
+                    <i className="fab fa-whatsapp" /> WhatsApp
                   </a>
                 </li>
               </ul>
@@ -101,9 +138,9 @@ export default function Header1({
                     className="mobile-nav-toggler"
                     onClick={handleMobileMenu}
                   >
-                    <i className="icon-bar"></i>
-                    <i className="icon-bar"></i>
-                    <i className="icon-bar"></i>
+                    <i className="icon-bar" />
+                    <i className="icon-bar" />
+                    <i className="icon-bar" />
                   </div>
                   <nav className="main-menu navbar-expand-md navbar-light clearfix">
                     <div
@@ -127,6 +164,7 @@ export default function Header1({
 
         <MobileMenu handleMobileMenu={handleMobileMenu} />
       </header>
+
       <style jsx>{`
         /* Estilos generales para escritorio y móvil */
         .top-inner {
