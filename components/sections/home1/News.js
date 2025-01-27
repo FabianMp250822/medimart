@@ -27,20 +27,27 @@ export default function News() {
     fetchBlogs();
   }, []);
 
+  // Función para limpiar etiquetas HTML del texto
+  const cleanText = (text) => {
+    if (!text) return ""; // Retorna cadena vacía si el texto no existe
+    return text.replace(/<\/?[^>]+(>|$)/g, ""); // Elimina etiquetas HTML
+  };
+
   // Función para truncar texto
   const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength) + "...";
+    const clean = cleanText(text); // Limpia las etiquetas antes de truncar
+    if (clean.length > maxLength) {
+      return clean.substring(0, maxLength) + "...";
     }
-    return text;
+    return clean;
   };
 
   if (loading) {
-    return <p>Cargando artículos...</p>; // Puedes mostrar un indicador de carga mientras se obtienen los datos
+    return <p>Cargando artículos...</p>; // Indicador de carga
   }
 
   if (!blogs || blogs.length === 0) {
-    return null; // Retorna nada si no hay blogs
+    return <p>No hay artículos disponibles.</p>; // Mensaje si no hay blogs
   }
 
   return (
@@ -57,7 +64,7 @@ export default function News() {
                 <div className="inner-box">
                   <figure className="image-box">
                     <Link href={`/blog-details/${blog.id}`}>
-                      <img src={blog.image} alt={blog.title} />
+                      <img src={blog.image} alt={cleanText(blog.title)} />
                     </Link>
                   </figure>
                   <div className="lower-content">
@@ -66,8 +73,8 @@ export default function News() {
                       <li>{new Date(blog.date).toLocaleDateString("es-ES", { year: 'numeric', month: 'short', day: 'numeric' })}</li>
                       <li>{blog.comments || 0} Comentarios</li>
                     </ul>
-                    <h3><Link href={`/blog-details/${blog.id}`}>{blog.title}</Link></h3>
-                    <p>{truncateText(blog.content, 150)}</p> {/* Limita a 150 caracteres */}
+                    <h3><Link href={`/blog-details/${blog.id}`}>{cleanText(blog.title)}</Link></h3>
+                    <p>{truncateText(blog.content, 150)}</p> {/* Limpia y limita a 150 caracteres */}
                     <div className="link">
                       <Link href={`/blog-details/${blog.id}`}><span>Leer más</span></Link>
                     </div>

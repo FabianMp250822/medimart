@@ -225,7 +225,7 @@ export default function Home() {
                                     </div>
                                 )}
                                 <div className="buttons-container">
-                                    <button type="button" className="schedule-button" onClick={handleScheduleAppointment}>Agendar Cita</button>
+                                    {/* <button type="button" className="schedule-button" onClick={handleScheduleAppointment}>Agendar Cita</button> */}
                                     <button type="button" className="whatsapp-button" onClick={handleWhatsAppSchedule}>Agendar vía WhatsApp</button>
                                 </div>
                             </form>

@@ -20,9 +20,8 @@ export default function BlogDetails() {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          const data = docSnap.data();
-          const structuredContent = parseContent(data.content);
-          setBlogData({ ...data, content: structuredContent });
+          // docSnap.data().content es el HTML completo
+          setBlogData(docSnap.data());
         } else {
           console.error('No existe el documento');
         }
@@ -37,7 +36,7 @@ export default function BlogDetails() {
       try {
         const q = query(collection(db, 'blogs'), orderBy('date', 'desc'), limit(10));
         const querySnapshot = await getDocs(q);
-        const blogs = querySnapshot.docs.map(doc => ({ id: doc.id, title: doc.data().title }));
+        const blogs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setRecentBlogs(blogs);
       } catch (error) {
         console.error('Error al obtener los últimos blogs:', error);
@@ -50,40 +49,6 @@ export default function BlogDetails() {
 
   if (loading) {
     return <p>Cargando los detalles del blog...</p>;
-  }
-
-  function parseContent(text) {
-    const structure = [];
-    const lines = text.split(/(?=\n|\t|\s{4})/g); // Divide en líneas o secciones
-    let currentList = [];
-  
-    lines.forEach((line) => {
-      line = line.trim(); // Elimina espacios innecesarios
-  
-      if (line.startsWith("Conclusión") || line.startsWith("El papel") || line.startsWith("Beneficios")) {
-        structure.push({ type: "title", text: line });
-      } else if (line.startsWith("    ")) {
-        // Viñetas
-        currentList.push(line.replace(/^    /, "")); // Agrega a la lista actual
-      } else if (line.startsWith('"')) {
-        // Frases entrecomilladas
-        structure.push({ type: "quote", text: line });
-      } else if (currentList.length > 0) {
-        // Cierra listas si se detecta otra cosa
-        structure.push({ type: "list", items: currentList });
-        currentList = [];
-        structure.push({ type: "paragraph", text: line });
-      } else {
-        // Resto de párrafos
-        structure.push({ type: "paragraph", text: line });
-      }
-    });
-  
-    if (currentList.length > 0) {
-      structure.push({ type: "list", items: currentList }); // Agrega lista final
-    }
-  
-    return structure;
   }
 
   if (!blogData) {
@@ -107,62 +72,45 @@ export default function BlogDetails() {
         <div className="row">
           {/* Contenido principal del blog */}
           <div className="col-lg-8">
-            <div className="blog-details">
-              <div className="blog-header">
-                <h1>{title}</h1>
-                <p>
+            <article className="blog-details">
+              <header className="blog-header">
+                <h1 className="display-4">{title}</h1>
+                <p className="lead">
                   Por <span className="author">{author || 'Admin'}</span> el{' '}
-                  <span className="date">
+                  <time dateTime={date} className="date">
                     {new Date(date).toLocaleDateString('es-ES', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
                     })}
-                  </span>
+                  </time>
                 </p>
-              </div>
+              </header>
               <img
                 src={image || 'https://via.placeholder.com/800x400'}
                 alt={title}
-                className="blog-image"
+                className="img-fluid blog-image"
               />
-              <div className="blog-content">
-                {content.map((item, index) => {
-                  if (item.type === "title") {
-                    return <h2 key={index}>{item.text}</h2>;
-                  }
-                  if (item.type === "subtitle") {
-                    return <h3 key={index}>{item.text}</h3>;
-                  }
-                  if (item.type === "paragraph") {
-                    return <p key={index}>{item.text}</p>;
-                  }
-                  if (item.type === "list") {
-                    return (
-                      <ul key={index}>
-                        {item.items.map((listItem, listIndex) => (
-                          <li key={listIndex}>{listItem}</li>
-                        ))}
-                      </ul>
-                    );
-                  }
-                  if (item.type === "quote") {
-                    return <blockquote key={index}>{item.text}</blockquote>;
-                  }
-                  return null;
-                })}
-              </div>
-            </div>
+              <div
+                className="blog-content"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+            </article>
           </div>
 
           {/* Sidebar con los últimos blogs */}
           <div className="col-lg-4">
-            <aside className="sidebar">
-              <h4>Últimos Blogs</h4>
-              <ul>
+            <aside className="sidebar mt-4 mt-lg-0">
+              <h4 className="mb-3">Últimos Blogs</h4>
+              <ul className="list-unstyled">
                 {recentBlogs.map((blog) => (
-                  <li key={blog.id}>
-                    <a href={`/blog-details/${blog.id}`}>{blog.title}</a>
+                  <li key={blog.id} className="mb-2">
+                    <a
+                      href={`/blog-details/${blog.id}`}
+                      className="text-decoration-none text-dark font-weight-bold"
+                    >
+                      {blog.title}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -174,18 +122,20 @@ export default function BlogDetails() {
       <style jsx>{`
         .blog-details {
           background-color: #f8f9fa;
-          padding: 20px;
+          padding: 30px;
           border-radius: 8px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
         .blog-header h1 {
-          font-size: 2.5rem;
+          font-size: 3rem;
           font-weight: bold;
           margin-bottom: 10px;
+          color: #333;
         }
-        .blog-header p {
-          font-size: 1rem;
+        .blog-header .lead {
+          font-size: 1.2rem;
           color: #6c757d;
+          margin-bottom: 20px;
         }
         .blog-header .author,
         .blog-header .date {
@@ -197,18 +147,19 @@ export default function BlogDetails() {
           height: auto;
           border-radius: 8px;
           margin-top: 20px;
-          margin-bottom: 20px;
+          margin-bottom: 30px;
         }
-        .blog-content h2,
-        .blog-content h3 {
-          margin-top: 20px;
-          margin-bottom: 10px;
+        .blog-content h2 {
+          margin-top: 30px;
+          margin-bottom: 20px;
           font-weight: bold;
+          color: #333;
         }
         .blog-content p {
-          font-size: 1.2rem;
-          line-height: 1.6;
-          margin-bottom: 15px;
+          font-size: 1.1rem;
+          line-height: 1.7;
+          margin-bottom: 20px;
+          color: #555;
         }
         .blog-content ul {
           margin-left: 20px;
@@ -219,19 +170,21 @@ export default function BlogDetails() {
         }
         blockquote {
           font-style: italic;
-          border-left: 5px solid #ccc;
-          padding-left: 10px;
-          margin: 20px 0;
+          border-left: 5px solid #007bff;
+          padding-left: 20px;
+          margin: 30px 0;
+          color: #555;
         }
         .sidebar {
           padding: 20px;
           background-color: #f8f9fa;
           border-radius: 8px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
         .sidebar h4 {
           font-size: 1.5rem;
           margin-bottom: 15px;
+          color: #333;
         }
         .sidebar ul {
           list-style: none;

@@ -236,7 +236,23 @@ const [tempRelacionRef, setTempRelacionRef] = useState("");
               });
               return; 
             }
-          }
+          } else {
+            // Caso 2: Sin Oferta -> Verificar por correoElectronico y ofertaTitulo
+            const postulacionesRef = collection(db, "postulaciones");
+            const q = query(postulacionesRef, where("ofertaTitulo", "==", "Sin Oferta"), where("informacionPersonal.correoElectronico", "==", correoElectronico));
+            const querySnapshot = await getDocs(q);
+    
+            if (!querySnapshot.empty) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ya te has envio tu Curriculun a la clinica.',
+                    confirmButtonText: 'Aceptar'
+                });
+                return;
+            }
+        }
+          
       
           // Guardar en Firestore
           await setDoc(doc(collection(db, "postulaciones"), postulacionId), postulacion);
