@@ -5,7 +5,7 @@ import Layout from "@/components/layout/Layout";
 import { useState, useEffect } from 'react';
 import { collection, doc, getDoc, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import Head from 'next/head'; //  <-- Importamos Head de next/head
+import Head from 'next/head';
 
 // Importaciones de react-share
 import { 
@@ -25,13 +25,13 @@ import {
 export default function BlogDetails() {
   const { id } = useParams();
   const router = useRouter();
-  const pathname = usePathname();  
+  const pathname = usePathname();
 
   const [blogData, setBlogData] = useState(null);
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Cargar datos del post individual
+  // 1) Cargar datos del post individual (CLIENT-SIDE)
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
@@ -50,7 +50,7 @@ export default function BlogDetails() {
       }
     };
 
-    // Cargar últimas entradas
+    // 2) Cargar las últimas entradas
     const fetchRecentBlogs = async () => {
       try {
         const q = query(collection(db, 'blogs'), orderBy('date', 'desc'), limit(10));
@@ -83,48 +83,65 @@ export default function BlogDetails() {
     );
   }
 
-  // Datos del post
+  // -- Datos del post extraídos de la BD
   const { title, content, image, author, date } = blogData;
 
-  // Arma la URL final para compartir
-  const shareUrl = 
-    typeof window !== 'undefined' 
-      ? window.location.origin + pathname 
+  // -- Construimos la URL final (para compartir y canonical)
+  const fullUrl =
+    typeof window !== 'undefined'
+      ? window.location.origin + pathname
       : '';
 
-  // Opcional: Generar un "resumen" extraído del contenido (ej. 150 primeros caracteres sin HTML).
-  const textContent = content?.replace(/<[^>]+>/g, '') || ''; 
+  // -- Generamos un "resumen" desde el contenido HTML (ejemplo: primeros 150 caracteres)
+  const textContent = content?.replace(/<[^>]+>/g, '') || '';
   const summary = textContent.substring(0, 150) + (textContent.length > 150 ? '...' : '');
+
+  // -- Datos estructurados (JSON-LD) para describir el artículo
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": title,
+    "description": summary,
+    "image": image,
+    "author": author || "Admin",
+    "datePublished": date,
+    "url": fullUrl
+  };
 
   return (
     <Layout headerStyle={2} footerStyle={1}>
-      {/* 
-        1) Metatags Open Graph y Twitter en el Head. 
-        Las redes sociales leerán estas etiquetas cuando alguien comparta la URL actual (shareUrl).
-      */}
       <Head>
-        {/* Título para SEO */}
+        {/* Title y meta descripción */}
         <title>{title} | Mi Blog</title>
         <meta name="description" content={summary} />
 
-        {/* Open Graph / Facebook / LinkedIn */}
+        {/* Canónico */}
+        <link rel="canonical" href={fullUrl} />
+
+        {/* Metadatos Open Graph / Facebook / LinkedIn */}
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={shareUrl} />
+        <meta property="og:url" content={fullUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={summary} />
         <meta property="og:image" content={image} />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={shareUrl} />
+        <meta name="twitter:url" content={fullUrl} />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={summary} />
         <meta name="twitter:image" content={image} />
+
+        {/* Datos estructurados en formato JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </Head>
 
       <div className="container mt-5">
         <div className="row">
-          {/* Contenido principal del blog */}
+          {/* ========== Contenido principal del blog ========== */}
           <div className="col-lg-8">
             <article className="blog-details">
               <header className="blog-header">
@@ -139,53 +156,54 @@ export default function BlogDetails() {
                     })}
                   </time>
                 </p>
+
                 {/* Botones para compartir */}
                 <div className="share-icons mt-4 d-flex justify-content-end">
-                <span className="mr-3 font-weight-bold">Comparte este blog:</span>
+                  <span className="mr-3 font-weight-bold">Comparte este blog:</span>
 
-                {/* Facebook */}
-                <FacebookShareButton url={shareUrl} quote={title} hashtag="#MiBlog">
-                  <FaFacebookF size={24} className="mx-2 text-primary" />
-                </FacebookShareButton>
+                  {/* Facebook */}
+                  <FacebookShareButton url={fullUrl} quote={title} hashtag="#MiBlog">
+                    <FaFacebookF size={24} className="mx-2 text-primary" />
+                  </FacebookShareButton>
 
-                {/* Twitter (X) */}
-                <TwitterShareButton url={shareUrl} title={title} hashtags={["MiBlog"]}>
-                  <FaTwitter size={24} className="mx-2 text-info" />
-                </TwitterShareButton>
+                  {/* Twitter (X) */}
+                  <TwitterShareButton url={fullUrl} title={title} hashtags={["MiBlog"]}>
+                    <FaTwitter size={24} className="mx-2 text-info" />
+                  </TwitterShareButton>
 
-                {/* LinkedIn */}
-                <LinkedinShareButton 
-                  url={shareUrl} 
-                  title={title}
-                  summary={summary}   // LinkedIn sí puede usar "summary"
-                  source={typeof window !== 'undefined' ? window.location.origin : ''}
-                >
-                  <FaLinkedinIn size={24} className="mx-2 text-primary" />
-                </LinkedinShareButton>
+                  {/* LinkedIn */}
+                  <LinkedinShareButton
+                    url={fullUrl}
+                    title={title}
+                    summary={summary}
+                    source={typeof window !== 'undefined' ? window.location.origin : ''}
+                  >
+                    <FaLinkedinIn size={24} className="mx-2 text-primary" />
+                  </LinkedinShareButton>
 
-                {/* WhatsApp */}
-                <WhatsappShareButton url={shareUrl} title={title}>
-                  <FaWhatsapp size={24} className="mx-2 text-success" />
-                </WhatsappShareButton>
-              </div>
+                  {/* WhatsApp */}
+                  <WhatsappShareButton url={fullUrl} title={title}>
+                    <FaWhatsapp size={24} className="mx-2 text-success" />
+                  </WhatsappShareButton>
+                </div>
               </header>
+
+              {/* Imagen principal */}
               <img
                 src={image || 'https://via.placeholder.com/800x400'}
                 alt={title}
                 className="img-fluid blog-image"
               />
 
-              {/* Contenido del blog en HTML */}
+              {/* Contenido del blog en HTML (¡cuidado con XSS!) */}
               <div
                 className="blog-content"
                 dangerouslySetInnerHTML={{ __html: content }}
               />
-
-          
             </article>
           </div>
 
-          {/* Sidebar con los últimos blogs */}
+          {/* ========== Sidebar con los últimos blogs ========== */}
           <div className="col-lg-4">
             <aside className="sidebar mt-4 mt-lg-0">
               <h4 className="mb-3">Últimos Blogs</h4>
@@ -206,7 +224,7 @@ export default function BlogDetails() {
         </div>
       </div>
 
-      {/* Estilos */}
+      {/* ========== Estilos ========== */}
       <style jsx>{`
         .blog-details {
           background-color: #f8f9fa;
