@@ -1,18 +1,37 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, usePathname } from 'next/navigation';
 import Layout from "@/components/layout/Layout";
 import { useState, useEffect } from 'react';
 import { collection, doc, getDoc, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import Head from 'next/head'; //  <-- Importamos Head de next/head
+
+// Importaciones de react-share
+import { 
+  FacebookShareButton, 
+  TwitterShareButton, 
+  LinkedinShareButton, 
+  WhatsappShareButton 
+} from "react-share";
+
+import { 
+  FaFacebookF, 
+  FaTwitter, 
+  FaLinkedinIn, 
+  FaWhatsapp 
+} from 'react-icons/fa';
 
 export default function BlogDetails() {
   const { id } = useParams();
+  const router = useRouter();
+  const pathname = usePathname();  
+
   const [blogData, setBlogData] = useState(null);
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
+  // Cargar datos del post individual
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
@@ -20,7 +39,6 @@ export default function BlogDetails() {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          // docSnap.data().content es el HTML completo
           setBlogData(docSnap.data());
         } else {
           console.error('No existe el documento');
@@ -32,6 +50,7 @@ export default function BlogDetails() {
       }
     };
 
+    // Cargar últimas entradas
     const fetchRecentBlogs = async () => {
       try {
         const q = query(collection(db, 'blogs'), orderBy('date', 'desc'), limit(10));
@@ -64,10 +83,45 @@ export default function BlogDetails() {
     );
   }
 
+  // Datos del post
   const { title, content, image, author, date } = blogData;
+
+  // Arma la URL final para compartir
+  const shareUrl = 
+    typeof window !== 'undefined' 
+      ? window.location.origin + pathname 
+      : '';
+
+  // Opcional: Generar un "resumen" extraído del contenido (ej. 150 primeros caracteres sin HTML).
+  const textContent = content?.replace(/<[^>]+>/g, '') || ''; 
+  const summary = textContent.substring(0, 150) + (textContent.length > 150 ? '...' : '');
 
   return (
     <Layout headerStyle={2} footerStyle={1}>
+      {/* 
+        1) Metatags Open Graph y Twitter en el Head. 
+        Las redes sociales leerán estas etiquetas cuando alguien comparta la URL actual (shareUrl).
+      */}
+      <Head>
+        {/* Título para SEO */}
+        <title>{title} | Mi Blog</title>
+        <meta name="description" content={summary} />
+
+        {/* Open Graph / Facebook / LinkedIn */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={shareUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={summary} />
+        <meta property="og:image" content={image} />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={shareUrl} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={summary} />
+        <meta name="twitter:image" content={image} />
+      </Head>
+
       <div className="container mt-5">
         <div className="row">
           {/* Contenido principal del blog */}
@@ -85,16 +139,49 @@ export default function BlogDetails() {
                     })}
                   </time>
                 </p>
+                {/* Botones para compartir */}
+                <div className="share-icons mt-4 d-flex justify-content-end">
+                <span className="mr-3 font-weight-bold">Comparte este blog:</span>
+
+                {/* Facebook */}
+                <FacebookShareButton url={shareUrl} quote={title} hashtag="#MiBlog">
+                  <FaFacebookF size={24} className="mx-2 text-primary" />
+                </FacebookShareButton>
+
+                {/* Twitter (X) */}
+                <TwitterShareButton url={shareUrl} title={title} hashtags={["MiBlog"]}>
+                  <FaTwitter size={24} className="mx-2 text-info" />
+                </TwitterShareButton>
+
+                {/* LinkedIn */}
+                <LinkedinShareButton 
+                  url={shareUrl} 
+                  title={title}
+                  summary={summary}   // LinkedIn sí puede usar "summary"
+                  source={typeof window !== 'undefined' ? window.location.origin : ''}
+                >
+                  <FaLinkedinIn size={24} className="mx-2 text-primary" />
+                </LinkedinShareButton>
+
+                {/* WhatsApp */}
+                <WhatsappShareButton url={shareUrl} title={title}>
+                  <FaWhatsapp size={24} className="mx-2 text-success" />
+                </WhatsappShareButton>
+              </div>
               </header>
               <img
                 src={image || 'https://via.placeholder.com/800x400'}
                 alt={title}
                 className="img-fluid blog-image"
               />
+
+              {/* Contenido del blog en HTML */}
               <div
                 className="blog-content"
                 dangerouslySetInnerHTML={{ __html: content }}
               />
+
+          
             </article>
           </div>
 
@@ -119,6 +206,7 @@ export default function BlogDetails() {
         </div>
       </div>
 
+      {/* Estilos */}
       <style jsx>{`
         .blog-details {
           background-color: #f8f9fa;
@@ -199,6 +287,13 @@ export default function BlogDetails() {
         }
         .sidebar ul li a:hover {
           text-decoration: underline;
+        }
+        .share-icons {
+          display: flex;
+          align-items: center;
+        }
+        .share-icons .mx-2 {
+          cursor: pointer;
         }
       `}</style>
     </Layout>
