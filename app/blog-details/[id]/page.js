@@ -31,7 +31,6 @@ export default function BlogDetails() {
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 1) Cargar datos del post individual (CLIENT-SIDE)
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
@@ -50,7 +49,6 @@ export default function BlogDetails() {
       }
     };
 
-    // 2) Cargar las últimas entradas
     const fetchRecentBlogs = async () => {
       try {
         const q = query(collection(db, 'blogs'), orderBy('date', 'desc'), limit(10));
@@ -83,20 +81,16 @@ export default function BlogDetails() {
     );
   }
 
-  // -- Datos del post extraídos de la BD
   const { title, content, image, author, date } = blogData;
 
-  // -- Construimos la URL final (para compartir y canonical)
   const fullUrl =
     typeof window !== 'undefined'
       ? window.location.origin + pathname
       : '';
 
-  // -- Generamos un "resumen" desde el contenido HTML (ejemplo: primeros 150 caracteres)
   const textContent = content?.replace(/<[^>]+>/g, '') || '';
   const summary = textContent.substring(0, 150) + (textContent.length > 150 ? '...' : '');
 
-  // -- Datos estructurados (JSON-LD) para describir el artículo
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -111,19 +105,19 @@ export default function BlogDetails() {
   return (
     <Layout headerStyle={2} footerStyle={1}>
       <Head>
-        {/* Title y meta descripción */}
         <title>{title} | Mi Blog</title>
         <meta name="description" content={summary} />
-
-        {/* Canónico */}
+        <meta name="robots" content="index, follow" />
         <link rel="canonical" href={fullUrl} />
 
-        {/* Metadatos Open Graph / Facebook / LinkedIn */}
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="article" />
         <meta property="og:url" content={fullUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={summary} />
         <meta property="og:image" content={image} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -132,7 +126,6 @@ export default function BlogDetails() {
         <meta name="twitter:description" content={summary} />
         <meta name="twitter:image" content={image} />
 
-        {/* Datos estructurados en formato JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -141,7 +134,6 @@ export default function BlogDetails() {
 
       <div className="container mt-5">
         <div className="row">
-          {/* ========== Contenido principal del blog ========== */}
           <div className="col-lg-8">
             <article className="blog-details">
               <header className="blog-header">
@@ -157,45 +149,29 @@ export default function BlogDetails() {
                   </time>
                 </p>
 
-                {/* Botones para compartir */}
                 <div className="share-icons mt-4 d-flex justify-content-end">
                   <span className="mr-3 font-weight-bold">Comparte este blog:</span>
 
-                  {/* Facebook */}
-                  <FacebookShareButton url={fullUrl} quote={title} hashtag="#MiBlog">
+                  <FacebookShareButton url={fullUrl} quote={title} hashtag={`#${title.replace(/ /g, '')}`}>
                     <FaFacebookF size={24} className="mx-2 text-primary" />
                   </FacebookShareButton>
 
-                  {/* Twitter (X) */}
-                  <TwitterShareButton url={fullUrl} title={title} hashtags={["MiBlog"]}>
+                  <TwitterShareButton url={fullUrl} title={title} hashtags={[title.replace(/ /g, '')]}>
                     <FaTwitter size={24} className="mx-2 text-info" />
                   </TwitterShareButton>
 
-                  {/* LinkedIn */}
-                  <LinkedinShareButton
-                    url={fullUrl}
-                    title={title}
-                    summary={summary}
-                    source={typeof window !== 'undefined' ? window.location.origin : ''}
-                  >
+                  <LinkedinShareButton url={fullUrl} title={title} summary={summary}>
                     <FaLinkedinIn size={24} className="mx-2 text-primary" />
                   </LinkedinShareButton>
 
-                  {/* WhatsApp */}
                   <WhatsappShareButton url={fullUrl} title={title}>
                     <FaWhatsapp size={24} className="mx-2 text-success" />
                   </WhatsappShareButton>
                 </div>
               </header>
 
-              {/* Imagen principal */}
-              <img
-                src={image || 'https://via.placeholder.com/800x400'}
-                alt={title}
-                className="img-fluid blog-image"
-              />
+              <img src={image} alt={title} className="img-fluid blog-image" />
 
-              {/* Contenido del blog en HTML (¡cuidado con XSS!) */}
               <div
                 className="blog-content"
                 dangerouslySetInnerHTML={{ __html: content }}
@@ -203,7 +179,6 @@ export default function BlogDetails() {
             </article>
           </div>
 
-          {/* ========== Sidebar con los últimos blogs ========== */}
           <div className="col-lg-4">
             <aside className="sidebar mt-4 mt-lg-0">
               <h4 className="mb-3">Últimos Blogs</h4>
@@ -224,95 +199,9 @@ export default function BlogDetails() {
         </div>
       </div>
 
-      {/* ========== Estilos ========== */}
       <style jsx>{`
-        .blog-details {
-          background-color: #f8f9fa;
-          padding: 30px;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-        .blog-header h1 {
-          font-size: 3rem;
-          font-weight: bold;
-          margin-bottom: 10px;
-          color: #333;
-        }
-        .blog-header .lead {
-          font-size: 1.2rem;
-          color: #6c757d;
-          margin-bottom: 20px;
-        }
-        .blog-header .author,
-        .blog-header .date {
-          font-weight: bold;
-          color: #343a40;
-        }
-        .blog-image {
-          width: 100%;
-          height: auto;
-          border-radius: 8px;
-          margin-top: 20px;
-          margin-bottom: 30px;
-        }
-        .blog-content h2 {
-          margin-top: 30px;
-          margin-bottom: 20px;
-          font-weight: bold;
-          color: #333;
-        }
-        .blog-content p {
-          font-size: 1.1rem;
-          line-height: 1.7;
-          margin-bottom: 20px;
-          color: #555;
-        }
-        .blog-content ul {
-          margin-left: 20px;
-          list-style: disc;
-        }
-        .blog-content ul li {
-          margin-bottom: 10px;
-        }
-        blockquote {
-          font-style: italic;
-          border-left: 5px solid #007bff;
-          padding-left: 20px;
-          margin: 30px 0;
-          color: #555;
-        }
-        .sidebar {
-          padding: 20px;
-          background-color: #f8f9fa;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-        .sidebar h4 {
-          font-size: 1.5rem;
-          margin-bottom: 15px;
-          color: #333;
-        }
-        .sidebar ul {
-          list-style: none;
-          padding: 0;
-        }
-        .sidebar ul li {
-          margin-bottom: 10px;
-        }
-        .sidebar ul li a {
-          color: #007bff;
-          text-decoration: none;
-        }
-        .sidebar ul li a:hover {
-          text-decoration: underline;
-        }
-        .share-icons {
-          display: flex;
-          align-items: center;
-        }
-        .share-icons .mx-2 {
-          cursor: pointer;
-        }
+        .blog-details { /* ... */ }
+        .share-icons { /* ... */ }
       `}</style>
     </Layout>
   );

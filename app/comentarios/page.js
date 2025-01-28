@@ -34,6 +34,16 @@ export default function Page() {
     },
   });
 
+  function formatDate(timestamp) {
+    if (!timestamp) return ""; // Manejar casos donde la fecha no esté definida
+  
+    const date = timestamp.toDate(); // Convierte el timestamp de Firebase a un objeto Date
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // ¡Los meses en JavaScript son 0-indexados!
+    const year = date.getFullYear();
+  
+    return `${day}/${month}/${year}`; // Formato: DD/MM/AAAA
+  }
   // Maneja el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
