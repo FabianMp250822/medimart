@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useSede } from "@/app/context/SedeContext";
+import { AiFillFacebook, AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
+import { SiTiktok } from "react-icons/si"; // TikTok se importa desde "react-icons/si"
 
 export default function Footer1() {
   const { sedeData } = useSede(); // Obtener los datos de la sede seleccionada
@@ -10,24 +12,9 @@ export default function Footer1() {
     <>
       <footer className="main-footer" id="footer">
         <div className="pattern-layer">
-          <div
-            className="pattern-1"
-            style={{
-              backgroundImage: "url(assets/images/shape/shape-23.png)",
-            }}
-          ></div>
-          <div
-            className="pattern-2"
-            style={{
-              backgroundImage: "url(assets/images/shape/shape-24.png)",
-            }}
-          ></div>
-          <div
-            className="pattern-3"
-            style={{
-              backgroundImage: "url(assets/images/shape/shape-25.png)",
-            }}
-          ></div>
+          <div className="pattern-1" style={{ backgroundImage: "url(assets/images/shape/shape-23.png)" }}></div>
+          <div className="pattern-2" style={{ backgroundImage: "url(assets/images/shape/shape-24.png)" }}></div>
+          <div className="pattern-3" style={{ backgroundImage: "url(assets/images/shape/shape-25.png)" }}></div>
           <div className="pattern-4"></div>
         </div>
         <div className="widget-section pt_120 pb_100">
@@ -38,10 +25,7 @@ export default function Footer1() {
                 <div className="footer-widget logo-widget">
                   <figure className="footer-logo">
                     <Link href="/">
-                      <img
-                        src="assets/images/footer-logo.png"
-                        alt="Clínica de la Costa"
-                      />
+                      <img src="assets/images/footer-logo.png" alt="Clínica de la Costa" />
                     </Link>
                   </figure>
                   <p>
@@ -49,15 +33,30 @@ export default function Footer1() {
                     durante más de 30 años, combinando experiencia y tecnología
                     avanzada para cuidar tu salud.
                   </p>
-                  <ul className="social-links clearfix">
+                  <ul className="social-links clearfix flex gap-4">
                     <li>
-                      <Link href="https://www.facebook.com/clinicadelacosta">
-                        <i className="icon-4"></i>
+                      <Link href="https://web.facebook.com/profile.php?id=61572428767172">
+                        <AiFillFacebook size={24} />
                       </Link>
                     </li>
                     <li>
-                      <Link href="https://www.instagram.com/clinicadelacosta">
-                        <i className="icon-5"></i>
+                      <Link href="https://www.instagram.com/clinica_de_la_costa/">
+                        <AiFillInstagram size={24} />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="https://www.youtube.com/@Cl%C3%ADnicadelacosta-b9q">
+                        <AiFillYoutube size={24} />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="https://x.com/CliCosta01">
+                        <AiOutlineTwitter size={24} />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="https://www.tiktok.com/@clicosta1">
+                        <SiTiktok size={24} />
                       </Link>
                     </li>
                   </ul>
@@ -71,18 +70,10 @@ export default function Footer1() {
                   </div>
                   <div className="widget-content">
                     <ul className="links-list clearfix">
-                      <li>
-                        <Link href="/">Inicio</Link>
-                      </li>
-                      <li>
-                        <Link href="/about">Sobre Nosotros</Link>
-                      </li>
-                      <li>
-                        <Link href="/services">Servicios</Link>
-                      </li>
-                      <li>
-                        <Link href="/contact">Contáctenos</Link>
-                      </li>
+                      <li><Link href="/">Inicio</Link></li>
+                      <li><Link href="/about">Sobre Nosotros</Link></li>
+                      <li><Link href="/services">Servicios</Link></li>
+                      <li><Link href="/contact">Contáctenos</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -95,19 +86,9 @@ export default function Footer1() {
                   </div>
                   <div className="widget-content">
                     <ul className="links-list clearfix">
-                      <li>
-                        <Link href="/privacy-policy">
-                          Política de Privacidad
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/terms-conditions">
-                          Términos y Condiciones
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/faq">Preguntas Frecuentes</Link>
-                      </li>
+                      <li><Link href="/privacy-policy">Política de Privacidad</Link></li>
+                      <li><Link href="/terms-conditions">Términos y Condiciones</Link></li>
+                      <li><Link href="/faq">Preguntas Frecuentes</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -121,12 +102,8 @@ export default function Footer1() {
                   <div className="widget-content">
                     <ul className="info-list">
                       <li>
-                        <img
-                          src="assets/images/icons/icon-1.png"
-                          alt=""
-                        />{" "}
-                        {sedeData?.direccion ||
-                          "Cra. 50 #80-144, Barranquilla, Colombia"}
+                        <img src="assets/images/icons/icon-1.png" alt="" />{" "}
+                        {sedeData?.direccion || "Cra. 50 #80-144, Barranquilla, Colombia"}
                       </li>
                       <li>
                         <i className="icon-2"></i>
@@ -136,17 +113,10 @@ export default function Footer1() {
                       </li>
                       <li>
                         <i className="icon-26"></i>
-                        <Link
-                          href={`mailto:${
-                            sedeData?.email ||
-                            "consultaexterna@clinicadelacosta.co"
-                          }`}
-                        >
-                          {sedeData?.email ||
-                            "consultaexterna@clinicadelacosta.co"}
+                        <Link href={`mailto:${sedeData?.email || "consultaexterna@clinicadelacosta.co"}`}>
+                          {sedeData?.email || "consultaexterna@clinicadelacosta.co"}
                         </Link>
                       </li>
-                      {/* Puedes agregar más correos si están disponibles en sedeData */}
                     </ul>
                   </div>
                 </div>
@@ -159,26 +129,21 @@ export default function Footer1() {
           <div className="auto-container">
             <div className="bottom-inner">
               <ul className="footer-nav clearfix">
-                <li>
-                  <Link href="/privacy-policy">Política de Privacidad</Link>
-                </li>
-                <li>
-                  <Link href="/terms-conditions">Términos de Uso</Link>
-                </li>
-                <li>
-                  <Link href="/faq">Preguntas Frecuentes</Link>
-                </li>
+                <li><Link href="/privacy-policy">Política de Privacidad</Link></li>
+                <li><Link href="/terms-conditions">Términos de Uso</Link></li>
+                <li><Link href="/faq">Preguntas Frecuentes</Link></li>
               </ul>
               <div className="copyright">
                 <p>
-                  &copy; 2024 Clínica de la Costa. Dseño y Desarrollo: Fabian Muñoz Puello & Leidy Vega Anaya Todos los derechos reservados.
+                  &copy; 2024 Clínica de la Costa. Diseño y Desarrollo: Fabian
+                  Muñoz Puello & Leidy Vega Anaya. Todos los derechos
+                  reservados.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </footer>
-      {/* Puedes agregar estilos aquí si es necesario */}
     </>
   );
 }
