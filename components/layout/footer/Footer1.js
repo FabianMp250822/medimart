@@ -35,27 +35,27 @@ export default function Footer1() {
                   </p>
                   <ul className="social-links clearfix flex gap-4">
                     <li>
-                      <Link href="https://web.facebook.com/profile.php?id=61572428767172">
+                      <Link href="https://web.facebook.com/profile.php?id=61572428767172" target="_blank" rel="noopener noreferrer">
                         <AiFillFacebook size={24} />
                       </Link>
                     </li>
                     <li>
-                      <Link href="https://www.instagram.com/clinica_de_la_costa/">
+                      <Link href="https://www.instagram.com/clinica_de_la_costa/" target="_blank" rel="noopener noreferrer">
                         <AiFillInstagram size={24} />
                       </Link>
                     </li>
                     <li>
-                      <Link href="https://www.youtube.com/@Cl%C3%ADnicadelacosta-b9q">
+                      <Link href="https://www.youtube.com/@Cl%C3%ADnicadelacosta-b9q" target="_blank" rel="noopener noreferrer">
                         <AiFillYoutube size={24} />
                       </Link>
                     </li>
                     <li>
-                      <Link href="https://x.com/CliCosta01">
+                      <Link href="https://x.com/CliCosta01" target="_blank" rel="noopener noreferrer">
                         <AiOutlineTwitter size={24} />
                       </Link>
                     </li>
                     <li>
-                      <Link href="https://www.tiktok.com/@clicosta1">
+                      <Link href="https://www.tiktok.com/@clicosta1" target="_blank" rel="noopener noreferrer">
                         <SiTiktok size={24} />
                       </Link>
                     </li>
@@ -70,10 +70,10 @@ export default function Footer1() {
                   </div>
                   <div className="widget-content">
                     <ul className="links-list clearfix">
-                      <li><Link href="/">Inicio</Link></li>
-                      <li><Link href="/about">Sobre Nosotros</Link></li>
-                      <li><Link href="/services">Servicios</Link></li>
-                      <li><Link href="/contact">Contáctenos</Link></li>
+                      <li><Link href="/" target="_blank" rel="noopener noreferrer">Inicio</Link></li>
+                      <li><Link href="/about" target="_blank" rel="noopener noreferrer">Sobre Nosotros</Link></li>
+                      <li><Link href="/services" target="_blank" rel="noopener noreferrer">Servicios</Link></li>
+                      <li><Link href="/contact" target="_blank" rel="noopener noreferrer">Contáctenos</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -86,9 +86,9 @@ export default function Footer1() {
                   </div>
                   <div className="widget-content">
                     <ul className="links-list clearfix">
-                      <li><Link href="/privacy-policy">Política de Privacidad</Link></li>
-                      <li><Link href="/terms-conditions">Términos y Condiciones</Link></li>
-                      <li><Link href="/faq">Preguntas Frecuentes</Link></li>
+                      <li><Link href="/privacy-policy" target="_blank" rel="noopener noreferrer">Política de Privacidad</Link></li>
+                      <li><Link href="/terms-conditions" target="_blank" rel="noopener noreferrer">Términos y Condiciones</Link></li>
+                      <li><Link href="/faq" target="_blank" rel="noopener noreferrer">Preguntas Frecuentes</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -129,9 +129,9 @@ export default function Footer1() {
           <div className="auto-container">
             <div className="bottom-inner">
               <ul className="footer-nav clearfix">
-                <li><Link href="/privacy-policy">Política de Privacidad</Link></li>
-                <li><Link href="/terms-conditions">Términos de Uso</Link></li>
-                <li><Link href="/faq">Preguntas Frecuentes</Link></li>
+                <li><Link href="/privacy-policy" target="_blank" rel="noopener noreferrer">Política de Privacidad</Link></li>
+                <li><Link href="/terms-conditions" target="_blank" rel="noopener noreferrer">Términos de Uso</Link></li>
+                <li><Link href="/faq" target="_blank" rel="noopener noreferrer">Preguntas Frecuentes</Link></li>
               </ul>
               <div className="copyright">
                 <p>
