@@ -1,9 +1,8 @@
 import { db } from "@/lib/firebase";
-import { doc, getDoc, collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { notFound } from "next/navigation";
 import BlogDetailsClient from "./BlogDetailsClient";
 
-// 1️⃣ Generamos las metaetiquetas de Open Graph para Facebook, Twitter y LinkedIn
 export async function generateMetadata({ params }) {
   const { id } = params;
 
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }) {
   const textContent = blogData.content?.replace(/<[^>]+>/g, "") || "";
   const summary = textContent.substring(0, 150) + (textContent.length > 150 ? "..." : "");
 
-  // URL absoluta de la imagen (ajusta a tu dominio real)
+  // URL absoluta de la imagen (asegúrate de que sea pública y accesible)
   const imageUrl = blogData.image || "https://www.clinicadelacosta.com/assets/images/default-image.jpg";
 
   // URL completa del blog
@@ -37,6 +36,7 @@ export async function generateMetadata({ params }) {
       url: blogUrl,
       images: [{ url: imageUrl, width: 1200, height: 630, alt: blogData.title }],
       siteName: "Clínica de la Costa",
+      app_id: "1152616312324082", // 🔹 Agrega aquí tu Facebook App ID
     },
     twitter: {
       card: "summary_large_image",
@@ -47,7 +47,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// 2️⃣ Obtenemos el blog y los blogs recientes en SSR
 export default async function BlogDetailsPage({ params }) {
   const { id } = params;
 
@@ -61,13 +60,5 @@ export default async function BlogDetailsPage({ params }) {
 
   const blogData = { id: docSnap.id, ...docSnap.data() };
 
-  // Obtenemos blogs recientes
-  const q = query(collection(db, "blogs"), orderBy("date", "desc"), limit(10));
-  const querySnapshot = await getDocs(q);
-  const recentBlogs = querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  return <BlogDetailsClient blogData={blogData} recentBlogs={recentBlogs} />;
+  return <BlogDetailsClient blogData={blogData} />;
 }
