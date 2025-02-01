@@ -37,14 +37,14 @@ export async function generateMetadata({ params }) {
       images: [
         {
           url: imageUrl,
-          secureUrl: imageUrl, // Se asegura que la URL es segura (HTTPS)
+          secureUrl: imageUrl, // Asegura que se use una URL segura (HTTPS)
           width: 1200,
           height: 630,
           alt: blogData.title,
         },
       ],
       siteName: "Clínica de la Costa",
-      "fb:app_id": "1152616312324082", // Propiedad correcta para Facebook
+      "fb:app_id": "1152616312324082",
     },
     twitter: {
       card: "summary_large_image",
