@@ -6,13 +6,13 @@ import {
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
-  WhatsappShareButton
+  WhatsappShareButton,
 } from "react-share";
 import {
   FaFacebookF,
   FaTwitter,
   FaLinkedinIn,
-  FaWhatsapp
+  FaWhatsapp,
 } from "react-icons/fa";
 
 export default function BlogDetailsClient({ blogData, recentBlogs }) {
@@ -45,17 +45,31 @@ export default function BlogDetailsClient({ blogData, recentBlogs }) {
 
                 {/* Botones de compartir */}
                 <div className="share-icons mt-4 d-flex justify-content-end">
-                  <span className="mr-3 font-weight-bold">Comparte este blog:</span>
+                  <span className="mr-3 font-weight-bold">
+                    Comparte este blog:
+                  </span>
 
-                  <FacebookShareButton url={fullUrl} quote={title} hashtag={`#${title.replace(/ /g, "")}`}>
+                  <FacebookShareButton
+                    url={fullUrl}
+                    quote={title}
+                    hashtag={`#${title.replace(/ /g, "")}`}
+                  >
                     <FaFacebookF size={24} className="mx-2 text-primary" />
                   </FacebookShareButton>
 
-                  <TwitterShareButton url={fullUrl} title={title} hashtags={[title.replace(/ /g, "")]}>
+                  <TwitterShareButton
+                    url={fullUrl}
+                    title={title}
+                    hashtags={[title.replace(/ /g, "")]}
+                  >
                     <FaTwitter size={24} className="mx-2 text-info" />
                   </TwitterShareButton>
 
-                  <LinkedinShareButton url={fullUrl} title={title} summary={content?.substring(0, 150)}>
+                  <LinkedinShareButton
+                    url={fullUrl}
+                    title={title}
+                    summary={content?.substring(0, 150)}
+                  >
                     <FaLinkedinIn size={24} className="mx-2 text-primary" />
                   </LinkedinShareButton>
 
@@ -66,10 +80,19 @@ export default function BlogDetailsClient({ blogData, recentBlogs }) {
               </header>
 
               {/* Imagen principal */}
-              {image && <img src={image} alt={title} className="img-fluid blog-image" />}
+              {image && (
+                <img
+                  src={image}
+                  alt={title}
+                  className="img-fluid blog-image"
+                />
+              )}
 
               {/* Contenido HTML del blog */}
-              <div className="blog-content" dangerouslySetInnerHTML={{ __html: content }} />
+              <div
+                className="blog-content"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
             </article>
           </div>
         </div>

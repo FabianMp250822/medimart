@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
 
   const blogData = docSnap.data();
 
-  // Generamos una descripción corta
+  // Generamos una descripción corta eliminando etiquetas HTML
   const textContent = blogData.content?.replace(/<[^>]+>/g, "") || "";
   const summary = textContent.substring(0, 150) + (textContent.length > 150 ? "..." : "");
 
@@ -34,9 +34,17 @@ export async function generateMetadata({ params }) {
       description: summary,
       type: "article",
       url: blogUrl,
-      images: [{ url: imageUrl, width: 1200, height: 630, alt: blogData.title }],
+      images: [
+        {
+          url: imageUrl,
+          secureUrl: imageUrl, // Se asegura que la URL es segura (HTTPS)
+          width: 1200,
+          height: 630,
+          alt: blogData.title,
+        },
+      ],
       siteName: "Clínica de la Costa",
-      app_id: "1152616312324082", // 🔹 Agrega aquí tu Facebook App ID
+      "fb:app_id": "1152616312324082", // Propiedad correcta para Facebook
     },
     twitter: {
       card: "summary_large_image",
