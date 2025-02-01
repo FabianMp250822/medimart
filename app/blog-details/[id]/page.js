@@ -1,3 +1,4 @@
+// app/blog-details/[id]/page.js
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { notFound } from "next/navigation";
@@ -6,22 +7,28 @@ import BlogDetailsClient from "./BlogDetailsClient";
 export async function generateMetadata({ params }) {
   const { id } = params;
 
-  // Obtenemos el blog desde Firestore
+  // Obtener el blog desde Firestore
   const docRef = doc(db, "blogs", id);
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) {
-    return {};
+    return {
+      title: "Blog no encontrado",
+      description: "El blog que buscas no existe.",
+    };
   }
 
   const blogData = docSnap.data();
 
-  // Generamos una descripción corta eliminando etiquetas HTML
+  // Generar una descripción corta eliminando etiquetas HTML
   const textContent = blogData.content?.replace(/<[^>]+>/g, "") || "";
-  const summary = textContent.substring(0, 150) + (textContent.length > 150 ? "..." : "");
+  const summary =
+    textContent.substring(0, 150) + (textContent.length > 150 ? "..." : "");
 
   // URL absoluta de la imagen (asegúrate de que sea pública y accesible)
-  const imageUrl = blogData.image || "https://www.clinicadelacosta.com/assets/images/default-image.jpg";
+  const imageUrl =
+    blogData.image ||
+    "https://www.clinicadelacosta.com/assets/images/default-image.jpg";
 
   // URL completa del blog
   const blogUrl = `https://www.clinicadelacosta.com/blog-details/${id}`;
@@ -37,7 +44,7 @@ export async function generateMetadata({ params }) {
       images: [
         {
           url: imageUrl,
-          secureUrl: imageUrl, // Asegura que se use una URL segura (HTTPS)
+          secureUrl: imageUrl, // Garantiza uso de HTTPS
           width: 1200,
           height: 630,
           alt: blogData.title,
@@ -58,7 +65,7 @@ export async function generateMetadata({ params }) {
 export default async function BlogDetailsPage({ params }) {
   const { id } = params;
 
-  // Buscamos el blog en Firestore
+  // Buscar el blog en Firestore
   const docRef = doc(db, "blogs", id);
   const docSnap = await getDoc(docRef);
 

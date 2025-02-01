@@ -1,7 +1,9 @@
+// app/blog-details/[id]/BlogDetailsClient.js
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import {
   FacebookShareButton,
@@ -15,36 +17,47 @@ import {
   FaLinkedinIn,
   FaWhatsapp,
 } from "react-icons/fa";
-import { doc, updateDoc, getDoc, setDoc, increment } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  getDoc,
+  setDoc,
+  increment,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-export default function BlogDetailsClient({ blogData, recentBlogs }) {
+export default function BlogDetailsClient({ blogData }) {
   const { id, title, content, image, author, date } = blogData;
   const [visits, setVisits] = useState(0);
-  
+  const [recentBlogs, setRecentBlogs] = useState([]);
+  const router = useRouter();
+
+  // Actualizar el contador de visitas
   useEffect(() => {
-    // Bandera para evitar actualizar el estado si el componente se desmonta
     let isMounted = true;
 
     async function updateVisits() {
       try {
-        // Referencia al documento de visitas (ID del blog)
         const visitsRef = doc(db, "visitas", id);
         const docSnap = await getDoc(visitsRef);
         let newCount;
-        
+
         if (docSnap.exists()) {
-          // Incrementamos de forma atómica el valor de visitas
+          // Incrementa el valor de visitas de forma atómica
           await updateDoc(visitsRef, { visitas: increment(1) });
           const updatedSnap = await getDoc(visitsRef);
           newCount = updatedSnap.data().visitas;
         } else {
-          // Si no existe, lo creamos inicializando visitas en 1
+          // Si el documento no existe, lo crea con valor 1
           await setDoc(visitsRef, { visitas: 1 });
           newCount = 1;
         }
-        
-        // Solo actualizamos el estado si el componente sigue montado
+
         if (isMounted) {
           setVisits(newCount);
         }
@@ -54,13 +67,46 @@ export default function BlogDetailsClient({ blogData, recentBlogs }) {
     }
 
     updateVisits();
-    
-    // Cleanup: en caso de desmontarse, evitamos actualizar el estado
+
     return () => {
       isMounted = false;
     };
   }, [id]);
 
+  // Consultar los blogs recientes ordenados por fecha descendente
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchRecentBlogs() {
+      try {
+        const blogsRef = collection(db, "blogs");
+        // Ordenar por el campo "date" (formato "YYYY-MM-DD") de forma descendente y limitar a 5 resultados
+        const q = query(blogsRef, orderBy("date", "desc"), limit(5));
+        const querySnapshot = await getDocs(q);
+        const blogs = [];
+        querySnapshot.forEach((docSnapshot) => {
+          // Opcional: excluir el blog actual
+          if (docSnapshot.id !== id) {
+            blogs.push({ id: docSnapshot.id, ...docSnapshot.data() });
+          }
+        });
+
+        if (isMounted) {
+          setRecentBlogs(blogs);
+        }
+      } catch (error) {
+        console.error("Error obteniendo blogs recientes:", error);
+      }
+    }
+
+    fetchRecentBlogs();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id]);
+
+  // URL absoluta para compartir
   const fullUrl = `https://www.clinicadelacosta.com/blog-details/${id}`;
 
   return (
@@ -82,9 +128,7 @@ export default function BlogDetailsClient({ blogData, recentBlogs }) {
                     })}
                   </time>
                 </p>
-                {/* Se muestra el contador de visitas */}
                 <p>Visitas: {visits}</p>
-
                 {/* Botones de compartir */}
                 <div className="share-icons mt-4 d-flex justify-content-end">
                   <span className="mr-3 font-weight-bold">
@@ -116,18 +160,44 @@ export default function BlogDetailsClient({ blogData, recentBlogs }) {
                   </WhatsappShareButton>
                 </div>
               </header>
-              
               {/* Imagen principal */}
               {image && (
                 <img src={image} alt={title} className="img-fluid blog-image" />
               )}
-
               {/* Contenido HTML del blog */}
               <div
                 className="blog-content"
                 dangerouslySetInnerHTML={{ __html: content }}
               />
             </article>
+          </div>
+
+          {/* Sidebar con blogs recientes */}
+          <div className="col-lg-4 mt-4">
+            <aside className="sidebar">
+              <h3>Blogs Recientes</h3>
+              {recentBlogs.length > 0 ? (
+                <ul className="list-group">
+                  {recentBlogs.map((blog) => (
+                    <li key={blog.id} className="list-group-item">
+                      <Link href={`/blog-details/${blog.id}`}>
+                        {blog.title}
+                      </Link>
+                      <br />
+                      <small>
+                        {new Date(blog.date).toLocaleDateString("es-ES", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </small>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No hay blogs recientes.</p>
+              )}
+            </aside>
           </div>
         </div>
       </div>
