@@ -71,7 +71,7 @@ export default function News() {
                     <ul className="post-info mb_15 clearfix">
                       <li><Link href={`/blog-details/${blog.id}`}>{blog.author || "Admin"}</Link></li>
                       <li>{new Date(blog.date).toLocaleDateString("es-ES", { year: 'numeric', month: 'short', day: 'numeric' })}</li>
-                      <li>{blog.comments || 0} Comentarios</li>
+                      {/* <li>{blog.comments || 0} Comentarios</li> */}
                     </ul>
                     <h3><Link href={`/blog-details/${blog.id}`}>{cleanText(blog.title)}</Link></h3>
                     <p>{truncateText(blog.content, 150)}</p> {/* Limpia y limita a 150 caracteres */}
