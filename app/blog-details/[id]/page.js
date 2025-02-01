@@ -1,4 +1,3 @@
-// app/blog-details/[id]/page.js
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { notFound } from "next/navigation";
@@ -25,7 +24,7 @@ export async function generateMetadata({ params }) {
   const summary =
     textContent.substring(0, 150) + (textContent.length > 150 ? "..." : "");
 
-  // URL absoluta de la imagen (asegúrate de que sea pública y accesible)
+  // URL de la imagen (debe ser pública y accesible)
   const imageUrl =
     blogData.image ||
     "https://www.clinicadelacosta.com/assets/images/default-image.jpg";
@@ -44,7 +43,6 @@ export async function generateMetadata({ params }) {
       images: [
         {
           url: imageUrl,
-          secureUrl: imageUrl, // Garantiza uso de HTTPS
           width: 1200,
           height: 630,
           alt: blogData.title,
