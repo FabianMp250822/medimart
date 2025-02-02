@@ -84,7 +84,7 @@ export default function Home() {
   const topFive = sortedBlogs.slice(0, 5);
 
   return (
-    <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Blog Sidebar">
+    <Layout headerStyle={2} footerStyle={1} breadcrumbTitle="Ultimas Noticias">
       <div>
         {/* sidebar-page-container */}
         <section className="sidebar-page-container sec-pad-2">

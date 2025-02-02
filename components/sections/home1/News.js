@@ -9,31 +9,25 @@ export default function News() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Función para obtener datos de Firestore (blogs y visitas)
     const fetchBlogs = async () => {
       try {
-        // Cargamos todos los posts
         const blogsSnapshot = await getDocs(collection(db, "blogs"));
         const blogsData = blogsSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        // Cargamos la colección "visitas"
         const visitasSnapshot = await getDocs(collection(db, "visitas"));
         const visitasData = visitasSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        // Unimos "blogs" con "visitas" basados en el ID
         const mergedData = blogsData.map((blog) => {
-          // Buscamos si hay un documento de 'visitas' cuyo id coincida
           const found = visitasData.find((v) => v.id === blog.id);
-          // Asignamos blog.visits
           return {
             ...blog,
-            visits: found?.visitas || 0, // 0 si no se encontró
+            visits: found?.visitas || 0,
           };
         });
 
@@ -48,40 +42,32 @@ export default function News() {
     fetchBlogs();
   }, []);
 
-  // Función para limpiar etiquetas HTML del texto
   const cleanText = (text) => {
     if (!text) return "";
     return text.replace(/<\/?[^>]+(>|$)/g, "");
   };
 
-  // Función para truncar texto
   const truncateText = (text, maxLength) => {
     const clean = cleanText(text);
-    if (clean.length > maxLength) {
-      return clean.substring(0, maxLength) + "...";
-    }
-    return clean;
+    return clean.length > maxLength ? clean.substring(0, maxLength) + "..." : clean;
   };
 
   if (loading) {
-    return <p>Cargando artículos...</p>; // Indicador de carga
+    return <p>Cargando artículos...</p>;
   }
 
   if (!blogs || blogs.length === 0) {
-    return <p>No hay artículos disponibles.</p>; // Mensaje si no hay blogs
+    return <p>No hay artículos disponibles.</p>;
   }
 
-  // Ordenamos por número de visitas, de mayor a menor
+  // Ordenamos por visitas (desc) y cogemos los 3 primeros
   const sortedByVisits = [...blogs].sort((a, b) => b.visits - a.visits);
-
-  // Mostramos solo los 3 primeros
   const topThree = sortedByVisits.slice(0, 3);
 
   return (
     <section className="news-section sec-pad bg-color-1">
       <div className="auto-container">
         <div className="sec-title mb_50 centred">
-          <span className="sub-title">Nuestro Blog</span>
           <h2>
             Consulta nuestros artículos más <br />
             recientes
@@ -90,43 +76,87 @@ export default function News() {
 
         <div className="row clearfix">
           {topThree.map((blog) => (
-            <div key={blog.id} className="col-lg-4 col-md-6 col-sm-12 news-block">
+            <div
+              key={blog.id}
+              className="col-lg-4 col-md-6 col-sm-12 news-block"
+              style={{ marginBottom: "30px" }} // Espacio entre columnas
+            >
               <div
                 className="news-block-one wow fadeInUp animated"
                 data-wow-delay="00ms"
                 data-wow-duration="1500ms"
+                style={{
+                  // Alto mínimo para la tarjeta
+                  minHeight: "450px",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
               >
-                <div className="inner-box">
-                  <figure className="image-box">
+                <div
+                  className="inner-box"
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  {/* Imagen con altura fija */}
+                  <figure
+                    className="image-box"
+                    style={{
+                      height: "200px",
+                      overflow: "hidden",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  >
                     <Link href={`/blog-details/${blog.id}`}>
                       <img
                         src={blog.image}
                         alt={cleanText(blog.title)}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover", 
+                        }}
                       />
                     </Link>
                   </figure>
-                  <div className="lower-content">
-                    <ul className="post-info mb_15 clearfix">
-                      <li>
+
+                  {/* Contenido */}
+                  <div
+                    className="lower-content"
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      padding: "15px",
+                    }}
+                  >
+                    <div>
+                      <ul className="post-info mb_15 clearfix">
+                        <li>
+                          <Link href={`/blog-details/${blog.id}`}>
+                            {blog.author || "Admin"}
+                          </Link>
+                        </li>
+                        <li>
+                          {new Date(blog.date).toLocaleDateString("es-ES", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </li>
+                      </ul>
+                      <h3 style={{ marginBottom: "10px" }}>
                         <Link href={`/blog-details/${blog.id}`}>
-                          {blog.author || "Admin"}
+                          {cleanText(blog.title)}
                         </Link>
-                      </li>
-                      <li>
-                        {new Date(blog.date).toLocaleDateString("es-ES", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </li>
-                      {/* <li>{blog.comments || 0} Comentarios</li> */}
-                    </ul>
-                    <h3>
-                      <Link href={`/blog-details/${blog.id}`}>
-                        {cleanText(blog.title)}
-                      </Link>
-                    </h3>
-                    <p>{truncateText(blog.content, 150)}</p>
+                      </h3>
+                      <p style={{ marginBottom: "15px" }}>
+                        {truncateText(blog.content, 150)}
+                      </p>
+                    </div>
                     <div className="link">
                       <Link href={`/blog-details/${blog.id}`}>
                         <span>Leer más</span>
