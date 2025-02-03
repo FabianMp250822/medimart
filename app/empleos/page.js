@@ -33,31 +33,37 @@ export default function OfertasEmpleo() {
     Swal.fire({
       title: "Comunicado Importante",
       html: `
-        <p>
-          La Clínica de la Costa S.A.S. informa a todos los aspirantes a nuestras convocatorias laborales que
-          dentro de nuestros procesos de selección 
-          <strong>NO solicitamos ningún tipo de pago</strong> 
-          por concepto de inscripción, realización de pruebas, cursos, laboratorios o cualquier otro trámite relacionado
-          con la vinculación a nuestra institución.
-        </p>
-        <p>
-          Cualquier solicitud de dinero en nombre de la Clínica de la Costa S.A.S. es fraudulenta. 
-          En caso de detectar este tipo de prácticas, le pedimos abstenerse de realizar pagos y 
-          reportarlo de inmediato a nuestros canales oficiales de atención.
-        </p>
-        <p>
-          Para información verídica sobre nuestros procesos de selección, le invitamos a consultar
-          nuestra página web oficial y redes sociales verificadas.
-        </p>
-        <p style="font-weight: 600; margin-top: 1rem;">
-          Atentamente,<br/>
-          Clínica de la Costa S.A.S
-        </p>
+        <div style="text-align: justify; line-height: 1.6;">
+          <h4 style="margin-bottom: 10px; text-align: center;">
+            Barranquilla, 03 de Febrero de 2025
+          </h4>
+          <p style="margin-top: 0;">
+            La Clínica de la Costa S.A.S. informa a todos los aspirantes a nuestras convocatorias laborales que 
+            dentro de nuestros procesos de selección 
+            <strong>NO solicitamos ningún tipo de pago</strong> 
+            por concepto de inscripción, realización de pruebas, cursos, laboratorios o cualquier otro trámite 
+            relacionado con la vinculación a nuestra institución.
+          </p>
+          <p>
+            Cualquier solicitud de dinero en nombre de la Clínica de la Costa S.A.S. es fraudulenta. 
+            En caso de detectar este tipo de prácticas, le pedimos abstenerse de realizar pagos y 
+            reportarlo de inmediato a nuestros canales oficiales de atención.
+          </p>
+          <p>
+            Para información verídica sobre nuestros procesos de selección, le invitamos a consultar
+            nuestra página web oficial y redes sociales verificadas.
+          </p>
+          <p style="font-weight: 600; margin-top: 1rem; text-align: right;">
+            Atentamente,<br/>
+            Clínica de la Costa S.A.S
+          </p>
+        </div>
       `,
       icon: "info",
       confirmButtonText: "Entendido",
     });
   }, []);
+  
 
   useEffect(() => {
     const fetchOfertas = async () => {
