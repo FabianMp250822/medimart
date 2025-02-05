@@ -270,7 +270,7 @@ export default function Page() {
               width={150}
               height={150}
               style={{
-                borderRadius: "50%",
+             
                 objectFit: "cover",
               }}
               priority
