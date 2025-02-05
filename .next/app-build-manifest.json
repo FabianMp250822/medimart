@@ -22,10 +22,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/empleos/page": [
+    "/comentarios/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/empleos/page.js"
+      "static/chunks/app/comentarios/page.js"
     ]
   }
 }

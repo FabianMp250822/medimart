@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { FaStar, FaUser, FaPhone, FaEnvelope, FaBuilding, FaSpinner } from "react-icons/fa";
+import {
+  FaStar,
+  FaUser,
+  FaPhone,
+  FaEnvelope,
+  FaBuilding,
+  FaSpinner,
+} from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import Swal from "sweetalert2";
@@ -15,13 +23,14 @@ export default function Page() {
   const [name, setName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedClinic, setSelectedClinic] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submittedRating, setSubmittedRating] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const clinics = ["Riohacha", "Cartagena", "Barranquilla", "Santa Marta"];
 
-  // SweetAlert2 configuration (for reusability)
+  // SweetAlert2 configuration (para reusabilidad)
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -34,16 +43,12 @@ export default function Page() {
     },
   });
 
-  function formatDate(timestamp) {
-    if (!timestamp) return ""; // Manejar casos donde la fecha no esté definida
-  
-    const date = timestamp.toDate(); // Convierte el timestamp de Firebase a un objeto Date
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // ¡Los meses en JavaScript son 0-indexados!
-    const year = date.getFullYear();
-  
-    return `${day}/${month}/${year}`; // Formato: DD/MM/AAAA
-  }
+  // Función para validar el formato del correo electrónico
+  const isValidEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   // Maneja el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,7 +111,6 @@ export default function Page() {
     });
 
     if (result.isConfirmed) {
-      // Lógica de envío a Firebase
       try {
         const docRef = await addDoc(collection(db, "pqyr"), {
           rating,
@@ -119,6 +123,7 @@ export default function Page() {
         });
 
         console.log("Documento escrito con ID: ", docRef.id);
+        setSubmittedRating(rating);
         setIsSubmitted(true);
 
         // Limpiar el formulario
@@ -130,18 +135,52 @@ export default function Page() {
         setEmail("");
         setSelectedClinic("");
 
-        // Notificación de éxito con SweetAlert2
-        Toast.fire({
-          icon: "success",
-          title: "Comentario enviado exitosamente",
-        });
+        // Si la calificación es de 3 o más estrellas se muestra un SweetAlert con el botón de reseña en Google,
+        // de lo contrario se muestra un Toast de éxito
+        if (rating >= 3) {
+          Swal.fire({
+            icon: "success",
+            title: rating === 5 ? "Muchas gracias por tus 5 estrellas" : "Gracias por tu comentario",
+            html: `
+              <p>Si lo deseas, deja tu reseña en Google:</p><br>
+              <a 
+                href="https://g.page/r/CR85TS3Ji47WEAE/review" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  background-color: #3b82f6;
+                  border: none;
+                  border-radius: 4px;
+                  padding: 0.5rem 1rem;
+                  text-decoration: none;
+                  color: #fff;
+                  font-weight: bold;
+                "
+              >
+                <span style="display: inline-flex; align-items: center;">
+                  <svg width="24" height="24" viewBox="0 0 24 24"><!-- Aquí puedes insertar el SVG o mantener el componente React si lo prefieres --></svg>
+                  Dejar reseña
+                </span>
+              </a>
+            `,
+            showConfirmButton: false
+          });
+        
+        
+        } else {
+          Toast.fire({
+            icon: "success",
+            title: "Comentario enviado exitosamente",
+          });
+        }
       } catch (error) {
         console.error("Error al agregar el documento: ", error);
         setSubmitError(
           "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo más tarde."
         );
-
-        // Notificación de error con SweetAlert2
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -155,21 +194,18 @@ export default function Page() {
     }
   };
 
-  // Función para validar el formato del correo electrónico
-  const isValidEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
   useEffect(() => {
     // Resetear el estado isSubmitted a false después de 3 segundos
     if (isSubmitted) {
       const timer = setTimeout(() => {
         setIsSubmitted(false);
+        setSubmittedRating(null);
       }, 3000);
 
       return () => clearTimeout(timer);
     }
   }, [isSubmitted]);
+
   return (
     <div
       style={{
@@ -204,7 +240,6 @@ export default function Page() {
             zIndex: 0,
           }}
         />
-
         <div
           style={{
             position: "absolute",
@@ -213,7 +248,6 @@ export default function Page() {
             zIndex: 10,
           }}
         />
-
         <div
           style={{
             position: "relative",
@@ -229,11 +263,7 @@ export default function Page() {
           }}
         >
           {/* Logo */}
-          <div
-            style={{
-              marginBottom: "2rem",
-            }}
-          >
+          <div style={{ marginBottom: "2rem" }}>
             <Image
               src="https://www.clinicadelacosta.com/assets/images/logo.png"
               alt="Clínica de la Costa Logo"
@@ -246,7 +276,6 @@ export default function Page() {
               priority
             />
           </div>
-
           {/* Texto del banner */}
           <div>
             <h1
@@ -259,24 +288,14 @@ export default function Page() {
             >
               ¡Cuidamos de tu salud con dedicación y profesionalismo!
             </h1>
-            <p
-              style={{
-                fontSize: "1.25rem",
-                color: "#fff",
-              }}
-            >
-              En la Clínica de la Costa SAS, estamos comprometidos con
-              ofrecerte atención médica de calidad, con tecnología avanzada y
-              un equipo humano especializado.
+            <p style={{ fontSize: "1.25rem", color: "#fff" }}>
+              En la Clínica de la Costa SAS, estamos comprometidos con ofrecerte
+              atención médica de calidad, con tecnología avanzada y un equipo
+              humano especializado.
             </p>
           </div>
-
           {/* Botón */}
-          <div
-            style={{
-              marginTop: "2rem",
-            }}
-          >
+          <div style={{ marginTop: "2rem" }}>
             <a
               href="https://www.clinicadelacosta.com"
               target="_blank"
@@ -312,7 +331,7 @@ export default function Page() {
         }}
       >
         {/* Mensaje de éxito */}
-         {isSubmitted && (
+        {isSubmitted && (
           <div
             style={{
               backgroundColor: "#f0fff4",
@@ -321,19 +340,40 @@ export default function Page() {
               padding: "1rem",
               borderRadius: "8px",
               marginBottom: "1.5rem",
-              position: "relative",
+              textAlign: "center",
             }}
             role="alert"
           >
             <strong style={{ fontWeight: "bold" }}>
-              ¡Gracias por tu comentario!
+              Gracias por tu comentario
             </strong>
-            <span style={{ display: "block" }}>
-              Tu opinión es muy valiosa para nosotros.
-            </span>
+            <p>Tu opinión es muy valiosa para nosotros.</p>
+            {submittedRating >= 3 && (
+              <div style={{ marginTop: "1rem" }}>
+                <a
+                  href="https://g.page/r/CR85TS3Ji47WEAE/review"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    backgroundColor: "#fff",
+                    border: "1px solid #ddd",
+                    borderRadius: "4px",
+                    padding: "0.5rem 1rem",
+                    textDecoration: "none",
+                    color: "#555",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <FcGoogle size={24} /> Dejar reseña
+                </a>
+              </div>
+            )}
           </div>
-        )} 
-      
+        )}
+
         {submitError && (
           <div
             style={{
@@ -343,14 +383,14 @@ export default function Page() {
               padding: "1rem",
               borderRadius: "8px",
               marginBottom: "1.5rem",
-              position: "relative",
+              textAlign: "center",
             }}
             role="alert"
           >
             <strong style={{ fontWeight: "bold" }}>
               ¡Ups! Ocurrió un error.
             </strong>
-            <span style={{ display: "block" }}>{submitError}</span>
+            <p>{submitError}</p>
           </div>
         )}
 
@@ -367,7 +407,7 @@ export default function Page() {
         </h2>
 
         {/* Formulario */}
-        <form onSubmit={handleSubmit} style={{}}>
+        <form onSubmit={handleSubmit}>
           {/* Calificación de estrellas */}
           <div
             style={{
@@ -417,13 +457,7 @@ export default function Page() {
               marginBottom: "1rem",
             }}
           >
-            <FaUser
-              style={{
-                color: "#9ca3af",
-                marginRight: "0.5rem",
-              }}
-              size={20}
-            />
+            <FaUser style={{ color: "#9ca3af", marginRight: "0.5rem" }} size={20} />
             <input
               type="text"
               id="name"
@@ -433,10 +467,6 @@ export default function Page() {
                 border: "1px solid #e2e8f0",
                 borderRadius: "8px",
                 outline: "none",
-                ":focus": {
-                  ring: "2px solid #3b82f6",
-                  border: "none",
-                },
               }}
               placeholder="Nombre completo"
               value={name}
@@ -453,13 +483,7 @@ export default function Page() {
               marginBottom: "1rem",
             }}
           >
-            <FaPhone
-              style={{
-                color: "#9ca3af",
-                marginRight: "0.5rem",
-              }}
-              size={20}
-            />
+            <FaPhone style={{ color: "#9ca3af", marginRight: "0.5rem" }} size={20} />
             <input
               type="tel"
               id="contactNumber"
@@ -469,10 +493,6 @@ export default function Page() {
                 border: "1px solid #e2e8f0",
                 borderRadius: "8px",
                 outline: "none",
-                ":focus": {
-                  ring: "2px solid #3b82f6",
-                  border: "none",
-                },
               }}
               placeholder="Número de contacto"
               value={contactNumber}
@@ -489,13 +509,7 @@ export default function Page() {
               marginBottom: "1rem",
             }}
           >
-            <FaBuilding
-              style={{
-                color: "#9ca3af",
-                marginRight: "0.5rem",
-              }}
-              size={20}
-            />
+            <FaBuilding style={{ color: "#9ca3af", marginRight: "0.5rem" }} size={20} />
             <div style={{ flex: 1, position: "relative" }}>
               <label htmlFor="clinicSelect" style={{ display: "none" }}>
                 Sede Clínica:
@@ -514,11 +528,8 @@ export default function Page() {
                   MozAppearance: "none",
                   appearance: "none",
                   paddingRight: "2.5rem",
-                  ":focus": {
-                    ring: "2px solid #3b82f6",
-                    border: "none",
-                  },
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill='%239ca3af'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E")`, // Custom dropdown arrow
+                  backgroundImage:
+                    'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' width=\'24\' height=\'24\' fill=\'%239ca3af\'%3E%3Cpath d=\'M7 10l5 5 5-5z\'/%3E%3C/svg%3E")',
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "right 0.75rem center",
                   backgroundSize: "1.5em 1.5em",
@@ -543,13 +554,7 @@ export default function Page() {
               marginBottom: "1rem",
             }}
           >
-            <FaEnvelope
-              style={{
-                color: "#9ca3af",
-                marginRight: "0.5rem",
-              }}
-              size={20}
-            />
+            <FaEnvelope style={{ color: "#9ca3af", marginRight: "0.5rem" }} size={20} />
             <input
               type="email"
               id="email"
@@ -559,10 +564,6 @@ export default function Page() {
                 border: "1px solid #e2e8f0",
                 borderRadius: "8px",
                 outline: "none",
-                ":focus": {
-                  ring: "2px solid #3b82f6",
-                  border: "none",
-                },
               }}
               placeholder="Correo electrónico"
               value={email}
@@ -595,10 +596,6 @@ export default function Page() {
                 marginBottom: "1rem",
                 outline: "none",
                 resize: "vertical",
-                ":focus": {
-                  ring: "2px solid #3b82f6",
-                  border: "none"
-                },
               }}
               placeholder="Cuéntanos más sobre tu experiencia..."
               value={comment}
@@ -613,26 +610,22 @@ export default function Page() {
               type="submit"
               disabled={isLoading}
               style={{
-                backgroundColor: isLoading ? "#9ca3af" : "#3b82f6", // Cambia el color cuando isLoading es true
+                backgroundColor: isLoading ? "#9ca3af" : "#3b82f6",
                 color: "#fff",
                 padding: "0.75rem 1.5rem",
                 borderRadius: "9999px",
                 fontWeight: "600",
                 transition: "background-color 0.2s",
-                cursor: isLoading ? "not-allowed" : "pointer", // Cambia el cursor cuando isLoading es true
-                ":hover": {
-                  backgroundColor: isLoading ? "#9ca3af" : "#2563eb", // Cambia el color en hover solo si isLoading es false
-                },
+                cursor: isLoading ? "not-allowed" : "pointer",
               }}
             >
-                {isLoading ? (
-  <span>
-    <FaSpinner className="animate-spin mr-2" /> Enviando...
-  </span>
-) : (
-  "Enviar"
-)}
-             
+              {isLoading ? (
+                <span>
+                  <FaSpinner className="animate-spin mr-2" /> Enviando...
+                </span>
+              ) : (
+                "Enviar"
+              )}
             </button>
           </div>
         </form>
