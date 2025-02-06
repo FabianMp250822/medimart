@@ -127,7 +127,7 @@ export default function Footer1() {
     <Image
       src="/assets/images/banner/super.png"
       alt="Vigilado Supersalud"
-      width={300}
+      width={220}
       height={50}
     />
   </Link>
