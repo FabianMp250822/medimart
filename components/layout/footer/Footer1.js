@@ -125,9 +125,9 @@ export default function Footer1() {
             <div className="vigilado-supersalud">
   <Link href="https://www.supersalud.gov.co/" target="_blank" rel="noopener noreferrer">
     <Image
-      src="/assets/images/banner/super.png"
+      src="/assets/images/banner/supersalud.svg"
       alt="Vigilado Supersalud"
-      width={220}
+      width={200}
       height={50}
     />
   </Link>
