@@ -41,7 +41,13 @@ export default function Home() {
           };
         });
 
-        setBlogs(merged);
+        // Filtrar para que solo se muestren los blogs con lugar === "clinica" o "Clinica"
+        const filteredMerged = merged.filter(
+          (blog) =>
+            blog.lugar && blog.lugar.toLowerCase() === "clinica"
+        );
+
+        setBlogs(filteredMerged);
       } catch (error) {
         console.error("Error fetching data from Firestore:", error);
       }
@@ -53,22 +59,22 @@ export default function Home() {
   // Manejo de la búsqueda al hacer submit
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Al enviar, guardamos el término en "searchQuery"
     setSearchQuery(searchTerm);
-    // Regresamos a la primera página
     setCurrentPage(1);
   };
 
   // Función para crear un resumen recortando HTML
   const createSummary = (htmlContent, limit = 200) => {
     const textOnly = htmlContent.replace(/<[^>]+>/g, "");
-    return textOnly.length > limit ? textOnly.substring(0, limit) + "..." : textOnly;
+    return textOnly.length > limit
+      ? textOnly.substring(0, limit) + "..."
+      : textOnly;
   };
 
   // Ordenamos por visitas de mayor a menor
   const sortedBlogs = [...blogs].sort((a, b) => b.visits - a.visits);
 
-  // Filtramos solo por título
+  // Filtramos solo por título (si se desea buscar)
   const filteredBlogs = sortedBlogs.filter((blog) => {
     const query = searchQuery.toLowerCase();
     return blog.title?.toLowerCase().includes(query);
@@ -93,31 +99,10 @@ export default function Home() {
               {/* -- SIDEBAR -- */}
               <div className="col-lg-4 col-md-12 col-sm-12 sidebar-side">
                 <div className="blog-sidebar default-sidebar mr_10">
-                  {/* -- SEARCH WIDGET -- */}
-                  {/* <div className="sidebar-widget search-widget">
-                    <div className="search-form">
-                      <form onSubmit={handleSearchSubmit}>
-                        <div className="form-group">
-                          <input
-                            type="search"
-                            name="search-field"
-                            placeholder="Search by title"
-                            required
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                          />
-                          <button type="submit">
-                            <i className="icon-27"></i>
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div> */}
-
                   {/* -- TOP 5 POSTS WIDGET -- */}
                   <div className="sidebar-widget category-widget">
                     <div className="widget-title">
-                      <h3>Noticias detacadas</h3>
+                      <h3>Noticias destacadas</h3>
                     </div>
                     <div className="widget-content">
                       <ul className="category-list clearfix">
@@ -131,15 +116,12 @@ export default function Home() {
                       </ul>
                     </div>
                   </div>
-
-                  {/* Puedes agregar más widgets en el sidebar si lo deseas */}
                 </div>
               </div>
 
               {/* -- CONTENT -- */}
               <div className="col-lg-8 col-md-12 col-sm-12 content-side">
                 <div className="blog-classic-content">
-                  {/* -- LISTA DE BLOGS (CON PAGINACIÓN) -- */}
                   {currentBlogs.map((blog) => (
                     <div className="news-block-one" key={blog.id}>
                       <div className="inner-box">
@@ -173,14 +155,8 @@ export default function Home() {
                               </Link>
                             </li>
                             <li>{blog.date}</li>
-                            
                           </ul>
 
-                          {/* <h3>
-                            <Link href={`/blog-details/${blog.id}`}>
-                              {blog.title}
-                            </Link>
-                          </h3> */}
                           <p>{createSummary(blog.content)}</p>
                           <div className="link">
                             <Link href={`/blog-details/${blog.id}`}>
@@ -192,36 +168,37 @@ export default function Home() {
                     </div>
                   ))}
 
-                  {/* -- PAGINACIÓN DINÁMICA -- */}
+                  {/* PAGINACIÓN */}
                   <div className="pagination-wrapper pt_20">
-  <ul className="pagination clearfix">
-    {Array.from({ length: totalPages }).map((_, i) => (
-      <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
-        <button
-          onClick={() => setCurrentPage(i + 1)}
-          className="page-link"
-          style={{ 
-            border: "none",
-            background: "none",
-            padding: "8px 12px", // Ajusta el padding según tus necesidades
-            margin: "0 5px",     // Ajusta el margen entre los botones
-            borderRadius: "5px",   // Borde redondeado
-            cursor: "pointer",
-            color: currentPage === i + 1 ? "#fff" : "#007bff", // Cambia el color del texto de la página activa
-            backgroundColor: currentPage === i + 1 ? "#007bff" : "transparent",  // Cambia el color de fondo de la página activa
-            border: currentPage === i + 1 ? "none" : "1px solid #007bff", // Agrega un borde a las páginas inactivas
-          }}
+                    <ul className="pagination clearfix">
+                      {Array.from({ length: totalPages }).map((_, i) => (
+                        <li
+                          key={i}
+                          className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
+                        >
+                          <button
+                            onClick={() => setCurrentPage(i + 1)}
+                            className="page-link"
+                            style={{
+                              border: "none",
+                              background: "none",
+                              padding: "8px 12px",
+                              margin: "0 5px",
+                              borderRadius: "5px",
+                              cursor: "pointer",
+                              color: currentPage === i + 1 ? "#fff" : "#007bff",
+                              backgroundColor: currentPage === i + 1 ? "#007bff" : "transparent",
+                              border:
+                                currentPage === i + 1 ? "none" : "1px solid #007bff",
+                            }}
+                          >
+                            {i + 1}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-
-        >
-          {i + 1}
-        </button>
-      </li>
-    ))}
-  </ul>
-</div>
-
-                  {/* Mensaje si no hay coincidencias */}
                   {filteredBlogs.length === 0 && (
                     <p>No posts found for "{searchQuery}".</p>
                   )}
