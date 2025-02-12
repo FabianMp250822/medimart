@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Layout from "@/components/layout/Layout";
 import Link from "next/link";
@@ -13,116 +13,178 @@ export default function Home() {
 
   return (
     <>
-      <Layout headerStyle={2} footerStyle={1} breadcrumbTitle={`Contacto - ${sedeData?.nombre || "Sede"}`}>
+      <Layout
+        headerStyle={2}
+        footerStyle={1}
+        breadcrumbTitle={`Contacto - ${sedeData?.nombre || "Sede"}`}
+      >
         <div>
           {/* Sección de Información de Contacto */}
           <section className="contact-info-section pt_120">
             <div className="auto-container">
+              {/* Fila 1 */}
               <div className="row clearfix">
                 {/* Atención al Usuario */}
                 <div className="col-lg-4 col-md-6 col-sm-12 info-column">
                   <div className="info-block-one">
                     <h3>Atención al Usuario</h3>
                     <div className="inner-box">
-                      <div className="icon-box"><i className="icon-2"></i></div>
+                      <div className="icon-box">
+                        <i className="icon-2"></i>
+                      </div>
                       <p>
-                        Teléfono: <br />
-                        <Link href={`tel:3369999`}>3369999 ext: 112</Link>
+                        <strong>Teléfono:</strong> <br />
+                        <Link href="tel:3369999">3369999 ext: 112</Link>
                       </p>
                       <p>
-                        Correo electrónico: <br />
-                        <Link href="mailto:trabajosocial@clinicadelacosta.co">trabajosocial@clinicadelacosta.co</Link>
+                        <strong>Correo electrónico:</strong> <br />
+                        <Link href="mailto:trabajosocial@clinicadelacosta.co">
+                          trabajosocial@clinicadelacosta.co
+                        </Link>
                       </p>
                     </div>
                   </div>
                 </div>
+
                 {/* Contrataciones */}
                 <div className="col-lg-4 col-md-6 col-sm-12 info-column">
                   <div className="info-block-one">
                     <h3>Contrataciones</h3>
                     <div className="inner-box">
-                      <div className="icon-box"><i className="icon-2"></i></div>
+                      <div className="icon-box">
+                        <i className="icon-2"></i>
+                      </div>
                       <p>
-                        Teléfono: <br />
-                        <Link href={`tel:3369999`}>3369999 ext: 137</Link>
+                        <strong>Teléfono:</strong> <br />
+                        <Link href="tel:3369999">3369999 ext: 137</Link>
                       </p>
                       <p>
-                        Correo electrónico: <br />
-                        <Link href="mailto:resonancia@clinicadelacosta.co">resonancia@clinicadelacosta.co</Link>
+                        <strong>Correo electrónico:</strong> <br />
+                        <Link href="mailto:resonancia@clinicadelacosta.co">
+                          resonancia@clinicadelacosta.co
+                        </Link>
                       </p>
                     </div>
                   </div>
                 </div>
+
                 {/* Coordinación */}
                 <div className="col-lg-4 col-md-6 col-sm-12 info-column">
                   <div className="info-block-one">
                     <h3>Coordinación</h3>
                     <div className="inner-box">
                       <div className="icon-box">
-                        <img src="assets/images/icons/icon-2.png" alt="" />
+                        <img
+                          src="assets/images/icons/icon-2.png"
+                          alt="Coordinación"
+                        />
                       </div>
                       <p>
-                        Teléfono: <br />
-                        <Link href={`tel:3369999`}>3369999 ext: 110</Link>
+                        <strong>Teléfono:</strong> <br />
+                        <Link href="tel:3369999">3369999 ext: 110</Link>
                       </p>
                       <p>
-                        Correo electrónico: <br />
-                        <Link href="mailto:neurofisiologia@clinicadelacosta.co">neurofisiologia@clinicadelacosta.co</Link>
+                        <strong>Correo electrónico:</strong> <br />
+                        <Link href="mailto:neurofisiologia@clinicadelacosta.co">
+                          neurofisiologia@clinicadelacosta.co
+                        </Link>
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Información de Auditoría */}
+              {/* Fila 2 */}
               <div className="row clearfix">
+                {/* Auditoría */}
                 <div className="col-lg-4 col-md-6 col-sm-12 info-column">
                   <div className="info-block-one">
                     <h3>Auditoría</h3>
                     <div className="inner-box">
-                      <div className="icon-box"><i className="icon-2"></i></div>
+                      <div className="icon-box">
+                        <i className="icon-2"></i>
+                      </div>
                       <p>
-                        Teléfono: <br />
-                        <Link href={`tel:3369999`}>3369999 ext: 203</Link>
+                        <strong>Teléfono:</strong> <br />
+                        <Link href="tel:3369999">3369999 ext: 203</Link>
                       </p>
                       <p>
-                        Correo electrónico: <br />
-                        <Link href="mailto:patologia@clinicadelacosta.co">patologia@clinicadelacosta.co</Link>
+                        <strong>Correo electrónico:</strong> <br />
+                        <Link href="mailto:patologia@clinicadelacosta.co">
+                          patologia@clinicadelacosta.co
+                        </Link>
                       </p>
                     </div>
                   </div>
                 </div>
+
                 {/* Enfermería */}
                 <div className="col-lg-4 col-md-6 col-sm-12 info-column">
                   <div className="info-block-one">
                     <h3>Enfermería</h3>
                     <div className="inner-box">
-                      <div className="icon-box"><i className="icon-2"></i></div>
+                      <div className="icon-box">
+                        <i className="icon-2"></i>
+                      </div>
                       <p>
-                        Teléfono: <br />
-                        <Link href={`tel:3369999`}>3369999 ext: 106</Link>
+                        <strong>Teléfono:</strong> <br />
+                        <Link href="tel:3369999">3369999 ext: 106</Link>
                       </p>
                       <p>
-                        Correo electrónico: <br />
-                        <Link href="mailto:enfermeriacirugia@clinicadelacosta.co">enfermeriacirugia@clinicadelacosta.co</Link>
+                        <strong>Correo electrónico:</strong> <br />
+                        <Link href="mailto:enfermeriacirugia@clinicadelacosta.co">
+                          enfermeriacirugia@clinicadelacosta.co
+                        </Link>
                       </p>
                     </div>
                   </div>
                 </div>
-                {/* Atención */}
+
+                {/* Correo de Atención */}
                 <div className="col-lg-4 col-md-6 col-sm-12 info-column">
                   <div className="info-block-one">
                     <h3>Correo de Atención</h3>
                     <div className="inner-box">
-                      <div className="icon-box"><i className="icon-2"></i></div>
+                      <div className="icon-box">
+                        <i className="icon-2"></i>
+                      </div>
                       <p>
-                        Correo electrónico: <br />
-                        <Link href="mailto:citasmedicas@clinicadelacosta.co">citasmedicas@clinicadelacosta.co</Link>
+                        <strong>Correo electrónico:</strong> <br />
+                        <Link href="mailto:citasmedicas@clinicadelacosta.co">
+                          citasmedicas@clinicadelacosta.co
+                        </Link>
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
+
+              {/* Fila 3: Notificaciones Judiciales (NUEVO) */}
+              <div className="row clearfix">
+                <div className="col-lg-4 col-md-6 col-sm-12 info-column">
+                  <div className="info-block-one">
+                    <h3>Notificaciones Judiciales</h3>
+                    <div className="inner-box">
+                      <div className="icon-box">
+                        <i className="icon-2"></i>
+                      </div>
+                      <p>
+                        <strong>Correo electrónico 1:</strong> <br />
+                        <Link href="mailto:info@clinicadelacosta.co">
+                          info@clinicadelacosta.co
+                        </Link>
+                      </p>
+                      <p>
+                        <strong>Correo electrónico 2:</strong> <br />
+                        <Link href="mailto:juridica@clinicadelacosta.co">
+                          juridica@clinicadelacosta.co
+                        </Link>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Fin Fila 3 */}
             </div>
           </section>
 
@@ -135,35 +197,79 @@ export default function Home() {
                     <div className="sec-title mb_50">
                       <h2>Enviar un Mensaje</h2>
                     </div>
-                    <form method="post" action="sendemail.php" id="contact-form" className="default-form">
+                    <form
+                      method="post"
+                      action="sendemail.php"
+                      id="contact-form"
+                      className="default-form"
+                    >
                       <div className="row clearfix">
                         <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                          <input type="text" name="username" placeholder="Nombre" required />
+                          <input
+                            type="text"
+                            name="username"
+                            placeholder="Nombre"
+                            required
+                          />
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                          <input type="text" name="lname" placeholder="Apellido" required />
+                          <input
+                            type="text"
+                            name="lname"
+                            placeholder="Apellido"
+                            required
+                          />
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                          <input type="email" name="email" placeholder="Correo Electrónico" required />
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="Correo Electrónico"
+                            required
+                          />
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                          <input type="text" name="phone" required placeholder="Teléfono" />
+                          <input
+                            type="text"
+                            name="phone"
+                            required
+                            placeholder="Teléfono"
+                          />
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 form-group">
-                          <input type="text" name="subject" required placeholder="Asunto" />
+                          <input
+                            type="text"
+                            name="subject"
+                            required
+                            placeholder="Asunto"
+                          />
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 form-group">
-                          <textarea name="message" placeholder="Mensaje"></textarea>
+                          <textarea
+                            name="message"
+                            placeholder="Mensaje"
+                          ></textarea>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                          <button className="theme-btn btn-one" type="submit" name="submit-form"><span>Enviar Mensaje</span></button>
+                          <button
+                            className="theme-btn btn-one"
+                            type="submit"
+                            name="submit-form"
+                          >
+                            <span>Enviar Mensaje</span>
+                          </button>
                         </div>
                       </div>
                     </form>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-12 col-sm-12 image-column">
-                  <figure className="image-box"><img src="assets/images/banner/contacto.webp" alt="" /></figure>
+                  <figure className="image-box">
+                    <img
+                      src="assets/images/banner/contacto.webp"
+                      alt="Contacto"
+                    />
+                  </figure>
                 </div>
               </div>
             </div>
