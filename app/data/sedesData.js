@@ -18,7 +18,7 @@ const sedesData = {
     nombre: "Clínica de la Costa - Cartagena",
     direccion: "Calle 23 # 65 - 103 Blas de lezo",
     telefono: "+57 5 6654321",
-    whatsappNumber: "+57314 4182091",
+    whatsappNumber: "+573144182091",
     whatsappMessage: "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Cartagena.",
     servicios: [
       "HOSPITALIZACIÓN PACIENTE CRÓNICO CON VENTILADOR",
