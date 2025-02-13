@@ -32,10 +32,31 @@ import {
 import { db } from "@/lib/firebase";
 
 export default function BlogDetailsClient({ blogData }) {
-  const { id, title, content, image, author, date } = blogData;
+  const { id, title, content, image, author, date, video } = blogData;
   const [visits, setVisits] = useState(0);
   const [recentBlogs, setRecentBlogs] = useState([]);
   const router = useRouter();
+
+  // Función auxiliar para extraer el ID del video de YouTube
+  const getYouTubeVideoID = (url) => {
+    try {
+      const urlObj = new URL(url);
+      if (urlObj.hostname === "youtu.be") {
+        return urlObj.pathname.slice(1);
+      } else if (
+        urlObj.hostname === "www.youtube.com" ||
+        urlObj.hostname === "youtube.com"
+      ) {
+        return urlObj.searchParams.get("v");
+      }
+      return null;
+    } catch (error) {
+      console.error("URL de YouTube inválida:", error);
+      return null;
+    }
+  };
+
+  const videoID = video ? getYouTubeVideoID(video) : null;
 
   // Actualizar el contador de visitas
   useEffect(() => {
@@ -160,6 +181,23 @@ export default function BlogDetailsClient({ blogData }) {
                   </WhatsappShareButton>
                 </div>
               </header>
+
+              {/* Video de YouTube (si está disponible) */}
+              {video && videoID && (
+                <div className="my-4">
+                  <div className="embed-responsive embed-responsive-16by9">
+                    <iframe
+                      className="embed-responsive-item"
+                      src={`https://www.youtube.com/embed/${videoID}`}
+                      title="Video de YouTube"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </div>
+              )}
+
               {/* Imagen principal */}
               {image && (
                 <img src={image} alt={title} className="img-fluid blog-image" />
