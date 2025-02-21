@@ -1,10 +1,13 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { useTranslation } from "react-i18next";
 
 export default function News() {
+  const { t } = useTranslation();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -53,14 +56,14 @@ export default function News() {
   };
 
   if (loading) {
-    return <p>Cargando artículos...</p>;
+    return <p>{t("cargandoArticulos")}</p>;
   }
 
   if (!blogs || blogs.length === 0) {
-    return <p>No hay artículos disponibles.</p>;
+    return <p>{t("noHayArticulosDisponibles")}</p>;
   }
 
-  // Ordenamos por visitas (desc) y cogemos los 3 primeros
+  // Ordenar por visitas (desc) y tomar los 3 primeros
   const sortedByVisits = [...blogs].sort((a, b) => b.visits - a.visits);
   const topThree = sortedByVisits.slice(0, 3);
 
@@ -69,8 +72,7 @@ export default function News() {
       <div className="auto-container">
         <div className="sec-title mb_50 centred">
           <h2>
-            Consulta nuestros artículos más <br />
-            recientes
+            {t("consultaNuestrosArticulosRecientes")}
           </h2>
         </div>
 
@@ -79,14 +81,13 @@ export default function News() {
             <div
               key={blog.id}
               className="col-lg-4 col-md-6 col-sm-12 news-block"
-              style={{ marginBottom: "30px" }} // Espacio entre columnas
+              style={{ marginBottom: "30px" }}
             >
               <div
                 className="news-block-one wow fadeInUp animated"
                 data-wow-delay="00ms"
                 data-wow-duration="1500ms"
                 style={{
-                  // Alto mínimo para la tarjeta
                   minHeight: "450px",
                   display: "flex",
                   flexDirection: "column",
@@ -100,7 +101,6 @@ export default function News() {
                     flexDirection: "column",
                   }}
                 >
-                  {/* Imagen con altura fija */}
                   <figure
                     className="image-box"
                     style={{
@@ -116,13 +116,12 @@ export default function News() {
                         style={{
                           width: "100%",
                           height: "100%",
-                          objectFit: "cover", 
+                          objectFit: "cover",
                         }}
                       />
                     </Link>
                   </figure>
 
-                  {/* Contenido */}
                   <div
                     className="lower-content"
                     style={{
@@ -159,7 +158,7 @@ export default function News() {
                     </div>
                     <div className="link">
                       <Link href={`/blog-details/${blog.id}`}>
-                        <span>Leer más</span>
+                        <span>{t("leerMas")}</span>
                       </Link>
                     </div>
                   </div>
@@ -169,10 +168,9 @@ export default function News() {
           ))}
         </div>
 
-        {/* Botón para ver la página blog-2 con más posts */}
         <div className="text-center" style={{ marginTop: "30px" }}>
           <Link href="/blog-2" className="theme-btn btn-one">
-            <span>Ver más</span>
+            <span>{t("verMas")}</span>
           </Link>
         </div>
       </div>

@@ -1,60 +1,15 @@
+"use client";
+
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Recognitions() {
-  const textContent = [
-    {
-      title: "MSD",
-      description:
-        "Reconocimiento al CIC por excelente desempeño y gestión de calidad en la ejecución de estudios clínicos. Abril 2017.",
-    },
-    {
-      title: "MSD",
-      description:
-        "Reconocimiento al CIC por contribución al desarrollo de la investigación clínica, durante la conmemoración de los 75 años.",
-    },
-    {
-      title: "Noviembre 2022",
-      description:
-        "MSD - Inventing for Life - Otorga el presente reconocimiento a Clínica de La Costa por su contribución a la ciencia e innovación en la investigación clínica en Colombia.",
-    },
-  ];
+  const { t } = useTranslation();
 
-  const textContentRight = [
-    {
-      title: "Mayo 2021",
-      description:
-        "MSD - Otorga el presente reconocimiento a Clínica de la Costa por su adaptabilidad y eficiencia en los procesos administrativos y regulatorios llevados a cabo durante la pandemia. Bogotá, Colombia.",
-    },
-    {
-      title: "9 de Mayo de 2024",
-      description:
-        "MSD - Excelentes métricas de calidad durante el año 2023 y el primer trimestre del año 2024. Orgullosamente presentado a Clínica de la Costa. Este certificado se presenta por logro honorable.",
-    },
-    {
-      title: "Mayo 2021",
-      description:
-        "MSD - Otorga el presente reconocimiento a Clínica de la Costa por los esfuerzos extraordinarios realizados para garantizar la seguridad y continuidad en el estudio de todos los pacientes durante la pandemia. Bogotá, Colombia.",
-    },
-  ];
-
-  const bottomRecognitions = [
-    { 
-      title: "Excelente desempeño y gestión de calidad en la ejecución de estudios clínicos", 
-      image: "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
-    },
-    { 
-      title: "Contribución al desarrollo de la investigación clínica", 
-      image: "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
-    },
-    { 
-      title: "Excelentes métricas de calidad durante el año 2023 y el primer trimestre del año 2024", 
-      image: "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
-    },
-    { 
-      title: "Contribución a la ciencia e innovación en la investigación clínica en Colombia", 
-      image: "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
-    },
-  ];
+  // Se extraen los arrays definidos en la traducción
+  const textContent = t('recognitions.textContent', { returnObjects: true });
+  const textContentRight = t('recognitions.textContentRight', { returnObjects: true });
+  const bottomRecognitions = t('recognitions.bottomRecognitions', { returnObjects: true });
 
   const sectionStyle = {
     padding: "40px 20px",
@@ -124,7 +79,7 @@ export default function Recognitions() {
 
   return (
     <div style={sectionStyle}>
-      <h2 style={titleStyle}>Reconocimientos</h2>
+      <h2 style={titleStyle}>{t("reconocimientosTitle")}</h2>
       <div style={rowStyle}>
         <div style={columnStyle}>
           {textContent.map((item, index) => (

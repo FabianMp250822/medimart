@@ -116,37 +116,18 @@ export default function Footer1() {
                       style={{ fontFamily: "Nunito Sans", fontSize: "16px" }}
                     >
                       <li>
-                        <Link href="/" target="_blank" rel="noopener noreferrer">
-                          Inicio
+                        <Link href="www.invclicosta.com" target="_blank" rel="noopener noreferrer">
+                          Centro de Investigacion
                         </Link>
                       </li>
                       <li>
                         <Link
-                          href="/about"
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          href="www.cideacx.com" target="_blank" rel="noopener noreferrer"
                         >
-                          Sobre Nosotros
+                          CIDEACC
                         </Link>
                       </li>
-                      <li>
-                        <Link
-                          href="/services"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Servicios
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/contact"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Contáctenos
-                        </Link>
-                      </li>
+                     
                     </ul>
                   </div>
                 </div>
@@ -155,45 +136,36 @@ export default function Footer1() {
               {/* 3. Información Legal */}
               <div className="col-lg-3 col-md-6 col-sm-12 footer-column">
                 <div className="footer-widget links-widget ml_55">
+                  
+                  <div
+                  className="footer-widget contact-widget"
+                  style={{ marginTop: "30px" }}
+                >
                   <div className="widget-title">
                     <h3 style={{ fontFamily: "Nunito Sans", fontSize: "18px" }}>
-                      Información Legal
+                      Notificaciones Judiciales
                     </h3>
                   </div>
-                  <div className="widget-content">
-                    <ul
-                      className="links-list clearfix"
-                      style={{ fontFamily: "Nunito Sans", fontSize: "16px" }}
-                    >
+                  <div
+                    className="widget-content"
+                    style={{ fontFamily: "Nunito Sans", fontSize: "16px" }}
+                  >
+                    <ul className="info-list">
                       <li>
-                        <Link
-                          href="/privacy-policy"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Política de Privacidad
+                        <i className="icon-26"></i>
+                        <Link href="mailto:info@clinicadelacosta.co">
+                          info@clinicadelacosta.co
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          href="/terms-conditions"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Términos y Condiciones
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/faq"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Preguntas Frecuentes
+                        <i className="icon-26"></i>
+                        <Link href="mailto:juridica@clinicadelacosta.co">
+                          juridica@clinicadelacosta.co
                         </Link>
                       </li>
                     </ul>
                   </div>
+                </div>
                 </div>
               </div>
 
@@ -240,36 +212,7 @@ export default function Footer1() {
                   </div>
                 </div>
 
-                {/* Sección de Notificaciones Judiciales */}
-                <div
-                  className="footer-widget contact-widget"
-                  style={{ marginTop: "30px" }}
-                >
-                  <div className="widget-title">
-                    <h3 style={{ fontFamily: "Nunito Sans", fontSize: "18px" }}>
-                      Notificaciones Judiciales
-                    </h3>
-                  </div>
-                  <div
-                    className="widget-content"
-                    style={{ fontFamily: "Nunito Sans", fontSize: "16px" }}
-                  >
-                    <ul className="info-list">
-                      <li>
-                        <i className="icon-26"></i>
-                        <Link href="mailto:info@clinicadelacosta.co">
-                          info@clinicadelacosta.co
-                        </Link>
-                      </li>
-                      <li>
-                        <i className="icon-26"></i>
-                        <Link href="mailto:juridica@clinicadelacosta.co">
-                          juridica@clinicadelacosta.co
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+              
                 {/* Fin Notificaciones Judiciales */}
               </div>
             </div>

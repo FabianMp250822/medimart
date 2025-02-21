@@ -1,7 +1,12 @@
+"use client";
+
 import Link from 'next/link';
 import React from 'react';
+import { useTranslation } from "react-i18next";
 
 export default function About() {
+  const { t } = useTranslation();
+
   return (
     <section className="about-section pt_120 pb_120 bg-color-1">
       <div className="pattern-layer">
@@ -17,12 +22,17 @@ export default function About() {
             <div className="image_block_one">
               <div className="image-box">
                 <div className="shape float-bob-x" style={{ backgroundImage: 'url(assets/images/shape/shape-7.png)' }}></div>
-                <figure className="image"><img src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641" alt="Equipo médico de la Clínica de la Costa" /></figure>
+                <figure className="image">
+                  <img 
+                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641" 
+                    alt={t("equipoMedico")} 
+                  />
+                </figure>
                 <div className="icon-one"><i className="icon-13"></i></div>
                 <div className="icon-two"><i className="icon-14"></i></div>
                 <div className="text-box">
-                  <h3>Clínica de la Costa</h3>
-                  <span>Comprometidos con Tu Bienestar</span>
+                  <h3>{t("clinicaDeLaCosta")}</h3>
+                  <span>{t("comprometidosConTuBienestar")}</span>
                 </div>
               </div>
             </div>
@@ -31,22 +41,24 @@ export default function About() {
             <div className="content_block_one">
               <div className="content-box ml_30">
                 <div className="sec-title mb_15">
-                  <span className="sub-title">Sobre Nosotros</span>
-                  <h2>Comprometidos con tu Salud y Bienestar</h2>
+                  <span className="sub-title">{t("sobreNosotros")}</span>
+                  <h2>{t("comprometidosConTuSalud")}</h2>
                 </div>
                 <div className="text-box mb_40">
-                  <h6>En la Clínica de la Costa, cuidamos de ti como si fueras parte de nuestra familia.</h6>
-                  <p>Nos enfocamos en brindarte una atención humana y cercana, respaldada por tecnología avanzada y un equipo de profesionales comprometidos con tu salud. Desde servicios médicos especializados hasta atención de emergencias, estamos aquí para acompañarte en cada paso del camino.</p>
+                  <h6>{t("clinicaFamilia")}</h6>
+                  <p>{t("descripcionSobreNosotros")}</p>
                   <ul className="list-style-one clearfix">
-                    <li>Servicios de Ambulancia disponibles para emergencias</li>
-                    <li>Oxígeno a Domicilio para tu comodidad</li>
-                    <li>Farmacia en Clínica para mayor conveniencia</li>
-                    <li>Médicos de Guardia siempre listos para atenderte</li>
-                    <li>Emergencias Médicas 24/7 porque tu bienestar es nuestra prioridad</li>
+                    <li>{t("serviciosAmbulancia")}</li>
+                    <li>{t("oxigenoADomicilio")}</li>
+                    <li>{t("farmaciaEnClinica")}</li>
+                    <li>{t("medicosDeGuardia")}</li>
+                    <li>{t("emergenciasMedicas")}</li>
                   </ul>
                 </div>
                 <div className="btn-box">
-                  <Link href="/appointment"  className="theme-btn btn-one"><span>Descubre Más Sobre Nosotros</span></Link>
+                  <Link href="/appointment" className="theme-btn btn-one">
+                    <span>{t("descubreMasSobreNosotros")}</span>
+                  </Link>
                 </div>
               </div>
             </div>

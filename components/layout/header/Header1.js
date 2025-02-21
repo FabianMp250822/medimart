@@ -4,9 +4,9 @@ import Link from "next/link";
 import Menu from "../Menu";
 import MobileMenu from "../MobileMenu";
 import { useSede } from "@/app/context/SedeContext";
-
-// 1. Importa 'Script' desde 'next/script'
 import Script from "next/script";
+import { useTranslation } from "react-i18next";
+import ReactCountryFlag from "react-country-flag";
 
 export default function Header1({
   scroll,
@@ -17,6 +17,7 @@ export default function Header1({
   handleSidebar,
 }) {
   const { sedesData, selectedSede, selectSede } = useSede();
+  const { t, i18n } = useTranslation();
 
   const sedeData = sedesData[selectedSede];
   const whatsappNumber = sedeData?.whatsappNumber || "+573003456789";
@@ -35,12 +36,18 @@ export default function Header1({
     }
   };
 
+  // Funciones para cambiar el idioma manualmente
+  const changeLanguageToES = () => {
+    i18n.changeLanguage("es");
+  };
+
+  const changeLanguageToEN = () => {
+    i18n.changeLanguage("en");
+  };
+
   return (
     <>
-      {/*
-        2. Agrega el script principal de Google Tag Manager (GTM).
-           Esto insertará <script> con la estrategia de carga "afterInteractive".
-      */}
+      {/* Script de Google Tag Manager */}
       <Script id="gtm-init" strategy="afterInteractive">
         {`
           (function(w,d,s,l,i){
@@ -56,12 +63,6 @@ export default function Header1({
         `}
       </Script>
 
-      {/*
-        3. Agrega el bloque <noscript> con el iframe de GTM.
-           Para evitar problemas de JSX con <noscript>, puedes hacerlo de 2 maneras:
-             - Usar 'dangerouslySetInnerHTML'
-             - Insertarlo directamente como JSX (Next.js lo respeta).
-      */}
       <noscript>
         <iframe
           src="https://www.googletagmanager.com/ns.html?id=GTM-5MZSVT7Q"
@@ -72,35 +73,67 @@ export default function Header1({
       </noscript>
 
       <header className={`main-header ${scroll ? "fixed-header" : ""}`}>
+        {/* Sección superior */}
         <div className="header-top">
           <div className="auto-container">
-            <div className="top-inner">
-              <ul className="info-list clearfix">
-                <li>
-                  <i className="icon-1"></i>
-                  Atención:
-                  <Link href={`tel:${sedeData?.telefono}`}>
-                    {sedeData?.telefono || "+57 (605) 3369973"}
-                  </Link>
-                </li>
-                {/* Ocultar este elemento en móvil */}
-                <li className="direccion">
-                  <img src="/assets/images/icons/icon-1.png" alt="Icono" />
-                  {sedeData?.direccion || "Cra. 50 #80-149, Sede 3"}
-                </li>
-                <li>
-                  <a
-                    href={whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="fab fa-whatsapp" /> WhatsApp
-                  </a>
-                </li>
-              </ul>
+            {/* top-inner con 5 columnas usando CSS Grid */}
+            <div className="top-inner grid-five-columns">
+              {/* 1. Columna: Atención (atencion) */}
+              <div className="column">
+                <i className="icon-1" />
+                {t("atencion")}:
+                <Link href={`tel:${sedeData?.telefono}`}>
+                  {sedeData?.telefono || "+57 (605) 3369973"}
+                </Link>
+              </div>
 
-              <div className="sede-selector">
-                <label htmlFor="sede-select">Seleccionar Sede:</label>
+              {/* 2. Columna: Dirección (oculta en móvil con CSS) */}
+              <div className="column direccion">
+                <img src="/assets/images/icons/icon-1.png" alt="Icono" />
+                {sedeData?.direccion || "Cra. 50 #80-149, Sede 3"}
+              </div>
+
+              {/* 3. Columna: WhatsApp */}
+              <div className="column">
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i className="fab fa-whatsapp" /> WhatsApp
+                </a>
+              </div>
+
+              {/* 4. Columna: Banderas para cambiar idioma */}
+              <div className="column language-switcher">
+                <ReactCountryFlag
+                  countryCode="ES"
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "2em",
+                    cursor: "pointer",
+                    marginRight: "0.5em",
+                  }}
+                  title="Español"
+                  onClick={changeLanguageToES}
+                />
+                <ReactCountryFlag
+                  countryCode="US"
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "2em",
+                    cursor: "pointer",
+                  }}
+                  title="English"
+                  onClick={changeLanguageToEN}
+                />
+              </div>
+
+              {/* 5. Columna: Selector de sede (seleccionarSede) */}
+              <div className="column sede-selector">
+                <label htmlFor="sede-select">{t("seleccionarSede")}:</label>
                 <select
                   id="sede-select"
                   value={selectedSede || ""}
@@ -118,6 +151,7 @@ export default function Header1({
           </div>
         </div>
 
+        {/* Sección inferior (logo, menú, botón, etc.) */}
         <div className="header-lower">
           <div className="outer-container">
             <div className="auto-container">
@@ -153,8 +187,9 @@ export default function Header1({
                 </div>
 
                 <div className="btn-box">
+                  {/* Botón: Trabaje con nosotros (trabajeConNosotros) */}
                   <Link href="/empleos" className="theme-btn btn-one">
-                    <span>Trabaje con nosotros</span>
+                    <span>{t("trabajeConNosotros")}</span>
                   </Link>
                 </div>
               </div>
@@ -165,36 +200,38 @@ export default function Header1({
         <MobileMenu handleMobileMenu={handleMobileMenu} />
       </header>
 
+      {/* Estilos */}
       <style jsx>{`
-        /* Estilos generales para escritorio y móvil */
-        .top-inner {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: center;
+        /* Ajustes base para el header */
+        .main-header {
+          background-color: #005687; /* Ejemplo de color */
         }
 
-        .info-list {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
+        /* Estilos para la parte top en Grid */
+        .top-inner.grid-five-columns {
+          display: grid;
+          grid-template-columns: repeat(5, auto);
           gap: 20px;
+          align-items: center;
           padding: 15px 0;
-          list-style: none;
-          margin: 0;
         }
 
-        .info-list li {
-          color: white;
-          font-size: 1rem;
+        .column {
           display: flex;
           align-items: center;
+          gap: 5px;
+          color: white;
         }
 
-        .info-list li a {
-          color: white;
-          text-decoration: none;
-          margin-left: 5px;
+        @media (max-width: 768px) {
+          .direccion {
+            display: none;
+          }
+        }
+
+        .language-switcher {
+          display: flex;
+          align-items: center;
         }
 
         .sede-selector {
@@ -202,7 +239,6 @@ export default function Header1({
           align-items: center;
           gap: 10px;
         }
-
         .sede-selector label {
           font-weight: bold;
           color: white;
@@ -219,10 +255,28 @@ export default function Header1({
           outline: none;
           transition: border-color 0.3s, box-shadow 0.3s;
         }
-
         .custom-select:focus {
           border-color: #2563eb;
           box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+        }
+
+        .column a {
+          color: white;
+          text-decoration: none;
+        }
+
+        .header-lower {
+          padding: 20px 0;
+        }
+        .outer-box {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+        }
+        .logo-image {
+          max-width: 150px;
+          height: auto;
         }
 
         .theme-btn.btn-one {
@@ -236,88 +290,34 @@ export default function Header1({
           transition: background-color 0.3s ease;
           display: inline-block;
         }
-
         .theme-btn.btn-one:hover {
           background-color: #1e3a8a;
         }
 
-        .logo-image {
-          max-width: 150px;
-          height: auto;
-        }
-
-        .header-lower {
-          padding: 20px 0;
-        }
-
-        .outer-box {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 20px;
-        }
-
-        /* Ajustes responsivos */
         @media (max-width: 768px) {
-          .top-inner {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 5px;
+          .top-inner.grid-five-columns {
+            grid-template-columns: 1fr;
           }
-
-          .info-list {
-            width: 100%;
-            flex-direction: column;
-            gap: 5px;
-            padding: 10px 0;
+          .column {
+            margin-bottom: 5px;
           }
-
-          .info-list .direccion {
-            display: none;
-          }
-
-          .info-list li {
-            font-size: 0.9rem;
-          }
-
-          .sede-selector {
-            width: 100%;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-top: 5px;
-          }
-
-          .custom-select {
-            width: 100%;
-            padding: 8px 12px;
-            font-size: 0.9rem;
-          }
-
-          .logo-image {
-            max-width: 80px;
-          }
-
           .outer-box {
             flex-direction: row;
             justify-content: space-between;
             gap: 10px;
           }
-
-          .menu-area {
-            display: flex;
-            justify-content: center;
-          }
-
-          .theme-btn.btn-one {
-            padding: 8px 16px;
-            font-size: 0.8rem;
-            border-radius: 4px; /* Cambiar a una forma más cuadrada */
-            max-width: 120px; /* Reducir el tamaño del botón */
-          }
-
           .mobile-nav-toggler {
             font-size: 1.2rem;
             margin-top: 5px;
+          }
+          .logo-image {
+            max-width: 80px;
+          }
+          .theme-btn.btn-one {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            max-width: 120px;
           }
         }
       `}</style>

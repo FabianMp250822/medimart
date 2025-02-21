@@ -1,107 +1,126 @@
-'use client';
+"use client";
 
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export default function Menu() {
-    const nosotrosMenuItems = [
-        { title: "Acerca de Nosotros: Misión, Visión, Valores, Historia", link: "/service-details-3" },
-        { title: "Trabaja con nosotros", link: "/trabaja-con-nosotros" },
-        { title: "Gestión Documental", link: "/service-details-2" },
-        { title: "Certificaciones", link: "/certificaciones" },
-        { title: "Responsabilidad social y empresarial", link: "/responsabilidad-social" },
-        { title: "Direccionamiento Estratégico", link: "/direccionamiento-estrategico" },
-        { title: "Marco Legal", link: "/marco-legal" },
-        //{ title: "Informes de Sostenibilidad", link: "/informes-de-sostenibilidad" },
-        { title: "Sistema Integrado de Gestión", link: "/sistema-integrado-de-gestion" },
-        { title: "Política de tratamiento de datos", link: "/politica-de-datos" },
-    ];
+  const { t } = useTranslation();
 
-    const pacientesMenuItems = [
-        { title: "Solicitar Cita Médica", link: "/appointment" },
-        { title: "Preparación Para procediminetos", link: "/procedimientos" },
-        { title: "Directorio de Especialidades y Servicios", link: "/directorio-especialistas" },
-        { title: "Tus Resultados Médicos", link: "/reclamar-resultados" },
-        { title: "Laboratorio Clínico", link: "/laboratorio-clinico" },
-        { title: "Preparación para Exámenes Médicos", link: "/preparacion-examenes" },
-        { title: "Entidades en Convenio", link: "/entidades-convenio" },
-        { title: "Solicitud de Historia Clínica", link: "/solicitud-historia-clinica" },
-        { title: "Derechos y Deberes del Paciente", link: "/derechos-y-deberes" },
-        { title: "Durante su Visita", link: "/durante-visita" },
-        { title: "Educación al Paciente", link: "/educacion-paciente" },
-    ];
-    
+  // Menú "Nosotros"
+  const nosotrosMenuItems = [
+    {
+      title: t("acercaDeNosotros"), // <-- nueva clave
+      link: "/service-details-3",
+    },
+    { title: t("trabajaConNosotros"), link: "/trabaja-con-nosotros" },
+    { title: t("gestionDocumental"), link: "/service-details-2" },
+    { title: t("certificaciones"), link: "/certificaciones" },
+    { title: t("responsabilidadSocial"), link: "/responsabilidad-social" },
+    { title: t("direccionamientoEstrategico"), link: "/direccionamiento-estrategico" },
+    { title: t("marcoLegal"), link: "/marco-legal" },
+    { title: t("sistemaIntegradoDeGestion"), link: "/sistema-integrado-de-gestion" },
+    { title: t("politicaDeDatos"), link: "/politica-de-datos" },
+  ];
 
-    return (
-        <>
-            <ul className="navigation clearfix">
-                {/* Menú principal */}
-                <li className="dropdown"><Link href="/">Inicio</Link></li>
+  // Menú "Pacientes"
+  const pacientesMenuItems = [
+    { title: t("solicitarCitaMedica"), link: "/appointment" },
+    { title: t("preparacionProcedimientos"), link: "/procedimientos" },
+    {
+      title: t("directorioEspecialidadesServicios"),
+      link: "/directorio-especialistas",
+    },
+    { title: t("tusResultadosMedicos"), link: "/reclamar-resultados" },
+    { title: t("laboratorioClinico"), link: "/laboratorio-clinico" },
+    { title: t("preparacionExamenes"), link: "/preparacion-examenes" },
+    { title: t("entidadesConvenio"), link: "/entidades-convenio" },
+    { title: t("solicitudHistoriaClinica"), link: "/solicitud-historia-clinica" },
+    { title: t("derechosDeberesPaciente"), link: "/derechos-y-deberes" },
+    { title: t("duranteSuVisita"), link: "/durante-visita" },
+    { title: t("educacionAlPaciente"), link: "/educacion-paciente" },
+  ];
 
-                {/* Sección "Nosotros" */}
-                <li className="dropdown">
-                    <Link href="#">Nosotros</Link>
-                    <ul className="nosotros-submenu">
-                        {nosotrosMenuItems.map((item, index) => (
-                            <li key={index}>
-                                <Link href={item.link}>{item.title}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </li>
+  return (
+    <>
+      <ul className="navigation clearfix">
+        {/* Menú principal */}
+        <li className="dropdown">
+          <Link href="/">{t("inicio")}</Link>
+        </li>
 
-                {/* Sección "Servicios" */}
-                <li className="dropdown">
-                    <Link href="/service-details-6">Servicios</Link>
-                </li>
+        {/* Sección "Nosotros" */}
+        <li className="dropdown">
+          <Link href="#">{t("nosotros")}</Link>
+          <ul className="nosotros-submenu">
+            {nosotrosMenuItems.map((item, index) => (
+              <li key={index}>
+                <Link href={item.link}>{item.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </li>
 
-                {/* Sección "Pacientes" */}
-                <li className="dropdown">
-                    <Link href="#">Pacientes</Link>
-                    <ul className="pacientes-submenu">
-                        {pacientesMenuItems.map((item, index) => (
-                            <li key={index}>
-                                <Link href={item.link}>{item.title}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </li>
+        {/* Sección "Servicios" */}
+        <li className="dropdown">
+          <Link href="/service-details-6">{t("servicios")}</Link>
+        </li>
 
-                {/* Sección "Equipo" */}
-                <li className="dropdown">
-                    <Link href="/team">Especialistas</Link>
-                </li>
+        {/* Sección "Pacientes" */}
+        <li className="dropdown">
+          <Link href="#">{t("pacientes")}</Link>
+          <ul className="pacientes-submenu">
+            {pacientesMenuItems.map((item, index) => (
+              <li key={index}>
+                <Link href={item.link}>{item.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </li>
 
-                {/* Sección "Preguntas Frecuentes" */}
-                <li><Link href="/faq">Faq's</Link></li>
+        {/* Sección "Equipo / Especialistas" */}
+        <li className="dropdown">
+          <Link href="/team">{t("especialistas")}</Link>
+        </li>
 
-                {/* Sección "Contacto" */}
-                <li><Link href="/contact">Contacto</Link></li>
-            </ul>
+        {/* Sección "Preguntas Frecuentes" */}
+        <li>
+          <Link href="/faq">{t("faqs")}</Link>
+        </li>
 
-            <style jsx>{`
-                .nosotros-submenu, .pacientes-submenu {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 10px;
-                    padding: 10px;
-                    background-color: #f9f9f9;
-                    min-width: 400px;
-                }
+        {/* Sección "Contacto" */}
+        <li>
+          <Link href="/contact">{t("contacto")}</Link>
+        </li>
+      </ul>
 
-                .nosotros-submenu li, .pacientes-submenu li {
-                    list-style: none;
-                }
+      <style jsx>{`
+        .nosotros-submenu,
+        .pacientes-submenu {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          padding: 10px;
+          background-color: #f9f9f9;
+          min-width: 400px;
+        }
 
-                .nosotros-submenu li a, .pacientes-submenu li a {
-                    color: #333;
-                    text-decoration: none;
-                    font-size: 0.9rem;
-                }
+        .nosotros-submenu li,
+        .pacientes-submenu li {
+          list-style: none;
+        }
 
-                .nosotros-submenu li a:hover, .pacientes-submenu li a:hover {
-                    color: #2563eb;
-                }
-            `}</style>
-        </>
-    );
+        .nosotros-submenu li a,
+        .pacientes-submenu li a {
+          color: #333;
+          text-decoration: none;
+          font-size: 0.9rem;
+        }
+
+        .nosotros-submenu li a:hover,
+        .pacientes-submenu li a:hover {
+          color: #2563eb;
+        }
+      `}</style>
+    </>
+  );
 }

@@ -14,5 +14,15 @@
   "components/layout/Layout.js -> wowjs/dist/wow": {
     "id": "components/layout/Layout.js -> wowjs/dist/wow",
     "files": []
+  },
+  "components/layout/header/Header1NoSSR.jsx -> ./Header1": {
+    "id": "components/layout/header/Header1NoSSR.jsx -> ./Header1",
+    "files": []
+  },
+  "node_modules/i18next-http-backend/esm/request.js -> cross-fetch": {
+    "id": "node_modules/i18next-http-backend/esm/request.js -> cross-fetch",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_cross-fetch_dist_browser-ponyfill_js.js"
+    ]
   }
 }

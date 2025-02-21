@@ -18,6 +18,7 @@ import Header1 from "./header/Header1";
 import Header2 from './header/Header2';
 import Header3 from "./header/Header3";
 import Header4 from "./header/Header4";
+import Header1NoSSR from "./header/Header1NoSSR";
 
 export default function Layout({
   headerStyle,
@@ -76,7 +77,7 @@ export default function Layout({
         id="#top"
       >
         {(headerStyle === 1 || !headerStyle) && (
-          <Header1
+          <Header1NoSSR
             scroll={scroll}
             isMobileMenu={isMobileMenu}
             handleMobileMenu={handleMobileMenu}

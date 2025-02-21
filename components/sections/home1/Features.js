@@ -1,7 +1,12 @@
+"use client";
+
 import Link from 'next/link';
 import React from 'react';
+import { useTranslation } from "react-i18next";
 
 export default function Feature() {
+  const { t } = useTranslation();
+
   return (
     <section className="feature-section pt_120 pb_90">
       <div className="shape" style={{ backgroundImage: 'url(assets/images/shape/shape-6.png)' }}></div>
@@ -11,8 +16,10 @@ export default function Feature() {
             <div className="feature-block-one" style={{ height: '100%' }}>
               <div className="inner-box" style={{ height: '100%' }}>
                 <div className="icon-box"><i className="icon-9"></i></div>
-                <h3><Link href="/">Atención Personalizada</Link></h3>
-                <p>Nos importa tu bienestar. Nuestros especialistas están aquí para escucharte, entenderte y brindarte el cuidado que realmente necesitas, siempre con calidez y empatía.</p>
+                <h3>
+                  <Link href="/">{t("atencionPersonalizada")}</Link>
+                </h3>
+                <p>{t("descripcionAtencionPersonalizada")}</p>
               </div>
             </div>
           </div>
@@ -20,8 +27,10 @@ export default function Feature() {
             <div className="feature-block-one" style={{ height: '100%' }}>
               <div className="inner-box" style={{ height: '100%' }}>
                 <div className="icon-box"><i className="icon-10"></i></div>
-                <h3><Link href="/">Urgencias Disponibles 24/7</Link></h3>
-                <p>Sabemos que las emergencias no esperan. Estamos aquí para ti, día y noche, para asegurarnos de que recibas la atención que necesitas cuando más la necesitas.</p>
+                <h3>
+                  <Link href="/">{t("urgenciasDisponibles")}</Link>
+                </h3>
+                <p>{t("descripcionUrgenciasDisponibles")}</p>
               </div>
             </div>
           </div>
@@ -29,8 +38,10 @@ export default function Feature() {
             <div className="feature-block-one" style={{ height: '100%' }}>
               <div className="inner-box" style={{ height: '100%' }}>
                 <div className="icon-box"><i className="icon-11"></i></div>
-                <h3><Link href="/">Cuidado con Tecnología Avanzada</Link></h3>
-                <p>Tu salud merece lo mejor. Utilizamos tecnología de última generación para ofrecerte diagnósticos y tratamientos precisos, siempre enfocados en tu bienestar.</p>
+                <h3>
+                  <Link href="/">{t("cuidadoConTecnologia")}</Link>
+                </h3>
+                <p>{t("descripcionCuidadoConTecnologia")}</p>
               </div>
             </div>
           </div>
@@ -38,8 +49,10 @@ export default function Feature() {
             <div className="feature-block-one" style={{ height: '100%' }}>
               <div className="inner-box" style={{ height: '100%' }}>
                 <div className="icon-box"><i className="icon-12"></i></div>
-                <h3><Link href="/">Atención para Toda la Familia</Link></h3>
-                <p>Nos preocupamos por cada miembro de tu familia. Ofrecemos un cuidado integral que promueve la salud y el bienestar de todos, desde los más pequeños hasta los mayores.</p>
+                <h3>
+                  <Link href="/">{t("atencionParaTodaLaFamilia")}</Link>
+                </h3>
+                <p>{t("descripcionAtencionFamilia")}</p>
               </div>
             </div>
           </div>

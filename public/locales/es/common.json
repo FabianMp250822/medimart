@@ -1,0 +1,244 @@
+{
+    "atencion": "Atención",
+    "seleccionarSede": "Seleccionar Sede",
+    "trabajeConNosotros": "Trabaje con nosotros",
+    "acercaDeNosotros": "Acerca de Nosotros: Misión, Visión, Valores, Historia",
+    "trabajaConNosotros": "Trabaja con nosotros",
+    "gestionDocumental": "Gestión Documental",
+    "certificaciones": "Certificaciones",
+    "responsabilidadSocial": "Responsabilidad social y empresarial",
+    "direccionamientoEstrategico": "Direccionamiento Estratégico",
+    "marcoLegal": "Marco Legal",
+    "sistemaIntegradoDeGestion": "Sistema Integrado de Gestión",
+    "politicaDeDatos": "Política de tratamiento de datos",
+    
+    "solicitarCitaMedica": "Solicitar Cita Médica",
+    "preparacionProcedimientos": "Preparación Para procediminetos",
+    "directorioEspecialidadesServicios": "Directorio de Especialidades y Servicios",
+    "tusResultadosMedicos": "Tus Resultados Médicos",
+    "laboratorioClinico": "Laboratorio Clínico",
+    "preparacionExamenes": "Preparación para Exámenes Médicos",
+    "entidadesConvenio": "Entidades en Convenio",
+    "solicitudHistoriaClinica": "Solicitud de Historia Clínica",
+    "derechosDeberesPaciente": "Derechos y Deberes del Paciente",
+    "duranteSuVisita": "Durante su Visita",
+    "educacionAlPaciente": "Educación al Paciente",
+    
+    "inicio": "Inicio",
+    "nosotros": "Nosotros",
+    "servicios": "Servicios",
+    "pacientes": "Pacientes",
+    "especialistas": "Especialistas",
+    "faqs": "Faq's",
+    "contacto": "Contacto",
+    "atencionPersonalizada": "Atención Personalizada",
+  "descripcionAtencionPersonalizada": "Nos importa tu bienestar. Nuestros especialistas están aquí para escucharte, entenderte y brindarte el cuidado que realmente necesitas, siempre con calidez y empatía.",
+  "urgenciasDisponibles": "Urgencias Disponibles 24/7",
+  "descripcionUrgenciasDisponibles": "Sabemos que las emergencias no esperan. Estamos aquí para ti, día y noche, para asegurarnos de que recibas la atención que necesitas cuando más la necesitas.",
+  "cuidadoConTecnologia": "Cuidado con Tecnología Avanzada",
+  "descripcionCuidadoConTecnologia": "Tu salud merece lo mejor. Utilizamos tecnología de última generación para ofrecerte diagnósticos y tratamientos precisos, siempre enfocados en tu bienestar.",
+  "atencionParaTodaLaFamilia": "Atención para Toda la Familia",
+  "descripcionAtencionFamilia": "Nos preocupamos por cada miembro de tu familia. Ofrecemos un cuidado integral que promueve la salud y el bienestar de todos, desde los más pequeños hasta los mayores.",
+
+  "clinicaDeLaCosta": "Clínica de la Costa",
+  "comprometidosConTuBienestar": "Comprometidos con Tu Bienestar",
+  "sobreNosotros": "Sobre Nosotros",
+  "comprometidosConTuSalud": "Comprometidos con tu Salud y Bienestar",
+  "clinicaFamilia": "En la Clínica de la Costa, cuidamos de ti como si fueras parte de nuestra familia.",
+  "descripcionSobreNosotros": "Nos enfocamos en brindarte una atención humana y cercana, respaldada por tecnología avanzada y un equipo de profesionales comprometidos con tu salud. Desde servicios médicos especializados hasta atención de emergencias, estamos aquí para acompañarte en cada paso del camino.",
+  "serviciosAmbulancia": "Servicios de Ambulancia disponibles para emergencias",
+  "oxigenoADomicilio": "Oxígeno a Domicilio para tu comodidad",
+  "farmaciaEnClinica": "Farmacia en Clínica para mayor conveniencia",
+  "medicosDeGuardia": "Médicos de Guardia siempre listos para atenderte",
+  "emergenciasMedicas": "Emergencias Médicas 24/7 porque tu bienestar es nuestra prioridad",
+  "descubreMasSobreNosotros": "Descubre Más Sobre Nosotros",
+  "equipoMedico": "Equipo médico de la Clínica de la Costa",
+
+  "nuestrosServicios": "Nuestros Servicios",
+  "atencionIntegralCuidandoDeTiSiempre": "Atención Integral <br />Cuidando de Ti Siempre",
+  "neurocirugia": "Neurocirugía",
+  "descripcionNeurocirugia": "Nos preocupamos por tu salud cerebral con un equipo de neurocirujanos altamente calificados, siempre listos para brindarte el mejor cuidado posible.",
+  "laboratorioModerno": "Laboratorio Moderno",
+  "descripcionLaboratorioModerno": "Entendemos lo importante que es un diagnóstico preciso. Nuestro laboratorio está equipado con la última tecnología para brindarte resultados rápidos y confiables.",
+  "medicosExperimentados": "Médicos Experimentados",
+  "descripcionMedicosExperimentados": "Nuestros médicos están aquí para escucharte, cuidarte y acompañarte, ofreciendo un enfoque cálido y humano para garantizar tu bienestar.",
+
+    "cuidandoDeTi": "Cuidando de Ti y de los Tuyos",
+  "tuSaludPrioridad": "Tu Salud, Nuestra Prioridad",
+  "prioridadSpan": "por 35 Años",
+  "mensajeDefaultBanner": "En la Clínica de la Costa, sabemos lo importante que es sentirte acompañado en los momentos que más lo necesitas. Nuestro equipo está comprometido con brindarte una atención cálida, humana y personalizada, asegurándonos de que te sientas en un entorno seguro y lleno de confianza.",
+  "agendaTuCita": "Agenda tu cita",
+  "altBanner": "Paciente recibiendo atención y cuidado",
+
+  "porQueElegirnos": "¿Por qué Elegirnos?",
+  "tuSaludEsNuestraMayorPrioridad": "Tu Salud es Nuestra <br /> Mayor Prioridad",
+  "personalMedicoComprometido": "Personal Médico Comprometido",
+  "descripcionPersonalMedicoComprometido": "Nuestro equipo está formado por médicos y especialistas apasionados por cuidarte, ofreciendo un trato cercano y humano para que te sientas en confianza.",
+  "atencionEmergencias24": "Atención de Emergencias 24/7",
+  "descripcionAtencionEmergencias24": "Sabemos que los momentos de emergencia no esperan. Estamos disponibles las 24 horas, siempre listos para ayudarte cuando más lo necesitas.",
+  "citasMedicasEnLinea": "Citas Médicas en Línea",
+  "descripcionCitasMedicasEnLinea": "Queremos que acceder a nuestra atención sea lo más cómodo para ti. Agenda tus citas fácilmente desde la comodidad de tu hogar.",
+  "atencionContinuada": "Atención Continuada",
+  "descripcionAtencionContinuada": "Estamos aquí para ti siempre que nos necesites. Nuestros servicios están disponibles 24/7, porque tu bienestar es nuestra prioridad.",
+    
+"nuestroProceso": "Nuestro Proceso",
+  "facilYRapidoComoTeAtendemos": "Fácil y Rápido: Cómo Te Atendemos",
+  "descripcionProceso": "En la Clínica de la Costa hacemos que tu atención sea sencilla y eficiente. Conoce nuestro proceso diseñado para brindarte el mejor apoyo de manera fácil y rápida.",
+  "agendarUnaCita": "Agendar una Cita",
+  "descripcionAgendarUnaCita": "Programar tu cita es rápido y sencillo. Contáctanos a través de nuestro sitio web, llamada telefónica o visítanos presencialmente.",
+  "asisteATuCita": "Asiste a tu cita",
+  "descripcionAsisteATuCita": "Recibe atención de nuestros especialistas en un ambiente cómodo y seguro, donde todas tus dudas serán resueltas con empatía y profesionalismo.",
+  "seguimientoContinuo": "Seguimiento Continuo",
+  "descripcionSeguimientoContinuo": "Nos aseguramos de que recibas un seguimiento constante para mantener y mejorar tu salud, acompañándote en cada paso del camino.",
+
+
+  "testimonios": "Testimonios",
+  "loQueDicenNuestrosPacientes": "Lo Que Dicen Nuestros Pacientes",
+  "descripcionTestimonios": "Nuestros pacientes son nuestra mayor prioridad. Conoce sus experiencias y cómo los hemos ayudado a mejorar su calidad de vida.",
+   
+  "reconocimientosTitle": "Reconocimientos",
+  "recognitions": {
+    "textContent": [
+      {
+        "title": "MSD",
+        "description": "Reconocimiento al CIC por excelente desempeño y gestión de calidad en la ejecución de estudios clínicos. Abril 2017."
+      },
+      {
+        "title": "MSD",
+        "description": "Reconocimiento al CIC por contribución al desarrollo de la investigación clínica, durante la conmemoración de los 75 años."
+      },
+      {
+        "title": "Noviembre 2022",
+        "description": "MSD - Inventing for Life - Otorga el presente reconocimiento a Clínica de La Costa por su contribución a la ciencia e innovación en la investigación clínica en Colombia."
+      }
+    ],
+    "textContentRight": [
+      {
+        "title": "Mayo 2021",
+        "description": "MSD - Otorga el presente reconocimiento a Clínica de la Costa por su adaptabilidad y eficiencia en los procesos administrativos y regulatorios llevados a cabo durante la pandemia. Bogotá, Colombia."
+      },
+      {
+        "title": "9 de Mayo de 2024",
+        "description": "MSD - Excelentes métricas de calidad durante el año 2023 y el primer trimestre del año 2024. Orgullosamente presentado a Clínica de la Costa. Este certificado se presenta por logro honorable."
+      },
+      {
+        "title": "Mayo 2021",
+        "description": "MSD - Otorga el presente reconocimiento a Clínica de la Costa por los esfuerzos extraordinarios realizados para garantizar la seguridad y continuidad en el estudio de todos los pacientes durante la pandemia. Bogotá, Colombia."
+      }
+    ],
+    "bottomRecognitions": [
+      { 
+        "title": "Excelente desempeño y gestión de calidad en la ejecución de estudios clínicos", 
+        "image": "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
+      },
+      { 
+        "title": "Contribución al desarrollo de la investigación clínica", 
+        "image": "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
+      },
+      { 
+        "title": "Excelentes métricas de calidad durante el año 2023 y el primer trimestre del año 2024", 
+        "image": "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
+      },
+      { 
+        "title": "Contribución a la ciencia e innovación en la investigación clínica en Colombia", 
+        "image": "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
+      }
+    ]
+  },
+
+  "nuestroEquipo": "Our Team",
+  "conoceNuestroEquipo": "Meet Our Team of Professionals  Who Are Here for You",
+  "fotoDe": "Photo of",
+  "verMas": "View more",
+
+  "cargandoArticulos": "Cargando artículos...",
+  "noHayArticulosDisponibles": "No hay artículos disponibles.",
+  "consultaNuestrosArticulosRecientes": "Consulta nuestros artículos más recientes",
+  "leerMas": "Leer más",
+  
+  "sedes": {
+      "barranquilla": {
+        "nombre": "Clínica de la Costa - Barranquilla",
+        "direccion": "Calle 85 #47-11, Barranquilla 1",
+        "telefono": "+57 5 3855555",
+        "whatsappNumber": "+573003456789",
+        "whatsappMessage": "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Barranquilla.",
+        "servicios": [
+          "Radioterapia",
+          "Urgencias 24h",
+          "Consultas Médicas Especializadas"
+        ],
+        "image": "/assets/images/banner/banner.webp",
+        "modalImage": "/assets/images/sedes/barranquilla.png",
+        "mensaje": "En la Clínica de la Costa Barranquilla, sabemos que en los momentos más importantes de tu salud, necesitas un equipo que te acompañe con calidez y humanidad. Nuestro compromiso es brindarte atención personalizada, asegurando que te sientas en un entorno seguro y de confianza en cada paso de tu recuperación"
+      },
+      "cartagena": {
+        "nombre": "Clínica de la Costa - Cartagena",
+        "direccion": "Calle 23 # 65 - 103 Blas de lezo",
+        "telefono": "+57 5 6654321",
+        "whatsappNumber": "+573144182091",
+        "whatsappMessage": "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Cartagena.",
+        "servicios": [
+          "HOSPITALIZACIÓN PACIENTE CRÓNICO CON VENTILADOR",
+          "HOSPITALIZACIÓN PACIENTE CRÓNICO SIN VENTILADOR",
+          "ENFERMERÍA",
+          "GINECOBSTETRICIA",
+          "INFECTOLOGÍA",
+          "MEDICINA FÍSICA Y REHABILITACIÓN",
+          "MEDICINA GENERAL",
+          "MEDICINA INTERNA",
+          "NUTRICIÓN Y DIETÉTICA",
+          "ODONTOLOGÍA GENERAL",
+          "PEDIATRÍA",
+          "PSICOLOGÍA",
+          "PSIQUIATRÍA",
+          "OTRAS CONSULTAS DE ESPECIALIDAD",
+          "NEUROPEDIATRÍA",
+          "VACUNACIÓN",
+          "LABORATORIO CLÍNICO",
+          "TOMA DE MUESTRAS DE LABORATORIO CLÍNICO",
+          "SERVICIO FARMACÉUTICO",
+          "TERAPIA OCUPACIONAL",
+          "TERAPIA RESPIRATORIA",
+          "FISIOTERAPIA",
+          "FONOAUDIOLOGÍA Y/O TERAPIA DEL LENGUAJE",
+          "TRANSPORTE ASISTENCIAL BASICO",
+          "TRANSPORTE ASISTENCIAL MEDICALIZADO"
+        ],
+        "image": "/assets/images/sedes/Cartagena.png",
+        "modalImage": "/assets/images/sedes/Cartagena.png",
+        "mensaje": "En la Clínica de la Costa Cartagena, entendemos que cuidar de tu salud significa más que un tratamiento. Nuestro equipo está dedicado a ofrecerte una atención cálida y cercana, creando un ambiente seguro y confiable para que siempre te sientas acompañado y en las mejores manos."
+      },
+      "santaMarta": {
+        "nombre": "Clínica de la Costa - Santa Marta",
+        "direccion": "Calle 17 # 20 - 10 Barrio Jardin, Santa Marta",
+        "telefono": "+57 3112097409",
+        "whatsappNumber": "+573112097409",
+        "whatsappMessage": "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Santa Marta.",
+        "servicios": [
+          "Consulta Externa",
+          "Radioterapia",
+          "Laboratorio Clínico"
+        ],
+        "image": "/assets/images/sedes/Santamartha.jpeg",
+        "modalImage": "/assets/images/sedes/Santamartha.jpeg",
+        "mensaje": "En la Clínica de la Costa Santa Marta, nos comprometemos a brindarte un cuidado integral, centrado en tus necesidades. Nuestro equipo médico ofrece un servicio personalizado y humano, garantizando que te sientas en un entorno de confianza, seguro y acogedor durante tu tratamiento."
+      },
+      "rioacha": {
+        "nombre": "Clínica de la Costa - Riohacha",
+        "direccion": "Calle 51 N 4/15 kL 2 salida valle dupar",
+        "telefono": "+57 3218085712",
+        "whatsappNumber": "+573218085712",
+        "whatsappMessage": "Hola, me gustaría saber más sobre las consultas disponibles en la Clínica de la Costa en Rioacha.",
+        "servicios": [
+          "Hospitalización",
+          "Pediatría",
+          "Cirugía"
+        ],
+        "image": "/assets/images/sedes/rioacha.jpeg",
+        "modalImage": "/assets/images/sedes/rioacha.jpeg",
+        "mensaje": "En la Clínica de la Costa Valledupar, trabajamos para que tu experiencia médica sea excepcional. Nuestro equipo altamente calificado te brindará una atención cercana y personalizada, asegurando que te sientas en un entorno confiable, seguro y con el apoyo que necesitas para tu bienestar."
+      }
+    }
+  }
+  

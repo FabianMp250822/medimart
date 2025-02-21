@@ -1,0 +1,244 @@
+{
+  "atencion": "Customer Service",
+  "seleccionarSede": "Select Branch",
+  "trabajeConNosotros": "Work with us",
+  "acercaDeNosotros": "About us: Mission, Vision, Values, History",
+  "trabajaConNosotros": "Work with us",
+  "gestionDocumental": "Document Management",
+  "certificaciones": "Certifications",
+  "responsabilidadSocial": "Social and Corporate Responsibility",
+  "direccionamientoEstrategico": "Strategic Direction",
+  "marcoLegal": "Legal Framework",
+  "sistemaIntegradoDeGestion": "Integrated Management System",
+  "politicaDeDatos": "Data Processing Policy",
+  
+  "solicitarCitaMedica": "Request a Medical Appointment",
+  "preparacionProcedimientos": "Preparation for procedures",
+  "directorioEspecialidadesServicios": "Directory of Specialties and Services",
+  "tusResultadosMedicos": "Your Medical Results",
+  "laboratorioClinico": "Clinical Laboratory",
+  "preparacionExamenes": "Exam Preparation",
+  "entidadesConvenio": "Affiliated Entities",
+  "solicitudHistoriaClinica": "Request Clinical History",
+  "derechosDeberesPaciente": "Patient Rights and Duties",
+  "duranteSuVisita": "During your Visit",
+  "educacionAlPaciente": "Patient Education",
+  
+  "inicio": "Home",
+  "nosotros": "About Us",
+  "servicios": "Services",
+  "pacientes": "Patients",
+  "especialistas": "Specialists",
+  "faqs": "Faq's",
+  "contacto": "Contact",
+
+  "cuidandoDeTi": "Caring for You and Yours",
+  "tuSaludPrioridad": "Your Health, Our Priority",
+  "prioridadSpan": "for 35 Years",
+  "mensajeDefaultBanner": "At Clínica de la Costa, we know how important it is to feel supported during your most challenging moments. Our team is committed to providing you with warm, human, and personalized care, ensuring that you feel safe and confident in a trusted environment.",
+  "agendaTuCita": "Schedule your appointment",
+  "altBanner": "Patient receiving care and attention",
+
+  "atencionPersonalizada": "Personalized Attention",
+  "descripcionAtencionPersonalizada": "We care about your well-being. Our specialists are here to listen, understand, and provide the care you truly need, always with warmth and empathy.",
+  "urgenciasDisponibles": "24/7 Emergency Services",
+  "descripcionUrgenciasDisponibles": "We know emergencies don't wait. We're here for you day and night to ensure you receive the care you need when you need it most.",
+  "cuidadoConTecnologia": "Advanced Technology Care",
+  "descripcionCuidadoConTecnologia": "Your health deserves the best. We use state-of-the-art technology to offer you precise diagnoses and treatments, always focused on your well-being.",
+  "atencionParaTodaLaFamilia": "Family Care",
+  "descripcionAtencionFamilia": "We care about every member of your family. We offer comprehensive care that promotes the health and well-being of everyone, from the little ones to the elders.",
+  
+
+  "clinicaDeLaCosta": "Clínica de la Costa",
+  "comprometidosConTuBienestar": "Committed to Your Well-being",
+  "sobreNosotros": "About Us",
+  "comprometidosConTuSalud": "Committed to Your Health and Well-being",
+  "clinicaFamilia": "At Clínica de la Costa, we care for you as if you were part of our family.",
+  "descripcionSobreNosotros": "We focus on providing you with human and friendly care, supported by advanced technology and a team of professionals dedicated to your health. From specialized medical services to emergency care, we are here to accompany you every step of the way.",
+  "serviciosAmbulancia": "Ambulance services available for emergencies",
+  "oxigenoADomicilio": "Home delivery of oxygen for your convenience",
+  "farmaciaEnClinica": "In-clinic pharmacy for added convenience",
+  "medicosDeGuardia": "On-call doctors always ready to assist you",
+  "emergenciasMedicas": "24/7 Medical Emergencies because your well-being is our priority",
+  "descubreMasSobreNosotros": "Learn More About Us",
+  "equipoMedico": "Medical team at Clínica de la Costa",
+
+  "porQueElegirnos": "Why Choose Us?",
+  "tuSaludEsNuestraMayorPrioridad": "Your Health is Our <br /> Top Priority",
+  "personalMedicoComprometido": "Committed Medical Staff",
+  "descripcionPersonalMedicoComprometido": "Our team consists of dedicated doctors and specialists passionate about caring for you, providing a friendly and human approach to make you feel confident.",
+  "atencionEmergencias24": "24/7 Emergency Care",
+  "descripcionAtencionEmergencias24": "We know that emergencies don't wait. We are available 24/7, always ready to help you when you need it most.",
+  "citasMedicasEnLinea": "Online Medical Appointments",
+  "descripcionCitasMedicasEnLinea": "We want accessing our care to be as comfortable as possible for you. Schedule your appointments easily from the comfort of your home.",
+  "atencionContinuada": "Continuous Care",
+  "descripcionAtencionContinuada": "We are here for you whenever you need us. Our services are available 24/7, because your well-being is our priority.",
+
+"testimonios": "Testimonials",
+  "loQueDicenNuestrosPacientes": "What Our Patients Say",
+  "descripcionTestimonios": "Our patients are our top priority. Discover their experiences and how we have helped improve their quality of life.",
+  "nuestroProceso": "Our Process",
+  "facilYRapidoComoTeAtendemos": "Fast & Easy: How We Care for You",
+  "descripcionProceso": "At Clínica de la Costa, we make your care simple and efficient. Discover our process designed to provide you with the best support in a fast and easy way.",
+  "agendarUnaCita": "Schedule an Appointment",
+  "descripcionAgendarUnaCita": "Scheduling your appointment is quick and easy. Contact us via our website, phone call, or visit us in person.",
+  "asisteATuCita": "Attend Your Appointment",
+  "descripcionAsisteATuCita": "Receive care from our specialists in a comfortable and safe environment, where all your questions are answered with empathy and professionalism.",
+  "seguimientoContinuo": "Continuous Follow-up",
+  "descripcionSeguimientoContinuo": "We ensure that you receive continuous follow-up to maintain and improve your health, supporting you every step of the way.",
+  "nuestrosServicios": "Our Services",
+  "atencionIntegralCuidandoDeTiSiempre": "Comprehensive Care <br />Always Caring for You",
+  "neurocirugia": "Neurosurgery",
+  "descripcionNeurocirugia": "We care about your brain health with a team of highly qualified neurosurgeons, always ready to provide you with the best possible care.",
+  "laboratorioModerno": "Modern Laboratory",
+  "descripcionLaboratorioModerno": "We understand the importance of an accurate diagnosis. Our laboratory is equipped with state-of-the-art technology to provide you with fast and reliable results.",
+  "medicosExperimentados": "Experienced Doctors",
+  "descripcionMedicosExperimentados": "Our doctors are here to listen, care, and accompany you, offering a warm and human approach to ensure your well-being.",
+  
+  
+  "reconocimientosTitle": "Recognitions",
+  "recognitions": {
+    "textContent": [
+      {
+        "title": "MSD",
+        "description": "Recognition to the CIC for excellent performance and quality management in the execution of clinical studies. April 2017."
+      },
+      {
+        "title": "MSD",
+        "description": "Recognition to the CIC for its contribution to the development of clinical research during the 75th anniversary celebration."
+      },
+      {
+        "title": "November 2022",
+        "description": "MSD - Inventing for Life - Presents this recognition to Clínica de La Costa for its contribution to science and innovation in clinical research in Colombia."
+      }
+    ],
+    "textContentRight": [
+      {
+        "title": "May 2021",
+        "description": "MSD - Presents this recognition to Clínica de la Costa for its adaptability and efficiency in administrative and regulatory processes during the pandemic. Bogotá, Colombia."
+      },
+      {
+        "title": "May 9, 2024",
+        "description": "MSD - Excellent quality metrics during 2023 and Q1 2024. Proudly presented to Clínica de la Costa. This certificate is awarded for honorable achievement."
+      },
+      {
+        "title": "May 2021",
+        "description": "MSD - Presents this recognition to Clínica de la Costa for the extraordinary efforts made to ensure safety and continuity in patient studies during the pandemic. Bogotá, Colombia."
+      }
+    ],
+    "bottomRecognitions": [
+      { 
+        "title": "Excellent performance and quality management in executing clinical studies", 
+        "image": "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
+      },
+      { 
+        "title": "Contribution to the development of clinical research", 
+        "image": "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
+      },
+      { 
+        "title": "Excellent quality metrics during 2023 and Q1 2024", 
+        "image": "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
+      },
+      { 
+        "title": "Contribution to science and innovation in clinical research in Colombia", 
+        "image": "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-12-04%20at%2010.48.16%20AM(1).jpeg?alt=media&token=dca190ac-8059-43e6-b6e3-2b6497ce85c7" 
+      }
+    ]
+  },
+  
+  "nuestroEquipo": "Our Team",
+  "conoceNuestroEquipo": "Meet Our Team of Professionals  Who Are Here for You",
+  "fotoDe": "Photo of",
+  "verMas": "View more",
+
+  "cargandoArticulos": "Loading articles...",
+  "noHayArticulosDisponibles": "No articles available.",
+  "consultaNuestrosArticulosRecientes": "Check out our most recent articles",
+  "leerMas": "Read more",
+  
+  
+  "sedes": {
+    "barranquilla": {
+      "nombre": "Clínica de la Costa - Barranquilla",
+      "direccion": "Calle 85 #47-11, Barranquilla 1",
+      "telefono": "+57 5 3855555",
+      "whatsappNumber": "+573003456789",
+      "whatsappMessage": "Hello, I would like to know more about the available consultations at Clínica de la Costa in Barranquilla.",
+      "servicios": [
+        "Radiotherapy",
+        "24h Emergency",
+        "Specialized Medical Consultations"
+      ],
+      "image": "/assets/images/banner/banner.webp",
+      "modalImage": "/assets/images/sedes/barranquilla.png",
+      "mensaje": "At Clínica de la Costa Barranquilla, we understand that during the most important moments of your health, you need a team that supports you with warmth and humanity. Our commitment is to provide personalized care, ensuring you feel safe and confident every step of your recovery."
+    },
+    "cartagena": {
+      "nombre": "Clínica de la Costa - Cartagena",
+      "direccion": "Calle 23 # 65 - 103 Blas de lezo",
+      "telefono": "+57 5 6654321",
+      "whatsappNumber": "+573144182091",
+      "whatsappMessage": "Hello, I would like to know more about the available consultations at Clínica de la Costa in Cartagena.",
+      "servicios": [
+        "CHRONIC PATIENT HOSPITALIZATION WITH VENTILATOR",
+        "CHRONIC PATIENT HOSPITALIZATION WITHOUT VENTILATOR",
+        "NURSING",
+        "OBSTETRICS & GYNECOLOGY",
+        "INFECTIOUS DISEASES",
+        "PHYSICAL MEDICINE AND REHABILITATION",
+        "GENERAL MEDICINE",
+        "INTERNAL MEDICINE",
+        "NUTRITION AND DIETETICS",
+        "GENERAL DENTISTRY",
+        "PEDIATRICS",
+        "PSYCHOLOGY",
+        "PSYCHIATRY",
+        "OTHER SPECIALTY CONSULTATIONS",
+        "NEUROPEDIATRICS",
+        "VACCINATION",
+        "CLINICAL LABORATORY",
+        "LABORATORY SAMPLE COLLECTION",
+        "PHARMACEUTICAL SERVICE",
+        "OCCUPATIONAL THERAPY",
+        "RESPIRATORY THERAPY",
+        "PHYSIOTHERAPY",
+        "SPEECH THERAPY",
+        "BASIC AMBULANCE SERVICE",
+        "MEDICALIZED AMBULANCE SERVICE"
+      ],
+      "image": "/assets/images/sedes/Cartagena.png",
+      "modalImage": "/assets/images/sedes/Cartagena.png",
+      "mensaje": "At Clínica de la Costa Cartagena, we understand that taking care of your health means more than just treatment. Our team is dedicated to providing warm and close care, creating a safe and trustworthy environment so that you always feel supported and in good hands."
+    },
+    "santaMarta": {
+      "nombre": "Clínica de la Costa - Santa Marta",
+      "direccion": "Calle 17 # 20 - 10 Barrio Jardin, Santa Marta",
+      "telefono": "+57 3112097409",
+      "whatsappNumber": "+573112097409",
+      "whatsappMessage": "Hello, I would like to know more about the available consultations at Clínica de la Costa in Santa Marta.",
+      "servicios": [
+        "Outpatient Consultation",
+        "Radiotherapy",
+        "Clinical Laboratory"
+      ],
+      "image": "/assets/images/sedes/Santamartha.jpeg",
+      "modalImage": "/assets/images/sedes/Santamartha.jpeg",
+      "mensaje": "At Clínica de la Costa Santa Marta, we are committed to providing you with comprehensive care focused on your needs. Our medical team offers personalized and human service, ensuring you feel safe and well-cared for during your treatment."
+    },
+    "rioacha": {
+      "nombre": "Clínica de la Costa - Riohacha",
+      "direccion": "Calle 51 N 4/15 kL 2 salida valle dupar",
+      "telefono": "+57 3218085712",
+      "whatsappNumber": "+573218085712",
+      "whatsappMessage": "Hello, I would like to know more about the available consultations at Clínica de la Costa in Riohacha.",
+      "servicios": [
+        "Hospitalization",
+        "Pediatrics",
+        "Surgery"
+      ],
+      "image": "/assets/images/sedes/rioacha.jpeg",
+      "modalImage": "/assets/images/sedes/rioacha.jpeg",
+      "mensaje": "At Clínica de la Costa Riohacha, we work to make your medical experience exceptional. Our highly qualified team will provide you with close and personalized care, ensuring you feel supported in a reliable and safe environment."
+    }
+  }
+}
