@@ -7,15 +7,37 @@ import { useTranslation } from "react-i18next";
 
 export default function Banner() {
   const { sedeData } = useSede(); // Obtener datos de la sede seleccionada
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // Determinar el campo que tomaremos según el idioma actual
+  // Si es inglés -> "mensaje_en", de lo contrario -> "mensaje"
+  const currentLanguage = i18n.language; // Por ej. "en", "es", etc.
+  const messageKey = currentLanguage === "en" ? "mensaje_en" : "mensaje";
+
+  // En caso de que no exista traducción para ese idioma, devolvemos el mensaje original
+  const message = sedeData?.[messageKey] || t("mensajeDefaultBanner");
 
   return (
     <section className="banner-section p_relative" style={{ padding: '160px 0', marginTop: '80px' }}>
-      <div className="pattern-layer wow slideInDown animated" data-wow-delay="00ms" data-wow-duration="1500ms" style={{ backgroundImage: 'url(assets/images/shape/shape-1.png)' }}></div>
+      <div 
+        className="pattern-layer wow slideInDown animated" 
+        data-wow-delay="00ms" 
+        data-wow-duration="1500ms" 
+        style={{ backgroundImage: 'url(assets/images/shape/shape-1.png)' }}
+      ></div>
       <div className="shape">
-        <div className="shape-1" style={{ backgroundImage: 'url(assets/images/shape/shape-2.png)' }}></div>
-        <div className="shape-3" style={{ backgroundImage: 'url(assets/images/shape/shape-4.png)' }}></div>
-        <div className="shape-4" style={{ backgroundImage: 'url(assets/images/shape/shape-5.png)' }}></div>
+        <div 
+          className="shape-1" 
+          style={{ backgroundImage: 'url(assets/images/shape/shape-2.png)' }}
+        ></div>
+        <div 
+          className="shape-3" 
+          style={{ backgroundImage: 'url(assets/images/shape/shape-4.png)' }}
+        ></div>
+        <div 
+          className="shape-4" 
+          style={{ backgroundImage: 'url(assets/images/shape/shape-5.png)' }}
+        ></div>
       </div>
       <div className="auto-container">
         <div className="row align-items-center">
@@ -29,7 +51,7 @@ export default function Banner() {
                 {t("tuSaludPrioridad")} <span>{t("prioridadSpan")}</span>
               </h2>
               <p style={{ fontSize: '16px', lineHeight: '1.5em', maxWidth: '400px' }}>
-                {sedeData?.mensaje || t("mensajeDefaultBanner")}
+                {message}
               </p>
               <div className="btn-box">
                 <Link href="/appointment" className="theme-btn btn-two">

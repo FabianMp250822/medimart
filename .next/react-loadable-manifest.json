@@ -19,6 +19,24 @@
     "id": "components/layout/header/Header1NoSSR.jsx -> ./Header1",
     "files": []
   },
+  "components/layout/header/Header2NoSSR.jsx -> ./Header2": {
+    "id": "components/layout/header/Header2NoSSR.jsx -> ./Header2",
+    "files": [
+      "static/chunks/_app-pages-browser_components_layout_header_Header2_js.js"
+    ]
+  },
+  "components/layout/header/Header3NoSSR.jsx -> ./Header3": {
+    "id": "components/layout/header/Header3NoSSR.jsx -> ./Header3",
+    "files": [
+      "static/chunks/_app-pages-browser_components_layout_header_Header3_js.js"
+    ]
+  },
+  "components/layout/header/Header4NoSSR.jsx -> ./Header4": {
+    "id": "components/layout/header/Header4NoSSR.jsx -> ./Header4",
+    "files": [
+      "static/chunks/_app-pages-browser_components_layout_header_Header4_js.js"
+    ]
+  },
   "node_modules/i18next-http-backend/esm/request.js -> cross-fetch": {
     "id": "node_modules/i18next-http-backend/esm/request.js -> cross-fetch",
     "files": [

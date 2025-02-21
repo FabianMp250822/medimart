@@ -15,9 +15,9 @@ import Sidebar from "./Sidebar";
 import Footer1 from './footer/Footer1';
 import Footer2 from './footer/Footer2';
 import Header1 from "./header/Header1";
-import Header2 from './header/Header2';
-import Header3 from "./header/Header3";
-import Header4 from "./header/Header4";
+import Header2NoSSR from './header/Header2NoSSR';
+import Header3NoSSR from "./header/Header3NoSSR";
+import Header4NoSSR from "./header/Header4NoSSR";
 import Header1NoSSR from "./header/Header1NoSSR";
 
 export default function Layout({
@@ -87,7 +87,7 @@ export default function Layout({
           />
         )}
         {headerStyle === 2 && (
-          <Header2
+          <Header2NoSSR
             scroll={scroll}
             isMobileMenu={isMobileMenu}
             handleMobileMenu={handleMobileMenu}
@@ -97,7 +97,7 @@ export default function Layout({
           />
         )}
         {headerStyle === 3 && (
-          <Header3
+          <Header3NoSSR
             scroll={scroll}
             isMobileMenu={isMobileMenu}
             handleMobileMenu={handleMobileMenu}
@@ -107,7 +107,7 @@ export default function Layout({
           />
         )}
         {headerStyle === 4 && (
-          <Header4
+          <Header4NoSSR
             scroll={scroll}
             isMobileMenu={isMobileMenu}
             handleMobileMenu={handleMobileMenu}
