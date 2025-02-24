@@ -70,7 +70,7 @@ export default function Documentos() {
         {
             title: 'Reglamento Interno de Trabajo',
             documents: [
-                { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FREGLAMENTO%20INTERNO%20DE%20TRABAJO%20CCOSTA.pdf?alt=media&token=16d301c9-cc2b-4f00-98fa-145a6cd586a6' },
+                { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FREGLAMENTO%20INTERNO%20DE%20TRABAJO%20CL%C3%8DNICA%20DE%20LA%20COSTA%202025.pdf?alt=media&token=83aa9a79-4650-4fbc-9071-78f58baff12c' },
             ],
         },
         {
