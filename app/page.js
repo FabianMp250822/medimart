@@ -71,7 +71,7 @@ export default function Home() {
             <Funfacts />
             <Process />
             <Testimonial />
-            <Recognitions />
+            {/* <Recognitions /> */}
             <Team />
             <News />
             <RecaptchaWidget />

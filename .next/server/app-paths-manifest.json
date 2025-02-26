@@ -1,7 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/empleos/page": "app/empleos/page.js",
-  "/service-details-3/page": "app/service-details-3/page.js",
-  "/certificaciones/page": "app/certificaciones/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/page": "app/page.js"
 }

@@ -130,7 +130,7 @@ export default function Service() {
                     </li>
                     <li><strong>Objetivos a Mediano Plazo:</strong>
                         <ul>
-                            <li>Ser reconocidos como una institución certificada en calidad por ICONTEC (ISO 9001).</li>
+                            <li>Ser reconocidos como una institución que cumple con los más altos estándares de calidad en el sector salud.</li>  
                             <li>Reducir en un 30% la huella de carbono de nuestras operaciones.</li>
                             <li>Establecer un programa integral de telemedicina para zonas rurales.</li>
                         </ul>
