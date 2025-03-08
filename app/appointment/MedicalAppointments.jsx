@@ -6,399 +6,57 @@ import {
   getDocs,
   getDoc,
   addDoc,
-  deleteDoc,
   doc,
   Timestamp,
   query,
   where,
-  runTransaction,
 } from "firebase/firestore";
 import { imedicDb, imedicAuth } from "@/lib/firebase";
 import StepIndicator from "./StepIndicator";
 
-import dayjs from "dayjs";
-import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-dayjs.extend(isSameOrBefore);
-
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-
 import Swal from "sweetalert2";
 import "./MedicalAppointments.css";
 
-/* ===============================
-   FUNCIONES AUXILIARES PARA HORARIOS
-   =============================== */
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import doctorsData from "./doctors.json";
 
-// Genera intervalos (slots) de 20 minutos a partir de un intervalo dado.
-function generateSlotsForInterval(candidateDate, interval) {
-  const slots = [];
-  const startTime = dayjs(candidateDate)
-    .hour(parseInt(interval.start.split(":")[0], 10))
-    .minute(parseInt(interval.start.split(":")[1], 10));
-  const endTime = dayjs(candidateDate)
-    .hour(parseInt(interval.end.split(":")[0], 10))
-    .minute(parseInt(interval.end.split(":")[1], 10));
-
-  const slotDuration = 20;
-  let current = startTime;
-
-  while (current.add(slotDuration, "minute").isSameOrBefore(endTime)) {
-    const slotStart = current.format("HH:mm");
-    const slotEnd = current.add(slotDuration, "minute").format("HH:mm");
-    slots.push(`${slotStart} - ${slotEnd}`);
-    current = current.add(slotDuration, "minute");
-  }
-  return slots;
-}
-
-// Obtiene los intervalos reservados consultando la subcolección "schedules"
-// del doctor (identificado por doctorId) para la fecha (candidateDate) dada.
-async function getBookedSlots(doctorId, candidateDate) {
-  const scheduleDocId = dayjs(candidateDate).format("YYYY-MM-DD");
-  const scheduleRef = doc(
-    imedicDb,
-    "doctores",
-    doctorId,
-    "schedules",
-    scheduleDocId
-  );
-  const scheduleDoc = await getDoc(scheduleRef);
-  if (scheduleDoc.exists()) {
-    return scheduleDoc.data().bookedSlots || [];
-  }
-  return [];
-}
-
-// Calcula las fechas e intervalos disponibles para un doctor,
-// descartando aquellos intervalos que ya están reservados (según el documento
-// en la subcolección "schedules") y bloqueando el día completo si se
-// alcanza el límite de pacientes.
-async function computeAvailableDatesForDoctor(doctor) {
-  const availableDates = [];
-  const today = dayjs();
-  const endOfYear = dayjs().endOf("year");
-
-  async function processSchedule(scheduleArray, isCyclic = false) {
-    for (const entry of scheduleArray) {
-      if (isCyclic) {
-        const dayOfWeek = dayjs(
-          entry.date.toDate ? entry.date.toDate() : entry.date
-        ).day();
-
-        let dateCandidate = today;
-        while (
-          dateCandidate.isBefore(endOfYear) ||
-          dateCandidate.isSame(endOfYear)
-        ) {
-          if (dateCandidate.day() === dayOfWeek) {
-            let slotsForDate = [];
-            for (const interval of entry.intervals) {
-              const slots = generateSlotsForInterval(
-                dateCandidate.toDate(),
-                interval
-              );
-              slotsForDate = slotsForDate.concat(slots);
-            }
-            const bookedSlots = await getBookedSlots(
-              doctor.id,
-              dateCandidate.toDate()
-            );
-            if (bookedSlots.length < doctor.maxPatients) {
-              const availableSlots = slotsForDate.filter(
-                (slot) => !bookedSlots.includes(slot)
-              );
-              if (availableSlots.length > 0) {
-                availableDates.push({
-                  date: dateCandidate.toDate(),
-                  availableSlots,
-                });
-              }
-            }
-          }
-          dateCandidate = dateCandidate.add(1, "day");
-        }
-      } else {
-        const candidate = dayjs(
-          entry.date.toDate ? entry.date.toDate() : entry.date
-        );
-        if (candidate.isBefore(today, "day")) continue;
-
-        let slotsForDate = [];
-        for (const interval of entry.intervals) {
-          const slots = generateSlotsForInterval(candidate.toDate(), interval);
-          slotsForDate = slotsForDate.concat(slots);
-        }
-        const bookedSlots = await getBookedSlots(doctor.id, candidate.toDate());
-        if (bookedSlots.length < doctor.maxPatients) {
-          const availableSlots = slotsForDate.filter(
-            (slot) => !bookedSlots.includes(slot)
-          );
-          if (availableSlots.length > 0) {
-            availableDates.push({
-              date: candidate.toDate(),
-              availableSlots,
-            });
-          }
-        }
-      }
-    }
-  }
-
-  if (doctor.cyclicSchedule && doctor.cyclicSchedule.length > 0) {
-    await processSchedule(doctor.cyclicSchedule, true);
-  }
-  if (doctor.variableSchedule && doctor.variableSchedule.length > 0) {
-    await processSchedule(doctor.variableSchedule, false);
-  }
-  availableDates.sort((a, b) => a.date - b.date);
-  return availableDates;
-}
-
-/* ========================================
-   FUNCION: bookAppointment (transacción)
-   ======================================== */
-// Se utiliza una transacción para actualizar de forma atómica el documento
-// de agenda en la subcolección "schedules" (dentro del documento del doctor)
-// y para crear la cita en la colección "citas".
-async function bookAppointment(doctorId, appointmentDate, interval, appointmentData) {
-  const scheduleDocId = dayjs(appointmentDate).format("YYYY-MM-DD");
-  const scheduleRef = doc(
-    imedicDb,
-    "doctores",
-    doctorId,
-    "schedules",
-    scheduleDocId
-  );
-  const citasCollectionRef = collection(imedicDb, "citas");
-
-  try {
-    await runTransaction(imedicDb, async (transaction) => {
-      // Lee o inicializa el documento de agenda para ese día del doctor.
-      const scheduleDoc = await transaction.get(scheduleRef);
-      let bookedSlots = [];
-      let appointmentsCount = 0;
-      if (scheduleDoc.exists()) {
-        bookedSlots = scheduleDoc.data().bookedSlots || [];
-        appointmentsCount = scheduleDoc.data().appointmentsCount || 0;
-      }
-
-      // Lee el documento del doctor para obtener el límite de pacientes del día.
-      const doctorRef = doc(imedicDb, "doctores", doctorId);
-      const doctorDoc = await transaction.get(doctorRef);
-      const maxPatients = doctorDoc.data().maxPatients;
-
-      // Verifica que el intervalo no esté ya reservado y que no se exceda el límite.
-      if (bookedSlots.includes(interval)) {
-        throw new Error("El intervalo ya está reservado.");
-      }
-      if (appointmentsCount >= maxPatients) {
-        throw new Error("Se ha alcanzado el límite de pacientes para este día.");
-      }
-
-      // Actualiza la agenda: agrega el intervalo reservado y aumenta el contador.
-      const updatedBookedSlots = [...bookedSlots, interval];
-      transaction.set(
-        scheduleRef,
-        {
-          doctorId, // Se almacena el ID del doctor para mayor claridad.
-          date: scheduleDocId,
-          bookedSlots: updatedBookedSlots,
-          appointmentsCount: appointmentsCount + 1,
-        },
-        { merge: true }
-      );
-
-      // Crea la cita en la colección "citas".
-      const newAppointmentRef = doc(collection(imedicDb, "citas"));
-      transaction.set(newAppointmentRef, {
-        ...appointmentData,
-        doctorId,
-        date: Timestamp.fromDate(new Date(appointmentDate)),
-        interval,
-        createdAt: Timestamp.now(),
-      });
-    });
-    return true;
-  } catch (error) {
-    throw error;
-  }
-}
-
-/* ========================================
-   FUNCION: sendAppointmentSupportMessage
-   ======================================== */
-// Esta función se encarga de enviar un mensaje al chat de soporte con los detalles
-// de la cita confirmada.
-async function sendAppointmentSupportMessage({ doctorName, specialty, date, interval }) {
-  try {
-    const user = imedicAuth.currentUser;
-    if (!user) throw new Error("Usuario no autenticado");
-
-    // Buscar la relación agente–paciente para obtener el agente asignado.
-    const relationRef = collection(imedicDb, "agentPatientRelations");
-    const relationQuery = query(relationRef, where("patientId", "==", user.uid));
-    const relationSnapshot = await getDocs(relationQuery);
-    if (relationSnapshot.empty) {
-      console.warn("No se encontró relación para el paciente");
-      return;
-    }
-    const relationData = relationSnapshot.docs[0].data();
-    const agentUid = relationData.agentUid;
-
-    // Buscar el chat correspondiente usando patientUid y agentUid.
-    const chatsRef = collection(imedicDb, "chats");
-    const chatQuery = query(
-      chatsRef,
-      where("patientUid", "==", user.uid),
-      where("agentUid", "==", agentUid)
-    );
-    const chatSnapshot = await getDocs(chatQuery);
-    if (chatSnapshot.empty) {
-      console.warn("No se encontró chat para la relación");
-      return;
-    }
-    const chatId = chatSnapshot.docs[0].id;
-
-    // Función auxiliar para determinar el turno (día, tarde, noche) a partir del intervalo.
-    const getShiftFromTime = (interval) => {
-      const start = interval.split(" - ")[0];
-      const hour = parseInt(start.split(":")[0]);
-      if (hour < 12) return "día";
-      if (hour < 18) return "tarde";
-      return "noche";
-    };
-
-    const shift = getShiftFromTime(interval);
-
-    // Construir el mensaje de solicitud de confirmación.
-    const messageText = `Buenas, he apartado una cita para el turno de ${shift} con el Dr. ${doctorName} el ${date} a las ${interval.split(" - ")[0]}. ¿Me regala una confirmación y los detalles de la cita?`;
-
-    // Enviar el mensaje al chat (a la subcolección "messages").
-    const messagesRef = collection(imedicDb, "chats", chatId, "messages");
-    await addDoc(messagesRef, {
-      message: messageText,
-      sender: user.uid,
-      status: "emitido", // Mensaje del paciente
-      timestamp: new Date(),
-    });
-  } catch (error) {
-    console.error("Error enviando mensaje al chat de soporte:", error);
-  }
-}
-
-/* ===============================
-   COMPONENTE: MedicalAppointments
-   =============================== */
-   export default function MedicalAppointments({ onAppointmentConfirmed }) {
-  const [appointments, setAppointments] = useState([]);
+export default function MedicalAppointments({ onAppointmentConfirmed }) {
+  // 1. Estados para solicitudes y pasos
+  const [requests, setRequests] = useState([]);
   const [currentStep, setCurrentStep] = useState(1);
 
+  // Paso 1
   const [specialtySearch, setSpecialtySearch] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState("");
   const [filteredSpecialties, setFilteredSpecialties] = useState([]);
+
+  // Paso 2
   const [allDoctors, setAllDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
-  const [availableDates, setAvailableDates] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [availableIntervals, setAvailableIntervals] = useState([]);
-  const [selectedInterval, setSelectedInterval] = useState(null);
+  // Paso 3
+  const [epsList, setEpsList] = useState([]);
+  const [selectedEps, setSelectedEps] = useState("");
+  const [residence, setResidence] = useState("");
+  const [additionalInfo, setAdditionalInfo] = useState("");
+  const [examFiles, setExamFiles] = useState([]);
+
+  // Datos paciente
+  const [patientData, setPatientData] = useState(null);
 
   const currentUser = imedicAuth.currentUser;
 
-  const fetchAppointments = async () => {
-    if (!currentUser) return;
-    try {
-      const q = query(
-        collection(imedicDb, "citas"),
-        where("uidPaciente", "==", currentUser.uid)
-      );
-      const querySnapshot = await getDocs(q);
-      const appointmentsData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setAppointments(appointmentsData);
-    } catch (error) {
-      console.error("Error al obtener citas:", error);
-    }
-  };
+  // ================================
+  // 2. useEffects para cargar datos
+  // ================================
 
+  // 2.1. Doctores desde JSON
   useEffect(() => {
-    fetchAppointments();
-  }, [currentUser]);
-
-  const deleteAppointment = async (appointmentId) => {
-    try {
-      // Referencia a la cita a eliminar
-      const appointmentRef = doc(imedicDb, "citas", appointmentId);
-      // Recuperar la información de la cita (fuera de la transacción)
-      const appointmentSnap = await getDoc(appointmentRef);
-      if (!appointmentSnap.exists()) {
-        throw new Error("La cita no existe.");
-      }
-      const appointmentData = appointmentSnap.data();
-      const doctorId = appointmentData.doctorId;
-      // Convertir la fecha de Timestamp a Date
-      const appointmentDate = appointmentData.date.toDate();
-      const interval = appointmentData.interval;
-  
-      // Construir la referencia del documento de agenda (schedules)
-      const scheduleDocId = dayjs(appointmentDate).format("YYYY-MM-DD");
-      const scheduleRef = doc(imedicDb, "doctores", doctorId, "schedules", scheduleDocId);
-  
-      // Ejecutar la transacción para eliminar la cita y actualizar la agenda
-      await runTransaction(imedicDb, async (transaction) => {
-        // Primero, lee el documento de agenda
-        const scheduleSnap = await transaction.get(scheduleRef);
-  
-        // Ahora que todas las lecturas están completas, realiza las operaciones de escritura
-  
-        // Elimina la cita
-        transaction.delete(appointmentRef);
-  
-        if (scheduleSnap.exists()) {
-          const scheduleData = scheduleSnap.data();
-          let bookedSlots = scheduleData.bookedSlots || [];
-          let appointmentsCount = scheduleData.appointmentsCount || 0;
-  
-          // Remueve el intervalo de bookedSlots
-          bookedSlots = bookedSlots.filter(slot => slot !== interval);
-          // Disminuye el contador de citas
-          appointmentsCount = Math.max(appointmentsCount - 1, 0);
-  
-          // Actualiza el documento de agenda
-          transaction.set(scheduleRef, { bookedSlots, appointmentsCount }, { merge: true });
-        }
-      });
-  
-      Swal.fire("Eliminado", "La cita fue eliminada correctamente.", "success");
-      fetchAppointments();
-    } catch (error) {
-      console.error("Error al eliminar cita:", error);
-      Swal.fire("Error", error.message, "error");
-    }
-  };
-  
-
-  useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const docsSnap = await getDocs(collection(imedicDb, "doctores"));
-        const docsData = docsSnap.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setAllDoctors(docsData);
-      } catch (error) {
-        console.error("Error fetching doctores:", error);
-      }
-    };
-    fetchDoctors();
+    setAllDoctors(doctorsData);
   }, []);
 
+  // 2.2. Filtrar especialidades
   useEffect(() => {
     if (!specialtySearch) {
       setFilteredSpecialties([]);
@@ -411,6 +69,7 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
     setFilteredSpecialties(filtered);
   }, [specialtySearch, allDoctors]);
 
+  // 2.3. Filtrar doctores
   useEffect(() => {
     if (!selectedSpecialty) {
       setFilteredDoctors([]);
@@ -424,141 +83,398 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
     setFilteredDoctors(filtered);
   }, [selectedSpecialty, allDoctors]);
 
+  // 2.4. Cargar EPS
   useEffect(() => {
-    async function computeDates() {
-      if (!selectedDoctor) {
-        setAvailableDates([]);
-        return;
+    const fetchEps = async () => {
+      try {
+        const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
+        let epsArray = [];
+        epsSnapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          if (data.listEps && Array.isArray(data.listEps)) {
+            epsArray = data.listEps;
+          }
+        });
+        setEpsList(epsArray);
+      } catch (error) {
+        console.error("Error fetching EPS:", error);
       }
-      const dates = await computeAvailableDatesForDoctor(selectedDoctor);
-      setAvailableDates(dates);
-    }
-    computeDates();
-  }, [selectedDoctor]);
+    };
+    fetchEps();
+  }, []);
 
+  // 2.5. Cargar paciente
   useEffect(() => {
-    if (!selectedDate) {
-      setAvailableIntervals([]);
-      return;
-    }
-    const candidate = availableDates.find(
-      (d) => dayjs(d.date).format("YYYY-MM-DD") === selectedDate
-    );
-    if (candidate) {
-      setAvailableIntervals(candidate.availableSlots);
-    } else {
-      setAvailableIntervals([]);
-    }
-  }, [selectedDate, availableDates]);
+    if (!currentUser) return;
+    const fetchPatientData = async () => {
+      try {
+        const patientDoc = await getDoc(doc(imedicDb, "pacientes", currentUser.uid));
+        if (patientDoc.exists()) {
+          setPatientData(patientDoc.data());
+        }
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+      }
+    };
+    fetchPatientData();
+  }, [currentUser]);
 
+  // 2.6. Cargar solicitudes
+  useEffect(() => {
+    if (!currentUser) return;
+    const fetchRequests = async () => {
+      try {
+        const q = query(
+          collection(imedicDb, "solicitudesCitas"),
+          where("uidPaciente", "==", currentUser.uid)
+        );
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setRequests(data);
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    };
+    fetchRequests();
+  }, [currentUser]);
+
+  // ================================
+  // 3. Función para recargar
+  // ================================
+  const reloadRequests = async () => {
+    if (!currentUser) return;
+    try {
+      const q = query(
+        collection(imedicDb, "solicitudesCitas"),
+        where("uidPaciente", "==", currentUser.uid)
+      );
+      const snapshot = await getDocs(q);
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setRequests(data);
+    } catch (error) {
+      console.error("Error fetching requests (reload):", error);
+    }
+  };
+
+  // ================================
+  // 4. Manejo de steps
+  // ================================
   const nextStep = () => setCurrentStep((prev) => prev + 1);
   const prevStep = () => setCurrentStep((prev) => (prev > 1 ? prev - 1 : 1));
 
-  // Se utiliza la función bookAppointment (con transacción) para crear la cita.
+  // ================================
+  // 5. Subida de archivos
+  // ================================
+  const uploadExamFiles = async (files) => {
+    if (!files || files.length === 0) return [];
+    const storage = getStorage();
+    const urls = [];
+    for (let file of files) {
+      const storageRef = ref(storage, `examenes/${currentUser.uid}/${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      urls.push(downloadURL);
+    }
+    return urls;
+  };
+
+  const handleExamFilesChange = (e) => {
+    setExamFiles(e.target.files);
+  };
+
+  // ================================
+  // 6. Guardar archivos en subcolección
+  // ================================
+  const saveExamDocuments = async (urls) => {
+    for (let url of urls) {
+      await addDoc(
+        collection(imedicDb, "pacientes", currentUser.uid, "documentos de soporte"),
+        {
+          fileURL: url,
+          uploadedAt: Timestamp.now(),
+        }
+      );
+    }
+  };
+
+  // ================================
+  // 7. sendAppointmentSupportMessage
+  // ================================
+  async function sendAppointmentSupportMessage(appointmentInfo) {
+    try {
+      if (!currentUser) throw new Error("Usuario no autenticado");
+      if (!patientData) {
+        console.warn("No se encontró data del paciente, no se enviará mensaje con datos.");
+      }
+
+      // Buscar la relación agente–paciente
+      const relationRef = collection(imedicDb, "agentPatientRelations");
+      const relationQuery = query(relationRef, where("patientId", "==", currentUser.uid));
+      const relationSnapshot = await getDocs(relationQuery);
+      if (relationSnapshot.empty) {
+        console.warn("No se encontró relación para el paciente");
+        return;
+      }
+      const relationData = relationSnapshot.docs[0].data();
+      const agentUid = relationData.agentUid;
+
+      // Buscar el chat correspondiente
+      const chatsRef = collection(imedicDb, "chats");
+      const chatQuery = query(
+        chatsRef,
+        where("patientUid", "==", currentUser.uid),
+        where("agentUid", "==", agentUid)
+      );
+      const chatSnapshot = await getDocs(chatQuery);
+      if (chatSnapshot.empty) {
+        console.warn("No se encontró chat para la relación");
+        return;
+      }
+      const chatId = chatSnapshot.docs[0].id;
+
+      // Procesar URL
+      let examFilesText = "N/A";
+      if (appointmentInfo.examDocuments && appointmentInfo.examDocuments.length > 0) {
+        examFilesText = appointmentInfo.examDocuments
+          .map(url => `[Ver archivo](${url})`)
+          .join(" | ");
+      }
+
+      const patientInfo = patientData
+        ? `
+| Campo              | Valor                                |
+|--------------------|--------------------------------------|
+| Nombres            | ${patientData.nombres}               |
+| Apellidos          | ${patientData.apellidos}             |
+| Identificación     | ${patientData.identificacion}        |
+| Email              | ${patientData.email}                 |
+| Teléfono           | ${patientData.telefono}              |
+| Dirección          | ${patientData.direccion}             |
+| Estado             | ${patientData.estado}                |
+| Lugar de Solicitud | ${patientData.lugarSolicitud}        |
+| Creado             | ${patientData.createdAt ? patientData.createdAt.toDate().toLocaleString() : ""} |
+`
+        : "No disponible.";
+
+      // Construir mensaje en Markdown
+      const messageText = `
+### Datos del Paciente
+${patientInfo}
+
+### Datos de la Solicitud de Cita
+| Campo                  | Valor                                |
+|------------------------|--------------------------------------|
+| Doctor                 | ${appointmentInfo.doctorName}        |
+| Especialidad           | ${appointmentInfo.specialty}         |
+| Sede                   | ${appointmentInfo.sede}              |
+| EPS                    | ${appointmentInfo.selectedEps}       |
+| Lugar de residencia    | ${appointmentInfo.residence}         |
+| Observaciones          | ${appointmentInfo.additionalInfo}    |
+| Archivos de exámenes   | ${examFilesText}                     |
+`;
+
+      await addDoc(collection(imedicDb, "chats", chatId, "messages"), {
+        message: messageText,
+        sender: currentUser.uid,
+        status: "emitido",
+        timestamp: Timestamp.now(),
+      });
+    } catch (error) {
+      console.error("Error enviando mensaje al chat de soporte:", error);
+    }
+  }
+
+  // ================================
+  // 8. Crear la solicitud en "solicitudesCitas"
+  // ================================
+  const createRequest = async (data) => {
+    const docRef = await addDoc(collection(imedicDb, "solicitudesCitas"), {
+      ...data,
+      createdAt: Timestamp.now(),
+      status: "solicitando",
+    });
+    return docRef.id;
+  };
+
+  // ================================
+  // 9. Funciones de validación
+  // ================================
+
+  /**
+   * Determina si dos fechas están en el mismo día (compara año-mes-día).
+   */
+  const isSameDay = (d1, d2) => {
+    return (
+      d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate()
+    );
+  };
+
+  /**
+   * Determina si d1 y d2 están dentro de la misma semana.
+   * Aquí se asume "misma semana" como "los últimos 7 días".
+   * Podrías personalizarlo si quieres la semana calendario Lunes-Domingo.
+   */
+  const isWithin7Days = (d1, d2) => {
+    const diff = Math.abs(d1 - d2);
+    const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+    return diff < sevenDaysMs;
+  };
+
+  // ================================
+  // 10. Confirmar (flujo final)
+  // ================================
   const confirmAppointment = async () => {
     try {
       if (!currentUser) {
         Swal.fire("Error", "El usuario no está autenticado", "error");
         return;
       }
-  
-      // Verificar si ya existe una cita con el mismo doctor
-      const existsSameDoctor = appointments.some(
-        (appt) => appt.doctorId === selectedDoctor.id
-      );
-      if (existsSameDoctor) {
-        Swal.fire("Atención", "Ya tienes una cita con este doctor.", "info");
+      if (!selectedEps) {
+        Swal.fire("Error", "Debe seleccionar una EPS", "error");
         return;
       }
-  
-      // Verificar si ya existe una cita en la misma especialidad
-      const existsSameSpecialty = appointments.some(
-        (appt) => appt.specialty.toLowerCase() === selectedSpecialty.toLowerCase()
-      );
-      if (existsSameSpecialty) {
-        Swal.fire("Atención", "Ya tienes una cita en esta especialidad.", "info");
+      if (!residence) {
+        Swal.fire("Error", "Debe ingresar su lugar de residencia", "error");
         return;
       }
-  
-      // Si pasa las validaciones, se crea la cita y se envía el mensaje al chat de soporte.
-      await bookAppointment(
-        selectedDoctor.id,
-        selectedDate,
-        selectedInterval,
-        {
-          doctorName: selectedDoctor.doctorName,
-          specialty: selectedDoctor.specialty,
-          uidPaciente: currentUser.uid,
+      if (!additionalInfo) {
+        Swal.fire("Error", "Debe ingresar observaciones adicionales", "error");
+        return;
+      }
+
+      // Validaciones:
+      // 1. El mismo día con la misma especialidad
+      // 2. La misma semana con el mismo médico
+      const now = new Date();
+      for (let req of requests) {
+        const createdAt = req.createdAt?.toDate?.() || null;
+        if (!createdAt) continue; // si no tiene createdAt, ignoramos
+
+        // 1. Misma especialidad el mismo día
+        if (req.specialty === selectedSpecialty && isSameDay(createdAt, now)) {
+          Swal.fire(
+            "Atención",
+            `Ya tienes una solicitud de esta especialidad hoy (${selectedSpecialty}).`,
+            "info"
+          );
+          return;
         }
-      );
-      await sendAppointmentSupportMessage({
+
+        // 2. Mismo doctor en la misma semana
+        if (req.doctorId === selectedDoctor.id && isWithin7Days(createdAt, now)) {
+          Swal.fire(
+            "Atención",
+            `Ya tienes una solicitud con este doctor esta misma semana (${selectedDoctor.doctorName}).`,
+            "info"
+          );
+          return;
+        }
+      }
+
+      // Subir archivos
+      let examDocuments = [];
+      if (examFiles && examFiles.length > 0) {
+        examDocuments = await uploadExamFiles(examFiles);
+        await saveExamDocuments(examDocuments);
+      }
+
+      // Construir objeto
+      const appointmentObj = {
+        doctorId: selectedDoctor.id,
         doctorName: selectedDoctor.doctorName,
         specialty: selectedDoctor.specialty,
-        date: selectedDate,
-        interval: selectedInterval,
-      });
-      Swal.fire("Cita Creada", "Su cita ha sido registrada con éxito", "success");
-  
-      // Restablecer estados
+        sede: selectedDoctor.sede,
+        selectedEps,
+        residence,
+        additionalInfo,
+        examDocuments,
+        uidPaciente: currentUser.uid,
+      };
+
+      // 1. Crear solicitud
+      await createRequest(appointmentObj);
+
+      // 2. Enviar la información al chat
+      await sendAppointmentSupportMessage(appointmentObj);
+
+      // 3. Avisar y recargar
+      Swal.fire("Solicitud Enviada", "Su solicitud ha sido enviada al soporte", "success");
+
+      // 4. Resetear
       setCurrentStep(1);
       setSpecialtySearch("");
       setSelectedSpecialty("");
+      setFilteredSpecialties([]);
+      setFilteredDoctors([]);
       setSelectedDoctor(null);
-      setAvailableDates([]);
-      setSelectedDate(null);
-      setAvailableIntervals([]);
-      setSelectedInterval(null);
-      fetchAppointments();
-  
-      // Redirigir al chat de soporte si se proporcionó el callback
+      setSelectedEps("");
+      setResidence("");
+      setAdditionalInfo("");
+      setExamFiles([]);
+
+      await reloadRequests();
+
       if (onAppointmentConfirmed) {
         onAppointmentConfirmed();
       }
     } catch (error) {
-      console.error("Error al crear cita:", error);
+      console.error("Error al enviar la solicitud:", error);
       Swal.fire("Error", error.message, "error");
     }
   };
-  
+
+  // ================================
+  // 11. Render tabla (y steps)
+  // ================================
+  const renderStatusCell = (status) => {
+    let color = "grey";
+    if (status === "solicitando") color = "red";
+    else if (status === "en proceso") color = "blue";
+    else if (status === "asignada") color = "green";
+
+    return <span style={{ color }}>{status}</span>;
+  };
 
   return (
     <div id="medical-appointments">
-      <div className="appointments-table">
-        <h2>Mis Citas</h2>
-        {appointments.length > 0 ? (
+      {/* Tabla de solicitudes */}
+      <div className="requests-table">
+        <h2>Mis Solicitudes de Cita</h2>
+        {requests.length === 0 ? (
+          <p>No tiene solicitudes</p>
+        ) : (
           <table>
             <thead>
               <tr>
-                <th>Doctor</th>
                 <th>Especialidad</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Acción</th>
+                <th>Doctor</th>
+                <th>Estado</th>
+                <th>Fecha Creación</th>
               </tr>
             </thead>
             <tbody>
-              {appointments.map((appt) => (
-                <tr key={appt.id}>
-                  <td>{appt.doctorName}</td>
-                  <td>{appt.specialty}</td>
-                  <td>{dayjs(appt.date.toDate()).format("YYYY-MM-DD")}</td>
-                  <td>{appt.interval}</td>
+              {requests.map((req) => (
+                <tr key={req.id}>
+                  <td>{req.specialty}</td>
+                  <td>{req.doctorName}</td>
+                  <td>{renderStatusCell(req.status)}</td>
                   <td>
-                    <button onClick={() => deleteAppointment(appt.id)}>
-                      Eliminar
-                    </button>
+                    {req.createdAt
+                      ? req.createdAt.toDate().toLocaleString()
+                      : ""}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        ) : (
-          <p>No tienes citas asignadas</p>
         )}
       </div>
 
       <StepIndicator currentStep={currentStep} />
 
+      {/* Paso 1 */}
       {currentStep === 1 && (
         <div className="step1">
           <h3>Paso 1: Seleccionar Especialidad</h3>
@@ -583,7 +499,6 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
               ))}
             </ul>
           )}
-
           {selectedSpecialty && (
             <div style={{ marginTop: "10px" }}>
               <p>
@@ -591,13 +506,17 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
               </p>
             </div>
           )}
-
-          <button disabled={!selectedSpecialty} onClick={nextStep} style={{ marginLeft: "20px" }}>
+          <button
+            disabled={!selectedSpecialty}
+            onClick={nextStep}
+            style={{ marginLeft: "20px" }}
+          >
             Siguiente
           </button>
         </div>
       )}
 
+      {/* Paso 2 */}
       {currentStep === 2 && (
         <div className="step2">
           <h3>Paso 2: Seleccionar Doctor</h3>
@@ -616,7 +535,7 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
                 {filteredDoctors.map((doc) => (
                   <tr key={doc.id}>
                     <td>{doc.doctorName}</td>
-                    <td>{doc.consultingRoom}</td>
+                    <td>{doc.sede || "N/D"}</td>
                     <td>
                       <button onClick={() => setSelectedDoctor(doc)}>
                         Seleccionar
@@ -627,16 +546,16 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
               </tbody>
             </table>
           )}
-
           {selectedDoctor && (
             <div style={{ marginTop: "10px" }}>
               <p>
-                Doctor seleccionado:{" "}
-                <strong>{selectedDoctor.doctorName}</strong>
+                Doctor seleccionado: <strong>{selectedDoctor.doctorName}</strong>
+              </p>
+              <p>
+                Sede: <strong>{selectedDoctor.sede || "N/D"}</strong>
               </p>
             </div>
           )}
-
           <button onClick={prevStep} style={{ marginRight: "20px" }}>
             Atrás
           </button>
@@ -646,75 +565,51 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
         </div>
       )}
 
+      {/* Paso 3 */}
       {currentStep === 3 && (
         <div className="step3">
-          <h3>Paso 3: Seleccionar Fecha y Hora</h3>
-          <div style={{ marginBottom: "1rem" }}>
-            <Calendar
-              onClickDay={(value) => {
-                setSelectedDate(dayjs(value).format("YYYY-MM-DD"));
-              }}
-              tileDisabled={({ date, view }) => {
-                if (view === "month") {
-                  const found = availableDates.some((item) =>
-                    dayjs(item.date).isSame(dayjs(date), "day")
-                  );
-                  return !found;
-                }
-                return false;
-              }}
-              tileClassName={({ date, view }) => {
-                if (view === "month") {
-                  const found = availableDates.some((item) =>
-                    dayjs(item.date).isSame(dayjs(date), "day")
-                  );
-                  return found ? "" : "unavailable-date";
-                }
-              }}
-              minDate={new Date()}
+          <h3>Paso 3: Detalles de la Cita</h3>
+          <div>
+            <label>Seleccione EPS:</label>
+            <select
+              value={selectedEps}
+              onChange={(e) => setSelectedEps(e.target.value)}
+            >
+              <option value="">-- Seleccione EPS --</option>
+              {epsList.map((eps, idx) => (
+                <option key={idx} value={eps}>
+                  {eps}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label>Lugar de residencia:</label>
+            <input
+              type="text"
+              value={residence}
+              onChange={(e) => setResidence(e.target.value)}
+              placeholder="Ingrese su lugar de residencia"
             />
           </div>
-
-          <div style={{ display: "flex", gap: "20px" }}>
-            <div>
-              <p>Intervalos Disponibles:</p>
-              {selectedDate ? (
-                availableIntervals.length > 0 ? (
-                  <ul className="slots-grid">
-                    {availableIntervals.map((slot, idx) => (
-                      <li key={idx}>
-                        <button onClick={() => setSelectedInterval(slot)}>
-                          {slot}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>No hay intervalos disponibles para esta fecha</p>
-                )
-              ) : (
-                <p>Seleccione una fecha en el calendario</p>
-              )}
-            </div>
+          <div>
+            <label>Subir archivos de exámenes / órdenes:</label>
+            <input type="file" multiple onChange={handleExamFilesChange} />
           </div>
-
-          <div style={{ marginTop: "10px" }}>
-            <p>
-              Fecha seleccionada:{" "}
-              <strong>{selectedDate || "Ninguna"}</strong>
-            </p>
-            <p>
-              Intervalo seleccionado:{" "}
-              <strong>{selectedInterval || "Ninguno"}</strong>
-            </p>
+          <div>
+            <label>Observaciones adicionales:</label>
+            <textarea
+              value={additionalInfo}
+              onChange={(e) => setAdditionalInfo(e.target.value)}
+              placeholder="Ingrese observaciones adicionales"
+            />
           </div>
-
-          <div style={{ display: "flex", gap: "20px" }}>
+          <div style={{ marginTop: "20px" }}>
             <button onClick={prevStep} style={{ marginRight: "20px" }}>
               Atrás
             </button>
             <button
-              disabled={!selectedDate || !selectedInterval}
+              disabled={!selectedEps || !residence || !additionalInfo}
               onClick={nextStep}
             >
               Siguiente
@@ -723,9 +618,10 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
         </div>
       )}
 
+      {/* Paso 4 */}
       {currentStep === 4 && (
         <div className="step4">
-          <h3>Paso 4: Confirmar Cita</h3>
+          <h3>Paso 4: Confirmar Solicitud de Cita</h3>
           <p>
             <strong>Especialidad:</strong> {selectedSpecialty}
           </p>
@@ -733,16 +629,31 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
             <strong>Doctor:</strong> {selectedDoctor?.doctorName || ""}
           </p>
           <p>
-            <strong>Fecha:</strong> {selectedDate}
+            <strong>Sede:</strong> {selectedDoctor?.sede || "N/D"}
           </p>
           <p>
-            <strong>Hora:</strong> {selectedInterval}
+            <strong>EPS:</strong> {selectedEps}
           </p>
-
-          <button onClick={prevStep} style={{ marginRight: "20px" }}>
-            Atrás
-          </button>
-          <button onClick={confirmAppointment}>Confirmar</button>
+          <p>
+            <strong>Lugar de residencia:</strong> {residence}
+          </p>
+          <p>
+            <strong>Observaciones adicionales:</strong> {additionalInfo}
+          </p>
+          {examFiles && examFiles.length > 0 && (
+            <p>
+              <strong>Archivos seleccionados:</strong>{" "}
+              {Array.from(examFiles)
+                .map((file) => file.name)
+                .join(", ")}
+            </p>
+          )}
+          <div style={{ marginTop: "20px" }}>
+            <button onClick={prevStep} style={{ marginRight: "20px" }}>
+              Atrás
+            </button>
+            <button onClick={confirmAppointment}>Confirmar</button>
+          </div>
         </div>
       )}
 
@@ -754,15 +665,15 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
           max-width: 900px;
           margin: 0 auto;
         }
-        .appointments-table {
-          margin-bottom: 20px;
+        .requests-table {
+          margin-bottom: 30px;
         }
-        .appointments-table table {
+        .requests-table table {
           width: 100%;
           border-collapse: collapse;
         }
-        .appointments-table th,
-        .appointments-table td {
+        .requests-table th,
+        .requests-table td {
           border: 1px solid #ccc;
           padding: 8px;
           text-align: left;
@@ -775,10 +686,13 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
         }
         input,
         select,
-        button {
+        button,
+        textarea {
           margin-top: 5px;
           margin-bottom: 10px;
           padding: 8px;
+          width: 100%;
+          box-sizing: border-box;
         }
         .autocomplete-list {
           border: 1px solid #ccc;
@@ -804,50 +718,6 @@ async function sendAppointmentSupportMessage({ doctorName, specialty, date, inte
         .doctors-table td {
           border: 1px solid #ccc;
           padding: 8px;
-        }
-        /* Estilos para el calendario */
-        .react-calendar {
-          width: 100%;
-          max-width: 800px;
-          background: #f8f8f8;
-          border: none;
-          font-family: Arial, Helvetica, sans-serif;
-          line-height: 1.125em;
-          border-radius: 8px;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-          margin: 0 auto;
-        }
-        .react-calendar__tile {
-          padding: 10px;
-        }
-        .unavailable-date {
-          background-color: #fff !important;
-          color: #000 !important;
-        }
-        /* Grid de intervalos en 5 columnas */
-        .slots-grid {
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
-          gap: 10px;
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        .slots-grid li {
-          margin: 0;
-        }
-        .slots-grid li button {
-          width: 100%;
-          padding: 8px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          background-color: #fff;
-          cursor: pointer;
-          transition: background-color 0.3s, transform 0.3s;
-        }
-        .slots-grid li button:hover {
-          background-color: #f0f0f0;
-          transform: scale(1.05);
         }
       `}</style>
     </div>

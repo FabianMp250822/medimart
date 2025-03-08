@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState, useRef } from "react";
 import {
   collection,
@@ -12,6 +13,48 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { imedicDb, imedicAuth } from "@/lib/firebase";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+/**
+ * Componente que renderiza el contenido Markdown de un mensaje.
+ */
+function MarkdownMessage({ text }) {
+  return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;
+}
+
+/**
+ * Componente para renderizar un mensaje individual.
+ * 
+ * - Si es mensaje del agente, se muestra a la izquierda (azul Messenger).
+ * - Si es mensaje del paciente, se muestra a la derecha (gris claro).
+ */
+function ChatMessage({ msg, isAgent }) {
+  // Estilos para la burbuja del mensaje
+  const bubbleStyle = {
+    maxWidth: "70%",
+    padding: "10px 15px",
+    borderRadius: isAgent ? "18px 18px 18px 0" : "18px 18px 0 18px",
+    margin: "5px 0",
+    color: isAgent ? "#fff" : "#000",
+    backgroundColor: isAgent ? "#0084ff" : "#f1f0f0",
+    whiteSpace: "pre-wrap",
+  };
+
+  // Estilos para el contenedor (alineación a la izquierda o derecha)
+  const containerStyle = {
+    display: "flex",
+    justifyContent: isAgent ? "flex-start" : "flex-end",
+  };
+
+  return (
+    <div style={containerStyle}>
+      <div style={bubbleStyle}>
+        <MarkdownMessage text={msg.message} />
+      </div>
+    </div>
+  );
+}
 
 export default function ChatSupport() {
   const [statusMessage, setStatusMessage] = useState("Cargando información...");
@@ -22,7 +65,7 @@ export default function ChatSupport() {
   const currentUser = imedicAuth.currentUser;
   const messagesEndRef = useRef(null);
 
-  // Hace scroll al final del contenedor de mensajes (solo dentro del contenedor)
+  // Función para hacer scroll al final del contenedor de mensajes
   const scrollToBottom = () => {
     const container = document.getElementById("chatSupportMessages");
     if (container) {
@@ -34,13 +77,13 @@ export default function ChatSupport() {
     scrollToBottom();
   }, [messages]);
 
-  // Buscar la relación y el chat correspondiente
+  // Buscar la relación y el chat correspondiente para el usuario actual
   useEffect(() => {
     if (!currentUser) return;
 
     async function findRelationAndChat() {
       try {
-        console.log("Buscando en 'agentPatientRelations' para el paciente UID:", currentUser.uid);
+        console.log("Buscando relación en 'agentPatientRelations' para el paciente UID:", currentUser.uid);
 
         const agentPatientRef = collection(imedicDb, "agentPatientRelations");
         const relationQuery = query(agentPatientRef, where("patientId", "==", currentUser.uid));
@@ -52,53 +95,48 @@ export default function ChatSupport() {
           return;
         }
 
-        // Tomamos la primera relación encontrada
+        // Tomar la primera relación encontrada
         const firstRelationDoc = relationSnapshot.docs[0];
         const relationData = firstRelationDoc.data();
         console.log("Relación encontrada:", relationData);
 
-        const patientId = relationData.patientId;
-        const agentUid = relationData.agentUid;
-
+        const { patientId, agentUid } = relationData;
         if (!patientId || !agentUid) {
-          console.error("Los campos 'patientId' o 'agentUid' no están definidos en la relación.");
+          console.error("Datos de relación incompletos.");
           setStatusMessage("Datos de relación incompletos.");
           return;
         }
 
         // Buscar el chat en la colección "chats"
-        console.log("Buscando en 'chats' con patientUid == %s y agentUid == %s", patientId, agentUid);
+        console.log("Buscando chat con patientUid:", patientId, "y agentUid:", agentUid);
         const chatsRef = collection(imedicDb, "chats");
         const chatQuery = query(
           chatsRef,
           where("patientUid", "==", patientId),
           where("agentUid", "==", agentUid)
         );
-
         const chatSnapshot = await getDocs(chatQuery);
 
         if (chatSnapshot.empty) {
-          console.warn("No se encontró ningún chat con esos datos (patientUid y agentUid).");
+          console.warn("No se encontró ningún chat para esa relación.");
           setStatusMessage("No hay chat registrado para esa relación.");
           return;
         }
 
-        // Tomamos el primer chat encontrado
         const chatDoc = chatSnapshot.docs[0];
         setChatId(chatDoc.id);
         console.log("Chat encontrado con ID:", chatDoc.id);
 
-        // Obtener info del agente para mostrar su nombre
+        // Obtener información del agente para mostrar su nombre
         const agentDocRef = doc(imedicDb, "agentes", agentUid);
         const agentSnap = await getDoc(agentDocRef);
         if (!agentSnap.exists()) {
-          console.error("No existe un documento en 'agentes' con el UID:", agentUid);
+          console.error("No se encontró el documento del agente:", agentUid);
           setStatusMessage("No se encontró información del agente.");
           return;
         }
         const agentData = agentSnap.data();
         setAgentName(agentData.agentName);
-      
         setStatusMessage(`Agente asignado: ${agentData.agentName}.`);
       } catch (error) {
         console.error("Error en findRelationAndChat:", error);
@@ -109,7 +147,7 @@ export default function ChatSupport() {
     findRelationAndChat();
   }, [currentUser]);
 
-  // Suscribirse en tiempo real a la subcolección "messages" del chat encontrado
+  // Suscribirse a la subcolección "messages" del chat en tiempo real
   useEffect(() => {
     if (!chatId) return;
 
@@ -124,16 +162,16 @@ export default function ChatSupport() {
     return () => unsubscribe();
   }, [chatId]);
 
-  // Función para enviar mensaje al chat encontrado
+  // Función para enviar mensaje al chat
   const sendMessage = async () => {
     if (!newMsg.trim() || !chatId) return;
 
     try {
       const messagesRef = collection(imedicDb, "chats", chatId, "messages");
       await addDoc(messagesRef, {
-        message: newMsg,      // Cambiado de 'text' a 'message'
+        message: newMsg,
         sender: currentUser.uid,
-        status: "emitido",    // Se utiliza para identificar el mensaje del paciente, pero no se mostrará
+        status: "emitido", // Indica mensaje del paciente
         timestamp: new Date(),
       });
       setNewMsg("");
@@ -143,54 +181,30 @@ export default function ChatSupport() {
   };
 
   return (
-    <div>
-      <h3>Chat clínica de la costa</h3>
+    <div style={{ padding: "1rem", maxWidth: "600px", margin: "0 auto" }}>
+      <h3>Chat Clínica de la Costa</h3>
       <p>{statusMessage}</p>
-     
       
-      {/* Área de mensajes */}
+      {/* Contenedor de mensajes */}
       <div
         id="chatSupportMessages"
         style={{
           border: "1px solid #ccc",
           padding: "1rem",
           marginTop: "1rem",
-          maxHeight: "300px",
+          maxHeight: "400px",
           overflowY: "auto",
+          backgroundColor: "#fafafa",
         }}
       >
         {messages.map((msg) => {
-          // Si "msg.status" existe, es mensaje del paciente (izquierda); de lo contrario, del agente (derecha)
-          const isPatientMessage = !!msg.status;
-
-          return (
-            <div
-              key={msg.id}
-              style={{
-                display: "flex",
-                justifyContent: isPatientMessage ? "flex-start" : "flex-end",
-                marginBottom: "0.5rem",
-              }}
-            >
-              <div
-                style={{
-                  maxWidth: "60%",
-                  backgroundColor: isPatientMessage ? "#e5e5e5" : "blue",
-                  color: isPatientMessage ? "#000" : "#fff",
-                  padding: "0.5rem 0.75rem",
-                  borderRadius: "1rem",
-                }}
-              >
-                {/* Si es mensaje del agente se muestra la etiqueta */}
-                {!isPatientMessage && <strong>Agente: </strong>}
-                {msg.message}
-              </div>
-            </div>
-          );
+          // Si existe "msg.status", es un mensaje del paciente; de lo contrario, es del agente.
+          const isAgentMessage = !msg.status;
+          return <ChatMessage key={msg.id} msg={msg} isAgent={isAgentMessage} />;
         })}
       </div>
 
-      {/* Input y botón para enviar mensajes */}
+      {/* Campo de texto y botón para enviar */}
       <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem" }}>
         <input
           type="text"

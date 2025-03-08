@@ -1,0 +1,395 @@
+[
+    {
+      "especialidad": "ANESTESIOLOGIA",
+      "nombreEspecialista": "YAMILE JEREZ OLAYA"
+    },
+    {
+      "especialidad": "CARDIOLOGIA, IAR",
+      "nombreEspecialista": "JOSE ALFREDO ACOSTA M. (COORDINADOR DE INVESTIGACIONES CARDIOLAB)"
+    },
+    {
+      "especialidad": "CIRUGIA DE CABEZA Y CUELLO",
+      "nombreEspecialista": "DUBER ALEXANDER AGUDELO S."
+    },
+    {
+      "especialidad": "CIRUGIA DE MANO",
+      "nombreEspecialista": "MARIA FERNANDA RODRIGUEZ M."
+    },
+    {
+      "especialidad": "CIRUGIA DE MANO",
+      "nombreEspecialista": "GLORIA PATRICIA RESTREPO DE LA OSSA"
+    },
+    {
+      "especialidad": "CIRUGIA DE TORAX",
+      "nombreEspecialista": "GIOVANNI ANDRES MESA"
+    },
+    {
+      "especialidad": "CIRUGIA MAXILOFACIAL",
+      "nombreEspecialista": "JOSE GREGORIO LOPEZ"
+    },
+    {
+      "especialidad": "CIRUGIA MAXILOFACIAL",
+      "nombreEspecialista": "JUAN DAVID JARAMILLO"
+    },
+    {
+      "especialidad": "CIRUGIA MAXILOFACIAL",
+      "nombreEspecialista": "LUIS MIGUEL AGUDELO"
+    },
+    {
+      "especialidad": "CIRUGIA PEDIATRICA",
+      "nombreEspecialista": "MIGUEL ANGEL MUÑOZ ORTIZ"
+    },
+    {
+      "especialidad": "CIRUGIA PEDIATRICA",
+      "nombreEspecialista": "ALEJANDRO ALZATE"
+    },
+    {
+      "especialidad": "CIRUGIA PEDIATRICA",
+      "nombreEspecialista": "HECTOR IVAN MATTEUS PAZ"
+    },
+    {
+      "especialidad": "CIRUGIA PEDIATRICA",
+      "nombreEspecialista": "CARLOS JOSE HENAO PARRA"
+    },
+    {
+      "especialidad": "CIRUGIA PEDIATRICA",
+      "nombreEspecialista": "GUILLERMO DAVID DIAZ BORELLY"
+    },
+    {
+      "especialidad": "CIRUGIA PLASTICA",
+      "nombreEspecialista": "GERMAN RICARDO OSORIO URREA"
+    },
+    {
+      "especialidad": "CIRUGIA PLASTICA",
+      "nombreEspecialista": "FELIPE RODRIGUEZ GUTIERREZ"
+    },
+    {
+      "especialidad": "CIRUGIA VASCULAR Y ANGIOLOGIA",
+      "nombreEspecialista": "MARIA FERNANDA BENITEZ"
+    },
+    {
+      "especialidad": "DERMATOLOGIA",
+      "nombreEspecialista": "LUIS FERNANDO RODRIGUEZ"
+    },
+    {
+      "especialidad": "ENDOCRINOLOGIA PEDIATRICA",
+      "nombreEspecialista": "CLAUDIA ALEJANDRA SOTO"
+    },
+    {
+      "especialidad": "ENDOCRINOLOGIA",
+      "nombreEspecialista": "GABRIELA LILIANA CASTRO"
+    },
+    {
+      "especialidad": "ENDOCRINOLOGIA",
+      "nombreEspecialista": "ANA MERCEDES GOMEZ"
+    },
+    {
+      "especialidad": "FISIATRIA",
+      "nombreEspecialista": "MARIA EUGENIA PATINO"
+    },
+    {
+      "especialidad": "FISIOTERAPIA DEPORTIVA",
+      "nombreEspecialista": "YERLY TATIANA CORDOBA"
+    },
+    {
+      "especialidad": "GASTROENTEROLOGIA",
+      "nombreEspecialista": "LUIS CARLOS LONDOÑO"
+    },
+    {
+      "especialidad": "GASTROENTEROLOGIA",
+      "nombreEspecialista": "MARIA TERESA BAENA"
+    },
+    {
+      "especialidad": "GASTROENTEROLOGIA",
+      "nombreEspecialista": "YASMIN CASTRO"
+    },
+    {
+      "especialidad": "GASTROENTEROLOGIA PEDIATRICA",
+      "nombreEspecialista": "LINA MARIA FRANCO"
+    },
+    {
+      "especialidad": "GINECOLOGIA",
+      "nombreEspecialista": "CARLOS ARTURO ZAPATA"
+    },
+    {
+      "especialidad": "GINECOLOGIA",
+      "nombreEspecialista": "CRISTIAN JULIAN VILLADA"
+    },
+    {
+      "especialidad": "GINECOLOGIA ONCOLOGICA",
+      "nombreEspecialista": "JAIME ALBERTO ARANGO"
+    },
+    {
+      "especialidad": "HEMATOLOGIA",
+      "nombreEspecialista": "JAVIER ANDRES DIAZ VERA"
+    },
+    {
+      "especialidad": "HEMATOLOGIA PEDIATRICA",
+      "nombreEspecialista": "GONZALO ARTURO GUTIERREZ"
+    },
+    {
+      "especialidad": "INFECTOLOGIA",
+      "nombreEspecialista": "ALBERTO JOSE VARELA"
+    },
+    {
+      "especialidad": "INFECTOLOGIA PEDIATRICA",
+      "nombreEspecialista": "GUSTAVO ADOLFO ZAPATA"
+    },
+    {
+      "especialidad": "MASTOLOGIA",
+      "nombreEspecialista": "PATRICIA OROZCO"
+    },
+    {
+      "especialidad": "NEFROLOGIA",
+      "nombreEspecialista": "MILENA BEDOYA"
+    },
+    {
+      "especialidad": "NEFROLOGIA",
+      "nombreEspecialista": "LINA MARIA FRANCO"
+    },
+    {
+      "especialidad": "NEFROLOGIA PEDIATRICA",
+      "nombreEspecialista": "MIRIAM ZAPATA"
+    },
+    {
+      "especialidad": "NEONATOLOGIA",
+      "nombreEspecialista": "JUAN MANUEL GARCIA"
+    },
+    {
+      "especialidad": "NEUROCIRUGIA",
+      "nombreEspecialista": "DANIEL ALBERTO HERNANDEZ"
+    },
+    {
+      "especialidad": "NEUROLOGIA",
+      "nombreEspecialista": "MARGARITA MARIA RIVERA"
+    },
+    {
+      "especialidad": "NEUMOLOGIA",
+      "nombreEspecialista": "MARGARITA URIBE"
+    },
+    {
+      "especialidad": "NUTRICION",
+      "nombreEspecialista": "NANCY LUZ MORA"
+    },
+    {
+      "especialidad": "ODONTOLOGIA",
+      "nombreEspecialista": "LUZ MARINA GONZALEZ"
+    },
+    {
+      "especialidad": "ONCOHEMATOLOGIA PEDIATRICA",
+      "nombreEspecialista": "GONZALO ARTURO GUTIERREZ"
+    },
+    {
+      "especialidad": "ORL",
+      "nombreEspecialista": "FERNANDO JARAMILLO"
+    },
+    {
+      "especialidad": "ORTOPEDIA",
+      "nombreEspecialista": "JOSE CARLOS ARANGO"
+    },
+    {
+      "especialidad": "ORTOPEDIA PEDIATRICA",
+      "nombreEspecialista": "FELIPE ANDRES GARCIA"
+    },
+    {
+      "especialidad": "ORTOPEDIA TRAUMATOLOGIA",
+      "nombreEspecialista": "JUAN CARLOS MARIN"
+    },
+    {
+      "especialidad": "OSTOMIAS",
+      "nombreEspecialista": "LUZ MARINA GONZALEZ"
+    },
+    {
+      "especialidad": "PEDIATRIA",
+      "nombreEspecialista": "HUMBERTO GIL"
+    },
+    {
+      "especialidad": "PEDIATRIA",
+      "nombreEspecialista": "RICARDO ARTURO FONSECA"
+    },
+    {
+      "especialidad": "PSICOLOGIA",
+      "nombreEspecialista": "MARIA CAMILA POSADA"
+    },
+    {
+      "especialidad": "PSICOLOGIA",
+      "nombreEspecialista": "DIANA CAROLINA PINZON"
+    },
+    {
+      "especialidad": "PSIQUIATRIA",
+      "nombreEspecialista": "JORGE HUMBERTO VASQUEZ"
+    },
+    {
+      "especialidad": "PSIQUIATRIA",
+      "nombreEspecialista": "JUAN MANUEL SANCHEZ"
+    },
+    {
+      "especialidad": "PSIQUIATRIA INFANTIL",
+      "nombreEspecialista": "LUZ ADRIANA QUINTERO"
+    },
+    {
+      "especialidad": "RADIOLOGIA",
+      "nombreEspecialista": "RICARDO HERNANDEZ"
+    },
+    {
+      "especialidad": "RADIOTERAPIA",
+      "nombreEspecialista": "SANDRA MILENA VALENCIA"
+    },
+    {
+      "especialidad": "REUMATOLOGIA",
+      "nombreEspecialista": "MARIA XIMENA VASQUEZ"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "JHON JAIRO HIGUITA"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "NATALIA MARIA CARDONA"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "MARIA ALEJANDRA VALENCIA"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "LINA MARIA LOPEZ"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "LINA MARIA GONZALEZ"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "LAURA VANESA DUQUE"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "JULIANA RESTREPO"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "ELIANA MUÑOZ"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "ANGELA MARIA PARRA"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "ANDREA CAICEDO"
+    },
+    {
+      "especialidad": "TERAPIAS",
+      "nombreEspecialista": "ANDREA BORRERO"
+    },
+    {
+      "especialidad": "TERAPIA RESPIRATORIA",
+      "nombreEspecialista": "LINA MARIA LOPEZ"
+    },
+    {
+      "especialidad": "TERAPIA RESPIRATORIA",
+      "nombreEspecialista": "LINA MARIA GONZALEZ"
+    },
+    {
+      "especialidad": "TERAPIA RESPIRATORIA",
+      "nombreEspecialista": "LAURA VANESA DUQUE"
+    },
+    {
+      "especialidad": "TERAPIA RESPIRATORIA",
+      "nombreEspecialista": "JULIANA RESTREPO"
+    },
+    {
+      "especialidad": "TERAPIA RESPIRATORIA",
+      "nombreEspecialista": "ELIANA MUÑOZ"
+    },
+    {
+      "especialidad": "TERAPIA RESPIRATORIA",
+      "nombreEspecialista": "ANGELA MARIA PARRA"
+    },
+    {
+      "especialidad": "TERAPIA RESPIRATORIA",
+      "nombreEspecialista": "ANDREA CAICEDO"
+    },
+    {
+      "especialidad": "TERAPIA RESPIRATORIA",
+      "nombreEspecialista": "ANDREA BORRERO"
+    },
+    {
+      "especialidad": "TERAPIA FISICA",
+      "nombreEspecialista": "LINA MARIA LOPEZ"
+    },
+    {
+      "especialidad": "TERAPIA FISICA",
+      "nombreEspecialista": "LINA MARIA GONZALEZ"
+    },
+    {
+      "especialidad": "TERAPIA FISICA",
+      "nombreEspecialista": "LAURA VANESA DUQUE"
+    },
+    {
+      "especialidad": "TERAPIA FISICA",
+      "nombreEspecialista": "ELIANA MUÑOZ"
+    },
+    {
+      "especialidad": "TERAPIA FISICA",
+      "nombreEspecialista": "ANGELA MARIA PARRA"
+    },
+    {
+      "especialidad": "TERAPIA FISICA",
+      "nombreEspecialista": "ANDREA CAICEDO"
+    },
+    {
+      "especialidad": "TERAPIA FISICA",
+      "nombreEspecialista": "ANDREA BORRERO"
+    },
+    {
+      "especialidad": "TERAPIA OCUPACIONAL",
+      "nombreEspecialista": "LINA MARIA GONZALEZ"
+    },
+    {
+      "especialidad": "TERAPIA OCUPACIONAL",
+      "nombreEspecialista": "LAURA VANESA DUQUE"
+    },
+    {
+      "especialidad": "TERAPIA OCUPACIONAL",
+      "nombreEspecialista": "ANGELA MARIA PARRA"
+    },
+    {
+      "especialidad": "TERAPIA OCUPACIONAL",
+      "nombreEspecialista": "ANDREA CAICEDO"
+    },
+    {
+      "especialidad": "TERAPIA DEL LENGUAJE",
+      "nombreEspecialista": "LINA MARIA GONZALEZ"
+    },
+    {
+      "especialidad": "TERAPIA DEL LENGUAJE",
+      "nombreEspecialista": "LAURA VANESA DUQUE"
+    },
+    {
+      "especialidad": "TERAPIA DEL LENGUAJE",
+      "nombreEspecialista": "ANGELA MARIA PARRA"
+    },
+    {
+      "especialidad": "TERAPIA DEL LENGUAJE",
+      "nombreEspecialista": "ANDREA CAICEDO"
+    },
+    {
+      "especialidad": "TOXICOLOGIA",
+      "nombreEspecialista": "HECTOR GIL"
+    },
+    {
+      "especialidad": "UCI NEONATAL",
+      "nombreEspecialista": "MARGARITA MARIA RIVERA"
+    },
+    {
+      "especialidad": "UROLOGIA",
+      "nombreEspecialista": "PAULA ANDREA DIAZ VERA"
+    },
+    {
+      "especialidad": "CIRUGIA ONCOLOGICA",
+      "nombreEspecialista": "JOHN MONTOYA"
+    }
+  ]
+  
