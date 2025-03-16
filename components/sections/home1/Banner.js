@@ -53,11 +53,11 @@ export default function Banner() {
               <p style={{ fontSize: '16px', lineHeight: '1.5em', maxWidth: '400px' }}>
                 {message}
               </p>
-              <div className="btn-box">
+              {/* <div className="btn-box">
                 <Link href="/appointment" className="theme-btn btn-two">
                   <span>{t("agendaTuCita")}</span>
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
 

@@ -35,10 +35,14 @@ export default function MedicalAppointments({ onAppointmentConfirmed }) {
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
-  // Paso 3
+  // Paso 3 - Detalles de la Cita (nuevos campos incluidos)
   const [epsList, setEpsList] = useState([]);
   const [selectedEps, setSelectedEps] = useState("");
   const [residence, setResidence] = useState("");
+  const [appointmentType, setAppointmentType] = useState("");
+  const [appointmentReason, setAppointmentReason] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [examFiles, setExamFiles] = useState([]);
 
@@ -50,7 +54,6 @@ export default function MedicalAppointments({ onAppointmentConfirmed }) {
   // ================================
   // 2. useEffects para cargar datos
   // ================================
-
   // 2.1. Doctores desde JSON
   useEffect(() => {
     setAllDoctors(doctorsData);
@@ -232,11 +235,11 @@ export default function MedicalAppointments({ onAppointmentConfirmed }) {
       }
       const chatId = chatSnapshot.docs[0].id;
 
-      // Procesar URL
+      // Procesar URL de archivos
       let examFilesText = "N/A";
       if (appointmentInfo.examDocuments && appointmentInfo.examDocuments.length > 0) {
         examFilesText = appointmentInfo.examDocuments
-          .map(url => `[Ver archivo](${url})`)
+          .map((url) => `[Ver archivo](${url})`)
           .join(" | ");
       }
 
@@ -256,21 +259,25 @@ export default function MedicalAppointments({ onAppointmentConfirmed }) {
 `
         : "No disponible.";
 
-      // Construir mensaje en Markdown
+      // Construir mensaje en Markdown con los nuevos campos
       const messageText = `
 ### Datos del Paciente
 ${patientInfo}
 
 ### Datos de la Solicitud de Cita
-| Campo                  | Valor                                |
-|------------------------|--------------------------------------|
-| Doctor                 | ${appointmentInfo.doctorName}        |
-| Especialidad           | ${appointmentInfo.specialty}         |
-| Sede                   | ${appointmentInfo.sede}              |
-| EPS                    | ${appointmentInfo.selectedEps}       |
-| Lugar de residencia    | ${appointmentInfo.residence}         |
-| Observaciones          | ${appointmentInfo.additionalInfo}    |
-| Archivos de exámenes   | ${examFilesText}                     |
+| Campo                  | Valor                                   |
+|------------------------|-----------------------------------------|
+| Doctor                 | ${appointmentInfo.doctorName}           |
+| Especialidad           | ${appointmentInfo.specialty}            |
+| Sede                   | ${appointmentInfo.sede}                 |
+| Tipo de Cita           | ${appointmentInfo.appointmentType}      |
+| Motivo de la Cita      | ${appointmentInfo.appointmentReason}    |
+| Teléfono de contacto   | ${appointmentInfo.contactPhone}         |
+| Correo electrónico     | ${appointmentInfo.confirmEmail}         |
+| EPS                    | ${appointmentInfo.selectedEps}          |
+| Lugar de residencia    | ${appointmentInfo.residence}            |
+| Observaciones          | ${appointmentInfo.additionalInfo}       |
+| Archivos de exámenes   | ${examFilesText}                        |
 `;
 
       await addDoc(collection(imedicDb, "chats", chatId, "messages"), {
@@ -299,7 +306,6 @@ ${patientInfo}
   // ================================
   // 9. Funciones de validación
   // ================================
-
   /**
    * Determina si dos fechas están en el mismo día (compara año-mes-día).
    */
@@ -313,8 +319,6 @@ ${patientInfo}
 
   /**
    * Determina si d1 y d2 están dentro de la misma semana.
-   * Aquí se asume "misma semana" como "los últimos 7 días".
-   * Podrías personalizarlo si quieres la semana calendario Lunes-Domingo.
    */
   const isWithin7Days = (d1, d2) => {
     const diff = Math.abs(d1 - d2);
@@ -339,6 +343,26 @@ ${patientInfo}
         Swal.fire("Error", "Debe ingresar su lugar de residencia", "error");
         return;
       }
+      if (!appointmentType) {
+        Swal.fire("Error", "Debe seleccionar el tipo de cita", "error");
+        return;
+      }
+      if (!appointmentReason) {
+        Swal.fire("Error", "Debe ingresar el motivo de la cita", "error");
+        return;
+      }
+      if (!contactPhone) {
+        Swal.fire("Error", "Debe ingresar su número de teléfono de contacto", "error");
+        return;
+      }
+      if (!confirmEmail) {
+        Swal.fire("Error", "Debe ingresar su correo electrónico para verificación", "error");
+        return;
+      }
+      if (patientData && confirmEmail !== patientData.email) {
+        Swal.fire("Error", "El correo electrónico ingresado no coincide con el registrado", "error");
+        return;
+      }
       if (!additionalInfo) {
         Swal.fire("Error", "Debe ingresar observaciones adicionales", "error");
         return;
@@ -350,9 +374,9 @@ ${patientInfo}
       const now = new Date();
       for (let req of requests) {
         const createdAt = req.createdAt?.toDate?.() || null;
-        if (!createdAt) continue; // si no tiene createdAt, ignoramos
+        if (!createdAt) continue;
 
-        // 1. Misma especialidad el mismo día
+        // Misma especialidad el mismo día
         if (req.specialty === selectedSpecialty && isSameDay(createdAt, now)) {
           Swal.fire(
             "Atención",
@@ -362,7 +386,7 @@ ${patientInfo}
           return;
         }
 
-        // 2. Mismo doctor en la misma semana
+        // Mismo doctor en la misma semana
         if (req.doctorId === selectedDoctor.id && isWithin7Days(createdAt, now)) {
           Swal.fire(
             "Atención",
@@ -380,7 +404,7 @@ ${patientInfo}
         await saveExamDocuments(examDocuments);
       }
 
-      // Construir objeto
+      // Construir objeto con todos los datos
       const appointmentObj = {
         doctorId: selectedDoctor.id,
         doctorName: selectedDoctor.doctorName,
@@ -388,21 +412,22 @@ ${patientInfo}
         sede: selectedDoctor.sede,
         selectedEps,
         residence,
+        appointmentType,
+        appointmentReason,
+        contactPhone,
+        confirmEmail,
         additionalInfo,
         examDocuments,
         uidPaciente: currentUser.uid,
       };
 
-      // 1. Crear solicitud
+      // Crear solicitud y enviar información al chat
       await createRequest(appointmentObj);
-
-      // 2. Enviar la información al chat
       await sendAppointmentSupportMessage(appointmentObj);
 
-      // 3. Avisar y recargar
       Swal.fire("Solicitud Enviada", "Su solicitud ha sido enviada al soporte", "success");
 
-      // 4. Resetear
+      // Resetear campos
       setCurrentStep(1);
       setSpecialtySearch("");
       setSelectedSpecialty("");
@@ -411,6 +436,10 @@ ${patientInfo}
       setSelectedDoctor(null);
       setSelectedEps("");
       setResidence("");
+      setAppointmentType("");
+      setAppointmentReason("");
+      setContactPhone("");
+      setConfirmEmail("");
       setAdditionalInfo("");
       setExamFiles([]);
 
@@ -474,9 +503,9 @@ ${patientInfo}
 
       <StepIndicator currentStep={currentStep} />
 
-      {/* Paso 1 */}
+      {/* Paso 1: Seleccionar Especialidad */}
       {currentStep === 1 && (
-        <div className="step1">
+        <div className="step1 form-card">
           <h3>Paso 1: Seleccionar Especialidad</h3>
           <input
             type="text"
@@ -500,25 +529,21 @@ ${patientInfo}
             </ul>
           )}
           {selectedSpecialty && (
-            <div style={{ marginTop: "10px" }}>
+            <div className="info-selected">
               <p>
                 Especialidad elegida: <strong>{selectedSpecialty}</strong>
               </p>
             </div>
           )}
-          <button
-            disabled={!selectedSpecialty}
-            onClick={nextStep}
-            style={{ marginLeft: "20px" }}
-          >
+          <button disabled={!selectedSpecialty} onClick={nextStep}>
             Siguiente
           </button>
         </div>
       )}
 
-      {/* Paso 2 */}
+      {/* Paso 2: Seleccionar Doctor */}
       {currentStep === 2 && (
-        <div className="step2">
+        <div className="step2 form-card">
           <h3>Paso 2: Seleccionar Doctor</h3>
           {filteredDoctors.length === 0 ? (
             <p>No hay doctores con la especialidad "{selectedSpecialty}"</p>
@@ -547,7 +572,7 @@ ${patientInfo}
             </table>
           )}
           {selectedDoctor && (
-            <div style={{ marginTop: "10px" }}>
+            <div className="info-selected">
               <p>
                 Doctor seleccionado: <strong>{selectedDoctor.doctorName}</strong>
               </p>
@@ -556,20 +581,20 @@ ${patientInfo}
               </p>
             </div>
           )}
-          <button onClick={prevStep} style={{ marginRight: "20px" }}>
-            Atrás
-          </button>
-          <button disabled={!selectedDoctor} onClick={nextStep}>
-            Siguiente
-          </button>
+          <div className="button-group">
+            <button onClick={prevStep}>Atrás</button>
+            <button disabled={!selectedDoctor} onClick={nextStep}>
+              Siguiente
+            </button>
+          </div>
         </div>
       )}
 
-      {/* Paso 3 */}
+      {/* Paso 3: Detalles de la Cita */}
       {currentStep === 3 && (
-        <div className="step3">
+        <div className="step3 form-card">
           <h3>Paso 3: Detalles de la Cita</h3>
-          <div>
+          <div className="form-group">
             <label>Seleccione EPS:</label>
             <select
               value={selectedEps}
@@ -583,7 +608,7 @@ ${patientInfo}
               ))}
             </select>
           </div>
-          <div>
+          <div className="form-group">
             <label>Lugar de residencia:</label>
             <input
               type="text"
@@ -592,11 +617,48 @@ ${patientInfo}
               placeholder="Ingrese su lugar de residencia"
             />
           </div>
-          <div>
+          <div className="form-group">
+            <label>Tipo de cita:</label>
+            <select
+              value={appointmentType}
+              onChange={(e) => setAppointmentType(e.target.value)}
+            >
+              <option value="">-- Seleccione Tipo de Cita --</option>
+              <option value="Primera vez">Primera vez</option>
+              <option value="Control">Control</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Motivo de la cita:</label>
+            <textarea
+              value={appointmentReason}
+              onChange={(e) => setAppointmentReason(e.target.value)}
+              placeholder="Ingrese el motivo de la cita"
+            />
+          </div>
+          <div className="form-group">
+            <label>Teléfono de contacto:</label>
+            <input
+              type="text"
+              value={contactPhone}
+              onChange={(e) => setContactPhone(e.target.value)}
+              placeholder="Ingrese su número de teléfono"
+            />
+          </div>
+          <div className="form-group">
+            <label>Verificar correo electrónico:</label>
+            <input
+              type="email"
+              value={confirmEmail}
+              onChange={(e) => setConfirmEmail(e.target.value)}
+              placeholder={patientData ? patientData.email : "Ingrese su correo electrónico"}
+            />
+          </div>
+          <div className="form-group">
             <label>Subir archivos de exámenes / órdenes:</label>
             <input type="file" multiple onChange={handleExamFilesChange} />
           </div>
-          <div>
+          <div className="form-group">
             <label>Observaciones adicionales:</label>
             <textarea
               value={additionalInfo}
@@ -604,12 +666,18 @@ ${patientInfo}
               placeholder="Ingrese observaciones adicionales"
             />
           </div>
-          <div style={{ marginTop: "20px" }}>
-            <button onClick={prevStep} style={{ marginRight: "20px" }}>
-              Atrás
-            </button>
+          <div className="button-group">
+            <button onClick={prevStep}>Atrás</button>
             <button
-              disabled={!selectedEps || !residence || !additionalInfo}
+              disabled={
+                !selectedEps ||
+                !residence ||
+                !appointmentType ||
+                !appointmentReason ||
+                !contactPhone ||
+                !confirmEmail ||
+                !additionalInfo
+              }
               onClick={nextStep}
             >
               Siguiente
@@ -618,9 +686,9 @@ ${patientInfo}
         </div>
       )}
 
-      {/* Paso 4 */}
+      {/* Paso 4: Confirmar Solicitud de Cita */}
       {currentStep === 4 && (
-        <div className="step4">
+        <div className="step4 form-card">
           <h3>Paso 4: Confirmar Solicitud de Cita</h3>
           <p>
             <strong>Especialidad:</strong> {selectedSpecialty}
@@ -630,6 +698,18 @@ ${patientInfo}
           </p>
           <p>
             <strong>Sede:</strong> {selectedDoctor?.sede || "N/D"}
+          </p>
+          <p>
+            <strong>Tipo de Cita:</strong> {appointmentType}
+          </p>
+          <p>
+            <strong>Motivo de la Cita:</strong> {appointmentReason}
+          </p>
+          <p>
+            <strong>Teléfono de contacto:</strong> {contactPhone}
+          </p>
+          <p>
+            <strong>Correo electrónico:</strong> {confirmEmail}
           </p>
           <p>
             <strong>EPS:</strong> {selectedEps}
@@ -648,10 +728,8 @@ ${patientInfo}
                 .join(", ")}
             </p>
           )}
-          <div style={{ marginTop: "20px" }}>
-            <button onClick={prevStep} style={{ marginRight: "20px" }}>
-              Atrás
-            </button>
+          <div className="button-group">
+            <button onClick={prevStep}>Atrás</button>
             <button onClick={confirmAppointment}>Confirmar</button>
           </div>
         </div>
@@ -663,10 +741,16 @@ ${patientInfo}
           background-color: #fff;
           border-radius: 8px;
           max-width: 900px;
-          margin: 0 auto;
+          margin: 20px auto;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+          text-align: center;
+          margin-bottom: 20px;
         }
         .requests-table {
           margin-bottom: 30px;
+          overflow-x: auto;
         }
         .requests-table table {
           width: 100%;
@@ -675,24 +759,43 @@ ${patientInfo}
         .requests-table th,
         .requests-table td {
           border: 1px solid #ccc;
-          padding: 8px;
+          padding: 10px;
           text-align: left;
         }
-        .step1,
-        .step2,
-        .step3,
-        .step4 {
-          margin-top: 20px;
+        .requests-table th {
+          background-color: #f7f7f7;
         }
-        input,
+        .form-card {
+          background-color: #fafafa;
+          padding: 20px;
+          margin: 20px 0;
+          border-radius: 8px;
+          border: 1px solid #e0e0e0;
+        }
+        .form-group {
+          margin-bottom: 15px;
+          display: flex;
+          flex-direction: column;
+        }
+        label {
+          margin-bottom: 5px;
+          font-weight: 500;
+        }
+        input[type="text"],
+        input[type="email"],
         select,
-        button,
         textarea {
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 1rem;
+        }
+        input[type="file"] {
           margin-top: 5px;
-          margin-bottom: 10px;
-          padding: 8px;
-          width: 100%;
-          box-sizing: border-box;
+        }
+        textarea {
+          resize: vertical;
+          min-height: 80px;
         }
         .autocomplete-list {
           border: 1px solid #ccc;
@@ -701,7 +804,7 @@ ${patientInfo}
           background: #fff;
           list-style: none;
           padding: 0;
-          margin: 0;
+          margin: 5px 0;
         }
         .autocomplete-list li {
           padding: 8px;
@@ -713,11 +816,42 @@ ${patientInfo}
         .doctors-table {
           width: 100%;
           border-collapse: collapse;
+          margin-bottom: 15px;
         }
         .doctors-table th,
         .doctors-table td {
           border: 1px solid #ccc;
-          padding: 8px;
+          padding: 10px;
+          text-align: left;
+        }
+        .info-selected {
+          margin-top: 10px;
+          padding: 10px;
+          background-color: #e7f3ff;
+          border-left: 4px solid #2196f3;
+        }
+        .button-group {
+          display: flex;
+          justify-content: flex-end;
+          gap: 10px;
+          margin-top: 20px;
+        }
+        button {
+          padding: 10px 20px;
+          font-size: 1rem;
+          border: none;
+          border-radius: 4px;
+          background-color: #2196f3;
+          color: #fff;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        button[disabled] {
+          background-color: #ccc;
+          cursor: not-allowed;
+        }
+        button:hover:not([disabled]) {
+          background-color: #1976d2;
         }
       `}</style>
     </div>
