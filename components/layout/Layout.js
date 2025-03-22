@@ -1,24 +1,29 @@
 "use client";
 
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import dynamic from 'next/dynamic';
-// 1. Importa 'Script' de 'next/script'
+import dynamic from "next/dynamic";
 import Script from "next/script";
 
-const WOW = dynamic(() => import('wowjs/dist/wow'));
-
-import BackToTop from '../elements/BackToTop';
+// Importa tus demás componentes y estilos
+import BackToTop from "../elements/BackToTop";
 import DataBg from "../elements/DataBg";
-import Breadcrumb from './Breadcrumb';
+import Breadcrumb from "./Breadcrumb";
 import SearchPopup from "./SearchPopup";
 import Sidebar from "./Sidebar";
-import Footer1 from './footer/Footer1';
-import Footer2 from './footer/Footer2';
-import Header1 from "./header/Header1";
-import Header2NoSSR from './header/Header2NoSSR';
+import Footer1 from "./footer/Footer1";
+import Footer2 from "./footer/Footer2";
+import Header1NoSSR from "./header/Header1NoSSR";
+import Header2NoSSR from "./header/Header2NoSSR";
 import Header3NoSSR from "./header/Header3NoSSR";
 import Header4NoSSR from "./header/Header4NoSSR";
-import Header1NoSSR from "./header/Header1NoSSR";
+
+const WOW = dynamic(() => import("wowjs/dist/wow"));
+
+const theme = createTheme({
+  // Puedes personalizar el tema si lo deseas
+  // breakpoints, palette, typography, etc.
+});
 
 export default function Layout({
   headerStyle,
@@ -30,20 +35,19 @@ export default function Layout({
 }) {
   const [scroll, setScroll] = useState(0);
   const [isMobileMenu, setMobileMenu] = useState(false);
+  const [isPopup, setPopup] = useState(false);
+  const [isSidebar, setSidebar] = useState(false);
+
   const handleMobileMenu = () => {
     setMobileMenu(!isMobileMenu);
     document.body.classList.toggle("mobile-menu-visible", !isMobileMenu);
   };
-  const [isPopup, setPopup] = useState(false);
   const handlePopup = () => setPopup(!isPopup);
-  const [isSidebar, setSidebar] = useState(false);
   const handleSidebar = () => setSidebar(!isSidebar);
 
   useEffect(() => {
     const WOW = require("wowjs");
-    window.wow = new WOW.WOW({
-      live: false,
-    });
+    window.wow = new WOW.WOW({ live: false });
     window.wow.init();
 
     document.addEventListener("scroll", () => {
@@ -55,8 +59,8 @@ export default function Layout({
   }, [scroll]);
 
   return (
-    <>
-      {/* 2. Agregamos Scripts de Google Analytics (gtag) */}
+    <ThemeProvider theme={theme}>
+      {/* Scripts de Google Analytics */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-EL74C3P69H"
         strategy="afterInteractive"
@@ -69,7 +73,7 @@ export default function Layout({
           gtag('config', 'G-EL74C3P69H');
         `}
       </Script>
-      {/* Fin de integración de Google Analytics */}
+      {/* Fin Google Analytics */}
 
       <DataBg />
       <div
@@ -122,12 +126,13 @@ export default function Layout({
 
         {breadcrumbTitle && <Breadcrumb breadcrumbTitle={breadcrumbTitle} />}
 
+        {/* Contenido principal (children) */}
         {children}
 
         {(footerStyle === 1 || !footerStyle) && <Footer1 />}
         {footerStyle === 2 && <Footer2 />}
       </div>
       <BackToTop scroll={scroll} />
-    </>
+    </ThemeProvider>
   );
 }

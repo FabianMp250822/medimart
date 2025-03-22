@@ -4,18 +4,53 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { imedicAuth } from "@/lib/firebase";
 import Layout from "@/components/layout/Layout";
-import "react-calendar/dist/Calendar.css";
 import AuthOptions from "./citaIndex";
 
-// Importamos los componentes separados
-import MedicalAppointments from "./MedicalAppointments"; // Ajusta la ruta
+// Componentes separados
+import MedicalAppointments from "./MedicalAppointments";
 import ChatSupport from "./ChatSupport";
-import MedicalResults from "./MedicalResults"; // Nuevo componente separado
+import MedicalResults from "./MedicalResults";
+
+import {
+  Box,
+  Button,
+  Typography,
+  useMediaQuery,
+  Stack,
+  useTheme,
+} from "@mui/material";
+
+// Iconos de Material UI
+import PersonIcon from "@mui/icons-material/Person";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import ChatIcon from "@mui/icons-material/Chat";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+// 1. Define la función de estilos aquí
+function getButtonStyles(menuKey, selectedMenu, theme) {
+  const isSelected = selectedMenu === menuKey;
+  return {
+    textTransform: "none",
+    border: "1px solid",
+    borderColor: isSelected ? "#fff" : theme.palette.primary.main,
+    color: isSelected ? "#fff" : theme.palette.primary.main,
+    backgroundColor: isSelected ? theme.palette.primary.main : "#fff",
+    boxShadow: isSelected ? 3 : 1,
+    transition: "all 0.3s ease",
+    "&:hover": {
+      backgroundColor: isSelected
+        ? theme.palette.primary.dark
+        : theme.palette.action.hover,
+      boxShadow: 4,
+    },
+  };
+}
 
 export default function Home() {
   const [user, setUser] = useState(null);
 
-  // Verificar autenticación en imedicAuth
+  // Verificar autenticación
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(imedicAuth, (currentUser) => {
       setUser(currentUser || null);
@@ -29,22 +64,6 @@ export default function Home() {
       footerStyle={1}
       breadcrumbTitle="Agendamiento de Citas Médicas Especializadas"
     >
-      <section
-        className="appointment-section sec-pad-2"
-        style={{ paddingBottom: "0" }}
-      >
-        <div className="outer-container p_relative">
-          <div
-            className="bg-layer"
-            style={{
-              backgroundImage:
-                "url(assets/images/background/appointment-bg.jpg)",
-            }}
-          ></div>
-        </div>
-      </section>
-
-      {/* Si el usuario no está autenticado, se muestra AuthOptions; de lo contrario, el dashboard */}
       {user ? <ImedicDashboard user={user} /> : <AuthOptions />}
     </Layout>
   );
@@ -52,8 +71,9 @@ export default function Home() {
 
 function ImedicDashboard({ user }) {
   const [selectedMenu, setSelectedMenu] = useState("profile");
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const theme = useTheme();
 
-  // Función de logout
   const handleLogout = async () => {
     try {
       await signOut(imedicAuth);
@@ -63,99 +83,115 @@ function ImedicDashboard({ user }) {
     }
   };
 
-  return (
-    <div className="dashboard-container">
-      <div className="sidebar">
-        <button onClick={() => setSelectedMenu("profile")}>Perfil</button>
-        <button onClick={() => setSelectedMenu("results")}>
-          Resultados Médicos
-        </button>
-        <button onClick={() => setSelectedMenu("appointments")}>
-          Agendar citas 
-        </button>
-        <button onClick={() => setSelectedMenu("schedule")}>
-          Chat de soporte
-        </button>
-        <button onClick={handleLogout} className="logout-button">
-          Logout
-        </button>
-      </div>
+  // 2. Aplica la función a cada botón
+  const getButtonStylesLocal = (menuKey) =>
+    getButtonStyles(menuKey, selectedMenu, theme);
 
-      <div className="content">
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        gap: 2,
+        maxWidth: 1200,
+        mx: "auto",
+        p: 2,
+      }}
+    >
+      {/* Sidebar de navegación */}
+      <Box
+        sx={{
+          flex: "0 0 30%",
+          backgroundColor: "#fff",
+          border: `1px solid ${theme.palette.primary.main}`,
+          borderRadius: 2,
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          gap: 1,
+          alignItems: "stretch",
+        }}
+      >
+        <Stack spacing={1}>
+          <Button
+            fullWidth
+            startIcon={<PersonIcon />}
+            onClick={() => setSelectedMenu("profile")}
+            sx={getButtonStylesLocal("profile")}
+          >
+            Perfil
+          </Button>
+          <Button
+            fullWidth
+            startIcon={<MedicalServicesIcon />}
+            onClick={() => setSelectedMenu("results")}
+            sx={getButtonStylesLocal("results")}
+          >
+            Resultados Médicos
+          </Button>
+          <Button
+            fullWidth
+            startIcon={<CalendarTodayIcon />}
+            onClick={() => setSelectedMenu("appointments")}
+            sx={getButtonStylesLocal("appointments")}
+          >
+            Agendar citas
+          </Button>
+          <Button
+            fullWidth
+            startIcon={<ChatIcon />}
+            onClick={() => setSelectedMenu("schedule")}
+            sx={getButtonStylesLocal("schedule")}
+          >
+            Chat de soporte
+          </Button>
+          <Button
+            fullWidth
+            startIcon={<LogoutIcon />}
+            onClick={handleLogout}
+            sx={getButtonStylesLocal("logout")}
+          >
+            Logout
+          </Button>
+        </Stack>
+      </Box>
+
+      {/* Contenido del dashboard */}
+      <Box
+        sx={{
+          flex: 1,
+          backgroundColor: "#fff",
+          borderRadius: 2,
+          p: 3,
+          boxShadow: 1,
+          textAlign: "left",
+        }}
+      >
         {selectedMenu === "profile" && <Profile user={user} />}
         {selectedMenu === "results" && <MedicalResults />}
         {selectedMenu === "appointments" && (
-          <MedicalAppointments onAppointmentConfirmed={() => setSelectedMenu("schedule")} />
+          <MedicalAppointments
+            onAppointmentConfirmed={() => setSelectedMenu("schedule")}
+          />
         )}
         {selectedMenu === "schedule" && <ChatSupport />}
-      </div>
-
-      <style jsx>{`
-        .dashboard-container {
-          display: flex;
-          gap: 20px;
-          padding: 20px;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .sidebar {
-          flex: 0 0 30%;
-          background: #f8f8f8;
-          border-radius: 8px;
-          padding: 10px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-        .sidebar button {
-          padding: 12px;
-          border: none;
-          border-radius: 5px;
-          background-color: #007bff;
-          color: #fff;
-          cursor: pointer;
-          font-weight: bold;
-          transition: background-color 0.3s ease;
-        }
-        .sidebar button:hover {
-          background-color: #0056b3;
-        }
-        .logout-button {
-          background-color: #dc3545 !important;
-        }
-        .logout-button:hover {
-          background-color: #c82333 !important;
-        }
-        .content {
-          flex: 1;
-          background: #ffffff;
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        @media (max-width: 768px) {
-          .dashboard-container {
-            flex-direction: column;
-          }
-          .sidebar {
-            flex: 0 0 auto;
-            width: 100%;
-          }
-          .content {
-            width: 100%;
-          }
-        }
-      `}</style>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
 function Profile({ user }) {
   return (
-    <div>
-      <h3>Perfil del usuario</h3>
-      <p>Bienvenido, {user.email}</p>
-      <p>UID: {user.uid}</p>
-    </div>
+    <Box>
+      <Typography variant="h6" gutterBottom align="left">
+        Perfil del usuario
+      </Typography>
+      <Typography variant="body1" align="left">
+        Bienvenido, {user.email}
+      </Typography>
+      <Typography variant="body2" align="left">
+        UID: {user.uid}
+      </Typography>
+    </Box>
   );
 }

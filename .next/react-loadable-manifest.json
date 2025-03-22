@@ -17,7 +17,9 @@
   },
   "components/layout/header/Header1NoSSR.jsx -> ./Header1": {
     "id": "components/layout/header/Header1NoSSR.jsx -> ./Header1",
-    "files": []
+    "files": [
+      "static/chunks/_app-pages-browser_components_layout_header_Header1_js.js"
+    ]
   },
   "components/layout/header/Header2NoSSR.jsx -> ./Header2": {
     "id": "components/layout/header/Header2NoSSR.jsx -> ./Header2",

@@ -25,7 +25,6 @@
     "/appointment/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/appointment/page.css",
       "static/chunks/app/appointment/page.js"
     ]
   }

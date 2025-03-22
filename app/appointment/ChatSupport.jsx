@@ -16,43 +16,45 @@ import { imedicDb, imedicAuth } from "@/lib/firebase";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-/**
- * Componente que renderiza el contenido Markdown de un mensaje.
- */
+import {
+  Box,
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+
 function MarkdownMessage({ text }) {
   return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;
 }
 
-/**
- * Componente para renderizar un mensaje individual.
- * 
- * - Si es mensaje del agente, se muestra a la izquierda (azul Messenger).
- * - Si es mensaje del paciente, se muestra a la derecha (gris claro).
- */
 function ChatMessage({ msg, isAgent }) {
-  // Estilos para la burbuja del mensaje
-  const bubbleStyle = {
-    maxWidth: "70%",
-    padding: "10px 15px",
-    borderRadius: isAgent ? "18px 18px 18px 0" : "18px 18px 0 18px",
-    margin: "5px 0",
-    color: isAgent ? "#fff" : "#000",
-    backgroundColor: isAgent ? "#0084ff" : "#f1f0f0",
-    whiteSpace: "pre-wrap",
-  };
-
-  // Estilos para el contenedor (alineación a la izquierda o derecha)
-  const containerStyle = {
-    display: "flex",
-    justifyContent: isAgent ? "flex-start" : "flex-end",
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={bubbleStyle}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: isAgent ? "flex-start" : "flex-end",
+        mb: 1,
+      }}
+    >
+      <Box
+        sx={{
+          p: 1.5,
+          borderRadius: 2,
+          maxWidth: "70%",
+          bgcolor: isAgent ? "#ffffff" : "#dcf8c6",
+          color: "#333",
+          borderTopLeftRadius: isAgent ? 0 : 2,
+          borderTopRightRadius: isAgent ? 2 : 0,
+          boxShadow: 1,
+        }}
+      >
         <MarkdownMessage text={msg.message} />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
@@ -63,13 +65,12 @@ export default function ChatSupport() {
   const [messages, setMessages] = useState([]);
   const [newMsg, setNewMsg] = useState("");
   const currentUser = imedicAuth.currentUser;
-  const messagesEndRef = useRef(null);
 
-  // Función para hacer scroll al final del contenedor de mensajes
+  const chatContainerRef = useRef(null);
+
   const scrollToBottom = () => {
-    const container = document.getElementById("chatSupportMessages");
-    if (container) {
-      container.scrollTop = container.scrollHeight;
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   };
 
@@ -77,38 +78,27 @@ export default function ChatSupport() {
     scrollToBottom();
   }, [messages]);
 
-  // Buscar la relación y el chat correspondiente para el usuario actual
   useEffect(() => {
     if (!currentUser) return;
 
     async function findRelationAndChat() {
       try {
-        console.log("Buscando relación en 'agentPatientRelations' para el paciente UID:", currentUser.uid);
-
         const agentPatientRef = collection(imedicDb, "agentPatientRelations");
-        const relationQuery = query(agentPatientRef, where("patientId", "==", currentUser.uid));
+        const relationQuery = query(
+          agentPatientRef,
+          where("patientId", "==", currentUser.uid)
+        );
         const relationSnapshot = await getDocs(relationQuery);
 
         if (relationSnapshot.empty) {
-          console.warn("No se encontró ninguna relación para este paciente.");
           setStatusMessage("No hay ninguna relación agente–paciente.");
           return;
         }
 
-        // Tomar la primera relación encontrada
         const firstRelationDoc = relationSnapshot.docs[0];
         const relationData = firstRelationDoc.data();
-        console.log("Relación encontrada:", relationData);
-
         const { patientId, agentUid } = relationData;
-        if (!patientId || !agentUid) {
-          console.error("Datos de relación incompletos.");
-          setStatusMessage("Datos de relación incompletos.");
-          return;
-        }
 
-        // Buscar el chat en la colección "chats"
-        console.log("Buscando chat con patientUid:", patientId, "y agentUid:", agentUid);
         const chatsRef = collection(imedicDb, "chats");
         const chatQuery = query(
           chatsRef,
@@ -118,28 +108,23 @@ export default function ChatSupport() {
         const chatSnapshot = await getDocs(chatQuery);
 
         if (chatSnapshot.empty) {
-          console.warn("No se encontró ningún chat para esa relación.");
           setStatusMessage("No hay chat registrado para esa relación.");
           return;
         }
 
         const chatDoc = chatSnapshot.docs[0];
         setChatId(chatDoc.id);
-        console.log("Chat encontrado con ID:", chatDoc.id);
 
-        // Obtener información del agente para mostrar su nombre
         const agentDocRef = doc(imedicDb, "agentes", agentUid);
         const agentSnap = await getDoc(agentDocRef);
-        if (!agentSnap.exists()) {
-          console.error("No se encontró el documento del agente:", agentUid);
+        if (agentSnap.exists()) {
+          const agentData = agentSnap.data();
+          setAgentName(agentData.agentName);
+          setStatusMessage("");
+        } else {
           setStatusMessage("No se encontró información del agente.");
-          return;
         }
-        const agentData = agentSnap.data();
-        setAgentName(agentData.agentName);
-        setStatusMessage(`Agente asignado: ${agentData.agentName}.`);
       } catch (error) {
-        console.error("Error en findRelationAndChat:", error);
         setStatusMessage("Ocurrió un error al buscar la relación o el chat.");
       }
     }
@@ -147,7 +132,6 @@ export default function ChatSupport() {
     findRelationAndChat();
   }, [currentUser]);
 
-  // Suscribirse a la subcolección "messages" del chat en tiempo real
   useEffect(() => {
     if (!chatId) return;
 
@@ -162,7 +146,6 @@ export default function ChatSupport() {
     return () => unsubscribe();
   }, [chatId]);
 
-  // Función para enviar mensaje al chat
   const sendMessage = async () => {
     if (!newMsg.trim() || !chatId) return;
 
@@ -171,7 +154,7 @@ export default function ChatSupport() {
       await addDoc(messagesRef, {
         message: newMsg,
         sender: currentUser.uid,
-        status: "emitido", // Indica mensaje del paciente
+        status: "emitido",
         timestamp: new Date(),
       });
       setNewMsg("");
@@ -180,70 +163,76 @@ export default function ChatSupport() {
     }
   };
 
-  return (
-    <div style={{ padding: "1rem", maxWidth: "600px", margin: "0 auto" }}>
-      <h3>Chat Clínica de la Costa</h3>
-      <p>{statusMessage}</p>
-      
-      {/* Contenedor de mensajes */}
-      <div
-        id="chatSupportMessages"
-        style={{
-          border: "1px solid #ccc",
-          padding: "1rem",
-          marginTop: "1rem",
-          maxHeight: "400px",
-          overflowY: "auto",
-          backgroundColor: "#fafafa",
-        }}
-      >
-        {messages.map((msg) => {
-          // Si existe "msg.status", es un mensaje del paciente; de lo contrario, es del agente.
-          const isAgentMessage = !msg.status;
-          return <ChatMessage key={msg.id} msg={msg} isAgent={isAgentMessage} />;
-        })}
-      </div>
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
 
-      {/* Campo de texto y botón para enviar */}
-      <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem" }}>
-        <input
-          type="text"
-          value={newMsg}
-          onChange={(e) => setNewMsg(e.target.value)}
-          placeholder="Escribe tu mensaje..."
-          style={{
-            flex: 1,
-            padding: "0.5rem",
-            border: "1px solid #ccc",
-            borderRadius: "0.5rem",
-            fontSize: "1rem",
-            color: "#333",
-          }}
-          className="input-placeholder-difuminada"
-        />
-        <button
-          onClick={sendMessage}
-          style={{
-            padding: "0.5rem 1rem",
-            fontSize: "1rem",
-            border: "none",
-            borderRadius: "0.5rem",
-            backgroundColor: "#0070f3",
-            color: "#fff",
-            cursor: "pointer",
+  return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Paper elevation={3} sx={{ p: 2, borderRadius: 2, bgcolor: "#f9f9f9" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 1,
           }}
         >
-          Enviar
-        </button>
-      </div>
+          <Typography variant="h5">Chat Clínica de la Costa</Typography>
+          {agentName && (
+            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+              Agente: {agentName}
+            </Typography>
+          )}
+        </Box>
 
-      {/* Estilos locales para el placeholder */}
-      <style jsx>{`
-        .input-placeholder-difuminada::placeholder {
-          color: #aaa;
-          opacity: 0.7;
-        }
-      `}</style>
-    </div>
+        {statusMessage && (
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            {statusMessage}
+          </Typography>
+        )}
+
+        <Box
+          ref={chatContainerRef}
+          sx={{
+            p: 2,
+            borderRadius: 2,
+            overflowY: "auto",
+            bgcolor: "#FAFAFA",
+            boxShadow: 1,
+            maxHeight: 500,
+          }}
+        >
+          {messages.map((msg) => {
+            const isAgentMessage = !msg.status;
+            return (
+              <ChatMessage key={msg.id} msg={msg} isAgent={isAgentMessage} />
+            );
+          })}
+        </Box>
+
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            fullWidth
+            placeholder="Escribe tu mensaje..."
+            value={newMsg}
+            onChange={(e) => setNewMsg(e.target.value)}
+            onKeyDown={handleKeyDown}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={sendMessage} color="primary">
+                    <SendIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
+      </Paper>
+    </Container>
   );
 }
