@@ -77,15 +77,19 @@ function ImedicDashboard({ user }) {
   const handleLogout = async () => {
     try {
       await signOut(imedicAuth);
-      setSelectedMenu("profile");
+      setSelectedMenu("profile"); // Redirigir al perfil después del logout
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
   };
 
-  // 2. Aplica la función a cada botón
   const getButtonStylesLocal = (menuKey) =>
     getButtonStyles(menuKey, selectedMenu, theme);
+
+  // Función para navegar a la sección de agendar citas
+  const navigateToAppointments = () => {
+    setSelectedMenu("appointments");
+  };
 
   return (
     <Box
@@ -174,7 +178,7 @@ function ImedicDashboard({ user }) {
             onAppointmentConfirmed={() => setSelectedMenu("schedule")}
           />
         )}
-        {selectedMenu === "schedule" && <ChatSupport />}
+        {selectedMenu === "schedule" && <ChatSupport appointmentInfo={null} onNavigateToAppointments={navigateToAppointments} />} {/* Asegúrate de pasar appointmentInfo si es necesario o null/undefined */}
       </Box>
     </Box>
   );

@@ -122,9 +122,16 @@ export default function Footer2() {
                       </li>
                       <li>
                         <Link
-                          href="www.cideacx.com" target="_blank" rel="noopener noreferrer"
+                          href="https://www.cideacc.com" target="_blank" rel="noopener noreferrer"
                         >
                           CIDEACC
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://citas-beta.vercel.app/en" target="_blank" rel="noopener noreferrer"
+                        >
+                          Admin Citas
                         </Link>
                       </li>
                      

@@ -116,15 +116,22 @@ export default function Footer1() {
                       style={{ fontFamily: "Nunito Sans", fontSize: "16px" }}
                     >
                       <li>
-                        <Link href="www.invclicosta.com" target="_blank" rel="noopener noreferrer">
+                        <Link href="https://www.invclicosta.com" target="_blank" rel="noopener noreferrer">
                           Centro de Investigacion
                         </Link>
                       </li>
                       <li>
                         <Link
-                          href="www.cideacx.com" target="_blank" rel="noopener noreferrer"
+                          href="https://www.cideacc.com" target="_blank" rel="noopener noreferrer"
                         >
                           CIDEACC
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://citas-beta.vercel.app/en" target="_blank" rel="noopener noreferrer"
+                        >
+                          Admin Citas
                         </Link>
                       </li>
                      
