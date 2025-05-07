@@ -32,11 +32,49 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 
-function MarkdownMessage({ text }) {
-  return <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>;
+// Modificar MarkdownMessage para aceptar onNavigateToAppointments y personalizar el renderizado de enlaces
+function MarkdownMessage({ text, onNavigateToAppointments }) {
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        a: ({ node, ...props }) => {
+          if (props.href === "#ACTION_NAVIGATE_TO_APPOINTMENTS") {
+            return (
+              <Button
+                onClick={onNavigateToAppointments}
+                sx={{
+                  p: 0,
+                  minWidth: "auto",
+                  textTransform: "none",
+                  color: "#1976d2", // O el color que prefieras para el enlace/botón
+                  fontWeight: "bold",
+                  textDecoration: "underline",
+                  display: "inline",
+                  verticalAlign: "baseline",
+                  // Asegúrate de que los hijos (el texto del enlace) se rendericen
+                }}
+              >
+                {props.children}
+              </Button>
+            );
+          }
+          // Para todos los demás enlaces, comportamiento normal (abrir en nueva pestaña)
+          return (
+            <a {...props} target="_blank" rel="noopener noreferrer">
+              {props.children}
+            </a>
+          );
+        },
+      }}
+    >
+      {text}
+    </ReactMarkdown>
+  );
 }
 
-function ChatMessage({ msg, isAgent }) {
+// Modificar ChatMessage para aceptar y pasar onNavigateToAppointments
+function ChatMessage({ msg, isAgent, onNavigateToAppointments }) {
   return (
     <Box
       sx={{
@@ -58,7 +96,7 @@ function ChatMessage({ msg, isAgent }) {
         }}
       >
         {/* Texto */}
-        {msg.message && <MarkdownMessage text={msg.message} />}
+        {msg.message && <MarkdownMessage text={msg.message} onNavigateToAppointments={onNavigateToAppointments} />}
 
         {/* Archivo adjunto */}
         {msg.fileUrl && (
@@ -444,11 +482,10 @@ Este canal está disponible para el agendamiento y seguimiento de sus citas méd
             )
            )}
           {messages.map((msg) => {
-            // Asumimos que los mensajes del agente no tienen 'status', o tienen un 'status' diferente
-            // Ajusta esta lógica si es necesario para identificar correctamente los mensajes del agente.
-            const isAgentMessage = msg.sender !== currentUser?.uid; 
+            const isAgentMessage = msg.sender !== currentUser?.uid;
             return (
-              <ChatMessage key={msg.id} msg={msg} isAgent={isAgentMessage} />
+              // Pasar onNavigateToAppointments a ChatMessage
+              <ChatMessage key={msg.id} msg={msg} isAgent={isAgentMessage} onNavigateToAppointments={onNavigateToAppointments} />
             );
           })}
         </Box>
