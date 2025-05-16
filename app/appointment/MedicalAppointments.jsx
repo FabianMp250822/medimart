@@ -18,6 +18,7 @@ import StepIndicator from "./StepIndicator";
 import Swal from "sweetalert2";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import doctorsData from "./doctors.json";
+import { getDepartments, getCitiesByDepartment } from "../data/colombiaData";
 
 import {
   Container,
@@ -61,7 +62,13 @@ export default function MedicalAppointments({ onAppointmentConfirmed }) {
   // Paso 3 - Detalles de la Cita
   const [epsList, setEpsList] = useState([]);
   const [selectedEps, setSelectedEps] = useState("");
+  const [customEps, setCustomEps] = useState("");
+  const [showCustomEpsInput, setShowCustomEpsInput] = useState(false);
   const [residence, setResidence] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [availableCities, setAvailableCities] = useState([]);
+  const [departments, setDepartments] = useState([]);
   const [appointmentType, setAppointmentType] = useState("");
   const [appointmentReason, setAppointmentReason] = useState("");
   const [contactPhone, setContactPhone] = useState("");
@@ -204,6 +211,24 @@ export default function MedicalAppointments({ onAppointmentConfirmed }) {
       if (unsubscribeSol) unsubscribeSol();
     };
   }, [currentUser]);
+
+  // Cargar departamentos al iniciar
+  useEffect(() => {
+    const allDepartments = getDepartments();
+    setDepartments(allDepartments);
+  }, []);
+
+  // Filtrar ciudades según el departamento seleccionado
+  useEffect(() => {
+    if (selectedDepartment) {
+      const citiesOfDepartment = getCitiesByDepartment(selectedDepartment);
+      setAvailableCities(citiesOfDepartment);
+    } else {
+      setAvailableCities([]);
+    }
+    // Limpiar la selección de ciudad cuando cambia el departamento
+    setSelectedCity("");
+  }, [selectedDepartment]);
 
   // ================================
   // 3. Función para recargar solicitudes
@@ -389,12 +414,14 @@ ${patientInfo}
 | Doctor                 | ${appointmentInfo.doctorName}           |
 | Especialidad           | ${appointmentInfo.specialty}            |
 | Sede                   | ${appointmentInfo.sede}                 |
+| Fecha de Nacimiento    | ${appointmentInfo.birthDate}            |
 | Tipo de Cita           | ${appointmentInfo.appointmentType}      |
 | Motivo de la Cita      | ${appointmentInfo.appointmentReason}    |
 | Teléfono de contacto   | ${appointmentInfo.contactPhone}         |
 | Correo electrónico     | ${appointmentInfo.confirmEmail}         |
 | EPS                    | ${appointmentInfo.selectedEps}          |
-| Lugar de residencia    | ${appointmentInfo.residence}            |
+| Departamento           | ${appointmentInfo.department}           |
+| Ciudad                 | ${appointmentInfo.city}                 |
 | Observaciones          | ${appointmentInfo.additionalInfo}       |
 | Archivos de exámenes   | 
 ${examFilesText}
@@ -454,8 +481,12 @@ ${examFilesText}
         Swal.fire("Error", "Debe seleccionar una EPS", "error");
         return;
       }
-      if (!residence) {
-        Swal.fire("Error", "Debe ingresar su lugar de residencia", "error");
+      if (!selectedDepartment) {
+        Swal.fire("Error", "Debe seleccionar un departamento", "error");
+        return;
+      }
+      if (!selectedCity) {
+        Swal.fire("Error", "Debe seleccionar una ciudad", "error");
         return;
       }
       // Nueva validación para fecha de nacimiento
@@ -514,13 +545,19 @@ ${examFilesText}
         await saveExamDocuments(examDocuments);
       }
 
+      const finalEps = selectedEps === "OTRA" ? customEps : selectedEps;
+      // Crear un string con la información de residencia completa
+      const residenceInfo = `${selectedCity}, ${selectedDepartment}`;
+
       const appointmentObj = {
         doctorId: selectedDoctor.id,
         doctorName: selectedDoctor.doctorName,
         specialty: selectedDoctor.specialty,
         sede: selectedDoctor.sede,
-        selectedEps,
-        residence,
+        selectedEps: finalEps, // Usar la EPS final determinada
+        department: selectedDepartment,
+        city: selectedCity,
+        residence: residenceInfo, // Para mantener retrocompatibilidad
         birthDate, // Añadir fecha de nacimiento
         appointmentType,
         appointmentReason,
@@ -557,6 +594,9 @@ ${examFilesText}
       setAdditionalInfo("");
       setExamFiles([]);
       setBirthDate(""); // Resetear fecha de nacimiento
+      setSelectedDepartment("");
+      setSelectedCity("");
+      setAvailableCities([]);
 
       await reloadRequests();
 
@@ -787,7 +827,18 @@ ${examFilesText}
                   labelId="eps-label"
                   label="Seleccione EPS"
                   value={selectedEps}
-                  onChange={(e) => setSelectedEps(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSelectedEps(value);
+                    
+                    // Si selecciona "OTRA", mostrar el campo de entrada personalizada
+                    if (value === "OTRA") {
+                      setShowCustomEpsInput(true);
+                    } else {
+                      setShowCustomEpsInput(false);
+                      setCustomEps("");
+                    }
+                  }}
                 >
                   <MenuItem value="">
                     <em>-- Seleccione EPS --</em>
@@ -797,17 +848,80 @@ ${examFilesText}
                       {eps}
                     </MenuItem>
                   ))}
+                  <MenuItem value="OTRA">
+                    <em>OTRA</em>
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              
+              {/* Campo para ingresar EPS personalizada */}
+              {showCustomEpsInput && (
+                <TextField
+                  fullWidth
+                  label="Especifique su EPS"
+                  variant="outlined"
+                  value={customEps}
+                  onChange={(e) => {
+                    let value = e.target.value;
+                    
+                    // Convertir a mayúsculas
+                    value = value.toUpperCase();
+                    
+                    // Eliminar números y limitar a 50 caracteres
+                    value = value.replace(/[0-9]/g, "").slice(0, 50);
+                    
+                    setCustomEps(value);
+                  }}
+                  sx={{ mt: 2 }}
+                  placeholder="NOMBRE DE SU EPS"
+                  helperText="Solo letras, máximo 50 caracteres"
+                  inputProps={{
+                    style: { textTransform: 'uppercase' },
+                    maxLength: 50
+                  }}
+                  required
+                />
+              )}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel id="department-label">Departamento</InputLabel>
+                <Select
+                  labelId="department-label"
+                  label="Departamento"
+                  value={selectedDepartment}
+                  onChange={(e) => setSelectedDepartment(e.target.value)}
+                >
+                  <MenuItem value="">
+                    <em>-- Seleccione Departamento --</em>
+                  </MenuItem>
+                  {departments.map((dep) => (
+                    <MenuItem key={dep} value={dep}>
+                      {dep}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Lugar de residencia"
-                variant="outlined"
-                value={residence}
-                onChange={(e) => setResidence(e.target.value)}
-              />
+              <FormControl fullWidth variant="outlined" disabled={!selectedDepartment}>
+                <InputLabel id="city-label">Ciudad/Municipio</InputLabel>
+                <Select
+                  labelId="city-label"
+                  label="Ciudad/Municipio"
+                  value={selectedCity}
+                  onChange={(e) => setSelectedCity(e.target.value)}
+                >
+                  <MenuItem value="">
+                    <em>-- Seleccione Ciudad --</em>
+                  </MenuItem>
+                  {availableCities.map((city) => (
+                    <MenuItem key={city} value={city}>
+                      {city}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             {/* Nuevo campo para fecha de nacimiento */}
             <Grid item xs={12} sm={6}>
@@ -906,14 +1020,15 @@ ${examFilesText}
             <Button
               variant="contained"
               disabled={
-                !selectedEps ||
-                !residence ||
+                !selectedDepartment ||
+                !selectedCity ||
                 !birthDate || // Añadir validación de fecha de nacimiento
                 !appointmentType ||
                 !appointmentReason ||
                 !contactPhone ||
                 !confirmEmail ||
-                !additionalInfo
+                !additionalInfo ||
+                (selectedEps === "" || (selectedEps === "OTRA" && customEps === ""))
               }
               onClick={nextStep}
             >
@@ -955,10 +1070,13 @@ ${examFilesText}
               <strong>Correo electrónico:</strong> {confirmEmail}
             </Typography>
             <Typography>
-              <strong>EPS:</strong> {selectedEps}
+              <strong>EPS:</strong> {selectedEps === "OTRA" ? customEps : selectedEps}
             </Typography>
             <Typography>
-              <strong>Lugar de residencia:</strong> {residence}
+              <strong>Departamento:</strong> {selectedDepartment}
+            </Typography>
+            <Typography>
+              <strong>Ciudad:</strong> {selectedCity}
             </Typography>
             <Typography>
               <strong>Observaciones adicionales:</strong> {additionalInfo}
