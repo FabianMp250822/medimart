@@ -129,7 +129,7 @@ export default function Footer1() {
                       </li>
                       <li>
                         <Link
-                          href="https://citas-beta.vercel.app/en" target="_blank" rel="noopener noreferrer"
+                          href="https://clinica-citas-five.vercel.app/en" target="_blank" rel="noopener noreferrer"
                         >
                           Admin Citas
                         </Link>
