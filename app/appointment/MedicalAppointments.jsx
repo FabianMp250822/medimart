@@ -68,6 +68,8 @@ export default function MedicalAppointments({ onAppointmentConfirmed }) {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [examFiles, setExamFiles] = useState([]);
+  // Nuevo campo para fecha de nacimiento
+  const [birthDate, setBirthDate] = useState("");
 
   // Datos paciente
   const [patientData, setPatientData] = useState(null);
@@ -146,12 +148,17 @@ export default function MedicalAppointments({ onAppointmentConfirmed }) {
     fetchPatientData();
   }, [currentUser]);
 
-  // 2.6. Actualizar confirmEmail con el correo del paciente si aún no se ha ingresado
+  // 2.6. Actualizar confirmEmail y fecha de nacimiento con datos del paciente si están disponibles
   useEffect(() => {
-    if (patientData && !confirmEmail) {
-      setConfirmEmail(patientData.email);
+    if (patientData) {
+      if (!confirmEmail) {
+        setConfirmEmail(patientData.email);
+      }
+      if (!birthDate && patientData.fechaNacimiento) {
+        setBirthDate(patientData.fechaNacimiento);
+      }
     }
-  }, [patientData, confirmEmail]);
+  }, [patientData, confirmEmail, birthDate]);
 
   // 2.7. Cargar solicitudes y, en su lugar, citas si existen
   useEffect(() => {
@@ -451,6 +458,11 @@ ${examFilesText}
         Swal.fire("Error", "Debe ingresar su lugar de residencia", "error");
         return;
       }
+      // Nueva validación para fecha de nacimiento
+      if (!birthDate) {
+        Swal.fire("Error", "Debe ingresar su fecha de nacimiento", "error");
+        return;
+      }
       if (!appointmentType) {
         Swal.fire("Error", "Debe seleccionar el tipo de cita", "error");
         return;
@@ -509,6 +521,7 @@ ${examFilesText}
         sede: selectedDoctor.sede,
         selectedEps,
         residence,
+        birthDate, // Añadir fecha de nacimiento
         appointmentType,
         appointmentReason,
         contactPhone,
@@ -543,6 +556,7 @@ ${examFilesText}
       setConfirmEmail("");
       setAdditionalInfo("");
       setExamFiles([]);
+      setBirthDate(""); // Resetear fecha de nacimiento
 
       await reloadRequests();
 
@@ -795,6 +809,21 @@ ${examFilesText}
                 onChange={(e) => setResidence(e.target.value)}
               />
             </Grid>
+            {/* Nuevo campo para fecha de nacimiento */}
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Fecha de nacimiento"
+                type="date"
+                variant="outlined"
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                required
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth variant="outlined">
                 <InputLabel id="appointment-type-label">Tipo de Cita</InputLabel>
@@ -879,6 +908,7 @@ ${examFilesText}
               disabled={
                 !selectedEps ||
                 !residence ||
+                !birthDate || // Añadir validación de fecha de nacimiento
                 !appointmentType ||
                 !appointmentReason ||
                 !contactPhone ||
@@ -908,6 +938,9 @@ ${examFilesText}
             </Typography>
             <Typography>
               <strong>Sede:</strong> {selectedDoctor?.sede || "N/D"}
+            </Typography>
+            <Typography>
+              <strong>Fecha de nacimiento:</strong> {birthDate}
             </Typography>
             <Typography>
               <strong>Tipo de Cita:</strong> {appointmentType}

@@ -28,6 +28,7 @@ import {
   IconButton,
   InputAdornment,
   Button,
+  Alert,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -135,9 +136,49 @@ export default function ChatSupport({ appointmentInfo, onNavigateToAppointments 
   const [messages, setMessages] = useState([]);
   const [newMsg, setNewMsg] = useState("");
   const [file, setFile] = useState(null);
+  // Nuevo estado para verificar si el usuario tiene solicitudes de cita
+  const [hasAppointmentRequest, setHasAppointmentRequest] = useState(false);
+  const [loadingRequests, setLoadingRequests] = useState(true);
 
   const currentUser = imedicAuth.currentUser;
   const [patientAgentUid, setPatientAgentUid] = useState("");
+
+  // Verificar si el usuario tiene solicitudes de cita
+  useEffect(() => {
+    if (!currentUser) {
+      setLoadingRequests(false);
+      return;
+    }
+
+    const checkForAppointmentRequests = async () => {
+      try {
+        setLoadingRequests(true);
+        // Verificar solicitudes pendientes
+        const solQuery = query(
+          collection(imedicDb, "solicitudesCitas"),
+          where("uidPaciente", "==", currentUser.uid)
+        );
+        const solSnapshot = await getDocs(solQuery);
+        
+        // Verificar citas asignadas
+        const citasQuery = query(
+          collection(imedicDb, "citas"),
+          where("uidPaciente", "==", currentUser.uid)
+        );
+        const citasSnapshot = await getDocs(citasQuery);
+
+        // El usuario tiene solicitudes si hay al menos un documento en cualquiera de las colecciones
+        const hasRequests = !solSnapshot.empty || !citasSnapshot.empty;
+        setHasAppointmentRequest(hasRequests);
+      } catch (error) {
+        console.error("Error al verificar solicitudes de cita:", error);
+      } finally {
+        setLoadingRequests(false);
+      }
+    };
+
+    checkForAppointmentRequests();
+  }, [currentUser]);
 
   // 1) Escucha cambios en la relación paciente–agente
   useEffect(() => {
@@ -407,7 +448,7 @@ Este canal está disponible para el agendamiento y seguimiento de sus citas méd
            
             Chat Clínica de la Costa
           </Typography>
-          {agentName && (
+          {agentName && hasAppointmentRequest && (
             <Box
               sx={{
                 bgcolor: "#e3f2fd",
@@ -427,11 +468,33 @@ Este canal está disponible para el agendamiento y seguimiento de sus citas méd
           )}
         </Box>
 
-        {statusMessage && (
+        {!currentUser ? (
+          <Alert severity="info">Debe iniciar sesión para usar el chat de soporte.</Alert>
+        ) : loadingRequests ? (
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: 'center' }}>
+            Verificando información de citas...
+          </Typography>
+        ) : !hasAppointmentRequest ? (
+          <Alert 
+            severity="info"
+            sx={{ mb: 2 }}
+            action={
+              <Button 
+                color="inherit" 
+                size="small"
+                onClick={onNavigateToAppointments}
+              >
+                Agendar ahora
+              </Button>
+            }
+          >
+            El chat de soporte solo está disponible para pacientes con solicitudes de cita. Por favor, agende una cita primero.
+          </Alert>
+        ) : statusMessage ? (
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: 'center' }}>
             {statusMessage}
           </Typography>
-        )}
+        ) : null}
 
         <Box
           ref={chatContainerRef}
@@ -445,7 +508,7 @@ Este canal está disponible para el agendamiento y seguimiento de sus citas méd
             minHeight: 300, // Para que no colapse si no hay mensajes
           }}
         >
-          {messages.length === 0 && !statusMessage.startsWith("Error") && chatId && (
+          {messages.length === 0 && !statusMessage.startsWith("Error") && chatId && hasAppointmentRequest && (
             // Si no hay mensajes, el chat está listo y no hay errores:
             (!appointmentInfo || !appointmentInfo.specialty) ? (
               // Caso 1: No se pasó appointmentInfo (o está incompleta)
@@ -495,15 +558,15 @@ Este canal está disponible para el agendamiento y seguimiento de sus citas méd
             fullWidth
             multiline // Permitir múltiples líneas
             rows={2}    // Comenzar con 2 líneas, se expandirá si es necesario
-            placeholder="Escribe tu mensaje..."
+            placeholder={hasAppointmentRequest ? "Escribe tu mensaje..." : "Chat disponible solo con cita agendada"}
             value={newMsg}
             onChange={(e) => setNewMsg(e.target.value)}
             onKeyDown={handleKeyDown}
-            disabled={!chatId || !currentUser} // Deshabilitar si no hay chat o usuario
+            disabled={!chatId || !currentUser || !hasAppointmentRequest} // Deshabilitar si no hay chat o usuario
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={sendMessage} color="primary" disabled={!chatId || !currentUser || (!newMsg.trim() && !file)}>
+                  <IconButton onClick={sendMessage} color="primary" disabled={!chatId || !currentUser || (!newMsg.trim() && !file) || !hasAppointmentRequest}>
                     <SendIcon />
                   </IconButton>
                 </InputAdornment>
@@ -517,7 +580,7 @@ Este canal está disponible para el agendamiento y seguimiento de sus citas méd
               id="file-upload"
               type="file"
               onChange={handleFileChange}
-              disabled={!chatId || !currentUser}
+              disabled={!chatId || !currentUser || !hasAppointmentRequest}
             />
             <label htmlFor="file-upload">
               <Button
@@ -526,7 +589,7 @@ Este canal está disponible para el agendamiento y seguimiento de sus citas méd
                 component="span"
                 startIcon={<AttachFileIcon />}
                 sx={{ textTransform: "none" }}
-                disabled={!chatId || !currentUser}
+                disabled={!chatId || !currentUser || !hasAppointmentRequest}
               >
                 Adjuntar archivo
               </Button>
