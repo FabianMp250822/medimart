@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { PlayCircle } from 'lucide-react';
 
 interface Video {
@@ -84,18 +84,21 @@ export function VideoGallery({ videos }: VideoGalleryProps) {
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogContent className="max-w-4xl w-full p-0 border-0">
                     {selectedVideo && (
-                        <div className="relative aspect-video">
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src={getYouTubeEmbedUrl(selectedVideo.url)}
-                                title={selectedVideo.title}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                className="rounded-lg"
-                            ></iframe>
-                        </div>
+                        <>
+                           <DialogTitle className="sr-only">{selectedVideo.title}</DialogTitle>
+                            <div className="relative aspect-video">
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={getYouTubeEmbedUrl(selectedVideo.url)}
+                                    title={selectedVideo.title}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="rounded-lg"
+                                ></iframe>
+                            </div>
+                        </>
                     )}
                 </DialogContent>
             </Dialog>
