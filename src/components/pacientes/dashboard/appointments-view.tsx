@@ -73,16 +73,16 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     const form = useForm<AppointmentFormValues>({
         resolver: zodResolver(appointmentSchema),
         defaultValues: {
-            selectedEps: '',
-            customEps: '',
-            selectedDepartment: '',
-            selectedCity: '',
-            appointmentType: '',
-            appointmentReason: '',
-            contactPhone: '',
-            confirmEmail: '',
-            additionalInfo: '',
-        }
+            selectedEps: "",
+            customEps: "",
+            selectedDepartment: "",
+            selectedCity: "",
+            appointmentType: "",
+            appointmentReason: "",
+            contactPhone: "",
+            confirmEmail: "",
+            additionalInfo: "",
+        },
     });
 
     const selectedDepartment = form.watch("selectedDepartment");
@@ -104,7 +104,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     }, [selectedSpecialty, allDoctors]);
 
     useEffect(() => {
-        console.log("AppointmentsView: useEffect triggered. User:", user?.uid);
+        console.log(`AppointmentsView: useEffect triggered. User: ${user?.uid}`);
 
         if (!user || !imedicDb) {
             console.log("AppointmentsView: User or imedicDb is not available. Aborting data fetch.");
@@ -115,11 +115,10 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         const fetchInitialData = async () => {
             console.log("AppointmentsView: Starting to fetch initial data.");
             
-            // Fetch EPS list
             try {
                 console.log("AppointmentsView: Attempting to fetch 'eps' collection.");
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
-                console.log("AppointmentsView: 'eps' collection fetched successfully.", epsSnapshot.size, "documents found.");
+                console.log(`AppointmentsView: 'eps' collection fetched successfully. ${epsSnapshot.size} documents found.`);
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
                     if (epsData.listEps && Array.isArray(epsData.listEps)) {
@@ -128,17 +127,15 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 }
             } catch (error) {
                 console.error("AppointmentsView: Error fetching 'eps' collection:", error);
-                toast({ variant: 'destructive', title: "Error de Permisos (EPS)", description: "No se pudo cargar la lista de EPS." });
+                toast({ variant: 'destructive', title: "Error al Cargar EPS", description: (error as Error).message });
             }
 
-            // Fetch patient data
             try {
                 console.log(`AppointmentsView: Attempting to fetch 'patients' document for user UID: ${user.uid}`);
-                const q = query(collection(imedicDb, "patients"), where("uid", "==", user.uid));
-                const patientSnapshot = await getDocs(q);
+                const patientDocRef = doc(imedicDb, "patients", user.uid);
+                const patientDoc = await getDoc(patientDocRef);
 
-                if (!patientSnapshot.empty) {
-                    const patientDoc = patientSnapshot.docs[0];
+                if (patientDoc.exists()) {
                     console.log("AppointmentsView: 'patients' document found.", patientDoc.data());
                     const data = patientDoc.data();
                     form.setValue("contactPhone", data.telefono || "");
@@ -151,14 +148,14 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 }
             } catch (error) {
                  console.error("AppointmentsView: Error fetching 'patients' document:", error);
-                 toast({ variant: 'destructive', title: "Error (Datos Paciente)", description: "No se pudieron cargar los datos del paciente." });
+                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: (error as Error).message });
             }
         };
 
         console.log(`AppointmentsView: Setting up onSnapshot for 'solicitudesCitas' for user UID: ${user.uid}`);
         const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            console.log("AppointmentsView: onSnapshot for 'solicitudesCitas' triggered. Found", snapshot.size, "documents.");
+            console.log(`AppointmentsView: onSnapshot for 'solicitudesCitas' triggered. Found ${snapshot.size} documents.`);
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setRequests(data);
             setInitialLoading(false); 
@@ -166,8 +163,8 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             console.error("AppointmentsView: Error onSnapshot for 'solicitudesCitas' collection:", error);
             toast({
                 variant: 'destructive',
-                title: "Error de Permisos (Solicitudes)",
-                description: "No se pudieron cargar las solicitudes de citas.",
+                title: "Error al Cargar Solicitudes",
+                description: (error as Error).message,
             });
             setInitialLoading(false);
         });
@@ -365,5 +362,3 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
-
-    
