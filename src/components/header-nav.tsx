@@ -8,17 +8,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from 'lucide-react';
-
-const nosotrosSubItems = [
-    { href: '/nosotros/acerca-de', label: 'Acerca De Nosotros: Misión, Visión, Valores, Historia' },
-    { href: '/nosotros/gestion-documental', label: 'Gestión Documental' },
-    { href: '/nosotros/certificaciones', label: 'Certificaciones' },
-    { href: '/nosotros/responsabilidad-social', label: 'Responsabilidad Social Y Empresarial' },
-    { href: '/nosotros/direccionamiento-estrategico', label: 'Direccionamiento Estratégico' },
-    { href: '/nosotros/marco-legal', label: 'Marco Legal' },
-    { href: '/nosotros/sistema-integrado-de-gestion', label: 'Sistema Integrado De Gestión' },
-    { href: '/nosotros/politica-de-tratamiento-de-datos', label: 'Política De Tratamiento De Datos' },
-]
+import { nosotrosSubItems } from '@/lib/nosotros-links';
 
 const navItems = [
   { href: '/', label: 'Inicio' },
@@ -49,7 +39,7 @@ export function HeaderNav() {
                        <React.Fragment key={subItem.label}>
                          <DropdownMenuItem asChild>
                            <Link href={subItem.href} className="focus:bg-accent/20 focus:text-accent-foreground transition-all duration-200 ease-in-out hover:pl-3">
-                             {subItem.label}
+                             {subItem.label.split(':')[0]}
                            </Link>
                          </DropdownMenuItem>
                          {index < (item.subItems?.length ?? 0) - 1 && <DropdownMenuSeparator className="bg-primary-foreground/20" />}

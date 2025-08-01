@@ -5,18 +5,7 @@ import React, { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
-
-const nosotrosSubItems = [
-    { href: '/nosotros/acerca-de', label: 'Acerca De Nosotros' },
-    { href: '/trabaja-con-nosotros', label: 'Trabaja Con Nosotros' },
-    { href: '/nosotros/gestion-documental', label: 'Gestión Documental' },
-    { href: '/nosotros/certificaciones', label: 'Certificaciones' },
-    { href: '/nosotros/responsabilidad-social', label: 'Responsabilidad Social' },
-    { href: '/nosotros/direccionamiento-estrategico', label: 'Direccionamiento Estratégico' },
-    { href: '/nosotros/marco-legal', label: 'Marco Legal' },
-    { href: '/nosotros/sistema-integrado-de-gestion', label: 'Sistema Integrado De Gestión' },
-    { href: '/nosotros/politica-de-tratamiento-de-datos', label: 'Política De Datos' },
-]
+import { nosotrosSubItems } from '@/lib/nosotros-links';
 
 const navItems = [
   { href: '/', label: 'Inicio' },
@@ -57,7 +46,7 @@ export function MainNav() {
                             href={subItem.href}
                             className="block py-2 px-4 rounded-md text-sm text-foreground/70 hover:bg-accent/10 hover:text-accent"
                         >
-                            {subItem.label}
+                            {subItem.label.split(':')[0]}
                         </Link>
                         {subIndex < (item.subItems?.length ?? 0) - 1 && <DropdownMenuSeparator className="bg-border/50" />}
                      </React.Fragment>
