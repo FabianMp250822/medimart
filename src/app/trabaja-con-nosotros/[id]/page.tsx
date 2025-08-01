@@ -2,12 +2,13 @@ import { adminDb } from '@/lib/firebase-admin';
 import { OfertaEmpleo } from '@/types/oferta-empleo';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import { Briefcase, MapPin, Clock, FileText, GraduationCap, DollarSign, Calendar } from 'lucide-react';
+import { Briefcase, MapPin, Clock, GraduationCap, DollarSign, Calendar, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ShareButtonsJob } from '@/components/ofertas/share-buttons-job';
 import { ApplyButton } from '@/components/ofertas/apply-button';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 type Props = {
   params: { id: string };
@@ -95,6 +96,15 @@ export default async function OfertaDetailPage({ params }: Props) {
     <div className="bg-gray-50/50">
       <div className="container mx-auto py-12 px-4">
         <div className="lg:max-w-4xl mx-auto">
+            <div className="mb-8">
+                <Button asChild variant="outline">
+                    <Link href="/trabaja-con-nosotros">
+                        <ArrowLeft className="mr-2 h-4 w-4" />
+                        Volver a las ofertas
+                    </Link>
+                </Button>
+            </div>
+
             <Card className="overflow-hidden shadow-lg">
                 <CardHeader className="bg-primary/5 p-6 md:p-8 space-y-4">
                     <div className="flex flex-wrap justify-between items-start gap-4">
