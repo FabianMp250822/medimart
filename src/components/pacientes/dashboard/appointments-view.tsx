@@ -3,12 +3,13 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { collection, getDocs, getDoc, addDoc, deleteDoc, doc, Timestamp, query, where, onSnapshot } from "firebase/firestore";
-import { imedicDb, imedicStorage } from "@/lib/firebase";
+import { imedicDb, imedicStorage, imedicAuth } from "@/lib/firebase";
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import type { User } from 'firebase/auth';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import doctorsData from "@/data/doctors.json";
 import { getDepartments, getCitiesByDepartment } from "@/data/colombiaData";
@@ -56,8 +57,9 @@ const appointmentSchema = z.object({
 
 type AppointmentFormValues = z.infer<typeof appointmentSchema>;
 
-export function AppointmentsView({ user }: AppointmentsViewProps) {
+export function AppointmentsView({ user: authenticatedUser }: AppointmentsViewProps) {
     const { toast } = useToast();
+    const [user] = useAuthState(imedicAuth);
     const [requests, setRequests] = useState<any[]>([]);
     const [currentStep, setCurrentStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -93,9 +95,13 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     }, [selectedSpecialty, allDoctors]);
 
     useEffect(() => {
+        if (!user) {
+            setInitialLoading(false);
+            return;
+        };
+
         const fetchInitialData = async () => {
-            if (!imedicDb || !user) return;
-            setInitialLoading(true);
+            if (!imedicDb) return;
             try {
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
                 if (!epsSnapshot.empty) {
@@ -117,8 +123,6 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             } catch (error) {
                 console.error("Error fetching initial data:", error);
                 toast({ variant: 'destructive', title: "Error", description: "No se pudieron cargar los datos iniciales." });
-            } finally {
-                setInitialLoading(false);
             }
         };
 
@@ -162,7 +166,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     };
     
     const onSubmit = async (data: AppointmentFormValues) => {
-        if (!imedicDb || !imedicStorage) return;
+        if (!imedicDb || !imedicStorage || !user) return;
         setLoading(true);
         try {
             let examDocuments: string[] = [];
@@ -336,3 +340,5 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
+
+    
