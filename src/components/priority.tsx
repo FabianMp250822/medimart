@@ -37,7 +37,7 @@ export function Priority() {
                 </div>
                 <div className="relative h-96 w-full rounded-lg overflow-hidden">
                     <Image
-                        src="https://placehold.co/600x450.png"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%205.39.18%20PM.jpeg?alt=media&token=f5430294-929e-4089-be48-1ee6674b1d1f"
                         alt="Equipo médico"
                         layout="fill"
                         objectFit="cover"
