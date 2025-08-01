@@ -1,7 +1,7 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { getAuth, type Auth } from 'firebase/auth';
+import { getFirestore, type Firestore } from 'firebase/firestore';
+import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 // Client-side Firebase configuration for web app (Clinica de la Costa)
 const firebaseConfig = {
@@ -25,7 +25,11 @@ const imedicFirebaseConfig = {
 };
 
 // Helper function to initialize Firebase apps safely
-function initializeFirebaseApp(config: any, name?: string): FirebaseApp {
+function initializeFirebaseApp(config: any, name?: string): FirebaseApp | null {
+    if (!config.apiKey) {
+        console.error(`Firebase config for "${name || 'DEFAULT'}" is missing apiKey.`);
+        return null;
+    }
     const apps = getApps();
     const appName = name || '[DEFAULT]';
     const existingApp = apps.find(app => app.name === appName);
@@ -37,15 +41,15 @@ function initializeFirebaseApp(config: any, name?: string): FirebaseApp {
 
 // Initialize Firebase for Clinica de la Costa (default instance)
 const app = initializeFirebaseApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
+const auth = app ? getAuth(app) : null;
+const db = app ? getFirestore(app) : null;
+const storage = app ? getStorage(app) : null;
 
 // Initialize Firebase for iMedic (secondary instance)
 const imedicApp = initializeFirebaseApp(imedicFirebaseConfig, 'imedic');
-const imedicAuth = getAuth(imedicApp);
-const imedicDb = getFirestore(imedicApp);
-const imedicStorage = getStorage(imedicApp);
+const imedicAuth: Auth | null = imedicApp ? getAuth(imedicApp) : null;
+const imedicDb: Firestore | null = imedicApp ? getFirestore(imedicApp) : null;
+const imedicStorage: FirebaseStorage | null = imedicApp ? getStorage(imedicApp) : null;
 
 
 export { 
