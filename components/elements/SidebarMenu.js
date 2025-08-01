@@ -5,11 +5,12 @@ import Link from "next/link";
 export default function SidebarMenu() {
     const menuItems = [
         { title: "Trabaja con nosotros", link: "/trabaja-con-nosotros" },
-        { title: "Acerca de Nosotros: Misión, Visión, Valores, Historia", link: "/service-details-3" },
+        { title: "Acerca de Nosotros: Misión, Visión, Valores, Historia", link: "/about-us" },
         { title: "Certificaciones", link: "/certificaciones" },
         { title: "Responsabilidad social y empresarial", link: "/responsabilidad-social" },
         { title: "Direccionamiento Estratégico", link: "/direccionamiento-estrategico" },
         { title: "Marco Legal", link: "/marco-legal" },
+        { title: "Reglamento Interno de Trabajo", link: "/reglamento-interno-trabajo" },
         { title: "Informes de Sostenibilidad", link: "/informes-de-sostenibilidad" },
         { title: "Sistema Integrado de Gestión", link: "/sistema-integrado-de-gestion" },
         { title: "Política de tratamiento de datos", link: "/politica-de-datos" },
@@ -22,7 +23,7 @@ export default function SidebarMenu() {
                 backgroundColor: '#F7F7F7',
                 borderRadius: '8px',
                 boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                fontFamily: "'Roboto', sans-serif", // Fuente elegante
+                fontFamily: "'Roboto', sans-serif",
             }}
         >
             <h4
@@ -30,8 +31,9 @@ export default function SidebarMenu() {
                     color: '#1A1A3B',
                     fontWeight: 'bold',
                     marginBottom: '20px',
-                    fontSize: '18px', // Mejor tamaño para el título
-                    letterSpacing: '1px', // Espaciado para un efecto limpio
+                    fontSize: '18px',
+                    letterSpacing: '1px',
+                    marginTop: '0',
                 }}
             >
                 Sobre Nosotros
@@ -44,20 +46,12 @@ export default function SidebarMenu() {
                             style={{
                                 textDecoration: 'none',
                                 color: '#3B3B3B',
-                                fontSize: '16px', // Tamaño de letra más grande
+                                fontSize: '16px',
                                 fontWeight: '500',
-                                display: 'inline-block', // Para aplicar efecto hover en todo el enlace
-                                transition: 'all 0.3s ease', // Transición suave
-                                padding: '5px 10px', // Espaciado adicional
-                                borderRadius: '5px', // Bordes redondeados en hover
-                            }}
-                            onMouseOver={(e) => {
-                                e.target.style.color = '#ffffff'; // Cambia el color del texto
-                                e.target.style.backgroundColor = '#1A1A3B'; // Fondo oscuro
-                            }}
-                            onMouseOut={(e) => {
-                                e.target.style.color = '#3B3B3B'; // Color original del texto
-                                e.target.style.backgroundColor = 'transparent'; // Fondo transparente
+                                display: 'block',
+                                transition: 'all 0.3s ease',
+                                padding: '8px 12px',
+                                borderRadius: '5px',
                             }}
                         >
                             {item.title}
@@ -65,6 +59,14 @@ export default function SidebarMenu() {
                     </li>
                 ))}
             </ul>
+            
+            <style jsx>{`
+                a:hover {
+                    color: #ffffff !important;
+                    background-color: #1A1A3B !important;
+                    text-decoration: none !important;
+                }
+            `}</style>
         </div>
     );
 }
