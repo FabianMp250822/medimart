@@ -96,12 +96,7 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="flex-1 w-full">
-        <div className="container mx-auto flex">
-          <aside className="w-[280px] py-8 pr-8 hidden lg:block">
-            <Card className="p-4">
-              <MainNav />
-            </Card>
-          </aside>
+        <div className="container mx-auto">
           <main className="flex-1 py-8">
             <Hero />
             <Services />
