@@ -127,28 +127,32 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 }
             } catch (error) {
                 console.error("AppointmentsView: Error fetching 'eps' collection:", error);
-                toast({ variant: 'destructive', title: "Error al Cargar EPS", description: (error as Error).message });
+                toast({ variant: 'destructive', title: "Error al Cargar EPS", description: "No se pudo cargar la lista de EPS." });
             }
 
             try {
-                console.log(`AppointmentsView: Attempting to fetch 'patients' document for user UID: ${user.uid}`);
-                const patientDocRef = doc(imedicDb, "patients", user.uid);
-                const patientDoc = await getDoc(patientDocRef);
+                console.log(`AppointmentsView: Attempting to fetch 'pacientes' document for user UID: ${user.uid}`);
+                const q = query(collection(imedicDb, "pacientes"), where("uid", "==", user.uid));
+                const querySnapshot = await getDocs(q);
 
-                if (patientDoc.exists()) {
-                    console.log("AppointmentsView: 'patients' document found.", patientDoc.data());
+                if (!querySnapshot.empty) {
+                    const patientDoc = querySnapshot.docs[0];
+                    console.log("AppointmentsView: 'pacientes' document found.", patientDoc.data());
                     const data = patientDoc.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
-                    if (data.fechaNacimiento && data.fechaNacimiento.seconds) {
-                       form.setValue("birthDate", new Date(data.fechaNacimiento.seconds * 1000));
+                    if (data.fechaNacimiento) {
+                        const date = new Date(data.fechaNacimiento);
+                        // Adjust for timezone offset to prevent date from being off by one day
+                        const timezoneOffset = date.getTimezoneOffset() * 60000;
+                        form.setValue("birthDate", new Date(date.getTime() + timezoneOffset));
                     }
                 } else {
-                    console.warn("AppointmentsView: 'patients' document does not exist for this user.");
+                    console.warn("AppointmentsView: 'pacientes' document does not exist for this user.");
                 }
             } catch (error) {
-                 console.error("AppointmentsView: Error fetching 'patients' document:", error);
-                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: "No se pudieron cargar los datos del perfil. Por favor, complete el formulario manualmente." });
+                 console.error(`AppointmentsView: Error fetching 'pacientes' document:`, error);
+                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: "No se pudieron cargar los datos del perfil." });
             }
         };
 
@@ -164,7 +168,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             toast({
                 variant: 'destructive',
                 title: "Error al Cargar Solicitudes",
-                description: (error as Error).message,
+                description: "No se pudieron cargar las solicitudes existentes.",
             });
             setInitialLoading(false);
         });
@@ -362,5 +366,3 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
-
-    
