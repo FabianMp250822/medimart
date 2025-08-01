@@ -1,3 +1,4 @@
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, Users, ListChecks, FileQuestion, Clock, AlertTriangle } from 'lucide-react';
@@ -40,7 +41,7 @@ const sections = [
           <h4 className="font-semibold">Para el titular:</h4>
           <ul className="list-disc space-y-1 pl-5 mt-1">
             <li>Copia del documento de identidad del paciente.</li>
-            <li>Formato de solicitud firmado (disponible para descarga o puede solicitarse en <a href="mailto:archivo@clinicadelacosta.co" className="text-accent hover:underline">archivo@clinicadelacosta.co</a>).</li>
+            <li>Formato de solicitud firmado (puede solicitarse en <a href="mailto:archivo@clinicadelacosta.co" className="text-accent hover:underline">archivo@clinicadelacosta.co</a>).</li>
           </ul>
         </div>
         <div>
