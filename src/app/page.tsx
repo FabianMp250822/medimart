@@ -12,6 +12,7 @@ import { Header } from '@/components/header';
 import { adminDb } from '@/lib/firebase-admin';
 import type { Blog } from '@/types/blog';
 import type { Medico } from '@/types/medico';
+import type { Testimonial } from '@/types/testimonial';
 
 async function getRecentArticles(): Promise<Blog[]> {
   try {
@@ -54,9 +55,29 @@ async function getRandomMedicos(): Promise<Medico[]> {
   }
 }
 
+async function getRandomTestimonial(): Promise<Testimonial | null> {
+  try {
+    const testimonialsSnapshot = await adminDb.collection('pqyr').where('rating', '>=', 4).get();
+    if (testimonialsSnapshot.empty) {
+      return null;
+    }
+    const testimonials: Testimonial[] = testimonialsSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...(doc.data() as Omit<Testimonial, 'id'>),
+    }));
+
+    const randomIndex = Math.floor(Math.random() * testimonials.length);
+    return testimonials[randomIndex];
+  } catch (error) {
+    console.error("Error fetching random testimonial: ", error);
+    return null;
+  }
+}
+
 export default async function Home() {
   const articles = await getRecentArticles();
   const teamMembers = await getRandomMedicos();
+  const testimonial = await getRandomTestimonial();
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -70,7 +91,7 @@ export default async function Home() {
             <ComprehensiveCare />
             <Priority />
             <HowWeServe />
-            <Testimonials />
+            <Testimonials testimonial={testimonial} />
             <Team teamMembers={teamMembers} />
             <RecentArticles articles={articles} />
           </main>
