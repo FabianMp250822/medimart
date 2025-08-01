@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -26,7 +27,7 @@ interface ApplyModalProps {
 const applySchema = z.object({
   name: z.string().min(3, "El nombre es requerido"),
   email: z.string().email("El correo electrónico no es válido"),
-  cv: z.instanceof(FileList).refine(files => files?.length === 1, "Debes adjuntar tu hoja de vida."),
+  cv: z.any().refine((files) => files?.length === 1, "Debes adjuntar tu hoja de vida."),
 });
 
 type ApplyFormValues = z.infer<typeof applySchema>;
@@ -50,6 +51,8 @@ export function ApplyModal({ isOpen, onClose, oferta }: ApplyModalProps) {
     form.reset();
     onClose();
   };
+
+  const fileRef = form.register("cv");
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -89,15 +92,14 @@ export function ApplyModal({ isOpen, onClose, oferta }: ApplyModalProps) {
                  <FormField
                     control={form.control}
                     name="cv"
-                    render={({ field: { value, onChange, ...fieldProps } }) => (
+                    render={({ field }) => (
                         <FormItem>
                             <FormLabel>Hoja de vida (PDF)</FormLabel>
                              <FormControl>
                                 <Input 
-                                    {...fieldProps}
+                                    {...fileRef}
                                     type="file" 
                                     accept=".pdf"
-                                    onChange={(event) => onChange(event.target.files)}
                                 />
                             </FormControl>
                             <FormMessage />
