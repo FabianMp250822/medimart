@@ -82,21 +82,19 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
-      <div className="flex-1 w-full">
+      <main className="flex-1 w-full">
         <Hero />
         <div className="container mx-auto">
-          <main className="flex-1">
-            <Services />
-            <Commitment />
-            <ComprehensiveCare />
-            <Priority />
-            <HowWeServe />
-            <Testimonials testimonial={testimonial} />
-            <Team teamMembers={teamMembers} />
-            <RecentArticles articles={articles} />
-          </main>
+          <Services />
+          <Commitment />
+          <ComprehensiveCare />
+          <Priority />
+          <HowWeServe />
+          <Testimonials testimonial={testimonial} />
+          <Team teamMembers={teamMembers} />
+          <RecentArticles articles={articles} />
         </div>
-      </div>
+      </main>
       <AppFooter />
     </div>
   );
