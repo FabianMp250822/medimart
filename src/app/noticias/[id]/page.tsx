@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { SimilarArticles } from '@/components/blog/similar-articles';
 import Link from 'next/link';
 import { BlogLayout } from '@/components/blog/blog-layout';
+import admin from 'firebase-admin';
 
 type Props = {
   params: { id: string };
@@ -31,7 +32,7 @@ async function getRecentBlogs(currentId: string): Promise<Blog[]> {
         const blogsSnapshot = await adminDb.collection('blogs')
             .where('lugar', '==', 'clinica')
             .orderBy('date', 'desc')
-            .limit(4) // Fetch 4 to exclude the current one and have 3 left
+            .limit(4)
             .get();
             
         const blogs: Blog[] = blogsSnapshot.docs
@@ -49,15 +50,14 @@ async function getRecentBlogs(currentId: string): Promise<Blog[]> {
 async function getSimilarBlogs(category: string, currentId: string): Promise<Blog[]> {
     try {
         const blogsSnapshot = await adminDb.collection('blogs')
-            .where('lugar', '==', 'clinica')
             .where('category', '==', category)
             .orderBy('date', 'desc')
-            .limit(4) // Fetch 4 to exclude the current one and have 3 left
+            .limit(4)
             .get();
         
         const blogs: Blog[] = blogsSnapshot.docs
             .map(doc => ({ id: doc.id, ...(doc.data() as Omit<Blog, 'id'>) }))
-            .filter(blog => blog.id !== currentId)
+            .filter(blog => blog.id !== currentId && blog.lugar === 'clinica')
             .slice(0, 3);
             
         return blogs;
@@ -65,6 +65,25 @@ async function getSimilarBlogs(category: string, currentId: string): Promise<Blo
         console.error("Error fetching similar blogs: ", error);
         return [];
     }
+}
+
+async function getAndUpdateVisitCount(id: string): Promise<number> {
+  const visitRef = adminDb.collection('visitas').doc(id);
+  try {
+    await visitRef.set({ 
+      visitas: admin.firestore.FieldValue.increment(1) 
+    }, { merge: true });
+
+    const docSnap = await visitRef.get();
+    
+    if (docSnap.exists) {
+      return docSnap.data()?.visitas || 1;
+    }
+    return 1;
+  } catch (error) {
+    console.error("Error updating or fetching visit count: ", error);
+    return 0;
+  }
 }
 
 export async function generateMetadata(
@@ -121,14 +140,18 @@ export default async function BlogDetailPage({ params }: Props) {
     notFound();
   }
 
-  const recentBlogs = await getRecentBlogs(params.id);
-  const similarBlogs = await getSimilarBlogs(blog.category, params.id);
+  const [recentBlogs, similarBlogs, visitCount] = await Promise.all([
+    getRecentBlogs(params.id),
+    getSimilarBlogs(blog.category, params.id),
+    getAndUpdateVisitCount(params.id)
+  ]);
 
   return (
     <>
       <BlogLayout
         blog={blog}
         recentBlogs={recentBlogs}
+        visitCount={visitCount}
       />
       <div className="container mx-auto py-12 px-4">
         {similarBlogs.length > 0 && <SimilarArticles articles={similarBlogs} />}

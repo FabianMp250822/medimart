@@ -2,17 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, UserCircle } from "lucide-react";
+import { Calendar, UserCircle, Eye } from "lucide-react";
 import { CommentsSection } from "@/components/blog/comments-section";
 import { BlogSidebar } from "@/components/blog/blog-sidebar";
 import { Blog } from "@/types/blog";
+import { ShareButtons } from "./share-buttons";
 
 interface BlogLayoutProps {
   blog: Blog;
   recentBlogs: Blog[];
+  visitCount: number;
 }
 
-export function BlogLayout({ blog, recentBlogs }: BlogLayoutProps) {
+export function BlogLayout({ blog, recentBlogs, visitCount }: BlogLayoutProps) {
   return (
     <article>
       <div className="relative w-full h-80">
@@ -51,6 +53,10 @@ export function BlogLayout({ blog, recentBlogs }: BlogLayoutProps) {
               <UserCircle className="h-5 w-5" />
               <span>{blog.author}</span>
             </div>
+            <div className="flex items-center gap-2">
+              <Eye className="h-5 w-5" />
+              <span>{visitCount} Visitas</span>
+            </div>
           </div>
         </div>
       </div>
@@ -59,6 +65,9 @@ export function BlogLayout({ blog, recentBlogs }: BlogLayoutProps) {
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2">
+            <div className="flex justify-end mb-6">
+                <ShareButtons blog={blog} />
+            </div>
             <div
               className="prose prose-lg max-w-none prose-h3:text-primary prose-a:text-accent hover:prose-a:underline"
               dangerouslySetInnerHTML={{ __html: blog.content }}
