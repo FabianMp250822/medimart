@@ -53,8 +53,8 @@ export function Header() {
           </div>
 
           <div className="flex items-center justify-end gap-2 md:gap-4 lg:flex-1">
-             <Button className="bg-accent hover:bg-accent/90 hidden lg:flex">
-              Trabaje con nosotros
+             <Button asChild className="bg-accent hover:bg-accent/90 hidden lg:flex">
+              <Link href="/trabaja-con-nosotros">Trabaje con nosotros</Link>
             </Button>
             <div className="lg:hidden">
                <Sheet>
@@ -71,8 +71,8 @@ export function Header() {
                     </Link>
                     <div className="mt-8">
                        <MainNav />
-                       <Button className="w-full mt-4 bg-accent hover:bg-accent/90">
-                          Trabaje con nosotros
+                       <Button asChild className="w-full mt-4 bg-accent hover:bg-accent/90">
+                          <Link href="/trabaja-con-nosotros">Trabaje con nosotros</Link>
                        </Button>
                     </div>
                   </div>

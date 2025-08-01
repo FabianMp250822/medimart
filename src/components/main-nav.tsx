@@ -7,7 +7,7 @@ const navItems = [
   { href: '#', 'label': 'Pacientes' },
   { href: '/especialistas', label: 'Especialistas' },
   { href: '/noticias', label: 'Noticias' },
-  { href: "#", label: "Faq's" },
+  { href: "/trabaja-con-nosotros", label: "Trabaja con Nosotros" },
   { href: "#", label: "Contacto" },
 ];
 
