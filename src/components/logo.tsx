@@ -7,11 +7,10 @@ export const Logo: FC = () => {
       <Image
         src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Flogo%20(1).png?alt=media&token=961c0f8e-b866-47fd-b4a1-d942f2011f82"
         alt="Clínica de la Costa Logo"
-        width={180}
-        height={50}
+        width={160}
+        height={45}
         priority
-        className="h-auto"
-        style={{ width: 'auto', height: '50px' }}
+        className="h-10 w-auto sm:h-12"
       />
     </div>
   );
