@@ -80,7 +80,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             appointmentType: "",
             appointmentReason: "",
             contactPhone: "",
-            confirmEmail: "",
+            confirmEmail: user?.email || "",
             additionalInfo: "",
         },
     });
@@ -139,7 +139,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                     console.log("AppointmentsView: 'patients' document found.", patientDoc.data());
                     const data = patientDoc.data();
                     form.setValue("contactPhone", data.telefono || "");
-                    form.setValue("confirmEmail", data.email || "");
+                    form.setValue("confirmEmail", data.email || user.email || "");
                     if (data.fechaNacimiento && data.fechaNacimiento.seconds) {
                        form.setValue("birthDate", new Date(data.fechaNacimiento.seconds * 1000));
                     }
@@ -148,7 +148,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 }
             } catch (error) {
                  console.error("AppointmentsView: Error fetching 'patients' document:", error);
-                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: (error as Error).message });
+                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: "No se pudieron cargar los datos del perfil. Por favor, complete el formulario manualmente." });
             }
         };
 
@@ -188,7 +188,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     };
     
     const onSubmit = async (data: AppointmentFormValues) => {
-        if (!imedicDb || !imedicStorage || !user) return;
+        if (!imedicDb || !imedicStorage || !user || !selectedDoctor) return;
         setLoading(true);
         try {
             let examDocuments: string[] = [];
@@ -362,3 +362,5 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
+
+    
