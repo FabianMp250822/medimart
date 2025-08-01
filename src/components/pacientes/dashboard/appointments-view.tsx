@@ -133,18 +133,14 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     }, [selectedSpecialty, allDoctors]);
 
     useEffect(() => {
-        console.log(`AppointmentsView: useEffect triggered. User: ${user?.uid}`);
         if (!user || !imedicDb) {
             setInitialLoading(false);
             return;
         }
 
         const fetchInitialData = async () => {
-             console.log("AppointmentsView: Starting to fetch initial data.");
             try {
-                console.log("AppointmentsView: Attempting to fetch 'eps' collection.");
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
-                 console.log(`AppointmentsView: 'eps' collection fetched successfully. ${epsSnapshot.docs.length} documents found.`);
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
                     if (epsData.listEps && Array.isArray(epsData.listEps)) {
@@ -152,44 +148,35 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                     }
                 }
             } catch (error) {
-                console.error("AppointmentsView: Error fetching 'eps' collection:", error);
-                toast({ variant: 'destructive', title: "Error al Cargar EPS", description: `No se pudo cargar la lista de EPS. Detalles: ${error}` });
+                toast({ variant: 'destructive', title: "Error al Cargar EPS", description: "No se pudo cargar la lista de EPS." });
             }
 
             try {
-                console.log(`AppointmentsView: Attempting to fetch 'pacientes' document for user UID: ${user.uid}`);
-                const patientDocRef = doc(imedicDb, "pacientes", user.uid);
+                const patientDocRef = doc(imedicDb, "patients", user.uid);
                 const patientDocSnap = await getDoc(patientDocRef);
 
                 if (patientDocSnap.exists()) {
-                    console.log("AppointmentsView: 'pacientes' document found.", patientDocSnap.data());
                     const data = patientDocSnap.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
                      if (data.fechaNacimiento) {
                         const date = data.fechaNacimiento instanceof Timestamp 
                             ? data.fechaNacimiento.toDate()
-                            : new Date(data.fechaNacimiento + 'T00:00:00'); // Asegura que se interprete como local
+                            : new Date(data.fechaNacimiento + 'T00:00:00');
                         form.setValue("birthDate", date);
                     }
-                } else {
-                    console.warn("AppointmentsView: 'pacientes' document does not exist for this user.");
                 }
             } catch (error) {
-                 console.error(`AppointmentsView: Error fetching 'pacientes' document:`, error);
-                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: `No se pudieron cargar los datos del perfil. Detalles: ${error}` });
+                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: "No se pudieron cargar los datos del perfil." });
             }
         };
 
         const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
-        console.log(`AppointmentsView: Setting up onSnapshot for 'solicitudesCitas' for user UID: ${user.uid}`);
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            console.log(`AppointmentsView: onSnapshot for 'solicitudesCitas' triggered. Found ${snapshot.size} documents.`);
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setRequests(data);
             setInitialLoading(false); 
         }, (error) => {
-            console.error("AppointmentsView: Error onSnapshot for 'solicitudesCitas' collection:", error);
             toast({
                 variant: 'destructive',
                 title: "Error al Cargar Solicitudes",
@@ -201,7 +188,6 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         fetchInitialData();
         
         return () => {
-            console.log("AppointmentsView: Unsubscribing from onSnapshot listener.");
             unsubscribe();
         };
     }, [user, form, toast]);
@@ -260,7 +246,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
 
         } catch (error) {
             console.error("Error confirming appointment: ", error);
-            toast({ variant: 'destructive', title: "Error", description: `Ocurrió un error al enviar la solicitud. Detalles: ${error}` });
+            toast({ variant: 'destructive', title: "Error", description: `Ocurrió un error al enviar la solicitud. ${error}` });
         } finally {
             setLoading(false);
         }
@@ -286,6 +272,67 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             </div>
         )
     }
+    
+    const renderConfirmationView = () => {
+        const formData = form.getValues();
+        const finalEps = formData.selectedEps === "OTRA" ? formData.customEps : formData.selectedEps;
+    
+        return (
+            <div className="space-y-6">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Resumen de la Solicitud</CardTitle>
+                        <CardDescription>Por favor, revise que toda la información sea correcta antes de confirmar.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div>
+                            <h4 className="font-semibold text-primary">Cita Médica</h4>
+                            <div className="text-sm text-muted-foreground grid grid-cols-2 gap-2 mt-2">
+                                <p><strong>Especialidad:</strong> {selectedSpecialty}</p>
+                                <p><strong>Doctor:</strong> {selectedDoctor?.doctorName}</p>
+                                <p><strong>Sede:</strong> {selectedDoctor?.sede}</p>
+                                <p><strong>Fecha Deseada:</strong> {formData.appointmentDate ? format(formData.appointmentDate, "PPP", { locale: es }) : 'N/A'}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-primary">Información del Paciente</h4>
+                             <div className="text-sm text-muted-foreground grid grid-cols-2 gap-2 mt-2">
+                                <p><strong>EPS:</strong> {finalEps}</p>
+                                <p><strong>Ubicación:</strong> {formData.selectedCity}, {formData.selectedDepartment}</p>
+                                <p><strong>Fecha de Nac.:</strong> {formData.birthDate ? format(formData.birthDate, "PPP", { locale: es }) : 'N/A'}</p>
+                                <p><strong>Teléfono:</strong> {formData.contactPhone}</p>
+                                <p className="col-span-2"><strong>Email:</strong> {formData.confirmEmail}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-primary">Detalles de la Cita</h4>
+                             <div className="text-sm text-muted-foreground space-y-2 mt-2">
+                                <p><strong>Tipo de Cita:</strong> {formData.appointmentType}</p>
+                                <p><strong>Motivo:</strong> {formData.appointmentReason}</p>
+                                <p><strong>Observaciones:</strong> {formData.additionalInfo}</p>
+                                 {examFiles && examFiles.length > 0 && (
+                                    <div>
+                                        <strong>Archivos Adjuntos:</strong>
+                                        <ul className="list-disc pl-5">
+                                            {Array.from(examFiles).map((file: File, index) => (
+                                                <li key={index}>{file.name}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+                <div className="flex justify-between pt-4">
+                    <Button type="button" variant="outline" onClick={prevStep} disabled={loading}>Atrás</Button>
+                    <Button onClick={form.handleSubmit(onSubmit)} disabled={loading}>
+                        {loading ? <Loader2 className="animate-spin" /> : "Confirmar y Enviar Solicitud"}
+                    </Button>
+                </div>
+            </div>
+        );
+    };
 
     const renderStepContent = () => {
         switch (currentStep) {
@@ -327,7 +374,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             case 3:
                 return (
                    <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <form onSubmit={form.handleSubmit(nextStep)} className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <FormField control={form.control} name="selectedEps" render={({ field }) => (<FormItem><FormLabel>EPS</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione su EPS" /></SelectTrigger></FormControl><SelectContent>{epsList.map(eps => <SelectItem key={eps} value={eps}>{eps}</SelectItem>)}<SelectItem value="OTRA">OTRA</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                             {form.watch('selectedEps') === 'OTRA' && <FormField control={form.control} name="customEps" render={({ field }) => (<FormItem><FormLabel>Especifique su EPS</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />}
@@ -379,11 +426,13 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
 
                         <div className="flex justify-between pt-4">
                             <Button type="button" variant="outline" onClick={prevStep}>Atrás</Button>
-                            <Button type="submit" disabled={loading}>{loading ? <Loader2 className="animate-spin" /> : "Confirmar Solicitud"}</Button>
+                            <Button type="submit">Siguiente</Button>
                         </div>
                     </form>
                    </Form>
                 );
+            case 4:
+                return renderConfirmationView();
         }
     };
 
@@ -415,12 +464,12 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 </div>
 
                 <div className="flex items-center justify-center space-x-2 sm:space-x-4 mb-8">
-                    {[1, 2, 3].map(step => (
+                    {[1, 2, 3, 4].map(step => (
                         <React.Fragment key={step}>
                             <div className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 font-bold ${currentStep >= step ? 'bg-primary border-primary text-primary-foreground' : 'bg-muted border-muted-foreground/30'}`}>
                                 {step}
                             </div>
-                            {step < 3 && <div className={`flex-1 h-0.5 ${currentStep > step ? 'bg-primary' : 'bg-muted'}`} />}
+                            {step < 4 && <div className={`flex-1 h-0.5 ${currentStep > step ? 'bg-primary' : 'bg-muted'}`} />}
                         </React.Fragment>
                     ))}
                 </div>
