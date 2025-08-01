@@ -23,7 +23,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, Loader2, Paperclip, Trash2, XIcon } from "lucide-react";
+import { CalendarIcon, Loader2, Paperclip, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
@@ -133,6 +133,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     }, [selectedSpecialty, allDoctors]);
 
     useEffect(() => {
+        console.log(`AppointmentsView: useEffect triggered. User: ${user?.uid}`);
         if (!user || !imedicDb) {
             setInitialLoading(false);
             return;
@@ -156,27 +157,27 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             }
 
             try {
-                console.log(`AppointmentsView: Attempting to fetch 'patients' document for user UID: ${user.uid}`);
-                const patientDocRef = doc(imedicDb, "patients", user.uid);
+                console.log(`AppointmentsView: Attempting to fetch 'pacientes' document for user UID: ${user.uid}`);
+                const patientDocRef = doc(imedicDb, "pacientes", user.uid);
                 const patientDocSnap = await getDoc(patientDocRef);
 
                 if (patientDocSnap.exists()) {
-                    console.log("AppointmentsView: 'patients' document found.", patientDocSnap.data());
+                    console.log("AppointmentsView: 'pacientes' document found.", patientDocSnap.data());
                     const data = patientDocSnap.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
                      if (data.fechaNacimiento) {
                         const date = data.fechaNacimiento instanceof Timestamp 
                             ? data.fechaNacimiento.toDate()
-                            : new Date(data.fechaNacimiento + 'T00:00:00');
+                            : new Date(data.fechaNacimiento + 'T00:00:00'); // Asegura que se interprete como local
                         form.setValue("birthDate", date);
                     }
                 } else {
-                    console.warn("AppointmentsView: 'patients' document does not exist for this user.");
+                    console.warn("AppointmentsView: 'pacientes' document does not exist for this user.");
                 }
             } catch (error) {
-                 console.error(`AppointmentsView: Error fetching 'patients' document:`, error);
-                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: `No se pudieron cargar los datos del perfil.` });
+                 console.error(`AppointmentsView: Error fetching 'pacientes' document:`, error);
+                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: `No se pudieron cargar los datos del perfil. ${error}` });
             }
         };
 
@@ -429,5 +430,3 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
-
-    
