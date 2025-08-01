@@ -139,7 +139,9 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         }
 
         const fetchInitialData = async () => {
+            console.log("AppointmentsView: Starting to fetch initial data.");
             try {
+                console.log("AppointmentsView: Attempting to fetch 'eps' collection.");
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
@@ -147,36 +149,46 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                         setEpsList(epsData.listEps);
                     }
                 }
+                 console.log(`AppointmentsView: 'eps' collection fetched successfully. ${epsSnapshot.size} documents found.`);
             } catch (error) {
+                console.error("AppointmentsView: Error fetching 'eps' collection:", error);
                 toast({ variant: 'destructive', title: "Error al Cargar EPS", description: "No se pudo cargar la lista de EPS." });
             }
 
             try {
+                console.log(`AppointmentsView: Attempting to fetch 'patients' document for user UID: ${user.uid}`);
                 const patientDocRef = doc(imedicDb, "patients", user.uid);
                 const patientDocSnap = await getDoc(patientDocRef);
 
                 if (patientDocSnap.exists()) {
+                    console.log("AppointmentsView: 'patients' document found.");
                     const data = patientDocSnap.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
                      if (data.fechaNacimiento) {
                         const date = data.fechaNacimiento instanceof Timestamp 
                             ? data.fechaNacimiento.toDate()
-                            : new Date(data.fechaNacimiento + 'T00:00:00');
+                            : new Date(data.fechaNacimiento);
                         form.setValue("birthDate", date);
                     }
+                } else {
+                     console.log("AppointmentsView: 'patients' document not found for UID:", user.uid);
                 }
             } catch (error) {
+                 console.error("AppointmentsView: Error fetching 'patients' document:", error);
                  toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: "No se pudieron cargar los datos del perfil." });
             }
         };
 
+        console.log(`AppointmentsView: Setting up onSnapshot for 'solicitudesCitas' for user UID: ${user.uid}`);
         const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
         const unsubscribe = onSnapshot(q, (snapshot) => {
+            console.log(`AppointmentsView: onSnapshot for 'solicitudesCitas' triggered. Found ${snapshot.size} documents.`);
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setRequests(data);
             setInitialLoading(false); 
         }, (error) => {
+            console.error("AppointmentsView: onSnapshot for 'solicitudesCitas' failed:", error);
             toast({
                 variant: 'destructive',
                 title: "Error al Cargar Solicitudes",
@@ -188,6 +200,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         fetchInitialData();
         
         return () => {
+            console.log("AppointmentsView: Unsubscribing from onSnapshot listener.");
             unsubscribe();
         };
     }, [user, form, toast]);
@@ -205,19 +218,54 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     const onSubmit = async (data: AppointmentFormValues) => {
         if (!imedicDb || !imedicStorage || !user || !selectedDoctor) return;
         setLoading(true);
+
         try {
-            let examDocuments: string[] = [];
+            // 1. Asignar un agente
+            let assignedAgentUid: string | null = null;
+            const agentQuery = query(collection(imedicDb, "agentes"));
+            const agentSnapshot = await getDocs(agentQuery);
+
+            if (!agentSnapshot.empty) {
+                // Lógica de asignación simple: tomar el primer agente
+                const agentDoc = agentSnapshot.docs[0];
+                assignedAgentUid = agentDoc.id;
+
+                // Crear la relación en agentPatientRelations
+                const relationQuery = query(collection(imedicDb, "agentPatientRelations"), where("patientId", "==", user.uid));
+                const relationSnapshot = await getDocs(relationQuery);
+                
+                if (relationSnapshot.empty) {
+                    await addDoc(collection(imedicDb, "agentPatientRelations"), {
+                        agentUid: assignedAgentUid,
+                        patientId: user.uid,
+                        assignedAt: Timestamp.now()
+                    });
+                     console.log(`Agent ${assignedAgentUid} assigned to patient ${user.uid}`);
+                } else {
+                    console.log(`Patient ${user.uid} already has an assigned agent.`);
+                }
+            } else {
+                 console.log("No agents available to assign.");
+            }
+            
+            // 2. Subir archivos
+            let examDocuments: { url: string; name: string; type: string; }[] = [];
             if (data.examFiles && data.examFiles.length > 0) {
                 for (const file of Array.from(data.examFiles as FileList)) {
                     const fileRef = storageRef(imedicStorage, `fotos/examenes/${user.uid}/${Date.now()}_${file.name}`);
                     const snapshot = await uploadBytes(fileRef, file);
                     const downloadURL = await getDownloadURL(snapshot.ref);
-                    examDocuments.push(downloadURL);
+                    examDocuments.push({
+                        url: downloadURL,
+                        name: file.name,
+                        type: file.type
+                    });
                 }
             }
 
             const finalEps = data.selectedEps === "OTRA" ? data.customEps : data.selectedEps;
             
+            // 3. Crear el objeto de la cita
             const appointmentObj = {
                 doctorId: selectedDoctor.id,
                 doctorName: selectedDoctor.doctorName,
@@ -235,10 +283,12 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 additionalInfo: data.additionalInfo,
                 examDocuments,
                 uidPaciente: user.uid,
+                assignedAgentUid: assignedAgentUid, // Guardar el agente asignado
                 createdAt: Timestamp.now(),
                 status: "solicitando",
             };
 
+            // 4. Guardar la solicitud
             await addDoc(collection(imedicDb, "solicitudesCitas"), appointmentObj);
             
             toast({ title: "Solicitud Enviada", description: "Su solicitud ha sido enviada al soporte." });
