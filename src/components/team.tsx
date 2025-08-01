@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from './ui/button';
+import Link from 'next/link';
 
 const teamMembers = [
   {
@@ -47,7 +48,9 @@ export function Team() {
           </Card>
         ))}
       </div>
-      <Button className="mt-12 bg-accent hover:bg-accent/90">Ver todo el equipo</Button>
+      <Button asChild className="mt-12 bg-accent hover:bg-accent/90">
+        <Link href="/especialistas">Ver todo el equipo</Link>
+      </Button>
     </section>
   );
 }

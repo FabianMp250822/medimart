@@ -5,7 +5,7 @@ const navItems = [
   { href: '#', label: 'Nosotros' },
   { href: '#', label: 'Servicios' },
   { href: '#', 'label': 'Pacientes' },
-  { href: '#', label: 'Especialistas' },
+  { href: '/especialistas', label: 'Especialistas' },
   { href: '/noticias', label: 'Noticias' },
   { href: "#", label: "Faq's" },
   { href: "#", label: "Contacto" },
