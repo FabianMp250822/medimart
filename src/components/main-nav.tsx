@@ -7,15 +7,20 @@ import { ChevronDown } from 'lucide-react';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import { nosotrosSubItems } from '@/lib/nosotros-links';
 import { pacientesSubItems } from '@/lib/pacientes-links';
+import { servicesData } from '@/lib/servicios-links';
 
 const navItems = [
   { href: '/', label: 'Inicio' },
   { 
     label: 'Nosotros', 
     isDropdown: true,
-    subItems: nosotrosSubItems,
+    subItems: nosotrosSubItems.map(item => ({ href: item.href, label: item.label.split(':')[0] })),
   },
-  { href: '#', label: 'Servicios' },
+  { 
+    label: 'Servicios',
+    isDropdown: true,
+    subItems: servicesData.map(item => ({ href: `/servicios/${item.slug}`, label: item.title })),
+  },
   { 
     label: 'Pacientes', 
     isDropdown: true,
@@ -51,7 +56,7 @@ export function MainNav() {
                             href={subItem.href}
                             className="block py-2 px-4 rounded-md text-sm text-foreground/70 hover:bg-accent/10 hover:text-accent"
                         >
-                            {subItem.label.split(':')[0]}
+                            {subItem.label}
                         </Link>
                         {subIndex < (item.subItems?.length ?? 0) - 1 && <DropdownMenuSeparator className="bg-border/50" />}
                      </React.Fragment>

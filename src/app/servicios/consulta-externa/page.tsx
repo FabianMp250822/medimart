@@ -1,0 +1,36 @@
+import type { Metadata } from 'next';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { servicesData } from '@/lib/servicios-links';
+import Link from 'next/link';
+import { List } from 'lucide-react';
+
+const category = servicesData.find(cat => cat.slug === 'consulta-externa');
+
+export const metadata: Metadata = {
+  title: `${category?.title || 'Servicios'} - Clínica de la Costa`,
+  description: `Conozca nuestros servicios de ${category?.title.toLowerCase()}.`,
+};
+
+export default function ServiceCategoryPage() {
+  if (!category) return <div>Categoría no encontrada</div>;
+
+  return (
+    <div className="space-y-8">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl md:text-3xl font-bold text-primary">{category.title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+            {category.subservices.map((service) => (
+              <li key={service.name} className="flex items-start gap-3">
+                <List className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
+                <span className="text-muted-foreground">{service.name}</span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
