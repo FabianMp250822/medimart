@@ -5,17 +5,25 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { imedicAuth } from '@/lib/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { imedicAuth, imedicDb } from '@/lib/firebase';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon, Loader2 } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { useToast } from '@/hooks/use-toast';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
-import { Loader2 } from 'lucide-react';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Por favor, introduce un correo válido.' }),
@@ -23,9 +31,19 @@ const loginSchema = z.object({
 });
 
 const registerSchema = z.object({
-  name: z.string().min(3, { message: 'El nombre debe tener al menos 3 caracteres.' }),
+  nombres: z.string().min(3, { message: 'El nombre debe tener al menos 3 caracteres.' }),
+  apellidos: z.string().min(3, { message: 'El apellido debe tener al menos 3 caracteres.' }),
+  identificacion: z.string().min(5, { message: 'La identificación es obligatoria.' }),
+  fechaNacimiento: z.date({ required_error: 'La fecha de nacimiento es obligatoria.' }),
+  telefono: z.string().min(7, { message: 'El teléfono es obligatorio.' }),
+  direccion: z.string().min(5, { message: 'La dirección es obligatoria.' }),
+  lugarSolicitud: z.string().optional(),
+  foto: z.any().optional(),
   email: z.string().email({ message: 'Por favor, introduce un correo válido.' }),
   password: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres.' }),
+  aceptarTerminos: z.boolean().default(false).refine(val => val === true, {
+    message: 'Debes aceptar los términos y condiciones.'
+  }),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -34,6 +52,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 export default function SolicitarCitaPage() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('login');
 
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -42,18 +61,32 @@ export default function SolicitarCitaPage() {
 
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { name: '', email: '', password: '' },
+    defaultValues: {
+      nombres: '',
+      apellidos: '',
+      identificacion: '',
+      telefono: '',
+      direccion: '',
+      lugarSolicitud: '',
+      email: '',
+      password: '',
+      aceptarTerminos: false,
+    },
   });
 
   const onLoginSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
+    if (!imedicAuth) {
+        toast({ variant: 'destructive', title: 'Error de configuración', description: 'El servicio de autenticación no está disponible.' });
+        setIsLoading(false);
+        return;
+    }
     try {
-      await signInWithEmailAndPassword(imedicAuth, data.email, data.password);
+      await createUserWithEmailAndPassword(imedicAuth, data.email, data.password);
       toast({
         title: '¡Bienvenido de nuevo!',
         description: 'Has iniciado sesión correctamente.',
       });
-      // Aquí puedes redirigir al usuario al dashboard de citas
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -69,21 +102,46 @@ export default function SolicitarCitaPage() {
 
   const onRegisterSubmit = async (data: RegisterFormValues) => {
     setIsLoading(true);
+     if (!imedicAuth || !imedicDb) {
+        toast({ variant: 'destructive', title: 'Error de configuración', description: 'El servicio de registro no está disponible.' });
+        setIsLoading(false);
+        return;
+    }
     try {
       const userCredential = await createUserWithEmailAndPassword(imedicAuth, data.email, data.password);
-      await updateProfile(userCredential.user, { displayName: data.name });
+      const user = userCredential.user;
+      const fullName = `${data.nombres} ${data.apellidos}`;
+      
+      await updateProfile(user, { displayName: fullName });
+
+      await setDoc(doc(imedicDb, "patients", user.uid), {
+        uid: user.uid,
+        nombres: data.nombres,
+        apellidos: data.apellidos,
+        nombreCompleto: fullName,
+        identificacion: data.identificacion,
+        fechaNacimiento: data.fechaNacimiento,
+        telefono: data.telefono,
+        direccion: data.direccion,
+        email: data.email,
+        lugarSolicitud: data.lugarSolicitud,
+        createdAt: new Date(),
+      });
+      
       toast({
         title: '¡Registro exitoso!',
         description: 'Tu cuenta ha sido creada. Ahora puedes iniciar sesión.',
       });
-      // Aquí puedes cambiar a la pestaña de login o redirigir
+      setActiveTab('login');
+      loginForm.reset();
+      registerForm.reset();
     } catch (error: any) {
       toast({
         variant: 'destructive',
         title: 'Error en el registro',
         description: error.message.includes('auth/email-already-in-use')
           ? 'Este correo electrónico ya está en uso.'
-          : 'Ocurrió un error. Por favor, inténtalo de nuevo.',
+          : `Ocurrió un error: ${error.message}`,
       });
     } finally {
       setIsLoading(false);
@@ -91,13 +149,13 @@ export default function SolicitarCitaPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
       <div className="mb-8">
         <Link href="/">
           <Logo />
         </Link>
       </div>
-      <Tabs defaultValue="login" className="w-full max-w-md">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-lg lg:max-w-4xl">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="login">Iniciar Sesión</TabsTrigger>
           <TabsTrigger value="register">Registrarse</TabsTrigger>
@@ -149,54 +207,71 @@ export default function SolicitarCitaPage() {
 
         <TabsContent value="register">
           <Card>
-            <CardHeader>
-              <CardTitle>Crea tu Cuenta</CardTitle>
-              <CardDescription>Regístrate para acceder a nuestros servicios en línea.</CardDescription>
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl">Registro de Paciente</CardTitle>
             </CardHeader>
             <CardContent>
               <Form {...registerForm}>
-                <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-6">
-                  <FormField
-                    control={registerForm.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nombre Completo</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Tu nombre completo" {...field} />
-                        </FormControl>
+                <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {/* Columna Izquierda */}
+                    <div className="space-y-4">
+                      <FormField control={registerForm.control} name="nombres" render={({ field }) => (<FormItem><FormLabel>Nombres *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                      <FormField control={registerForm.control} name="apellidos" render={({ field }) => (<FormItem><FormLabel>Apellidos *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                      <FormField control={registerForm.control} name="identificacion" render={({ field }) => (<FormItem><FormLabel>Identificación *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                      <FormField control={registerForm.control} name="fechaNacimiento" render={({ field }) => (
+                        <FormItem className="flex flex-col"><FormLabel>Fecha de Nacimiento *</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button variant={"outline"} className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                                  {field.value ? (format(field.value, "dd 'de' MMMM 'de' yyyy", { locale: es })) : (<span>dd/mm/aaaa</span>)}
+                                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                      <FormField control={registerForm.control} name="telefono" render={({ field }) => (<FormItem><FormLabel>Teléfono *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                      <FormField control={registerForm.control} name="direccion" render={({ field }) => (<FormItem><FormLabel>Dirección *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    </div>
+                    {/* Columna Derecha */}
+                    <div className="space-y-4">
+                      <FormField control={registerForm.control} name="lugarSolicitud" render={({ field }) => (<FormItem><FormLabel>Lugar de Solicitud</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                      <FormField control={registerForm.control} name="foto" render={({ field }) => (<FormItem><FormLabel>Subir Foto</FormLabel><FormControl><Input type="file" accept="image/*" className="file:text-accent file:font-semibold" /></FormControl><FormMessage /></FormItem>)} />
+                      <FormField control={registerForm.control} name="email" render={({ field }) => (<FormItem><FormLabel>Correo (Auth) *</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                      <FormField control={registerForm.control} name="password" render={({ field }) => (<FormItem><FormLabel>Contraseña (Auth) *</FormLabel><FormControl><Input type="password" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    </div>
+                  </div>
+                  
+                  <Accordion type="single" collapsible>
+                      <AccordionItem value="item-1">
+                          <AccordionTrigger className="text-sm">Información sobre el tratamiento de datos personales</AccordionTrigger>
+                          <AccordionContent className="text-xs text-muted-foreground p-2">
+                              Aquí va el texto detallado sobre la política de tratamiento de datos personales, explicando cómo se usará, almacenará y protegerá la información del paciente de acuerdo a la ley.
+                          </AccordionContent>
+                      </AccordionItem>
+                  </Accordion>
+
+                  <FormField control={registerForm.control} name="aceptarTerminos" render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>He leído y acepto el consentimiento informado para el tratamiento de mis datos personales</FormLabel>
                         <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={registerForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Correo Electrónico</FormLabel>
-                        <FormControl>
-                          <Input type="email" placeholder="tu@correo.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={registerForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Contraseña</FormLabel>
-                        <FormControl>
-                          <Input type="password" placeholder="Mínimo 6 caracteres" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      </div>
+                    </FormItem>
+                  )} />
+
                   <Button type="submit" className="w-full bg-accent hover:bg-accent/90" disabled={isLoading}>
-                    {isLoading ? <Loader2 className="animate-spin" /> : 'Crear Cuenta'}
+                    {isLoading ? <Loader2 className="animate-spin" /> : 'REGISTRAR PACIENTE'}
                   </Button>
                 </form>
               </Form>
@@ -216,3 +291,6 @@ export default function SolicitarCitaPage() {
     </div>
   );
 }
+
+
+    
