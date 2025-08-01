@@ -6,22 +6,22 @@ const steps = [
     step: '01',
     title: 'Agenda tu Cita',
     description: 'Selecciona el especialista y horario que más te convenga a través de nuestro portal en línea o por teléfono.',
-    image: 'https://placehold.co/400x400.png',
-    hint: 'woman phone'
+    image: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/fondosweb%2Fpaceinte22.webp?alt=media&token=c99549d0-f796-4dc8-a98c-20e732e6b252',
+    hint: 'patient waiting'
   },
   {
     step: '02',
     title: 'Recibe Atención',
     description: 'Nuestros especialistas te brindarán una atención personalizada para diagnosticar y tratar tu condición.',
-    image: 'https://placehold.co/400x400.png',
+    image: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/fondosweb%2Fconsulta22.webp?alt=media&token=f9484315-05fd-4c70-9851-9c4390b4aec3',
     hint: 'doctor patient'
   },
   {
     step: '03',
     title: 'Sigue tu Tratamiento',
     description: 'Obtén tu plan de tratamiento y seguimiento para una pronta y efectiva recuperación.',
-    image: 'https://placehold.co/400x400.png',
-    hint: 'doctor microscope'
+    image: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/fondosweb%2Fmedico22.webp?alt=media&token=a975b622-84b1-4e06-9ac1-39e7f954b8c7',
+    hint: 'doctor smiling'
   },
 ];
 
