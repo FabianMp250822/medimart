@@ -4,17 +4,6 @@ import { Button } from './ui/button';
 import Link from 'next/link';
 import { Blog } from '@/types/blog';
 
-function slugify(text: string) {
-  return text
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
-}
-
 interface RecentArticlesProps {
   articles: Blog[];
 }
@@ -28,18 +17,18 @@ export function RecentArticles({ articles }: RecentArticlesProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             {articles.map((article) => (
               <Card key={article.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 text-left flex flex-col group">
-                 <Link href={`/noticias/${slugify(article.title)}`} className="block overflow-hidden">
+                 <Link href={`/noticias/${article.id}`} className="block overflow-hidden">
                     <div className="relative h-56">
                         <Image src={article.image} alt={article.title} layout="fill" objectFit="cover" className="transition-transform duration-300 group-hover:scale-105"/>
                     </div>
                 </Link>
                 <CardContent className="p-6 flex flex-col flex-grow">
                   <p className="text-sm text-accent font-semibold">{article.category}</p>
-                  <Link href={`/noticias/${slugify(article.title)}`} className="hover:underline">
+                  <Link href={`/noticias/${article.id}`} className="hover:underline">
                     <h3 className="text-lg font-bold text-primary mt-2 mb-4 flex-grow">{article.title}</h3>
                   </Link>
                    <Button variant="link" className="p-0 text-accent mt-auto self-start">
-                     <Link href={`/noticias/${slugify(article.title)}`}>Leer más...</Link>
+                     <Link href={`/noticias/${article.id}`}>Leer más...</Link>
                     </Button>
                 </CardContent>
               </Card>

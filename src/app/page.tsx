@@ -1,4 +1,3 @@
-"use client"
 import { Hero } from '@/components/hero';
 import { Services } from '@/components/services';
 import { Commitment } from '@/components/commitment';
@@ -11,8 +10,7 @@ import { RecentArticles } from '@/components/recent-articles';
 import { AppFooter } from '@/components/footer';
 import { Header } from '@/components/header';
 import { adminDb } from '@/lib/firebase';
-import { Blog } from '@/types/blog';
-import { useEffect, useState } from 'react';
+import type { Blog } from '@/types/blog';
 
 async function getRecentArticles(): Promise<Blog[]> {
   try {
@@ -31,17 +29,8 @@ async function getRecentArticles(): Promise<Blog[]> {
   }
 }
 
-export default function Home() {
-  const [articles, setArticles] = useState<Blog[]>([]);
-
-  useEffect(() => {
-    // Since this is a client component, we can't fetch server-side data directly.
-    // A proper solution would be to create a server component that fetches the data
-    // and passes it to this client component, or use an API route.
-    // For now, we will leave this empty to fix the build error.
-    // In a real application, you would fetch from an API endpoint here.
-  }, []);
-
+export default async function Home() {
+  const articles = await getRecentArticles();
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
