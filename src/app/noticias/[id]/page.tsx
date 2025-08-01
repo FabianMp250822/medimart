@@ -48,16 +48,16 @@ async function getRecentBlogs(currentId: string): Promise<Blog[]> {
 async function getSimilarBlogs(category: string, currentId: string): Promise<Blog[]> {
     try {
         const blogsSnapshot = await adminDb.collection('blogs')
-            .where('lugar', '==', 'clinica')
             .where('category', '==', category)
             .orderBy('date', 'desc')
-            .limit(4)
+            .limit(10) // Fetch more to filter in code
             .get();
         
         const blogs: Blog[] = blogsSnapshot.docs
             .map(doc => ({ id: doc.id, ...(doc.data() as Omit<Blog, 'id'>) }))
-            .filter(blog => blog.id !== currentId)
+            .filter(blog => blog.lugar === 'clinica' && blog.id !== currentId)
             .slice(0, 3);
+            
         return blogs;
     } catch (error) {
         console.error("Error fetching similar blogs: ", error);
