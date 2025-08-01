@@ -72,6 +72,17 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
 
     const form = useForm<AppointmentFormValues>({
         resolver: zodResolver(appointmentSchema),
+        defaultValues: {
+            selectedEps: '',
+            customEps: '',
+            selectedDepartment: '',
+            selectedCity: '',
+            appointmentType: '',
+            appointmentReason: '',
+            contactPhone: '',
+            confirmEmail: '',
+            additionalInfo: '',
+        }
     });
 
     const selectedDepartment = form.watch("selectedDepartment");
@@ -268,7 +279,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                             <FormField control={form.control} name="selectedEps" render={({ field }) => (<FormItem><FormLabel>EPS</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione su EPS" /></SelectTrigger></FormControl><SelectContent>{epsList.map(eps => <SelectItem key={eps} value={eps}>{eps}</SelectItem>)}<SelectItem value="OTRA">OTRA</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                             {form.watch('selectedEps') === 'OTRA' && <FormField control={form.control} name="customEps" render={({ field }) => (<FormItem><FormLabel>Especifique su EPS</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />}
                             <FormField control={form.control} name="selectedDepartment" render={({ field }) => (<FormItem><FormLabel>Departamento</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione departamento" /></SelectTrigger></FormControl><SelectContent>{departments.map(dep => <SelectItem key={dep} value={dep}>{dep}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>)} />
-                            <FormField control={form.control} name="selectedCity" render={({ field }) => (<FormItem><FormLabel>Ciudad/Municipio</FormLabel><Select onValueChange={field.onChange} value={field.value} disabled={!selectedDepartment}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione ciudad" /></SelectTrigger></FormControl><SelectContent>{availableCities.map(city => <SelectItem key={city} value={city}>{city}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>)} />
+                            <FormField control={form.control} name="selectedCity" render={({ field }) => (<FormItem><FormLabel>Ciudad/Municipio</FormLabel><Select onValueChange={field.onChange} value={field.value || ''} disabled={!selectedDepartment}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione ciudad" /></SelectTrigger></FormControl><SelectContent>{availableCities.map(city => <SelectItem key={city} value={city}>{city}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="birthDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Fecha de Nacimiento</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? (format(field.value, "PPP", { locale: es })) : (<span>Seleccione una fecha</span>)}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="appointmentType" render={({ field }) => (<FormItem><FormLabel>Tipo de Cita</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione tipo de cita" /></SelectTrigger></FormControl><SelectContent><SelectItem value="Consulta inicial">Consulta inicial</SelectItem><SelectItem value="Reunión con especialista">Reunión con especialista</SelectItem><SelectItem value="Revisión de exámenes">Revisión de exámenes</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="contactPhone" render={({ field }) => (<FormItem><FormLabel>Teléfono de Contacto</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -328,3 +339,5 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
+
+    
