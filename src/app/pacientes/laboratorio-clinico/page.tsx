@@ -1,34 +1,44 @@
 
 "use client";
 
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Microscope, Beaker, Dna, Syringe, HeartPulse, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 
 const areasEspecializadas = [
-    { text: "Hematología: Diagnóstico de enfermedades de la sangre y sus componentes." },
-    { text: "Coagulación: Evaluación de trastornos en la coagulación sanguínea." },
-    { text: "Microbiología: Identificación de microorganismos causantes de infecciones." },
-    { text: "Biología molecular: Diagnósticos genéticos y análisis de ADN." },
-    { text: "Citogenética: Evaluación de anomalías cromosómicas." },
+    "Hematología: Diagnóstico de enfermedades de la sangre y sus componentes.",
+    "Coagulación: Evaluación de trastornos en la coagulación sanguínea.",
+    "Microbiología: Identificación de microorganismos causantes de infecciones.",
+    "Biología molecular: Diagnósticos genéticos y análisis de ADN.",
+    "Citogenética: Evaluación de anomalías cromosómicas.",
 ];
 
 const serviciosDisponibles = [
-    { text: "Química clínica: Evaluación de órganos y sistemas." },
-    { text: "Inmunohistoquímica: Diagnósticos a nivel celular." },
-    { text: "TSH: Pruebas de función tiroidea." },
-    { text: "Pruebas avanzadas de Química Especializada." },
+    "Química clínica: Evaluación de órganos y sistemas.",
+    "Inmunohistoquímica: Diagnósticos a nivel celular.",
+    "TSH: Pruebas de función tiroidea.",
+    "Pruebas avanzadas de Química Especializada.",
 ];
 
 const atencionInmediata = [
-    { text: "Atención del parto." },
-    { text: "Urgencias." },
-    { text: "Transporte asistencial medicalizado." },
-    { text: "Atención prehospitalaria." },
+    "Atención del parto.",
+    "Urgencias.",
+    "Transporte asistencial medicalizado.",
+    "Atención prehospitalaria.",
 ];
 
+const InfoCard = ({ icon, title, children }: { icon: React.ReactNode, title: string, children: React.ReactNode }) => (
+    <Card>
+        <CardHeader>
+            <CardTitle className="flex items-center gap-3 text-xl text-primary">
+                {icon} {title}
+            </CardTitle>
+        </CardHeader>
+        <CardContent>
+            {children}
+        </CardContent>
+    </Card>
+);
 
 export default function LaboratorioClinicoPage() {
   return (
@@ -70,52 +80,31 @@ export default function LaboratorioClinicoPage() {
         </div>
       </div>
 
-       <Card>
-        <CardContent className="p-6">
-             <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
-                <AccordionItem value="item-1">
-                    <AccordionTrigger className="font-semibold text-lg hover:no-underline">
-                        <div className="flex items-center gap-3"><Beaker className="text-accent"/>Áreas Especializadas</div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pl-10">
-                        <ul className="space-y-2 list-disc list-inside text-muted-foreground">
-                           {areasEspecializadas.map(item => <li key={item.text}>{item.text}</li>)}
-                        </ul>
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                    <AccordionTrigger className="font-semibold text-lg hover:no-underline">
-                        <div className="flex items-center gap-3"><Syringe className="text-accent"/>Servicios Disponibles</div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pl-10">
-                         <ul className="space-y-2 list-disc list-inside text-muted-foreground">
-                           {serviciosDisponibles.map(item => <li key={item.text}>{item.text}</li>)}
-                        </ul>
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-3">
-                    <AccordionTrigger className="font-semibold text-lg hover:no-underline">
-                       <div className="flex items-center gap-3"><Dna className="text-accent"/>Tecnología de Última Generación</div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pl-10">
-                        <p className="text-muted-foreground">
-                            En la Clínica de la Costa SAS, utilizamos Genexpert, una herramienta avanzada para el diagnóstico rápido y preciso de tuberculosis y otras pruebas moleculares críticas.
-                        </p>
-                    </AccordionContent>
-                </AccordionItem>
-                 <AccordionItem value="item-4">
-                    <AccordionTrigger className="font-semibold text-lg hover:no-underline">
-                        <div className="flex items-center gap-3"><HeartPulse className="text-accent"/>Servicios de Atención Inmediata</div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pl-10">
-                         <ul className="space-y-2 list-disc list-inside text-muted-foreground">
-                           {atencionInmediata.map(item => <li key={item.text}>{item.text}</li>)}
-                        </ul>
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
-        </CardContent>
-       </Card>
+      <div className="grid md:grid-cols-2 gap-8">
+          <InfoCard icon={<Beaker className="text-accent"/>} title="Áreas Especializadas">
+            <ul className="space-y-2 list-disc list-inside text-muted-foreground">
+                {areasEspecializadas.map(item => <li key={item}>{item}</li>)}
+            </ul>
+          </InfoCard>
+
+          <InfoCard icon={<Syringe className="text-accent"/>} title="Servicios Disponibles">
+            <ul className="space-y-2 list-disc list-inside text-muted-foreground">
+                {serviciosDisponibles.map(item => <li key={item}>{item}</li>)}
+            </ul>
+          </InfoCard>
+
+          <InfoCard icon={<Dna className="text-accent"/>} title="Tecnología de Última Generación">
+            <p className="text-muted-foreground">
+                En la Clínica de la Costa SAS, utilizamos Genexpert, una herramienta avanzada para el diagnóstico rápido y preciso de tuberculosis y otras pruebas moleculares críticas.
+            </p>
+          </InfoCard>
+
+          <InfoCard icon={<HeartPulse className="text-accent"/>} title="Servicios de Atención Inmediata">
+            <ul className="space-y-2 list-disc list-inside text-muted-foreground">
+                {atencionInmediata.map(item => <li key={item}>{item}</li>)}
+            </ul>
+          </InfoCard>
+      </div>
     </div>
   );
 }
