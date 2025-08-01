@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookUser, Download, ExternalLink, FileText, Info, Calendar, Shield, Users } from 'lucide-react';
+import { BookUser, Download, ExternalLink, FileText, Info, Calendar, Shield, Users, FileSearch } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Link from 'next/link';
 
@@ -64,6 +64,31 @@ export default function ReglamentoInternoPage() {
                         </Button>
                    </div>
                 </CardContent>
+            </Card>
+
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-2xl text-primary">
+                  <FileSearch /> Visualización del Documento
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="relative w-full h-[800px] border rounded-lg overflow-hidden bg-muted">
+                   <iframe
+                      src={pdfUrl}
+                      width="100%"
+                      height="100%"
+                      className="border-none"
+                      title="Reglamento Interno de Trabajo - Clínica de la Costa"
+                    />
+                </div>
+                 <p className="text-muted-foreground text-center mt-2 text-sm">
+                    Si no puede visualizar el documento, 
+                    <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline ml-1">
+                      haga clic aquí para abrirlo en una nueva pestaña
+                    </a>
+                  </p>
+              </CardContent>
             </Card>
 
              <Alert>
