@@ -1,9 +1,10 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
+import { DropdownMenuSeparator } from './ui/dropdown-menu';
 
 const nosotrosSubItems = [
     { href: '/nosotros/acerca-de', label: 'Acerca De Nosotros' },
@@ -49,24 +50,24 @@ export function MainNav() {
                     <ChevronDown className={`h-5 w-5 transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`} />
                   </div>
                 </CollapsibleTrigger>
-                <CollapsibleContent className="py-1 pl-6 pr-2 space-y-1">
-                  {item.subItems?.map(subItem => (
-                     <Link
-                        key={subItem.label}
-                        href={subItem.href}
-                        className="block py-2 px-4 rounded-md text-sm text-foreground/70 hover:bg-accent/10 hover:text-accent"
-                      >
-                       {subItem.label}
-                     </Link>
+                <CollapsibleContent className="py-1 pl-6 pr-2 space-y-1 bg-primary/5 rounded-md">
+                  {item.subItems?.map((subItem, subIndex) => (
+                     <React.Fragment key={subItem.label}>
+                        <Link
+                            href={subItem.href}
+                            className="block py-2 px-4 rounded-md text-sm text-foreground/70 hover:bg-accent/10 hover:text-accent"
+                        >
+                            {subItem.label}
+                        </Link>
+                        {subIndex < (item.subItems?.length ?? 0) - 1 && <DropdownMenuSeparator className="bg-border/50" />}
+                     </React.Fragment>
                   ))}
                 </CollapsibleContent>
               </Collapsible>
             ) : (
                <Link
                 href={item.href || '#'}
-                className={`block py-3 px-4 rounded-md font-semibold transition-colors text-foreground/80 hover:bg-accent/10 hover:text-accent ${
-                    index === 0 ? 'bg-accent/10 text-accent' : ''
-                }`}
+                className={`block py-3 px-4 rounded-md font-semibold transition-colors text-foreground/80 hover:bg-accent/10 hover:text-accent`}
                 >
                 {item.label}
                 </Link>

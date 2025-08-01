@@ -1,15 +1,16 @@
 import Link from 'next/link';
+import React from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from 'lucide-react';
 
 const nosotrosSubItems = [
     { href: '/nosotros/acerca-de', label: 'Acerca De Nosotros: Misión, Visión, Valores, Historia' },
-    { href: '/trabaja-con-nosotros', label: 'Trabaja Con Nosotros' },
     { href: '/nosotros/gestion-documental', label: 'Gestión Documental' },
     { href: '/nosotros/certificaciones', label: 'Certificaciones' },
     { href: '/nosotros/responsabilidad-social', label: 'Responsabilidad Social Y Empresarial' },
@@ -43,11 +44,16 @@ export function HeaderNav() {
                     {item.label}
                     <ChevronDown className="h-4 w-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                    {item.subItems?.map(subItem => (
-                        <DropdownMenuItem key={subItem.label} asChild>
-                            <Link href={subItem.href}>{subItem.label}</Link>
-                        </DropdownMenuItem>
+                <DropdownMenuContent className="bg-primary text-primary-foreground border-primary-foreground/20">
+                    {item.subItems?.map((subItem, index) => (
+                       <React.Fragment key={subItem.label}>
+                         <DropdownMenuItem asChild>
+                           <Link href={subItem.href} className="focus:bg-accent/20 focus:text-accent-foreground transition-all duration-200 ease-in-out hover:pl-3">
+                             {subItem.label}
+                           </Link>
+                         </DropdownMenuItem>
+                         {index < (item.subItems?.length ?? 0) - 1 && <DropdownMenuSeparator className="bg-primary-foreground/20" />}
+                       </React.Fragment>
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>
