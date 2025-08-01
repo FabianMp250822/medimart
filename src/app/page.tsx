@@ -1,3 +1,4 @@
+"use client"
 import { Phone, MapPin, Menu, Clock, MessageSquare } from 'lucide-react';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
@@ -21,6 +22,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import Image from 'next/image';
+import Flag from 'react-world-flags';
+
 
 export default function Home() {
   return (
@@ -43,8 +46,8 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Image src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/flags%2Fes.png?alt=media&token=c863f858-19e1-4565-9838-898a120532ea" alt="Bandera de España" width={24} height={16} />
-            <Image src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/flags%2Fus.png?alt=media&token=5712862b-12d8-4a69-808f-2834b6e51163" alt="Bandera de Estados Unidos" width={24} height={16} />
+            <Flag code="ES" className="w-6 h-auto" />
+            <Flag code="US" className="w-6 h-auto" />
           </div>
         </div>
       </div>
