@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
 
 const steps = [
   {
@@ -32,11 +31,26 @@ export function HowWeServe() {
       <h2 className="text-3xl font-bold text-primary my-4">Fácil y Rápido: Cómo Te Atendemos</h2>
       <p className="max-w-2xl mx-auto text-muted-foreground">Nuestro proceso está diseñado para ser lo más simple y eficiente posible, garantizando que recibas la mejor atención sin complicaciones.</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 relative">
-        <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-border -translate-y-1/2"></div>
+        <div className="hidden md:block absolute top-1/2 left-0 w-full h-full -translate-y-1/2">
+            <svg
+                className="w-full h-full"
+                preserveAspectRatio="none"
+                viewBox="0 0 800 200"
+            >
+                <path
+                    d="M 150 110 C 250 150, 350 150, 400 110 S 550 30, 650 90"
+                    stroke="hsl(var(--accent))"
+                    fill="none"
+                    strokeWidth="2"
+                    strokeDasharray="8 8"
+                    className="animate-dash"
+                />
+            </svg>
+        </div>
         {steps.map((item) => (
           <div key={item.step} className="relative flex flex-col items-center">
             <div className="relative z-10">
-                <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-card shadow-lg">
+                <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-card shadow-lg bg-background">
                     <Image src={item.image} alt={item.title} layout="fill" objectFit="cover" data-ai-hint={item.hint} />
                 </div>
                 <div className="absolute -top-4 -left-4 bg-accent text-accent-foreground h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold">
