@@ -1,5 +1,4 @@
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Beaker, Droplet, Monitor, TestTube } from 'lucide-react';
 import type { Metadata } from 'next';
@@ -11,60 +10,48 @@ export const metadata: Metadata = {
 
 const examenes = [
   {
-    value: "sangre",
     title: "Exámenes de Sangre",
-    icon: <Droplet className="h-5 w-5 text-accent" />,
+    icon: <Droplet className="h-6 w-6 text-accent" />,
     content: (
-      <div className="prose max-w-none text-muted-foreground">
-        <ul>
-          <li><strong>Ayuno:</strong> Para la mayoría de los análisis de sangre, es necesario un ayuno de 8 a 12 horas. Evita alimentos, bebidas (excepto agua) y masticar chicle.</li>
-          <li><strong>Hidratación:</strong> Puedes beber agua para mantenerte hidratado, lo cual facilita la extracción de sangre.</li>
-          <li><strong>Medicamentos:</strong> Consulta con tu médico si debes suspender algún medicamento antes del examen.</li>
-        </ul>
-      </div>
+      <ul className="space-y-2 list-disc list-inside text-muted-foreground">
+        <li><strong>Ayuno:</strong> Para la mayoría de los análisis, es necesario un ayuno de 8 a 12 horas. Evita alimentos y bebidas (excepto agua).</li>
+        <li><strong>Hidratación:</strong> Beber agua facilita la extracción de sangre.</li>
+        <li><strong>Medicamentos:</strong> Consulta con tu médico si debes suspender algún medicamento.</li>
+      </ul>
     )
   },
   {
-    value: "orina",
     title: "Pruebas de Orina",
-    icon: <Beaker className="h-5 w-5 text-accent" />,
+    icon: <Beaker className="h-6 w-6 text-accent" />,
     content: (
-        <div className="prose max-w-none text-muted-foreground">
-           <ul>
-                <li><strong>Recolecta la Primera Orina de la Mañana:</strong> Para la mayoría de las pruebas, se recomienda recolectar la primera orina del día.</li>
-                <li><strong>Higiene:</strong> Lava y seca tus manos y genitales antes de recolectar la muestra.</li>
-                <li><strong>Envase Estéril:</strong> Usa el recipiente proporcionado por el laboratorio para evitar contaminaciones.</li>
-            </ul>
-        </div>
+      <ul className="space-y-2 list-disc list-inside text-muted-foreground">
+        <li><strong>Recolecta la Primera Orina de la Mañana:</strong> Es la más recomendada para la mayoría de las pruebas.</li>
+        <li><strong>Higiene:</strong> Lava y seca tus manos y genitales antes de recolectar la muestra.</li>
+        <li><strong>Envase Estéril:</strong> Usa el recipiente proporcionado por el laboratorio para evitar contaminaciones.</li>
+      </ul>
     )
   },
   {
-    value: "imagenes",
     title: "Pruebas de Imagen (Rayos X, Resonancia, TAC)",
-    icon: <Monitor className="h-5 w-5 text-accent" />,
+    icon: <Monitor className="h-6 w-6 text-accent" />,
     content: (
-        <div className="prose max-w-none text-muted-foreground">
-           <ul>
-                <li><strong>Ropa:</strong> Lleva ropa cómoda y sin elementos metálicos.</li>
-                <li><strong>Objetos Metálicos:</strong> Retira joyas, relojes, cinturones y otros objetos metálicos antes del examen.</li>
-                <li><strong>Consentimiento:</strong> Si estás embarazada o sospechas estarlo, informa al personal antes del procedimiento.</li>
-                <li><strong>Contraste:</strong> Algunas pruebas requieren el uso de medios de contraste. Sigue las indicaciones específicas proporcionadas por el laboratorio.</li>
-            </ul>
-        </div>
+      <ul className="space-y-2 list-disc list-inside text-muted-foreground">
+        <li><strong>Ropa:</strong> Viste ropa cómoda y sin elementos metálicos.</li>
+        <li><strong>Objetos Metálicos:</strong> Retira todas las joyas y objetos metálicos antes del examen.</li>
+        <li><strong>Embarazo:</strong> Si estás embarazada o sospechas estarlo, informa al personal.</li>
+        <li><strong>Contraste:</strong> Si tu prueba requiere contraste, sigue las indicaciones específicas del personal médico.</li>
+      </ul>
     )
   },
-   {
-    value: "colonoscopia",
+  {
     title: "Colonoscopia",
-    icon: <TestTube className="h-5 w-5 text-accent" />,
+    icon: <TestTube className="h-6 w-6 text-accent" />,
     content: (
-        <div className="prose max-w-none text-muted-foreground">
-            <ul>
-                <li><strong>Dieta Líquida:</strong> Sigue una dieta líquida clara el día anterior al examen.</li>
-                <li><strong>Laxantes:</strong> Usa los laxantes recetados para limpiar completamente el colon.</li>
-                <li><strong>Hidratación:</strong> Mantente bien hidratado durante la preparación.</li>
-            </ul>
-        </div>
+      <ul className="space-y-2 list-disc list-inside text-muted-foreground">
+        <li><strong>Dieta Líquida:</strong> Sigue una dieta líquida clara el día anterior al examen.</li>
+        <li><strong>Laxantes:</strong> Utiliza los laxantes recetados para una limpieza completa del colon.</li>
+        <li><strong>Hidratación:</strong> Es fundamental mantenerse bien hidratado durante la preparación.</li>
+      </ul>
     )
   }
 ];
@@ -81,26 +68,26 @@ export default function PreparacionExamenesPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">
-            La preparación adecuada para los exámenes médicos es crucial para obtener resultados precisos y confiables. Aquí encontrarás instrucciones detalladas para los exámenes más comunes. Por favor, sigue estas indicaciones cuidadosamente.
+            Una preparación adecuada es crucial para obtener resultados precisos. A continuación, encontrarás las guías para los exámenes más comunes. Por favor, síguelas cuidadosamente y consulta a tu médico si tienes alguna duda.
           </p>
         </CardContent>
       </Card>
 
-      <Accordion type="single" collapsible className="w-full">
+      <div className="grid md:grid-cols-2 gap-8">
         {examenes.map((examen) => (
-          <AccordionItem value={examen.value} key={examen.value}>
-            <AccordionTrigger className="font-semibold hover:no-underline text-lg">
-              <div className="flex items-center gap-3">
+          <Card key={examen.title}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3 text-xl text-primary">
                 {examen.icon}
                 <span>{examen.title}</span>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="pl-11">
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="prose max-w-none">
               {examen.content}
-            </AccordionContent>
-          </AccordionItem>
+            </CardContent>
+          </Card>
         ))}
-      </Accordion>
+      </div>
     </div>
   );
 }
