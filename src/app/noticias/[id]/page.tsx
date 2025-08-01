@@ -1,4 +1,4 @@
-import { adminDb } from '@/lib/firebase';
+import { adminDb } from '@/lib/firebase-admin';
 import { Blog } from '@/types/blog';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';

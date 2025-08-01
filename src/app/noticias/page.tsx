@@ -1,4 +1,4 @@
-import { adminDb } from '@/lib/firebase';
+import { adminDb } from '@/lib/firebase-admin';
 import { Blog } from '@/types/blog';
 import Link from 'next/link';
 import Image from 'next/image';

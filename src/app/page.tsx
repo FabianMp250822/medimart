@@ -9,7 +9,7 @@ import { Team } from '@/components/team';
 import { RecentArticles } from '@/components/recent-articles';
 import { AppFooter } from '@/components/footer';
 import { Header } from '@/components/header';
-import { adminDb } from '@/lib/firebase';
+import { adminDb } from '@/lib/firebase-admin';
 import type { Blog } from '@/types/blog';
 
 async function getRecentArticles(): Promise<Blog[]> {
