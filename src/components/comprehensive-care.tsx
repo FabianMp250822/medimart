@@ -5,22 +5,22 @@ import { ArrowRight } from 'lucide-react';
 
 const careItems = [
   {
-    title: 'Radiología',
-    description: 'Equipos de última generación para diagnósticos precisos por imagen.',
-    image: 'https://placehold.co/400x300.png',
-    hint: 'radiology equipment'
+    title: 'Neurocirugía',
+    description: 'Equipos de última generación para procedimientos neuroquirúrgicos de alta complejidad.',
+    image: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM(1).jpeg?alt=media&token=a0535648-1f07-4a43-87c1-8901f530dd94',
+    hint: 'neurosurgery equipment'
   },
   {
-    title: 'Laboratorio Clínico',
-    description: 'Análisis clínicos confiables con entrega de resultados oportuna.',
-    image: 'https://placehold.co/400x300.png',
-    hint: 'clinic laboratory'
+    title: 'Laboratorio Moderno',
+    description: 'Análisis clínicos confiables con tecnología de punta para entrega de resultados oportuna.',
+    image: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM.jpeg?alt=media&token=0073f503-653b-4326-907b-665688257340',
+    hint: 'modern laboratory'
   },
   {
-    title: 'Salas Quirúrgicas',
-    description: 'Quirófanos equipados con la más alta tecnología para procedimientos seguros.',
-    image: 'https://placehold.co/400x300.png',
-    hint: 'operating room'
+    title: 'Médicos Experimentados',
+    description: 'Un equipo de profesionales altamente calificados y dedicados al cuidado de tu salud.',
+    image: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%205.16.32%20PM.jpeg?alt=media&token=e4b6c4cb-586f-49e9-b5f9-9d73d30a01f8',
+    hint: 'experienced doctors'
   },
 ];
 
