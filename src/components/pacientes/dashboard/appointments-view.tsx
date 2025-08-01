@@ -123,32 +123,24 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             }
         };
 
-        const subscribeToRequests = () => {
-            const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setRequests(data);
-                setInitialLoading(false); 
-            }, (error) => {
-                console.error("Error fetching appointment requests:", error);
-                toast({
-                    variant: 'destructive',
-                    title: "Error de Permisos",
-                    description: "No se pudieron cargar las solicitudes. Verifica las reglas de seguridad de Firestore.",
-                });
-                setInitialLoading(false);
+        const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setRequests(data);
+            setInitialLoading(false); 
+        }, (error) => {
+            console.error("Error fetching appointment requests:", error);
+            toast({
+                variant: 'destructive',
+                title: "Error de Permisos",
+                description: "No se pudieron cargar las solicitudes. Verifica las reglas de seguridad de Firestore.",
             });
-            return unsubscribe;
-        };
+            setInitialLoading(false);
+        });
 
         fetchInitialData();
-        const unsubscribe = subscribeToRequests();
         
-        return () => {
-            if (unsubscribe) {
-                unsubscribe();
-            }
-        };
+        return () => unsubscribe();
     }, [user, form, toast]);
 
     const deleteRequest = async (id: string) => {
