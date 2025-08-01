@@ -83,9 +83,9 @@ export default async function Home() {
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <div className="flex-1 w-full">
+        <Hero />
         <div className="container mx-auto">
-          <main className="flex-1 py-8">
-            <Hero />
+          <main className="flex-1">
             <Services />
             <Commitment />
             <ComprehensiveCare />

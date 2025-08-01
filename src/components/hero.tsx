@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export function Hero() {
   return (
-    <div className="relative w-full h-[550px] rounded-lg overflow-hidden shadow-xl">
+    <div className="relative w-full h-[550px] overflow-hidden">
       <Image
         src="https://placehold.co/1200x600.png"
         alt="Interior de la clínica"
