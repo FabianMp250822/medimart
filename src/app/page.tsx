@@ -11,6 +11,7 @@ import { AppFooter } from '@/components/footer';
 import { Header } from '@/components/header';
 import { adminDb } from '@/lib/firebase-admin';
 import type { Blog } from '@/types/blog';
+import type { Medico } from '@/types/medico';
 
 async function getRecentArticles(): Promise<Blog[]> {
   try {
@@ -29,8 +30,33 @@ async function getRecentArticles(): Promise<Blog[]> {
   }
 }
 
+async function getRandomMedicos(): Promise<Medico[]> {
+  try {
+    const medicosSnapshot = await adminDb.collection('medicos').get();
+    if (medicosSnapshot.empty) {
+      return [];
+    }
+    const medicos: Medico[] = medicosSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...(doc.data() as Omit<Medico, 'id'>),
+    }));
+
+    // Algoritmo de Fisher-Yates para mezclar el array
+    for (let i = medicos.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [medicos[i], medicos[j]] = [medicos[j], medicos[i]];
+    }
+
+    return medicos.slice(0, 4);
+  } catch (error) {
+    console.error("Error fetching random medicos: ", error);
+    return [];
+  }
+}
+
 export default async function Home() {
   const articles = await getRecentArticles();
+  const teamMembers = await getRandomMedicos();
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -45,7 +71,7 @@ export default async function Home() {
             <Priority />
             <HowWeServe />
             <Testimonials />
-            <Team />
+            <Team teamMembers={teamMembers} />
             <RecentArticles articles={articles} />
           </main>
         </div>
