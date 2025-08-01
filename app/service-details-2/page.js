@@ -1,7 +1,7 @@
 'use client'
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css' // Estilos para el acordeón
 import Swal from 'sweetalert2'
@@ -70,7 +70,7 @@ export default function Documentos() {
         {
             title: 'Reglamento Interno de Trabajo',
             documents: [
-                { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FREGLAMENTO%20INTERNO%20DE%20TRABAJO%20CL%C3%8DNICA%20DE%20LA%20COSTA%202025.pdf?alt=media&token=83aa9a79-4650-4fbc-9071-78f58baff12c' },
+                { name: 'Ver Reglamento Interno de Trabajo (Julio 2025)', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/fondosweb%2FREGLAMENTO%20INTERNO%20DE%20TRABAJO%20CL%C3%8DNICA%20DE%20LA%20COSTA%20ACT%20JULIO%20-2025%20.pdf?alt=media&token=d1271ffd-7b2d-4541-8223-8e39a3a80583' },
             ],
         },
         {
@@ -97,34 +97,26 @@ export default function Documentos() {
                 { name: 'Descargar', file: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/documentos%2FClinicaDeLaCosta-Brochure-1.pdf?alt=media&token=cd401337-eec4-471d-a226-88aecb5c3fbb' },
             ],
         },
-       
     ]
 
     const [selectedCategory, setSelectedCategory] = useState(null)
     const [selectedSubcategory, setSelectedSubcategory] = useState(null)
+    const [embeddedPDF, setEmbeddedPDF] = useState(null)
 
-    const MySwal = withReactContent(Swal)
-
-    const openPDFModal = (document) => {
-        MySwal.fire({
-            title: document.name,
-            html: (
-                <div style={{ width: '100%', height: '500px' }}>
-                    <iframe
-                        src={document.file}
-                        style={{ width: '100%', height: '100%' }}
-                        frameBorder="0"
-                    ></iframe>
-                </div>
-            ),
-            width: '800px',
-            showCloseButton: true,
-            showConfirmButton: false,
-            customClass: {
-                popup: 'pdf-modal'
-            }
-        })
-    }
+    // Mostrar PDF automáticamente si la categoría tiene solo un documento y no tiene subcategorías
+    useEffect(() => {
+        if (
+            selectedCategory !== null &&
+            categories[selectedCategory] &&
+            categories[selectedCategory].documents &&
+            categories[selectedCategory].documents.length === 1 &&
+            !categories[selectedCategory].subcategories
+        ) {
+            setEmbeddedPDF(categories[selectedCategory].documents[0]);
+        } else {
+            setEmbeddedPDF(null);
+        }
+    }, [selectedCategory]);
 
     return (
         <>
@@ -167,14 +159,51 @@ export default function Documentos() {
                                                 <p>{categories[selectedCategory].description}</p>
                                             )}
                                             {/* Mostrar documentos si existen */}
-                                            {categories[selectedCategory].documents.length > 0 && (
+                                            {categories[selectedCategory].documents.length > 0 && (!embeddedPDF || categories[selectedCategory].documents.length > 1 || categories[selectedCategory].subcategories) && (
                                                 <ul className="documents-list">
                                                     {categories[selectedCategory].documents.map((doc, idx) => (
-                                                        <li key={idx} onClick={() => openPDFModal(doc)}>
+                                                        <li key={idx} onClick={() => setEmbeddedPDF(doc)} style={{cursor:'pointer'}}>
                                                             {doc.name}
                                                         </li>
                                                     ))}
                                                 </ul>
+                                            )}
+                                            {/* PDF incrustado */}
+                                            {embeddedPDF && (
+                                                <div style={{marginTop:20}}>
+                                                    <h4 style={{fontWeight:'bold'}}>{embeddedPDF.name}</h4>
+                                                    <iframe
+                                                        src={embeddedPDF.file}
+                                                        style={{ width: '100%', height: '600px', border: '1px solid #ccc', borderRadius: 8 }}
+                                                        frameBorder="0"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                    <div style={{ marginTop: 10, textAlign: 'right' }}>
+                                                        <a href={embeddedPDF.file} download target="_blank" rel="noopener noreferrer" style={{
+                                                            display: 'inline-block',
+                                                            padding: '8px 16px',
+                                                            background: '#007bff',
+                                                            color: '#fff',
+                                                            borderRadius: '4px',
+                                                            textDecoration: 'none',
+                                                            fontWeight: 'bold',
+                                                        }}>
+                                                            Descargar PDF
+                                                        </a>
+                                                        {categories[selectedCategory].documents.length > 1 || categories[selectedCategory].subcategories ? (
+                                                            <button onClick={() => setEmbeddedPDF(null)} style={{
+                                                                marginLeft: 10,
+                                                                padding: '8px 16px',
+                                                                background: '#6c757d',
+                                                                color: '#fff',
+                                                                border: 'none',
+                                                                borderRadius: '4px',
+                                                                fontWeight: 'bold',
+                                                                cursor: 'pointer'
+                                                            }}>Cerrar</button>
+                                                        ) : null}
+                                                    </div>
+                                                </div>
                                             )}
                                         </div>
                                         {/* Mostrar subcategorías si existen */}
@@ -203,7 +232,7 @@ export default function Documentos() {
                                                                 {subcat.documents.length > 0 && (
                                                                     <ul className="documents-list">
                                                                         {subcat.documents.map((doc, idx2) => (
-                                                                            <li key={idx2} onClick={() => openPDFModal(doc)}>
+                                                                            <li key={idx2} onClick={() => setEmbeddedPDF(doc)} style={{cursor:'pointer'}}>
                                                                                 {doc.name}
                                                                             </li>
                                                                         ))}
