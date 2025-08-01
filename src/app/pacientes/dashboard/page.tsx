@@ -58,7 +58,7 @@ export default function DashboardPage() {
       case 'results':
         return <ResultsView />;
       case 'chat':
-        return <ChatView />;
+        return <ChatView setActiveView={setActiveView} />;
       default:
         return <ProfileView user={user} />;
     }
