@@ -54,7 +54,7 @@ export default function DashboardPage() {
       case 'profile':
         return <ProfileView user={user} />;
       case 'appointments':
-        return <AppointmentsView user={user} />;
+        return <AppointmentsView user={user} setActiveView={setActiveView} />;
       case 'results':
         return <ResultsView />;
       case 'chat':

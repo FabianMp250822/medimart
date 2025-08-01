@@ -155,7 +155,6 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
             }
 
             try {
-                // CORRECT WAY TO FETCH PATIENT DATA
                 const q = query(collection(imedicDb, "pacientes"), where("uid", "==", user.uid));
                 const querySnapshot = await getDocs(q);
 
