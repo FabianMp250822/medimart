@@ -5,9 +5,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { imedicAuth, imedicDb } from '@/lib/firebase';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { imedicAuth, imedicDb, imedicStorage } from '@/lib/firebase';
+import { createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,6 +32,9 @@ const loginSchema = z.object({
   password: z.string().min(1, { message: 'La contraseña es obligatoria.' }),
 });
 
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const MAX_FILE_SIZE = 5000000; // 5MB
+
 const registerSchema = z.object({
   nombres: z.string().min(3, { message: 'El nombre debe tener al menos 3 caracteres.' }),
   apellidos: z.string().min(3, { message: 'El apellido debe tener al menos 3 caracteres.' }),
@@ -38,7 +43,13 @@ const registerSchema = z.object({
   telefono: z.string().min(7, { message: 'El teléfono es obligatorio.' }),
   direccion: z.string().min(5, { message: 'La dirección es obligatoria.' }),
   lugarSolicitud: z.string().optional(),
-  foto: z.any().optional(),
+  foto: z.any()
+    .refine((files) => files?.length === 0 || (files?.[0] && MAX_FILE_SIZE >= files[0].size), {
+        message: `El tamaño máximo de la imagen es de 5MB.`,
+    })
+    .refine((files) => files?.length === 0 || (files?.[0] && ACCEPTED_IMAGE_TYPES.includes(files[0].type)), {
+        message: "Solo se aceptan formatos .jpg, .jpeg, .png y .webp.",
+    }).optional(),
   email: z.string().email({ message: 'Por favor, introduce un correo válido.' }),
   password: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres.' }),
   aceptarTerminos: z.boolean().default(false).refine(val => val === true, {
@@ -82,11 +93,12 @@ export default function SolicitarCitaPage() {
         return;
     }
     try {
-      await createUserWithEmailAndPassword(imedicAuth, data.email, data.password);
+      await signInWithEmailAndPassword(imedicAuth, data.email, data.password);
       toast({
         title: '¡Bienvenido de nuevo!',
         description: 'Has iniciado sesión correctamente.',
       });
+      // Aquí puedes redirigir al usuario al dashboard de citas
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -102,7 +114,7 @@ export default function SolicitarCitaPage() {
 
   const onRegisterSubmit = async (data: RegisterFormValues) => {
     setIsLoading(true);
-     if (!imedicAuth || !imedicDb) {
+     if (!imedicAuth || !imedicDb || !imedicStorage) {
         toast({ variant: 'destructive', title: 'Error de configuración', description: 'El servicio de registro no está disponible.' });
         setIsLoading(false);
         return;
@@ -112,7 +124,21 @@ export default function SolicitarCitaPage() {
       const user = userCredential.user;
       const fullName = `${data.nombres} ${data.apellidos}`;
       
-      await updateProfile(user, { displayName: fullName });
+      let photoURL = '';
+      if (data.foto && data.foto.length > 0) {
+        const file = data.foto[0];
+        const fileExtension = file.name.split('.').pop();
+        const fileName = `${uuidv4()}.${fileExtension}`;
+        const storageRef = ref(imedicStorage, `patient-photos/${user.uid}/${fileName}`);
+        
+        await uploadBytes(storageRef, file);
+        photoURL = await getDownloadURL(storageRef);
+      }
+
+      await updateProfile(user, { 
+          displayName: fullName,
+          photoURL: photoURL || undefined
+      });
 
       await setDoc(doc(imedicDb, "patients", user.uid), {
         uid: user.uid,
@@ -125,6 +151,7 @@ export default function SolicitarCitaPage() {
         direccion: data.direccion,
         email: data.email,
         lugarSolicitud: data.lugarSolicitud,
+        photoURL: photoURL,
         createdAt: new Date(),
       });
       
@@ -147,6 +174,8 @@ export default function SolicitarCitaPage() {
       setIsLoading(false);
     }
   };
+
+  const fotoRef = registerForm.register("foto");
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
@@ -243,7 +272,15 @@ export default function SolicitarCitaPage() {
                     {/* Columna Derecha */}
                     <div className="space-y-4">
                       <FormField control={registerForm.control} name="lugarSolicitud" render={({ field }) => (<FormItem><FormLabel>Lugar de Solicitud</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                      <FormField control={registerForm.control} name="foto" render={({ field }) => (<FormItem><FormLabel>Subir Foto</FormLabel><FormControl><Input type="file" accept="image/*" className="file:text-accent file:font-semibold" /></FormControl><FormMessage /></FormItem>)} />
+                      <FormField control={registerForm.control} name="foto" render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Subir Foto</FormLabel>
+                            <FormControl>
+                                <Input type="file" accept="image/*" className="file:text-accent file:font-semibold" {...fotoRef} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                      )} />
                       <FormField control={registerForm.control} name="email" render={({ field }) => (<FormItem><FormLabel>Correo (Auth) *</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>)} />
                       <FormField control={registerForm.control} name="password" render={({ field }) => (<FormItem><FormLabel>Contraseña (Auth) *</FormLabel><FormControl><Input type="password" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     </div>
@@ -291,6 +328,3 @@ export default function SolicitarCitaPage() {
     </div>
   );
 }
-
-
-    
