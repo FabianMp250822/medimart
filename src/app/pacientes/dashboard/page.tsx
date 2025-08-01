@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { imedicAuth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
-import { AppFooter } from '@/components/footer';
-import { Header } from '@/components/header';
 import { DashboardSidebar } from '@/components/pacientes/dashboard-sidebar';
 import { ProfileView } from '@/components/pacientes/dashboard/profile-view';
 import { AppointmentsView } from '@/components/pacientes/dashboard/appointments-view';
@@ -61,19 +59,13 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <Header />
-      <div className="container mx-auto py-12 px-4 flex-grow">
-        <div className="grid lg:grid-cols-4 gap-12 items-start">
-          <aside className="lg:col-span-1">
-            <DashboardSidebar activeView={activeView} setActiveView={setActiveView} />
-          </aside>
-          <main className="lg:col-span-3">
-            {renderContent()}
-          </main>
-        </div>
-      </div>
-      <AppFooter />
+    <div className="grid lg:grid-cols-4 gap-12 items-start">
+      <aside className="lg:col-span-1">
+        <DashboardSidebar activeView={activeView} setActiveView={setActiveView} />
+      </aside>
+      <main className="lg:col-span-3">
+        {renderContent()}
+      </main>
     </div>
   );
 }
