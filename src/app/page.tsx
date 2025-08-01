@@ -14,7 +14,7 @@ import type { Blog } from '@/types/blog';
 
 async function getRecentArticles(): Promise<Blog[]> {
   try {
-    const blogsSnapshot = await adminDb.collection('blogs').orderBy('date', 'desc').limit(3).get();
+    const blogsSnapshot = await adminDb.collection('blogs').where('lugar', '==', 'clinica').orderBy('date', 'desc').limit(3).get();
     if (blogsSnapshot.empty) {
       return [];
     }

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 async function getBlogs(): Promise<Blog[]> {
   try {
-    const blogsSnapshot = await adminDb.collection('blogs').orderBy('date', 'desc').get();
+    const blogsSnapshot = await adminDb.collection('blogs').where('lugar', '==', 'clinica').orderBy('date', 'desc').get();
     if (blogsSnapshot.empty) {
       console.log('No blogs found.');
       return [];
