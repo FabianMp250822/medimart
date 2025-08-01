@@ -1,4 +1,4 @@
-import { Phone, MapPin, ChevronDown } from 'lucide-react';
+import { Phone, MapPin, Menu } from 'lucide-react';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import { MainNav } from '@/components/main-nav';
@@ -14,6 +14,12 @@ import { Testimonials } from '@/components/testimonials';
 import { Team } from '@/components/team';
 import { RecentArticles } from '@/components/recent-articles';
 import { AppFooter } from '@/components/footer';
+import { HeaderNav } from '@/components/header-nav';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 export default function Home() {
   return (
@@ -35,24 +41,41 @@ export default function Home() {
       {/* Main Header */}
       <header className="bg-card shadow-sm sticky top-0 z-40">
         <div className="container mx-auto flex items-center justify-between p-4 gap-4">
-          <div className="flex-1 hidden lg:flex">
-            <Button variant="ghost" className="text-foreground/80 hover:text-accent">
-              <span>Seleccionar Sede: Clínica de la Costa - Barranquilla</span>
-              <ChevronDown className="h-4 w-4 ml-2" />
-            </Button>
-          </div>
           <div className="flex-shrink-0">
             <Link href="/" aria-label="Volver al inicio">
               <Logo />
             </Link>
           </div>
-          <div className="flex-1 flex items-center justify-end gap-2 md:gap-4">
-            <Button variant="outline" className="border-accent text-accent hover:bg-accent/10 hover:text-accent">
+          
+          <div className="flex-1 hidden lg:flex justify-center">
+            <HeaderNav />
+          </div>
+
+          <div className="flex items-center justify-end gap-2 md:gap-4 lg:flex-1">
+             <Button className="bg-accent hover:bg-accent/90 hidden lg:flex">
               Trabaje con nosotros
             </Button>
-            <Button className="bg-accent hover:bg-accent/90">
-              Contacto
-            </Button>
+            <div className="lg:hidden">
+               <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Menu className="h-6 w-6" />
+                    <span className="sr-only">Abrir menú</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left">
+                  <div className="p-6">
+                    <Logo />
+                    <div className="mt-8">
+                       <MainNav />
+                       <Button className="w-full mt-4 bg-accent hover:bg-accent/90">
+                          Trabaje con nosotros
+                       </Button>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </header>
