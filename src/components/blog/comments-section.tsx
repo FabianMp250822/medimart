@@ -43,6 +43,7 @@ export function CommentsSection({ blogId }: CommentsSectionProps) {
     });
 
     useEffect(() => {
+        if (!blogId) return;
         const commentsRef = collection(db, 'blogs', blogId, 'comments');
         const q = query(commentsRef, orderBy('timestamp', 'desc'));
 
