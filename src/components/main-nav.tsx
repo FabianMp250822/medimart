@@ -1,11 +1,12 @@
 import Link from 'next/link';
 
 const navItems = [
-  { href: '#', label: 'Inicio' },
+  { href: '/', label: 'Inicio' },
   { href: '#', label: 'Nosotros' },
   { href: '#', label: 'Servicios' },
-  { href: '#', label: 'Pacientes' },
+  { href: '#', 'label': 'Pacientes' },
   { href: '#', label: 'Especialistas' },
+  { href: '/noticias', label: 'Noticias' },
   { href: "#", label: "Faq's" },
   { href: "#", label: "Contacto" },
 ];
