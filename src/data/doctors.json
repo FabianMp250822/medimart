@@ -1,0 +1,33 @@
+
+[
+  {
+    "id": "1",
+    "doctorName": "Dr. Juan Pérez",
+    "specialty": "Cardiología",
+    "sede": "Clínica de la Costa - Barranquilla"
+  },
+  {
+    "id": "2",
+    "doctorName": "Dra. María Rodríguez",
+    "specialty": "Dermatología",
+    "sede": "Clínica de la Costa - Barranquilla"
+  },
+  {
+    "id": "3",
+    "doctorName": "Dr. Carlos Gómez",
+    "specialty": "Cardiología",
+    "sede": "Sede Norte"
+  },
+  {
+    "id": "4",
+    "doctorName": "Dra. Ana Martínez",
+    "specialty": "Pediatría",
+    "sede": "Clínica de la Costa - Barranquilla"
+  },
+  {
+    "id": "5",
+    "doctorName": "Dr. Luis Hernández",
+    "specialty": "Neurología",
+    "sede": "Sede Sur"
+  }
+]
