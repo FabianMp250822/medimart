@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -27,6 +27,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Por favor, introduce un correo válido.' }),
@@ -66,6 +67,13 @@ export default function SolicitarCitaPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
   const router = useRouter();
+  const [user, authLoading] = useAuthState(imedicAuth);
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push('/pacientes/dashboard');
+    }
+  }, [user, authLoading, router]);
 
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -179,6 +187,15 @@ export default function SolicitarCitaPage() {
 
   const fotoRef = registerForm.register("foto");
 
+  if (authLoading || user) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <p className="mt-4 text-muted-foreground">Verificando sesión...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
       <div className="mb-8">
@@ -262,7 +279,7 @@ export default function SolicitarCitaPage() {
                               </FormControl>
                             </PopoverTrigger>
                             <PopoverContent className="w-auto p-0" align="start">
-                              <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
+                              <Calendar captionLayout="dropdown-buttons" fromYear={1930} toYear={new Date().getFullYear()} mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
                             </PopoverContent>
                           </Popover>
                           <FormMessage />
