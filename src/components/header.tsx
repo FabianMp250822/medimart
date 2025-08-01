@@ -48,11 +48,11 @@ export function Header() {
             </Link>
           </div>
           
-          <div className="flex-1 hidden lg:flex justify-center">
+          <div className="flex-1 hidden lg:flex justify-end">
             <HeaderNav />
           </div>
 
-          <div className="flex items-center justify-end gap-2 md:gap-4 lg:flex-1">
+          <div className="flex items-center justify-end gap-2 md:gap-4">
              <Button asChild className="bg-accent hover:bg-accent/90 hidden lg:flex">
               <Link href="/trabaja-con-nosotros">Trabaje con nosotros</Link>
             </Button>
