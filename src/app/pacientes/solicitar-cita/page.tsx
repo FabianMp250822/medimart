@@ -26,6 +26,7 @@ import { es } from 'date-fns/locale';
 import { useToast } from '@/hooks/use-toast';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Por favor, introduce un correo válido.' }),
@@ -64,6 +65,7 @@ export default function SolicitarCitaPage() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
+  const router = useRouter();
 
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -98,7 +100,7 @@ export default function SolicitarCitaPage() {
         title: '¡Bienvenido de nuevo!',
         description: 'Has iniciado sesión correctamente.',
       });
-      // Aquí puedes redirigir al usuario al dashboard de citas
+      router.push('/pacientes/dashboard');
     } catch (error: any) {
       toast({
         variant: 'destructive',
