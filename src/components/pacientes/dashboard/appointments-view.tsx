@@ -23,14 +23,24 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, Loader2, Trash2 } from "lucide-react";
+import { CalendarIcon, Loader2, Paperclip, Trash2, XIcon } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
 
 interface AppointmentsViewProps {
     user: User;
 }
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ACCEPTED_FILE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+];
 
 const appointmentSchema = z.object({
     selectedEps: z.string().min(1, "Debe seleccionar una EPS"),
@@ -44,7 +54,22 @@ const appointmentSchema = z.object({
     contactPhone: z.string().min(7, "Debe ingresar un teléfono de contacto válido"),
     confirmEmail: z.string().email("Debe ingresar un correo electrónico válido"),
     additionalInfo: z.string().min(1, "Debe ingresar observaciones adicionales"),
-    examFiles: z.any().optional(),
+    examFiles: z.any()
+        .optional()
+        .refine((files: FileList | undefined) => {
+            if (!files || files.length === 0) return true;
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].size > MAX_FILE_SIZE) return false;
+            }
+            return true;
+        }, `El tamaño máximo por archivo es de 5MB.`)
+        .refine((files: FileList | undefined) => {
+            if (!files || files.length === 0) return true;
+            for (let i = 0; i < files.length; i++) {
+                if (!ACCEPTED_FILE_TYPES.includes(files[i].type)) return false;
+            }
+            return true;
+        }, "Solo se aceptan archivos de tipo imagen (JPEG, PNG, WEBP) y PDF."),
 }).refine(data => {
     if (data.selectedEps === 'OTRA') {
         return !!data.customEps && data.customEps.length > 0;
@@ -83,10 +108,13 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             contactPhone: "",
             confirmEmail: user?.email || "",
             additionalInfo: "",
+            examFiles: undefined,
         },
     });
 
     const selectedDepartment = form.watch("selectedDepartment");
+    const examFiles = form.watch("examFiles");
+
     const availableCities = useMemo(() => selectedDepartment ? getCitiesByDepartment(selectedDepartment) : [], [selectedDepartment]);
 
     useEffect(() => {
@@ -111,12 +139,11 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         }
 
         const fetchInitialData = async () => {
-            console.log("AppointmentsView: Starting to fetch initial data.");
-            
+             console.log("AppointmentsView: Starting to fetch initial data.");
             try {
                 console.log("AppointmentsView: Attempting to fetch 'eps' collection.");
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
-                console.log(`AppointmentsView: 'eps' collection fetched successfully. ${epsSnapshot.docs.length} documents found.`);
+                 console.log(`AppointmentsView: 'eps' collection fetched successfully. ${epsSnapshot.docs.length} documents found.`);
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
                     if (epsData.listEps && Array.isArray(epsData.listEps)) {
@@ -138,9 +165,10 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                     const data = patientDocSnap.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
-                     if (data.fechaNacimiento && typeof data.fechaNacimiento === 'string') {
-                        // Handle potential timezone issues by parsing as local time.
-                        const date = new Date(data.fechaNacimiento + 'T00:00:00');
+                     if (data.fechaNacimiento) {
+                        const date = data.fechaNacimiento instanceof Timestamp 
+                            ? data.fechaNacimiento.toDate()
+                            : new Date(data.fechaNacimiento + 'T00:00:00');
                         form.setValue("birthDate", date);
                     }
                 } else {
@@ -153,6 +181,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         };
 
         const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
+        console.log(`AppointmentsView: Setting up onSnapshot for 'solicitudesCitas' for user UID: ${user.uid}`);
         const unsubscribe = onSnapshot(q, (snapshot) => {
             console.log(`AppointmentsView: onSnapshot for 'solicitudesCitas' triggered. Found ${snapshot.size} documents.`);
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -210,8 +239,8 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 selectedEps: finalEps,
                 department: data.selectedDepartment,
                 city: data.selectedCity,
-                birthDate: format(data.birthDate, "yyyy-MM-dd"),
-                appointmentDate: format(data.appointmentDate, "yyyy-MM-dd"),
+                birthDate: Timestamp.fromDate(data.birthDate),
+                appointmentDate: Timestamp.fromDate(data.appointmentDate),
                 appointmentType: data.appointmentType,
                 appointmentReason: data.appointmentReason,
                 contactPhone: data.contactPhone,
@@ -311,7 +340,42 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                          <FormField control={form.control} name="confirmEmail" render={({ field }) => (<FormItem><FormLabel>Correo de Verificación</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="appointmentReason" render={({ field }) => (<FormItem><FormLabel>Motivo de la Cita</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="additionalInfo" render={({ field }) => (<FormItem><FormLabel>Observaciones Adicionales</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="examFiles" render={() => (<FormItem><FormLabel>Subir Archivos (opcional)</FormLabel><FormControl><Input type="file" multiple {...examFilesRef} /></FormControl><FormMessage /></FormItem>)} />
+                        
+                        <FormField
+                            control={form.control}
+                            name="examFiles"
+                            render={() => (
+                                <FormItem>
+                                    <FormLabel>Subir Archivos (opcional, máx 5MB por archivo)</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="file"
+                                            multiple
+                                            accept={ACCEPTED_FILE_TYPES.join(",")}
+                                            {...examFilesRef}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {examFiles && examFiles.length > 0 && (
+                             <div className="space-y-2 pt-2">
+                                <p className="text-sm font-medium">Archivos seleccionados:</p>
+                                <div className="space-y-2">
+                                {Array.from(examFiles).map((file: File, index) => (
+                                    <div key={index} className="flex items-center justify-between p-2 rounded-md border bg-muted/50">
+                                        <div className="flex items-center gap-2 truncate">
+                                            <Paperclip className="h-4 w-4 flex-shrink-0" />
+                                            <span className="text-sm truncate">{file.name}</span>
+                                            <Badge variant="secondary">{Math.round(file.size / 1024)} KB</Badge>
+                                        </div>
+                                    </div>
+                                ))}
+                                </div>
+                            </div>
+                        )}
+
                         <div className="flex justify-between pt-4">
                             <Button type="button" variant="outline" onClick={prevStep}>Atrás</Button>
                             <Button type="submit" disabled={loading}>{loading ? <Loader2 className="animate-spin" /> : "Confirmar Solicitud"}</Button>
@@ -332,25 +396,27 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 <div className="mb-8">
                     <h3 className="font-semibold mb-4">Mis Solicitudes de Cita</h3>
                     {requests.length > 0 ? (
-                        <Table>
-                            <TableHeader><TableRow><TableHead>Especialidad</TableHead><TableHead>Doctor</TableHead><TableHead>Estado</TableHead><TableHead>Fecha</TableHead><TableHead></TableHead></TableRow></TableHeader>
-                            <TableBody>{requests.map(req => (
-                                <TableRow key={req.id}>
-                                    <TableCell>{req.specialty}</TableCell>
-                                    <TableCell>{req.doctorName}</TableCell>
-                                    <TableCell><span className={`px-2 py-1 text-xs rounded-full ${req.status === 'solicitando' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800'}`}>{req.status}</span></TableCell>
-                                    <TableCell>{req.createdAt ? new Date(req.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}</TableCell>
-                                    <TableCell><Button variant="ghost" size="icon" onClick={() => deleteRequest(req.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell>
-                                </TableRow>
-                            ))}</TableBody>
-                        </Table>
-                    ) : <p className="text-sm text-muted-foreground">No tiene solicitudes de cita activas.</p>}
+                        <div className="overflow-x-auto">
+                            <Table>
+                                <TableHeader><TableRow><TableHead>Especialidad</TableHead><TableHead>Doctor</TableHead><TableHead>Estado</TableHead><TableHead>Fecha</TableHead><TableHead></TableHead></TableRow></TableHeader>
+                                <TableBody>{requests.map(req => (
+                                    <TableRow key={req.id}>
+                                        <TableCell>{req.specialty}</TableCell>
+                                        <TableCell>{req.doctorName}</TableCell>
+                                        <TableCell><span className={`px-2 py-1 text-xs font-semibold rounded-full ${req.status === 'solicitando' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>{req.status}</span></TableCell>
+                                        <TableCell>{req.createdAt ? format(req.createdAt.toDate(), 'dd/MM/yyyy') : 'N/A'}</TableCell>
+                                        <TableCell><Button variant="ghost" size="icon" onClick={() => deleteRequest(req.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button></TableCell>
+                                    </TableRow>
+                                ))}</TableBody>
+                            </Table>
+                        </div>
+                    ) : <p className="text-sm text-muted-foreground text-center py-4">No tiene solicitudes de cita activas.</p>}
                 </div>
 
-                <div className="flex items-center justify-center space-x-4 mb-8">
+                <div className="flex items-center justify-center space-x-2 sm:space-x-4 mb-8">
                     {[1, 2, 3].map(step => (
                         <React.Fragment key={step}>
-                            <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${currentStep >= step ? 'bg-primary border-primary text-primary-foreground' : 'bg-muted border-muted-foreground'}`}>
+                            <div className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 font-bold ${currentStep >= step ? 'bg-primary border-primary text-primary-foreground' : 'bg-muted border-muted-foreground/30'}`}>
                                 {step}
                             </div>
                             {step < 3 && <div className={`flex-1 h-0.5 ${currentStep > step ? 'bg-primary' : 'bg-muted'}`} />}
@@ -363,3 +429,5 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
+
+    
