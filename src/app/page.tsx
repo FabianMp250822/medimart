@@ -1,4 +1,4 @@
-import { Phone, MapPin, Menu } from 'lucide-react';
+import { Phone, MapPin, Menu, Clock, MessageSquare } from 'lucide-react';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import { MainNav } from '@/components/main-nav';
@@ -20,20 +20,31 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import Image from 'next/image';
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Top Bar */}
       <div className="bg-primary text-primary-foreground">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between py-2 px-4 text-xs sm:text-sm">
-          <div className="flex items-center gap-2">
-            <Phone className="h-4 w-4" />
-            <span>Atención: +57 (605) 3369999 Ext. 1.</span>
+        <div className="container mx-auto flex flex-wrap items-center justify-between py-2 px-4 text-xs sm:text-sm">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              <span>Atención: +57 (605) 3369999 Ext. 1.</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="h-4 w-4" />
+              <span>carrera 50 no 80-90, Barranquilla</span>
+            </div>
+             <div className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" />
+              <span>WhatsApp</span>
+            </div>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" />
-            <span>carrera 50 no 80-90, Barranquilla WhatsApp</span>
+            <Image src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/flags%2Fes.png?alt=media&token=c863f858-19e1-4565-9838-898a120532ea" alt="Bandera de España" width={24} height={16} />
+            <Image src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/flags%2Fus.png?alt=media&token=5712862b-12d8-4a69-808f-2834b6e51163" alt="Bandera de Estados Unidos" width={24} height={16} />
           </div>
         </div>
       </div>
