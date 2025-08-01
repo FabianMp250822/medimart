@@ -3,11 +3,11 @@ import { Medico } from '@/types/medico';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { Briefcase, GraduationCap, Building, Star, Award, BookOpen, Stethoscope, Mail, Phone, MapPin, Globe } from 'lucide-react';
+import { Briefcase, GraduationCap, Building, Mail, Phone } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 type Props = {
   params: { id: string };

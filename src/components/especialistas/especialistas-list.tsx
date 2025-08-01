@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface EspecialistasListProps {
   especialistas: Medico[];
@@ -55,18 +56,20 @@ export function EspecialistasList({ especialistas }: EspecialistasListProps) {
         <Card>
             <CardContent className="p-4">
                 <h3 className="font-semibold text-lg text-primary mb-4">Especialidades</h3>
-                <div className="space-y-2 flex flex-col items-start">
-                    {specialties.map(specialty => (
-                        <Button
-                            key={specialty}
-                            variant={selectedSpecialty === specialty ? 'default' : 'ghost'}
-                            onClick={() => setSelectedSpecialty(specialty)}
-                            className={`w-full justify-start text-left h-auto py-2 px-3 ${selectedSpecialty === specialty ? 'bg-accent text-accent-foreground' : 'text-foreground'}`}
-                        >
-                            {specialty === 'all' ? 'Todas las especialidades' : specialty}
-                        </Button>
-                    ))}
-                </div>
+                <ScrollArea className="h-96">
+                  <div className="space-y-2 flex flex-col items-start pr-4">
+                      {specialties.map(specialty => (
+                          <Button
+                              key={specialty}
+                              variant={selectedSpecialty === specialty ? 'default' : 'ghost'}
+                              onClick={() => setSelectedSpecialty(specialty)}
+                              className={`w-full justify-start text-left h-auto py-2 px-3 ${selectedSpecialty === specialty ? 'bg-accent text-accent-foreground' : 'text-foreground'}`}
+                          >
+                              {specialty === 'all' ? 'Todas las especialidades' : specialty}
+                          </Button>
+                      ))}
+                  </div>
+                </ScrollArea>
             </CardContent>
         </Card>
       </aside>
