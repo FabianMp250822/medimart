@@ -8,20 +8,12 @@ export function Commitment() {
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div className="relative h-96 rounded-lg overflow-hidden">
             <Image
-                src="https://placehold.co/600x400.png"
+                src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641"
                 alt="Clínica exterior"
                 layout="fill"
                 objectFit="cover"
                 data-ai-hint="clinic exterior"
             />
-             <div className="absolute bottom-4 left-4 flex space-x-4">
-                <Button size="icon" className="bg-accent rounded-full h-12 w-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                </Button>
-                <Button size="icon" className="bg-accent rounded-full h-12 w-12">
-                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                </Button>
-             </div>
         </div>
         <div>
           <span className="text-accent font-semibold">SOBRE NOSOTROS</span>
@@ -30,12 +22,13 @@ export function Commitment() {
             En Clínica de la Costa, nos dedicamos a ofrecer atención médica de la más alta calidad, con un equipo de profesionales experimentados y tecnología de vanguardia para garantizar su bienestar.
           </p>
           <ul className="space-y-4 text-muted-foreground">
-            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Más de 30 años de experiencia</li>
-            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Equipo médico especializado</li>
-            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Tecnología médica avanzada</li>
-            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Atención personalizada y humana</li>
+            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Servicios de Ambulancia disponibles</li>
+            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Oxígeno a Domicilio para tu comodidad</li>
+            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Farmacia en Clínica para mayor conveniencia</li>
+            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Médicos de Guardia siempre listos</li>
+            <li className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Emergencias Médicas 24/7</li>
           </ul>
-          <Button className="mt-8 bg-accent hover:bg-accent/90">Conozca más</Button>
+          <Button className="mt-8 bg-accent hover:bg-accent/90">Descubre Más Sobre Nosotros</Button>
         </div>
       </div>
     </section>
