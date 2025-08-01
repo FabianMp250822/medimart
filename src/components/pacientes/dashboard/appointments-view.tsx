@@ -63,17 +63,11 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     const [loading, setLoading] = useState(false);
     const [initialLoading, setInitialLoading] = useState(true);
 
-    // Step 1
     const [specialtySearch, setSpecialtySearch] = useState("");
     const [selectedSpecialty, setSelectedSpecialty] = useState("");
-
-    // Step 2
     const [allDoctors] = useState(doctorsData);
     const [selectedDoctor, setSelectedDoctor] = useState<any | null>(null);
-    
-    // Step 3
     const [epsList, setEpsList] = useState<string[]>([]);
-    
     const departments = useMemo(() => getDepartments(), []);
 
     const form = useForm<AppointmentFormValues>({
@@ -103,7 +97,6 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             if (!imedicDb || !user) return;
             setInitialLoading(true);
             try {
-                // Fetch EPS
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
@@ -112,7 +105,6 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                     }
                 }
 
-                // Fetch Patient Data
                 const patientDoc = await getDoc(doc(imedicDb, "patients", user.uid));
                 if (patientDoc.exists()) {
                     const data = patientDoc.data();
@@ -129,27 +121,35 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 setInitialLoading(false);
             }
         };
-        fetchInitialData();
-    }, [user, form, toast]);
 
-    useEffect(() => {
-        if (!user || !imedicDb) return;
-        const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setRequests(data);
-        }, (error) => {
-            console.error("Error fetching appointment requests:", error);
-            if (error.code === 'permission-denied') {
+        const subscribeToRequests = () => {
+            if (!user || !imedicDb) return;
+            const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setRequests(data);
+                setInitialLoading(false); 
+            }, (error) => {
+                console.error("Error fetching appointment requests:", error);
                 toast({
                     variant: 'destructive',
                     title: "Error de Permisos",
-                    description: "No tienes permiso para ver las solicitudes. Por favor, contacta a soporte.",
+                    description: "No se pudieron cargar las solicitudes. Verifica las reglas de seguridad de Firestore.",
                 });
+                setInitialLoading(false);
+            });
+            return unsubscribe;
+        };
+
+        fetchInitialData();
+        const unsubscribe = subscribeToRequests();
+        
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
             }
-        });
-        return () => unsubscribe();
-    }, [user, toast]);
+        };
+    }, [user, form, toast]);
 
     const deleteRequest = async (id: string) => {
         if (!imedicDb) return;
@@ -336,5 +336,3 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
-
-    

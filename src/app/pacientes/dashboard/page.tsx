@@ -18,18 +18,15 @@ export default function DashboardPage() {
   const [activeView, setActiveView] = useState('profile');
   const router = useRouter();
 
-  // This effect will ensure that the user object is available before rendering the views
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  
   useEffect(() => {
-    if (user) {
-      setCurrentUser(user);
+    if (!loading && !user) {
+      router.push('/pacientes/solicitar-cita');
     }
-  }, [user]);
+  }, [user, loading, router]);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-[50vh]">
         <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     );
@@ -37,16 +34,15 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Error: {error.message}</p>
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <p className="text-destructive">Error: {error.message}</p>
       </div>
     );
   }
 
   if (!user) {
-    router.push('/pacientes/solicitar-cita');
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-[50vh]">
             <Loader2 className="h-12 w-12 animate-spin text-primary" />
             <p className="ml-4">Redirigiendo a inicio de sesión...</p>
         </div>
@@ -54,21 +50,17 @@ export default function DashboardPage() {
   }
 
   const renderContent = () => {
-    if (!currentUser) {
-       return <div className="flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
-    }
-
     switch (activeView) {
       case 'profile':
-        return <ProfileView user={currentUser} />;
+        return <ProfileView user={user} />;
       case 'appointments':
-        return <AppointmentsView user={currentUser} />;
+        return <AppointmentsView user={user} />;
       case 'results':
         return <ResultsView />;
       case 'chat':
         return <ChatView />;
       default:
-        return <ProfileView user={currentUser} />;
+        return <ProfileView user={user} />;
     }
   };
 
