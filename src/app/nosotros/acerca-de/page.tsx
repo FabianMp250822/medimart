@@ -1,13 +1,10 @@
 
+"use client";
+
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Building, Target, Eye, Gem, ShieldCheck, Award, Users, HeartHandshake, Zap, ThumbsUp, GitCommit } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Acerca de Nosotros - Clínica de la Costa',
-  description: 'Conozca nuestra misión, visión, valores, políticas de calidad y seguridad del paciente. Descubra nuestro compromiso con la excelencia en la atención médica en la Región Caribe.',
-};
 
 const valores = [
   { icon: <HeartHandshake className="h-5 w-5 text-accent" />, title: 'Servicio Humanizado' },
