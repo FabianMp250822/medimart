@@ -43,6 +43,7 @@ export function BlogLayout({ blog, recentBlogs }: BlogLayoutProps) {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
+                  timeZone: "UTC",
                 })}
               </span>
             </div>

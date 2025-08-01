@@ -34,7 +34,7 @@ export function BlogSidebar({ recentBlogs }: BlogSidebarProps) {
                                         </Link>
                                     </h4>
                                     <p className="text-xs text-muted-foreground mt-1">
-                                        {new Date(blog.date).toLocaleDateString('es-ES', { month: 'long', day: 'numeric', year: 'numeric' })}
+                                        {new Date(blog.date).toLocaleDateString('es-ES', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}
                                     </p>
                                 </div>
                             </li>

@@ -35,7 +35,7 @@ export function SimilarArticles({ articles }: SimilarArticlesProps) {
                                 </Link>
                             </h3>
                              <p className="text-xs text-muted-foreground mt-2">
-                                {new Date(article.date).toLocaleDateString('es-ES', { month: 'long', day: 'numeric', year: 'numeric' })}
+                                {new Date(article.date).toLocaleDateString('es-ES', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}
                             </p>
                         </CardContent>
                     </Card>

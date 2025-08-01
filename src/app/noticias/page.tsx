@@ -75,7 +75,7 @@ export default async function NoticiasPage() {
                      </Link>
                    </h2>
                    <div className="flex items-center justify-between text-sm text-muted-foreground mt-4">
-                     <span>{new Date(blog.date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                     <span>{new Date(blog.date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</span>
                      <span>Por {blog.author}</span>
                    </div>
                     <Button asChild className="mt-6 bg-accent hover:bg-accent/90 w-full">
