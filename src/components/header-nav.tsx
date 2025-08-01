@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from 'lucide-react';
 import { nosotrosSubItems } from '@/lib/nosotros-links';
+import { pacientesSubItems } from '@/lib/pacientes-links';
 
 const navItems = [
   { href: '/', label: 'Inicio' },
@@ -18,7 +19,11 @@ const navItems = [
     subItems: nosotrosSubItems,
   },
   { href: '#', label: 'Servicios' },
-  { href: '#', label: 'Pacientes' },
+  { 
+    label: 'Pacientes', 
+    isDropdown: true,
+    subItems: pacientesSubItems,
+  },
   { href: '/especialistas', label: 'Especialistas' },
   { href: "/noticias", label: "Noticias" },
   { href: "#", label: "Contacto" },
