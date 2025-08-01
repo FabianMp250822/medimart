@@ -14,8 +14,8 @@ export default function PacientesLayout({
 }>) {
   const pathname = usePathname();
 
-  // No aplicar este layout a la página de solicitar cita
-  if (pathname === '/pacientes/solicitar-cita') {
+  // No aplicar este layout a las páginas de solicitar cita o dashboard
+  if (pathname === '/pacientes/solicitar-cita' || pathname === '/pacientes/dashboard') {
     return <>{children}</>;
   }
 
