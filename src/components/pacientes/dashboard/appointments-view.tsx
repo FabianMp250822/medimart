@@ -104,15 +104,22 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     }, [selectedSpecialty, allDoctors]);
 
     useEffect(() => {
+        console.log("AppointmentsView: useEffect triggered. User:", user?.uid);
+
         if (!user || !imedicDb) {
+            console.log("AppointmentsView: User or imedicDb is not available. Aborting data fetch.");
             setInitialLoading(false);
             return;
-        };
+        }
 
         const fetchInitialData = async () => {
+            console.log("AppointmentsView: Starting to fetch initial data.");
+            
             // Fetch EPS list
             try {
+                console.log("AppointmentsView: Attempting to fetch 'eps' collection.");
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
+                console.log("AppointmentsView: 'eps' collection fetched successfully.", epsSnapshot.size, "documents found.");
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
                     if (epsData.listEps && Array.isArray(epsData.listEps)) {
@@ -120,45 +127,54 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                     }
                 }
             } catch (error) {
-                console.error("Error fetching 'eps' collection:", error);
-                toast({ variant: 'destructive', title: "Error de Permisos", description: "No se pudo cargar la lista de EPS. Verifique las reglas de seguridad." });
+                console.error("AppointmentsView: Error fetching 'eps' collection:", error);
+                toast({ variant: 'destructive', title: "Error de Permisos (EPS)", description: "No se pudo cargar la lista de EPS." });
             }
 
             // Fetch patient data
             try {
+                console.log(`AppointmentsView: Attempting to fetch 'patients' document for user UID: ${user.uid}`);
                 const patientDoc = await getDoc(doc(imedicDb, "patients", user.uid));
                 if (patientDoc.exists()) {
+                    console.log("AppointmentsView: 'patients' document found.", patientDoc.data());
                     const data = patientDoc.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || "");
                     if (data.fechaNacimiento && data.fechaNacimiento.seconds) {
                        form.setValue("birthDate", new Date(data.fechaNacimiento.seconds * 1000));
                     }
+                } else {
+                    console.warn("AppointmentsView: 'patients' document does not exist for this user.");
                 }
             } catch (error) {
-                 console.error("Error fetching 'patients' document:", error);
-                 toast({ variant: 'destructive', title: "Error", description: "No se pudieron cargar los datos del paciente." });
+                 console.error("AppointmentsView: Error fetching 'patients' document:", error);
+                 toast({ variant: 'destructive', title: "Error (Datos Paciente)", description: "No se pudieron cargar los datos del paciente." });
             }
         };
 
+        console.log(`AppointmentsView: Setting up onSnapshot for 'solicitudesCitas' for user UID: ${user.uid}`);
         const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
         const unsubscribe = onSnapshot(q, (snapshot) => {
+            console.log("AppointmentsView: onSnapshot for 'solicitudesCitas' triggered. Found", snapshot.size, "documents.");
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setRequests(data);
             setInitialLoading(false); 
         }, (error) => {
-            console.error("Error fetching 'solicitudesCitas' collection:", error);
+            console.error("AppointmentsView: Error onSnapshot for 'solicitudesCitas' collection:", error);
             toast({
                 variant: 'destructive',
-                title: "Error de Permisos",
-                description: "No se pudieron cargar las solicitudes. Verifica las reglas de seguridad de Firestore.",
+                title: "Error de Permisos (Solicitudes)",
+                description: "No se pudieron cargar las solicitudes de citas.",
             });
             setInitialLoading(false);
         });
 
         fetchInitialData();
         
-        return () => unsubscribe();
+        return () => {
+            console.log("AppointmentsView: Unsubscribing from onSnapshot listener.");
+            unsubscribe();
+        };
     }, [user, form, toast]);
 
     const deleteRequest = async (id: string) => {
@@ -346,5 +362,3 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
-
-    
