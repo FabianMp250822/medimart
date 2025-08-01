@@ -26,7 +26,7 @@ export function Testimonials({ testimonial }: TestimonialsProps) {
       <div className="grid md:grid-cols-2 gap-12 items-center container mx-auto">
         <div className="relative h-[500px] w-full rounded-lg overflow-hidden">
           <Image
-            src="https://placehold.co/600x800.png"
+            src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.02.22%20PM.jpeg?alt=media&token=d493e491-0d1b-484a-a35a-8d6a8a6d7e13"
             alt="Pasillo de la clínica"
             layout="fill"
             objectFit="cover"
