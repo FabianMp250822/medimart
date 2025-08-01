@@ -34,7 +34,7 @@ export default async function EspecialistasPage() {
     <div className="bg-background">
       <div className="relative bg-primary/80 text-white py-20 sm:py-28 md:py-32 flex items-center justify-center text-center">
         <Image
-          src="https://placehold.co/1920x400.png"
+          src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2Fmisionvision_(1)-transformed.jpeg?alt=media&token=fc787cf2-c0e8-4f7a-a5a4-da0291536d42"
           alt="Equipo médico en una reunión"
           layout="fill"
           objectFit="cover"
