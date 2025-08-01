@@ -1,7 +1,7 @@
 
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DatabaseLock, ShieldCheck, Target, Users, KeyRound, Lock, Server, Repeat } from 'lucide-react';
+import { DatabaseZap, ShieldCheck, Target, Users, KeyRound, Lock, Server, Repeat } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Política de Tratamiento de Datos Personales - Clínica de la Costa',
@@ -12,7 +12,7 @@ export default function PoliticaDatosPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-          <DatabaseLock className="mx-auto h-16 w-16 text-accent mb-4" />
+          <DatabaseZap className="mx-auto h-16 w-16 text-accent mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold text-primary">Política de Tratamiento de Datos Personales</h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-4xl mx-auto">
               Este documento detalla las políticas adoptadas por la Clínica de la Costa para garantizar el correcto manejo de los datos personales, conforme a la legislación vigente.

@@ -1,7 +1,6 @@
 
 "use client";
 
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Building, Target, Eye, Gem, ShieldCheck, Award, Users, HeartHandshake, Zap, ThumbsUp, GitCommit } from 'lucide-react';
