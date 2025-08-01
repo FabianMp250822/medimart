@@ -155,10 +155,12 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
             }
 
             try {
-                const patientDocRef = doc(imedicDb, "patients", user.uid);
-                const patientDocSnap = await getDoc(patientDocRef);
+                // CORRECT WAY TO FETCH PATIENT DATA
+                const q = query(collection(imedicDb, "pacientes"), where("uid", "==", user.uid));
+                const querySnapshot = await getDocs(q);
 
-                if (patientDocSnap.exists()) {
+                if (!querySnapshot.empty) {
+                    const patientDocSnap = querySnapshot.docs[0];
                     const data = patientDocSnap.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
@@ -168,9 +170,11 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
                             : new Date(data.fechaNacimiento);
                         form.setValue("birthDate", date);
                     }
+                } else {
+                    console.log("No patient document found for this user.");
                 }
             } catch (error) {
-                 console.error("AppointmentsView: Error fetching 'patients' document:", error);
+                 console.error("AppointmentsView: Error fetching 'pacientes' document:", error);
                  toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: `No se pudieron cargar los datos del perfil.` });
             }
         };
