@@ -110,6 +110,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         };
 
         const fetchInitialData = async () => {
+            // Fetch EPS list
             try {
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
                 if (!epsSnapshot.empty) {
@@ -118,7 +119,13 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                         setEpsList(epsData.listEps);
                     }
                 }
+            } catch (error) {
+                console.error("Error fetching 'eps' collection:", error);
+                toast({ variant: 'destructive', title: "Error de Permisos", description: "No se pudo cargar la lista de EPS. Verifique las reglas de seguridad." });
+            }
 
+            // Fetch patient data
+            try {
                 const patientDoc = await getDoc(doc(imedicDb, "patients", user.uid));
                 if (patientDoc.exists()) {
                     const data = patientDoc.data();
@@ -129,8 +136,8 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                     }
                 }
             } catch (error) {
-                console.error("Error fetching initial data:", error);
-                toast({ variant: 'destructive', title: "Error", description: "No se pudieron cargar los datos iniciales." });
+                 console.error("Error fetching 'patients' document:", error);
+                 toast({ variant: 'destructive', title: "Error", description: "No se pudieron cargar los datos del paciente." });
             }
         };
 
@@ -140,7 +147,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             setRequests(data);
             setInitialLoading(false); 
         }, (error) => {
-            console.error("Error fetching appointment requests:", error);
+            console.error("Error fetching 'solicitudesCitas' collection:", error);
             toast({
                 variant: 'destructive',
                 title: "Error de Permisos",
