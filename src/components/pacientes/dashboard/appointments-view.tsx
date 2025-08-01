@@ -105,10 +105,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     }, [selectedSpecialty, allDoctors]);
 
     useEffect(() => {
-        console.log(`AppointmentsView: useEffect triggered. User: ${user?.uid}`);
-
         if (!user || !imedicDb) {
-            console.log("AppointmentsView: User or imedicDb is not available. Aborting data fetch.");
             setInitialLoading(false);
             return;
         }
@@ -119,7 +116,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             try {
                 console.log("AppointmentsView: Attempting to fetch 'eps' collection.");
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
-                console.log(`AppointmentsView: 'eps' collection fetched successfully. ${epsSnapshot.size} documents found.`);
+                console.log(`AppointmentsView: 'eps' collection fetched successfully. ${epsSnapshot.docs.length} documents found.`);
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
                     if (epsData.listEps && Array.isArray(epsData.listEps)) {
@@ -132,31 +129,29 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             }
 
             try {
-                console.log(`AppointmentsView: Attempting to fetch 'pacientes' document for user UID: ${user.uid}`);
-                const patientDocRef = doc(imedicDb, "pacientes", user.uid);
+                console.log(`AppointmentsView: Attempting to fetch 'patients' document for user UID: ${user.uid}`);
+                const patientDocRef = doc(imedicDb, "patients", user.uid);
                 const patientDocSnap = await getDoc(patientDocRef);
 
                 if (patientDocSnap.exists()) {
-                    console.log("AppointmentsView: 'pacientes' document found.", patientDocSnap.data());
+                    console.log("AppointmentsView: 'patients' document found.", patientDocSnap.data());
                     const data = patientDocSnap.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
-                    if (data.fechaNacimiento) {
-                        // The date from Firestore is a string 'YYYY-MM-DD'. We need to convert it to a Date object.
-                        // Adding 'T00:00:00' and parsing ensures it's interpreted in the local timezone correctly.
-                        const date = new Date(`${data.fechaNacimiento}T00:00:00`);
+                     if (data.fechaNacimiento && typeof data.fechaNacimiento === 'string') {
+                        // Handle potential timezone issues by parsing as local time.
+                        const date = new Date(data.fechaNacimiento + 'T00:00:00');
                         form.setValue("birthDate", date);
                     }
                 } else {
-                    console.warn("AppointmentsView: 'pacientes' document does not exist for this user.");
+                    console.warn("AppointmentsView: 'patients' document does not exist for this user.");
                 }
             } catch (error) {
-                 console.error(`AppointmentsView: Error fetching 'pacientes' document:`, error);
+                 console.error(`AppointmentsView: Error fetching 'patients' document:`, error);
                  toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: `No se pudieron cargar los datos del perfil.` });
             }
         };
 
-        console.log(`AppointmentsView: Setting up onSnapshot for 'solicitudesCitas' for user UID: ${user.uid}`);
         const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             console.log(`AppointmentsView: onSnapshot for 'solicitudesCitas' triggered. Found ${snapshot.size} documents.`);
@@ -215,8 +210,8 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 selectedEps: finalEps,
                 department: data.selectedDepartment,
                 city: data.selectedCity,
-                birthDate: format(data.birthDate, "yyyy-MM-dd"), // Format date to string
-                appointmentDate: format(data.appointmentDate, "yyyy-MM-dd"), // Format date to string
+                birthDate: format(data.birthDate, "yyyy-MM-dd"),
+                appointmentDate: format(data.appointmentDate, "yyyy-MM-dd"),
                 appointmentType: data.appointmentType,
                 appointmentReason: data.appointmentReason,
                 contactPhone: data.contactPhone,
@@ -308,7 +303,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                             {form.watch('selectedEps') === 'OTRA' && <FormField control={form.control} name="customEps" render={({ field }) => (<FormItem><FormLabel>Especifique su EPS</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />}
                             <FormField control={form.control} name="selectedDepartment" render={({ field }) => (<FormItem><FormLabel>Departamento</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione departamento" /></SelectTrigger></FormControl><SelectContent>{departments.map(dep => <SelectItem key={dep} value={dep}>{dep}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="selectedCity" render={({ field }) => (<FormItem><FormLabel>Ciudad/Municipio</FormLabel><Select onValueChange={field.onChange} value={field.value || ''} disabled={!selectedDepartment}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione ciudad" /></SelectTrigger></FormControl><SelectContent>{availableCities.map(city => <SelectItem key={city} value={city}>{city}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>)} />
-                            <FormField control={form.control} name="birthDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Fecha de Nacimiento</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? (format(field.value, "PPP", { locale: es })) : (<span>Seleccione una fecha</span>)}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                            <FormField control={form.control} name="birthDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Fecha de Nacimiento</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? (format(field.value, "PPP", { locale: es })) : (<span>Seleccione una fecha</span>)}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar captionLayout="dropdown-buttons" fromYear={1930} toYear={new Date().getFullYear()} mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="appointmentDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Fecha Deseada de la Cita</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? (format(field.value, "PPP", { locale: es })) : (<span>Seleccione una fecha</span>)}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="appointmentType" render={({ field }) => (<FormItem><FormLabel>Tipo de Cita</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione tipo de cita" /></SelectTrigger></FormControl><SelectContent><SelectItem value="Consulta inicial">Consulta inicial</SelectItem><SelectItem value="Reunión con especialista">Reunión con especialista</SelectItem><SelectItem value="Revisión de exámenes">Revisión de exámenes</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="contactPhone" render={({ field }) => (<FormItem><FormLabel>Teléfono de Contacto</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -316,7 +311,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                          <FormField control={form.control} name="confirmEmail" render={({ field }) => (<FormItem><FormLabel>Correo de Verificación</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="appointmentReason" render={({ field }) => (<FormItem><FormLabel>Motivo de la Cita</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="additionalInfo" render={({ field }) => (<FormItem><FormLabel>Observaciones Adicionales</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="examFiles" render={({ field }) => (<FormItem><FormLabel>Subir Archivos (opcional)</FormLabel><FormControl><Input type="file" multiple {...examFilesRef} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="examFiles" render={() => (<FormItem><FormLabel>Subir Archivos (opcional)</FormLabel><FormControl><Input type="file" multiple {...examFilesRef} /></FormControl><FormMessage /></FormItem>)} />
                         <div className="flex justify-between pt-4">
                             <Button type="button" variant="outline" onClick={prevStep}>Atrás</Button>
                             <Button type="submit" disabled={loading}>{loading ? <Loader2 className="animate-spin" /> : "Confirmar Solicitud"}</Button>
@@ -368,5 +363,3 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
-
-    
