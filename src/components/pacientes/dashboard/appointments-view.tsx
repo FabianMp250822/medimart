@@ -134,8 +134,11 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             // Fetch patient data
             try {
                 console.log(`AppointmentsView: Attempting to fetch 'patients' document for user UID: ${user.uid}`);
-                const patientDoc = await getDoc(doc(imedicDb, "patients", user.uid));
-                if (patientDoc.exists()) {
+                const q = query(collection(imedicDb, "patients"), where("uid", "==", user.uid));
+                const patientSnapshot = await getDocs(q);
+
+                if (!patientSnapshot.empty) {
+                    const patientDoc = patientSnapshot.docs[0];
                     console.log("AppointmentsView: 'patients' document found.", patientDoc.data());
                     const data = patientDoc.data();
                     form.setValue("contactPhone", data.telefono || "");
@@ -362,3 +365,5 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
+
+    
