@@ -23,6 +23,10 @@ const GreenTriangle = () => (
 
 
 export function Hero() {
+  const foundingYear = 1989;
+  const currentYear = new Date().getFullYear();
+  const yearsOfExperience = currentYear - foundingYear;
+
   return (
     <section className="relative bg-primary text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-blue-900/90 z-0"></div>
@@ -36,7 +40,7 @@ export function Hero() {
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-2 leading-tight">
                         Tu Salud, Nuestra Prioridad
                     </h1>
-                     <span className="block text-3xl sm:text-4xl text-accent font-semibold mt-2">por 35 Años</span>
+                     <span className="block text-3xl sm:text-4xl text-accent font-semibold mt-2">por {yearsOfExperience} Años</span>
                     <p className="mt-6 text-base text-primary-foreground/80 max-w-lg mx-auto lg:mx-0">
                         En la Clínica de la Costa Barranquilla, sabemos que en los momentos más importantes de tu salud, necesitas un equipo que te acompañe con calidez y humanidad. Nuestro compromiso es brindarte atención personalizada, asegurando que te sientas en un entorno seguro y de confianza en cada paso de tu recuperación
                     </p>
@@ -45,7 +49,7 @@ export function Hero() {
                     </Button>
                 </div>
                 {/* Image Column */}
-                <div className="relative h-80 lg:h-[450px] w-full">
+                <div className="relative h-80 lg:h-[450px] w-full animate-float-bob">
                     <Image
                         src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641"
                         alt="Fachada de la Clínica de la Costa"
