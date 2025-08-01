@@ -61,6 +61,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     const [requests, setRequests] = useState<any[]>([]);
     const [currentStep, setCurrentStep] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true);
 
     // Step 1
     const [specialtySearch, setSpecialtySearch] = useState("");
@@ -72,7 +73,6 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     
     // Step 3
     const [epsList, setEpsList] = useState<string[]>([]);
-    const [patientData, setPatientData] = useState<any | null>(null);
     
     const departments = useMemo(() => getDepartments(), []);
 
@@ -100,9 +100,10 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
 
     useEffect(() => {
         const fetchInitialData = async () => {
-            if (!imedicDb) return;
-            // Fetch EPS
+            if (!imedicDb || !user) return;
+            setInitialLoading(true);
             try {
+                // Fetch EPS
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
@@ -110,28 +111,26 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                         setEpsList(epsData.listEps);
                     }
                 }
-            } catch (error) {
-                console.error("Error fetching EPS:", error);
-            }
 
-            // Fetch Patient Data
-            try {
+                // Fetch Patient Data
                 const patientDoc = await getDoc(doc(imedicDb, "patients", user.uid));
                 if (patientDoc.exists()) {
                     const data = patientDoc.data();
-                    setPatientData(data);
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || "");
-                    if (data.fechaNacimiento) {
+                    if (data.fechaNacimiento && data.fechaNacimiento.seconds) {
                        form.setValue("birthDate", new Date(data.fechaNacimiento.seconds * 1000));
                     }
                 }
             } catch (error) {
-                console.error("Error fetching patient data:", error);
+                console.error("Error fetching initial data:", error);
+                toast({ variant: 'destructive', title: "Error", description: "No se pudieron cargar los datos iniciales." });
+            } finally {
+                setInitialLoading(false);
             }
         };
         fetchInitialData();
-    }, [user, form]);
+    }, [user, form, toast]);
 
     useEffect(() => {
         if (!user || !imedicDb) return;
@@ -139,9 +138,18 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setRequests(data);
+        }, (error) => {
+            console.error("Error fetching appointment requests:", error);
+            if (error.code === 'permission-denied') {
+                toast({
+                    variant: 'destructive',
+                    title: "Error de Permisos",
+                    description: "No tienes permiso para ver las solicitudes. Por favor, contacta a soporte.",
+                });
+            }
         });
         return () => unsubscribe();
-    }, [user]);
+    }, [user, toast]);
 
     const deleteRequest = async (id: string) => {
         if (!imedicDb) return;
@@ -191,8 +199,6 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
 
             await addDoc(collection(imedicDb, "solicitudesCitas"), appointmentObj);
             
-            // TODO: Implement sendAppointmentSupportMessage logic if needed
-            
             toast({ title: "Solicitud Enviada", description: "Su solicitud ha sido enviada al soporte." });
             resetForm();
 
@@ -216,6 +222,14 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
     const prevStep = () => setCurrentStep(prev => prev - 1);
 
     const examFilesRef = form.register("examFiles");
+    
+    if (initialLoading) {
+        return (
+            <div className="flex items-center justify-center p-8">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        )
+    }
 
     const renderStepContent = () => {
         switch (currentStep) {
@@ -322,3 +336,5 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         </Card>
     );
 }
+
+    
