@@ -26,7 +26,7 @@ const navItems = [
   },
   { href: '/especialistas', label: 'Especialistas' },
   { href: "/noticias", label: "Noticias" },
-  { href: "#", label: "Contacto" },
+  { href: "/contacto", label: "Contacto" },
 ];
 
 export function HeaderNav() {
