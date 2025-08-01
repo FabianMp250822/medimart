@@ -99,6 +99,7 @@ export function ChatView({ setActiveView }: ChatViewProps) {
   const [hasAppointmentRequest, setHasAppointmentRequest] = useState(false);
   const [loadingRequests, setLoadingRequests] = useState(true);
   const [patientAgentUid, setPatientAgentUid] = useState("");
+  const [isAssigningAgent, setIsAssigningAgent] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const onNavigateToAppointments = () => setActiveView('appointments');
@@ -140,9 +141,6 @@ export function ChatView({ setActiveView }: ChatViewProps) {
         setPatientAgentUid(relationData.agentUid || "");
       } else {
         setPatientAgentUid("");
-        setChatId(null);
-        setAgentName("");
-        setStatusMessage("No tiene un agente asignado en este momento.");
       }
     }, (error) => {
       console.error("Chat: Error en listener de agentPatientRelations:", error);
@@ -150,6 +148,37 @@ export function ChatView({ setActiveView }: ChatViewProps) {
     });
     return () => unsubscribeRel();
   }, [user]);
+
+  useEffect(() => {
+      const assignAgentIfNeeded = async () => {
+          if (user && hasAppointmentRequest && !patientAgentUid && !isAssigningAgent && !loadingRequests) {
+              setIsAssigningAgent(true);
+              setStatusMessage("Asignando un agente de soporte...");
+              if (!imedicDb) return;
+              try {
+                  const agentQuery = query(collection(imedicDb, "agentes"));
+                  const agentSnapshot = await getDocs(agentQuery);
+                  if (!agentSnapshot.empty) {
+                      const agentDoc = agentSnapshot.docs[0]; // Simple assignment logic
+                      await addDoc(collection(imedicDb, "agentPatientRelations"), {
+                          agentUid: agentDoc.id,
+                          patientId: user.uid,
+                          assignedAt: Timestamp.now()
+                      });
+                      // The onSnapshot for relations will pick up this change and set patientAgentUid
+                  } else {
+                      setStatusMessage("No hay agentes de soporte disponibles en este momento.");
+                  }
+              } catch (error) {
+                  console.error("Error asignando agente:", error);
+                  setStatusMessage("Error al asignar un agente de soporte.");
+              } finally {
+                  setIsAssigningAgent(false);
+              }
+          }
+      };
+      assignAgentIfNeeded();
+  }, [user, hasAppointmentRequest, patientAgentUid, isAssigningAgent, loadingRequests]);
   
   const initChat = useCallback(async (patientId: string, agentUid: string) => {
     if (!imedicDb) return;
@@ -201,13 +230,15 @@ export function ChatView({ setActiveView }: ChatViewProps) {
   useEffect(() => {
     if (user && patientAgentUid) {
       initChat(user.uid, patientAgentUid);
-    } else if (user && !patientAgentUid) {
+    } else if (user && !patientAgentUid && !isAssigningAgent) {
       setChatId(null);
       setMessages([]);
       setAgentName("");
-      setStatusMessage("Esperando asignación de un agente...");
+      if (hasAppointmentRequest) {
+        setStatusMessage("Esperando asignación de un agente...");
+      }
     }
-  }, [user, patientAgentUid, initChat]);
+  }, [user, patientAgentUid, initChat, isAssigningAgent, hasAppointmentRequest]);
 
 
   useEffect(() => {
