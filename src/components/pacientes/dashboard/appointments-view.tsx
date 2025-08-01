@@ -3,13 +3,12 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { collection, getDocs, getDoc, addDoc, deleteDoc, doc, Timestamp, query, where, onSnapshot } from "firebase/firestore";
-import { imedicDb, imedicStorage, imedicAuth } from "@/lib/firebase";
+import { imedicDb, imedicStorage } from "@/lib/firebase";
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import type { User } from 'firebase/auth';
-import { useAuthState } from "react-firebase-hooks/auth";
 
 import doctorsData from "@/data/doctors.json";
 import { getDepartments, getCitiesByDepartment } from "@/data/colombiaData";
@@ -57,9 +56,8 @@ const appointmentSchema = z.object({
 
 type AppointmentFormValues = z.infer<typeof appointmentSchema>;
 
-export function AppointmentsView({ user: authenticatedUser }: AppointmentsViewProps) {
+export function AppointmentsView({ user }: AppointmentsViewProps) {
     const { toast } = useToast();
-    const [user] = useAuthState(imedicAuth);
     const [requests, setRequests] = useState<any[]>([]);
     const [currentStep, setCurrentStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -95,13 +93,12 @@ export function AppointmentsView({ user: authenticatedUser }: AppointmentsViewPr
     }, [selectedSpecialty, allDoctors]);
 
     useEffect(() => {
-        if (!user) {
+        if (!user || !imedicDb) {
             setInitialLoading(false);
             return;
         };
 
         const fetchInitialData = async () => {
-            if (!imedicDb) return;
             try {
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
                 if (!epsSnapshot.empty) {
@@ -127,7 +124,6 @@ export function AppointmentsView({ user: authenticatedUser }: AppointmentsViewPr
         };
 
         const subscribeToRequests = () => {
-            if (!user || !imedicDb) return;
             const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
             const unsubscribe = onSnapshot(q, (snapshot) => {
                 const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -340,5 +336,3 @@ export function AppointmentsView({ user: authenticatedUser }: AppointmentsViewPr
         </Card>
     );
 }
-
-    
