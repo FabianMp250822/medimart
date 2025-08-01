@@ -23,14 +23,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, Loader2, Paperclip, Trash2 } from "lucide-react";
+import { CalendarIcon, Loader2, Paperclip, Trash2, AlertTriangle } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface AppointmentsViewProps {
     user: User;
+    setActiveView: (view: string) => void;
 }
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -82,7 +84,7 @@ const appointmentSchema = z.object({
 
 type AppointmentFormValues = z.infer<typeof appointmentSchema>;
 
-export function AppointmentsView({ user }: AppointmentsViewProps) {
+export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps) {
     const { toast } = useToast();
     const [requests, setRequests] = useState<any[]>([]);
     const [currentStep, setCurrentStep] = useState(1);
@@ -139,9 +141,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         }
 
         const fetchInitialData = async () => {
-            console.log("AppointmentsView: Starting to fetch initial data.");
             try {
-                console.log("AppointmentsView: Attempting to fetch 'eps' collection.");
                 const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
@@ -149,19 +149,16 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                         setEpsList(epsData.listEps);
                     }
                 }
-                 console.log(`AppointmentsView: 'eps' collection fetched successfully. ${epsSnapshot.size} documents found.`);
             } catch (error) {
                 console.error("AppointmentsView: Error fetching 'eps' collection:", error);
                 toast({ variant: 'destructive', title: "Error al Cargar EPS", description: "No se pudo cargar la lista de EPS." });
             }
 
             try {
-                console.log(`AppointmentsView: Attempting to fetch 'patients' document for user UID: ${user.uid}`);
                 const patientDocRef = doc(imedicDb, "patients", user.uid);
                 const patientDocSnap = await getDoc(patientDocRef);
 
                 if (patientDocSnap.exists()) {
-                    console.log("AppointmentsView: 'patients' document found.");
                     const data = patientDocSnap.data();
                     form.setValue("contactPhone", data.telefono || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
@@ -171,19 +168,15 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                             : new Date(data.fechaNacimiento);
                         form.setValue("birthDate", date);
                     }
-                } else {
-                     console.log("AppointmentsView: 'patients' document not found for UID:", user.uid);
                 }
             } catch (error) {
                  console.error("AppointmentsView: Error fetching 'patients' document:", error);
-                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: "No se pudieron cargar los datos del perfil." });
+                 toast({ variant: 'destructive', title: "Error al Cargar Datos del Paciente", description: `No se pudieron cargar los datos del perfil.` });
             }
         };
 
-        console.log(`AppointmentsView: Setting up onSnapshot for 'solicitudesCitas' for user UID: ${user.uid}`);
         const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            console.log(`AppointmentsView: onSnapshot for 'solicitudesCitas' triggered. Found ${snapshot.size} documents.`);
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setRequests(data);
             setInitialLoading(false); 
@@ -200,7 +193,6 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         fetchInitialData();
         
         return () => {
-            console.log("AppointmentsView: Unsubscribing from onSnapshot listener.");
             unsubscribe();
         };
     }, [user, form, toast]);
@@ -222,30 +214,27 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
         try {
             // 1. Asignar un agente
             let assignedAgentUid: string | null = null;
-            const agentQuery = query(collection(imedicDb, "agentes"));
-            const agentSnapshot = await getDocs(agentQuery);
+            const agentPatientRelationQuery = query(collection(imedicDb, "agentPatientRelations"), where("patientId", "==", user.uid));
+            const relationSnapshot = await getDocs(agentPatientRelationQuery);
 
-            if (!agentSnapshot.empty) {
-                // Lógica de asignación simple: tomar el primer agente
-                const agentDoc = agentSnapshot.docs[0];
-                assignedAgentUid = agentDoc.id;
-
-                // Crear la relación en agentPatientRelations
-                const relationQuery = query(collection(imedicDb, "agentPatientRelations"), where("patientId", "==", user.uid));
-                const relationSnapshot = await getDocs(relationQuery);
-                
-                if (relationSnapshot.empty) {
+            if (!relationSnapshot.empty) {
+                assignedAgentUid = relationSnapshot.docs[0].data().agentUid;
+            } else {
+                const agentQuery = query(collection(imedicDb, "agentes"));
+                const agentSnapshot = await getDocs(agentQuery);
+                if (!agentSnapshot.empty) {
+                    const agentDoc = agentSnapshot.docs[0]; // Asignación simple
+                    assignedAgentUid = agentDoc.id;
                     await addDoc(collection(imedicDb, "agentPatientRelations"), {
                         agentUid: assignedAgentUid,
                         patientId: user.uid,
                         assignedAt: Timestamp.now()
                     });
-                     console.log(`Agent ${assignedAgentUid} assigned to patient ${user.uid}`);
-                } else {
-                    console.log(`Patient ${user.uid} already has an assigned agent.`);
                 }
-            } else {
-                 console.log("No agents available to assign.");
+            }
+
+            if (!assignedAgentUid) {
+                 throw new Error("No hay agentes de soporte disponibles. Por favor, intente más tarde.");
             }
             
             // 2. Subir archivos
@@ -283,7 +272,7 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                 additionalInfo: data.additionalInfo,
                 examDocuments,
                 uidPaciente: user.uid,
-                assignedAgentUid: assignedAgentUid, // Guardar el agente asignado
+                assignedAgentUid: assignedAgentUid,
                 createdAt: Timestamp.now(),
                 status: "solicitando",
             };
@@ -291,8 +280,9 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
             // 4. Guardar la solicitud
             await addDoc(collection(imedicDb, "solicitudesCitas"), appointmentObj);
             
-            toast({ title: "Solicitud Enviada", description: "Su solicitud ha sido enviada al soporte." });
+            toast({ title: "Solicitud Enviada", description: "Su solicitud ha sido enviada. Será redirigido al chat de soporte." });
             resetForm();
+            setActiveView('chat'); // Redirigir al chat
 
         } catch (error) {
             console.error("Error confirming appointment: ", error);
@@ -335,6 +325,13 @@ export function AppointmentsView({ user }: AppointmentsViewProps) {
                         <CardDescription>Por favor, revise que toda la información sea correcta antes de confirmar.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
+                         <Alert variant="destructive">
+                            <AlertTriangle className="h-4 w-4" />
+                            <AlertTitle>Aviso Importante</AlertTitle>
+                            <AlertDescription>
+                                Esta es una **solicitud de cita**. La asignación final con el médico y la fecha seleccionada está sujeta a la disponibilidad y validación interna de la clínica. Un agente se comunicará con usted a través del chat de soporte para confirmar los detalles.
+                            </AlertDescription>
+                        </Alert>
                         <div>
                             <h4 className="font-semibold text-primary">Cita Médica</h4>
                             <div className="text-sm text-muted-foreground grid grid-cols-2 gap-2 mt-2">
