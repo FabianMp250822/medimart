@@ -1,21 +1,30 @@
-import { FileText } from 'lucide-react';
+import { FileText, Search } from 'lucide-react';
 import type { Metadata } from 'next';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DirectorioList } from '@/components/pacientes/directorio-list';
 
 export const metadata: Metadata = {
   title: 'Directorio De Especialidades Y Servicios - Clínica de la Costa',
-  description: 'Información sobre el directorio de especialidades y servicios en la Clínica de la Costa.',
+  description: 'Encuentre información de contacto de nuestras especialidades y servicios, incluyendo ubicación, teléfonos y correos electrónicos. Utilice nuestro buscador para un acceso rápido.',
 };
 
 export default function DirectorioEspecialidadesPage() {
   return (
     <div className="space-y-8">
-        <div className="text-center">
-            <FileText className="mx-auto h-16 w-16 text-accent mb-4" />
-            <h1 className="text-4xl md:text-5xl font-bold text-primary">Directorio De Especialidades Y Servicios</h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-                Contenido sobre el directorio de especialidades y servicios próximamente.
-            </p>
-        </div>
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-2xl text-primary">
+                    <Search />
+                    Directorio de Especialidades y Servicios
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <p className="text-muted-foreground">
+                    Encuentre la información de contacto de nuestras áreas y servicios. Utilice el buscador para filtrar los resultados rápidamente.
+                </p>
+            </CardContent>
+        </Card>
+        <DirectorioList />
     </div>
   );
 }
