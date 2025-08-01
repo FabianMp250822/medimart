@@ -5,6 +5,15 @@ import { MainNav } from '@/components/main-nav';
 import { Hero } from '@/components/hero';
 import { Card } from '@/components/ui/card';
 import Link from 'next/link';
+import { Services } from '@/components/services';
+import { Commitment } from '@/components/commitment';
+import { ComprehensiveCare } from '@/components/comprehensive-care';
+import { Priority } from '@/components/priority';
+import { HowWeServe } from '@/components/how-we-serve';
+import { Testimonials } from '@/components/testimonials';
+import { Team } from '@/components/team';
+import { RecentArticles } from '@/components/recent-articles';
+import { AppFooter } from '@/components/footer';
 
 export default function Home() {
   return (
@@ -58,16 +67,20 @@ export default function Home() {
           </aside>
           <main className="flex-1 py-8">
             <Hero />
+            <Services />
+            <Commitment />
+            <ComprehensiveCare />
+            <Priority />
+            <HowWeServe />
+            <Testimonials />
+            <Team />
+            <RecentArticles />
           </main>
         </div>
       </div>
       
       {/* Footer */}
-      <footer className="bg-primary text-primary-foreground mt-auto p-8">
-        <div className="container mx-auto text-center text-sm">
-            © {new Date().getFullYear()} Clínica de la Costa. Todos los derechos reservados.
-        </div>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
