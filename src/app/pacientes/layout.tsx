@@ -1,3 +1,7 @@
+
+"use client";
+
+import { usePathname } from 'next/navigation';
 import { AppFooter } from "@/components/footer";
 import { Header } from "@/components/header";
 import { PacientesSidebar } from "@/components/pacientes/sidebar";
@@ -8,6 +12,13 @@ export default function PacientesLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
+  // No aplicar este layout a la página de solicitar cita
+  if (pathname === '/pacientes/solicitar-cita') {
+    return <>{children}</>;
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
