@@ -103,7 +103,7 @@ export const servicesData = [
         title: "Atención Inmediata",
         slug: "atencion-inmediata",
         subservices: [
-            { name: "Atención Del Parto", url: "/servicios/atencion-inmediata#atencion-parto" },
+            { name: "Atención Del Parto", url: "/servicios/atencion-inmediata/atencion-parto" },
             { name: "Urgencias", url: "/servicios/atencion-inmediata#urgencias" },
             { name: "Transporte Asistencial Medicalizado", url: "/servicios/atencion-inmediata#transporte-asistencial" },
             { name: "Atención Prehospitalaria", url: "/servicios/atencion-inmediata#atencion-prehospitalaria" }
@@ -114,7 +114,7 @@ export const servicesData = [
         slug: "otros-programas",
         subservices: [ 
             { name: "Trasplantes", url: "/servicios/otros-programas#trasplantes" },
-            { name: "Atención de Pacientes con Dolor Torácico", url: "/servicios/otros-programas#dolor-toracico" },
+            { name: "Atención de Pacientes con Dolor Torácico", url: "/servicios/otros-programas/atencion-pacientes-con-dolor-toracico" },
             { name: "PET-CT", url: "/servicios/otros-programas#pet-ct" },
             { name: "Manejo Integral del Paciente Hematoncológico", url: "/servicios/otros-programas/manejo-paciente-hematoncologico" }
         ]
