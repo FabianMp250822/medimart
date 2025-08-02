@@ -30,6 +30,18 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  webpack: (config, { isServer }) => {
+    // Excluir módulos problemáticos del bundle del cliente
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        '@opentelemetry/exporter-jaeger': false,
+        '@genkit-ai/firebase': false,
+      };
+    }
+
+    return config;
+  },
 };
 
 export default nextConfig;
