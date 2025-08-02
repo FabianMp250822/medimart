@@ -1,24 +1,157 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Phone, Users, CheckCircle } from 'lucide-react';
 import type { Metadata } from 'next';
+import { adminDb } from '@/lib/firebase-admin';
+import { Medico } from '@/types/medico';
+import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
 export const metadata: Metadata = {
-  title: 'Cirugía Plástica Y Estética - Clínica de la Costa',
-  description: 'Información sobre el servicio de Cirugía Plástica Y Estética.',
+    title: 'Cirugía Plástica y Estética - Clínica de la Costa',
+    description: 'Innovación y excelencia en cirugía plástica. Ofrecemos procedimientos estéticos y reconstructivos con tecnología de punta y un equipo de cirujanos expertos.',
 };
 
-export default function CirugiaPlasticaYEsteticaPage() {
-  return (
-    <div className="space-y-8">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl md:text-3xl font-bold text-primary">Cirugía Plástica Y Estética</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Información detallada sobre nuestro servicio de Cirugía Plástica Y Estética estará disponible próximamente. Estamos trabajando para ofrecerle el contenido más completo.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
-  );
+async function getSpecialists(): Promise<Medico[]> {
+    try {
+        const snapshot = await adminDb.collection('medicos')
+            .where('especialidad', '==', 'Cirugía Plástica y Estética')
+            .get();
+        if (snapshot.empty) {
+            return [];
+        }
+        return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
+    } catch (error) {
+        console.error("Error fetching specialists for Cirugía Plástica y Estética: ", error);
+        return [];
+    }
+}
+
+const services = {
+    estetica: [
+        "Rinoplastia (cirugía de nariz)",
+        "Lifting facial",
+        "Abdominoplastia",
+        "Aumento, reducción o levantamiento de senos",
+        "Liposucción y contorno corporal"
+    ],
+    reconstructiva: [
+        "Reconstrucción mamaria tras mastectomía",
+        "Reparación de cicatrices complejas",
+        "Corrección de deformidades congénitas",
+        "Tratamiento reconstructivo tras traumatismos o quemaduras"
+    ],
+    complementarios: [
+        "Rejuvenecimiento facial con técnicas mínimamente invasivas",
+        "Aplicación de toxina botulínica y rellenos dérmicos"
+    ]
+};
+
+export default async function CirugiaPlasticaYEsteticaPage() {
+    const specialists = await getSpecialists();
+    
+    return (
+        <div className="space-y-12">
+            <Card className="overflow-hidden">
+                <div className="relative h-64 sm:h-80 md:h-96 w-full">
+                    <Image
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
+                        alt="Cirugía Plástica y Estética"
+                        layout="fill"
+                        objectFit="cover"
+                        className="z-0"
+                        data-ai-hint="plastic surgery"
+                        priority
+                    />
+                    <div className="absolute inset-0 bg-black/40 z-10" />
+                    <div className="relative z-20 flex flex-col items-center justify-center h-full p-4 text-white text-center">
+                        <h1 className="text-3xl md:text-5xl font-bold max-w-4xl">Cirugía Plástica y Estética</h1>
+                    </div>
+                </div>
+            </Card>
+
+            <section>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-primary">Innovación y Excelencia que Transforman Vidas</CardTitle>
+                    </CardHeader>
+                    <CardContent className="prose max-w-none text-muted-foreground">
+                        <p>
+                            En la Clínica de la Costa SAS, estamos a la vanguardia de la cirugía plástica, estética y reconstructiva, combinando la más avanzada tecnología con la habilidad y precisión de un equipo de cirujanos altamente capacitados. Nuestros especialistas son pioneros en nuevas técnicas, garantizando resultados que reflejan excelencia y profesionalismo.
+                        </p>
+                    </CardContent>
+                </Card>
+            </section>
+            
+            <section>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-primary">Servicios Destacados</CardTitle>
+                    </CardHeader>
+                    <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div>
+                            <h3 className="font-semibold text-lg text-primary mb-3">Cirugía Estética</h3>
+                            <ul className="space-y-2">
+                                {services.estetica.map((item, index) => (
+                                     <li key={index} className="flex items-start gap-3">
+                                        <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                         <div>
+                            <h3 className="font-semibold text-lg text-primary mb-3">Cirugía Reconstructiva</h3>
+                            <ul className="space-y-2">
+                                {services.reconstructiva.map((item, index) => (
+                                     <li key={index} className="flex items-start gap-3">
+                                        <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                         <div>
+                            <h3 className="font-semibold text-lg text-primary mb-3">Tratamientos Complementarios</h3>
+                            <ul className="space-y-2">
+                                {services.complementarios.map((item, index) => (
+                                    <li key={index} className="flex items-start gap-3">
+                                        <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </CardContent>
+                </Card>
+            </section>
+            
+            {specialists.length > 0 && (
+                <RelatedSpecialists
+                    specialists={specialists}
+                    specialtyName="Cirujanos Plásticos"
+                />
+            )}
+
+            <section className="text-center bg-primary/5 p-8 rounded-lg">
+                <h2 className="text-2xl font-bold text-primary">Contáctenos para Más Información</h2>
+                <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Nuestro equipo de cirugía plástica está listo para ayudarte a alcanzar tus objetivos. Contáctanos para una consulta.</p>
+                <div className="mt-6 flex justify-center gap-4">
+                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                        <Link href="/contacto">
+                            <Phone className="mr-2 h-5 w-5" />
+                            Contáctanos
+                        </Link>
+                    </Button>
+                    <Button asChild size="lg" variant="outline">
+                        <Link href="/especialistas">
+                            <Users className="mr-2 h-5 w-5" />
+                            Ver Especialistas
+                        </Link>
+                    </Button>
+                </div>
+            </section>
+        </div>
+    );
 }
