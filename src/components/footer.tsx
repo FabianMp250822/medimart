@@ -3,6 +3,7 @@ import { Logo } from './logo';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import Image from 'next/image';
 
 export function AppFooter() {
   return (
@@ -59,7 +60,16 @@ export function AppFooter() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-primary-foreground/20 text-center text-sm text-primary-foreground/60">
-          <p>© {new Date().getFullYear()} Clínica de la Costa. Todos los derechos reservados.</p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Image 
+              src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2Fsupersalud.svg?alt=media&token=a5985584-fa36-4106-a434-5aacfbeaf973"
+              alt="SuperSalud Logo"
+              width={150}
+              height={40}
+              className="h-10 w-auto"
+            />
+            <p>© {new Date().getFullYear()} Clínica de la Costa. Diseño y Desarrollo: Fabian Muñoz Puello & Leidy Vega Anaya para tecnosalud internacional . Todos los derechos reservados.</p>
+          </div>
         </div>
       </div>
     </footer>
