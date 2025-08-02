@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
 import { adminDb } from '@/lib/firebase-admin';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const metadata: Metadata = {
     title: 'Medicina Nuclear - Clínica de la Costa',
@@ -32,7 +32,7 @@ async function getSpecialists(): Promise<Medico[]> {
 const diagnosticServices = [
     {
         category: "Cardiología Nuclear",
-        icon: <Heart className="h-5 w-5 text-accent" />,
+        icon: <Heart className="h-5 w-5" />,
         studies: [
             { name: "Perfusión Miocárdica (SPECT)", indications: "Diagnóstico de enfermedad arterial coronaria, evaluación de viabilidad miocárdica." },
             { name: "Ventriculografía Isotópica (MUGA)", indications: "Evaluación de función ventricular, seguimiento de cardiotoxicidad." }
@@ -40,7 +40,7 @@ const diagnosticServices = [
     },
     {
         category: "Endocrinología Nuclear",
-        icon: <Dna className="h-5 w-5 text-accent" />,
+        icon: <Dna className="h-5 w-5" />,
         studies: [
             { name: "Gammagrafía de Tiroides", indications: "Evaluación de nódulos tiroideos, hipertiroidismo, cáncer de tiroides." },
             { name: "Captación de Yodo Radiactivo (RAIU)", indications: "Diagnóstico diferencial de hipertiroidismo." },
@@ -49,7 +49,7 @@ const diagnosticServices = [
     },
     {
         category: "Sistema Óseo",
-        icon: <Bone className="h-5 w-5 text-accent" />,
+        icon: <Bone className="h-5 w-5" />,
         studies: [
             { name: "Gammagrafía Ósea", indications: "Detección de metástasis óseas, infecciones, fracturas." },
             { name: "Gammagrafía Ósea Trifásica", indications: "Osteomielitis, síndrome de dolor regional complejo." }
@@ -57,7 +57,7 @@ const diagnosticServices = [
     },
     {
         category: "Sistema Genitourinario",
-        icon: <Syringe className="h-5 w-5 text-accent" />,
+        icon: <Syringe className="h-5 w-5" />,
         studies: [
             { name: "Renograma Diurético", indications: "Evaluación de obstrucción urinaria, función renal diferencial." },
             { name: "Gammagrafía Renal Estática (DMSA)", indications: "Evaluación de cicatrices renales, función renal diferencial." },
@@ -66,7 +66,7 @@ const diagnosticServices = [
     },
      {
         category: "Neurología y Oncología",
-        icon: <BrainCircuit className="h-5 w-5 text-accent" />,
+        icon: <BrainCircuit className="h-5 w-5" />,
         studies: [
             { name: "SPECT Cerebral de Perfusión", indications: "Demencia, epilepsia, accidente cerebrovascular." },
             { name: "Gammagrafía con Octreótido (SomatoScan)", indications: "Detección de tumores neuroendocrinos." },
@@ -75,7 +75,7 @@ const diagnosticServices = [
     },
      {
         category: "Otros Sistemas",
-        icon: <Stethoscope className="h-5 w-5 text-accent" />,
+        icon: <Stethoscope className="h-5 w-5" />,
         studies: [
             { name: "Gammagrafía Pulmonar de Ventilación/Perfusión (V/Q)", indications: "Diagnóstico de tromboembolismo pulmonar." },
             { name: "Gammagrafía de Vaciamiento Gástrico", indications: "Evaluación de gastroparesia, trastornos de motilidad." },
@@ -140,28 +140,32 @@ export default async function MedicinaNuclearPage() {
                         <CardDescription>Utilizamos radiofármacos para obtener imágenes funcionales del cuerpo y detectar enfermedades en sus etapas iniciales.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                         <Accordion type="single" collapsible className="w-full">
-                            {diagnosticServices.map((service, index) => (
-                                <AccordionItem value={`item-${index}`} key={service.category}>
-                                    <AccordionTrigger className="font-semibold hover:no-underline text-lg">
-                                        <div className="flex items-center gap-3">
-                                            {service.icon}
-                                            <span>{service.category}</span>
-                                        </div>
-                                    </AccordionTrigger>
-                                    <AccordionContent className="pl-11 text-muted-foreground">
-                                        <ul className="space-y-3">
-                                            {service.studies.map(study => (
-                                                <li key={study.name}>
-                                                    <p className="font-semibold text-foreground">{study.name}</p>
-                                                    <p className="text-sm">{study.indications}</p>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </AccordionContent>
-                                </AccordionItem>
+                         <Tabs defaultValue={diagnosticServices[0].category} className="w-full">
+                            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 h-auto">
+                                {diagnosticServices.map((service) => (
+                                <TabsTrigger key={service.category} value={service.category} className="flex flex-col sm:flex-row gap-2 items-center justify-center py-2">
+                                    {service.icon}
+                                    <span className="text-xs sm:text-sm">{service.category}</span>
+                                </TabsTrigger>
+                                ))}
+                            </TabsList>
+                            {diagnosticServices.map((service) => (
+                                <TabsContent key={service.category} value={service.category} className="mt-6">
+                                    <Card>
+                                        <CardContent className="p-6">
+                                            <ul className="space-y-4">
+                                                {service.studies.map(study => (
+                                                    <li key={study.name} className="pb-4 border-b last:border-b-0 last:pb-0">
+                                                        <p className="font-semibold text-primary">{study.name}</p>
+                                                        <p className="text-sm text-muted-foreground mt-1">{study.indications}</p>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </CardContent>
+                                    </Card>
+                                </TabsContent>
                             ))}
-                        </Accordion>
+                        </Tabs>
                     </CardContent>
                 </Card>
             </section>
