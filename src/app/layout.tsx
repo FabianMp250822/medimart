@@ -2,6 +2,8 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ChatWidget } from '@/components/chat/chat-widget';
+import { Open_Sans } from 'next/font/google';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Clinica de la Costa',
@@ -12,6 +14,12 @@ export const metadata: Metadata = {
   },
 };
 
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-open-sans',
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,11 +28,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="font-body antialiased">
+      <body className={cn(openSans.variable, 'font-body antialiased')}>
         {children}
         <Toaster />
         <ChatWidget />

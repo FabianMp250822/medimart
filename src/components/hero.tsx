@@ -45,7 +45,7 @@ export function Hero() {
                         En la Clínica de la Costa Barranquilla, sabemos que en los momentos más importantes de tu salud, necesitas un equipo que te acompañe con calidez y humanidad. Nuestro compromiso es brindarte atención personalizada, asegurando que te sientas en un entorno seguro y de confianza en cada paso de tu recuperación
                     </p>
                     <Button asChild size="lg" className="mt-8 bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-8 py-6 text-lg">
-                        <Link href="#">Agenda tu cita</Link>
+                        <Link href="/pacientes/solicitar-cita">Agenda tu cita</Link>
                     </Button>
                 </div>
                 {/* Image Column */}

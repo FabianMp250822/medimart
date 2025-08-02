@@ -20,7 +20,15 @@ export function Team({ teamMembers }: TeamProps) {
             <Card key={member.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
               <Link href={`/especialistas/${member.id}`} className="block">
                 <div className="relative h-64 bg-gray-200">
-                    <Image src={member.profileImage || "https://placehold.co/300x400.png"} alt={member.nombreCompleto} layout="fill" objectFit="cover" objectPosition="top" data-ai-hint="doctor portrait" />
+                    <Image 
+                      src={member.profileImage || "https://placehold.co/300x400.png"} 
+                      alt={member.nombreCompleto} 
+                      layout="fill" 
+                      objectFit="cover" 
+                      objectPosition="top" 
+                      data-ai-hint="doctor portrait"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    />
                 </div>
               </Link>
               <CardContent className="p-6">

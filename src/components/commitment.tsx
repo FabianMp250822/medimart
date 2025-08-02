@@ -35,6 +35,7 @@ export function Commitment() {
                     objectFit="cover"
                     data-ai-hint="clinic exterior"
                     className="z-10"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                 />
             </div>
             

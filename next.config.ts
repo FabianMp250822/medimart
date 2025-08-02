@@ -42,6 +42,7 @@ const nextConfig: NextConfig = {
 
     return config;
   },
+  transpilePackages: [],
 };
 
 export default nextConfig;
