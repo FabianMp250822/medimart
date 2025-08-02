@@ -45,9 +45,9 @@ export const servicesData = [
         subservices: [
             { name: "Cardiología Pediátrica", url: "/servicios/consulta-externa/cardiologia-pediatrica" },
             { name: "Cardiología", url: "/servicios/consulta-externa#cardiologia" },
-            { name: "Gastroenterología", url: "/servicios/consulta-externa#gastroenterologia" },
+            { name: "Gastroenterología", url: "/servicios/consulta-externa/gastroenterologia" },
             { name: "Infectología", url: "/servicios/consulta-externa#infectologia" },
-            { name: "Inmunología", url: "/servicios/consulta-externa#inmunologia" },
+            { name: "Inmunología", url: "/servicios/consulta-externa/inmunologia" },
             { name: "Medicina Familiar", url: "/servicios/consulta-externa#medicina-familiar" },
             { name: "Medicina Física Y Rehabilitación", url: "/servicios/consulta-externa#medicina-fisica-rehabilitacion" },
             { name: "Medicina General", url: "/servicios/consulta-externa#medicina-general" },
