@@ -81,6 +81,17 @@ export default async function OrtopediaPediatricaPage() {
                 </Card>
             </section>
             
+            <div className="relative h-96 w-full rounded-lg overflow-hidden">
+                <Image
+                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-18%20at%202.35.13%20PM.jpeg?alt=media&token=6aae6289-d76f-4b36-b1be-59ad722a2551"
+                    alt="Atención Hospitalaria Pediátrica"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg"
+                    data-ai-hint="pediatric hospital care"
+                />
+            </div>
+
             <div className="grid md:grid-cols-2 gap-8 items-start">
                 <Card>
                     <CardHeader>
