@@ -1,3 +1,4 @@
+
 "use client"
 import { Phone, MapPin, Menu, Clock, MessageSquare } from 'lucide-react';
 import { Logo } from '@/components/logo';
@@ -7,6 +8,8 @@ import { HeaderNav } from '@/components/header-nav';
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 import Link from 'next/link';
@@ -65,6 +68,9 @@ export function Header() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left">
+                  <SheetHeader>
+                    <SheetTitle className="sr-only">Menú Principal</SheetTitle>
+                  </SheetHeader>
                   <div className="p-6">
                     <Link href="/" aria-label="Volver al inicio">
                       <Logo />
