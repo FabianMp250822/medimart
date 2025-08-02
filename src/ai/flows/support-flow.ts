@@ -63,6 +63,6 @@ export const supportFlow = ai.defineFlow(
       prompt: systemPrompt,
       history,
     });
-    return output!;
+    return output || "Lo siento, no pude generar una respuesta en este momento. Por favor, intenta de nuevo.";
   }
 );
