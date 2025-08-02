@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, Users } from 'lucide-react';
+import { Phone, Users, CheckCircle, BrainCircuit } from 'lucide-react';
 import type { Metadata } from 'next';
 import { adminDb } from '@/lib/firebase-admin';
 import { Medico } from '@/types/medico';
@@ -10,7 +10,7 @@ import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
 export const metadata: Metadata = {
     title: 'Neurocirugía - Clínica de la Costa',
-    description: 'Servicios avanzados de neurocirugía para el tratamiento de condiciones del cerebro, columna vertebral y sistema nervioso. Contenido detallado próximamente.',
+    description: 'Servicios avanzados de neurocirugía para el tratamiento de condiciones del cerebro, columna vertebral y sistema nervioso, con un enfoque multidisciplinario y tecnología de punta.',
 };
 
 async function getSpecialists(): Promise<Medico[]> {
@@ -28,15 +28,41 @@ async function getSpecialists(): Promise<Medico[]> {
     }
 }
 
+const services = [
+    {
+        title: "Manejo de emergencias neuroquirúrgicas",
+        items: ["Atención permanente para accidentes cerebrovasculares (ACV) y otros eventos críticos."]
+    },
+    {
+        title: "Cirugía de columna",
+        items: ["Procedimientos convencionales, de alta complejidad y mínimamente invasivos."]
+    },
+    {
+        title: "Cirugía funcional",
+        items: ["Tratamiento para Parkinson, espasticidad y dolor crónico."]
+    },
+    {
+        title: "Manejo de defectos congénitos",
+        items: ["Atención especializada para malformaciones del sistema nervioso central."]
+    }
+];
+
+const multidisciplinarySupport = [
+    "Neuroradiología diagnóstica e intervencionista.",
+    "Cuidados intensivos neurológicos.",
+    "Neuro-oncología y neuro-anestesia.",
+    "Neuropsicología y neurología clínica."
+];
+
 export default async function NeurocirugiaPage() {
     const specialists = await getSpecialists();
-
+    
     return (
         <div className="space-y-12">
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM(1).jpeg?alt=media&token=a0535648-1f07-4a43-87c1-8901f530dd94"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-18%20at%202.35.13%20PM.jpeg?alt=media&token=6aae6289-d76f-4b36-b1be-59ad722a2551"
                         alt="Neurocirugía"
                         layout="fill"
                         objectFit="cover"
@@ -54,16 +80,70 @@ export default async function NeurocirugiaPage() {
             <section>
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-2xl text-primary">Atención Especializada para el Sistema Nervioso</CardTitle>
+                        <CardTitle className="text-2xl text-primary">Innovación y Excelencia en el Cuidado del Sistema Nervioso</CardTitle>
                     </CardHeader>
                     <CardContent className="prose max-w-none text-muted-foreground">
                         <p>
-                            Información detallada sobre nuestro servicio de Neurocirugía estará disponible próximamente. Estamos trabajando para ofrecerle el contenido más completo sobre nuestros tratamientos para condiciones del cerebro, la columna vertebral y el sistema nervioso periférico.
+                            En la Clínica de la Costa SAS, ofrecemos un servicio de neurocirugía de vanguardia, diseñado para atender tanto procedimientos diagnósticos como terapéuticos relacionados con el cerebro y el sistema nervioso central. Contamos con un equipo médico altamente especializado y tecnología de última generación, lo que nos permite brindar una atención oportuna, segura y eficaz en cada caso.
                         </p>
                     </CardContent>
                 </Card>
             </section>
-
+            
+            <section>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-primary">Servicios que Ofrecemos</CardTitle>
+                    </CardHeader>
+                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {services.map((service) => (
+                            <div key={service.title} className="p-4 rounded-lg bg-primary/5">
+                                <h3 className="font-semibold text-lg text-primary mb-2">{service.title}</h3>
+                                <ul className="space-y-2 list-disc list-inside text-muted-foreground text-sm">
+                                    {service.items.map((item, index) => <li key={index}>{item}</li>)}
+                                </ul>
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
+            </section>
+            
+            <div className="grid md:grid-cols-2 gap-8 items-start">
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-primary flex items-center gap-3"><BrainCircuit /> Enfoque Multidisciplinario</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground mb-4">
+                           El éxito de nuestro servicio se basa en la colaboración con otras especialidades, garantizando un tratamiento integral.
+                        </p>
+                        <ul className="space-y-3">
+                            {multidisciplinarySupport.map((item, index) => (
+                                <li key={index} className="flex items-start gap-3">
+                                    <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                                    <span>{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-primary">Tecnología de Última Generación</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground mb-4">
+                            Utilizamos técnicas avanzadas para mejorar los resultados y la seguridad del paciente:
+                        </p>
+                         <ul className="space-y-3">
+                            <li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-accent mt-1" /><span>Cirugías mínimamente invasivas para una recuperación más rápida.</span></li>
+                            <li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-accent mt-1" /><span>Radiocirugía de alta precisión para tumores y lesiones.</span></li>
+                            <li className="flex items-start gap-3"><CheckCircle className="h-5 w-5 text-accent mt-1" /><span>Neurointervencionismo para condiciones vasculares.</span></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+            </div>
+            
             {specialists.length > 0 && (
                 <RelatedSpecialists
                     specialists={specialists}
@@ -73,7 +153,7 @@ export default async function NeurocirugiaPage() {
 
             <section className="text-center bg-primary/5 p-8 rounded-lg">
                 <h2 className="text-2xl font-bold text-primary">Contáctenos para Más Información</h2>
-                <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Si desea saber más sobre nuestros servicios de neurocirugía, no dude in contactarnos.</p>
+                <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Nuestro equipo de neurocirugía está preparado para atenderte. Contáctanos para más detalles sobre nuestros procedimientos.</p>
                 <div className="mt-6 flex justify-center gap-4">
                     <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
                         <Link href="/contacto">
