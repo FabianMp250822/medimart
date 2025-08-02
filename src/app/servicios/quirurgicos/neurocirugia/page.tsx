@@ -89,6 +89,17 @@ export default async function NeurocirugiaPage() {
                     </CardContent>
                 </Card>
             </section>
+
+             <div className="relative h-96 w-full rounded-lg overflow-hidden">
+                <Image
+                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2FDSC01594.JPG?alt=media&token=d932da45-0f06-4b19-85dc-58b718ff3a30"
+                    alt="Atención Hospitalaria Neurocirugía"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg"
+                    data-ai-hint="neurosurgery hospital care"
+                />
+            </div>
             
             <section>
                 <Card>

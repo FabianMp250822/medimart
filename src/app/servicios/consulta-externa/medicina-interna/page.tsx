@@ -87,6 +87,17 @@ export default async function MedicinaInternaPage() {
                 </Card>
             </section>
             
+            <div className="relative h-96 w-full rounded-lg overflow-hidden">
+                 <Image
+                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Ftratamiento-medicina-interna.jpg?alt=media"
+                    alt="Consulta de Medicina Interna"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg"
+                    data-ai-hint="doctor patient consultation"
+                />
+            </div>
+
             <div className="grid md:grid-cols-2 gap-8 items-start">
                  <Card>
                     <CardHeader>

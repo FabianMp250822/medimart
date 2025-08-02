@@ -58,14 +58,6 @@ const specializedServices = [
     }
 ];
 
-const programBenefits = [
-    "Descubrir riesgos de salud de forma temprana.",
-    "Reducir factores de riesgo mediante educación y cambios en el estilo de vida.",
-    "Atención oportuna frente a síntomas cardíacos.",
-    "Adopción de hábitos saludables con apoyo especializado."
-];
-
-
 export default async function CardiologiaPage() {
     const specialists = await getSpecialists();
     

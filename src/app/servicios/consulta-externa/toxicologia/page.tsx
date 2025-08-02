@@ -52,7 +52,7 @@ export default async function ToxicologiaPage() {
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Ftoxicologia.jpg?alt=media&token=12345678-abcd-efgh-ijkl-mnopqrstuvwxyz"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Ftoxicologia.jpg?alt=media"
                         alt="Servicios de Toxicología"
                         layout="fill"
                         objectFit="cover"
@@ -80,6 +80,17 @@ export default async function ToxicologiaPage() {
                 </Card>
             </section>
             
+            <div className="relative h-96 w-full rounded-lg overflow-hidden">
+                 <Image
+                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Ftratamiento-toxicologia.jpg?alt=media"
+                    alt="Tratamiento de Toxicología"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg"
+                    data-ai-hint="toxicology treatment"
+                />
+            </div>
+
             <div className="grid md:grid-cols-2 gap-8 items-start">
                  <Card>
                     <CardHeader>
