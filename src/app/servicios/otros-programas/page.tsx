@@ -25,7 +25,9 @@ export default function ServiceCategoryPage() {
             {category.subservices.map((service) => (
               <li key={service.name} className="flex items-start gap-3">
                 <List className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                <span className="text-muted-foreground">{service.name}</span>
+                 <Link href={service.url} className="text-muted-foreground hover:text-accent hover:underline transition-colors">
+                  {service.name}
+                </Link>
               </li>
             ))}
           </ul>
