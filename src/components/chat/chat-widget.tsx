@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -7,13 +8,10 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageSquare, Send, X, Bot, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { supportFlow } from "@/ai/flows/support-flow";
+import { supportFlow, type SupportInput } from "@/ai/flows/support-flow";
 import ReactMarkdown from "react-markdown";
 
-interface Message {
-    role: 'user' | 'model';
-    content: { text: string }[];
-}
+type Message = SupportInput['history'][number];
 
 export function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false);
