@@ -64,7 +64,7 @@ export const supportFlow = ai.defineFlow(
   async ({history}) => {
     const {output} = await ai.generate({
       model: 'googleai/gemini-2.0-flash',
-      prompt: prompt.prompt,
+      prompt: { text: prompt.prompt },
       history,
     });
     return output!;
