@@ -64,7 +64,7 @@ export const servicesData = [
             { name: "Periodoncia", url: "/servicios/consulta-externa/periodoncia" },
             { name: "Psiquiatría", url: "/servicios/consulta-externa/psiquiatria" },
             { name: "Rehabilitación Oral", url: "/servicios/consulta-externa/rehabilitacion-oral" },
-            { name: "Reumatología", url: "/servicios/consulta-externa#reumatologia" },
+            { name: "Reumatología", url: "/servicios/consulta-externa/reumatologia" },
             { name: "Toxicología", url: "/servicios/consulta-externa/toxicologia" },
             { name: "Urología", url: "/servicios/consulta-externa/urologia" },
             { name: "Medicina Nuclear", url: "/servicios/consulta-externa/medicina-nuclear" },
