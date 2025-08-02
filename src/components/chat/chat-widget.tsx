@@ -118,7 +118,7 @@ export function ChatWidget() {
                                 autoComplete="off"
                             />
                             <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
-                                <Send className="h-4 w-4" />
+                                {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                             </Button>
                         </form>
                     </CardFooter>

@@ -61,10 +61,8 @@ export const supportFlow = ai.defineFlow(
     inputSchema: SupportInputSchema,
     outputSchema: SupportOutputSchema,
   },
-  async (input) => {
-    const {output} = await prompt(input, {
-        history: input.history
-    });
+  async ({history}) => {
+    const {output} = await prompt({history}, {history});
     return output!;
   }
 );
