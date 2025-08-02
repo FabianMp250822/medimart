@@ -22,7 +22,7 @@ export default function ServiciosPage() {
               {category.subservices.map((service) => (
                 <li key={service.name} className="flex items-start gap-3">
                     <List className="h-5 w-5 mt-1 text-accent flex-shrink-0" />
-                    <Link href={`/servicios/${category.slug}`} className="text-muted-foreground hover:text-accent hover:underline">
+                    <Link href={service.url} className="text-muted-foreground hover:text-accent hover:underline">
                         {service.name}
                     </Link>
                 </li>
