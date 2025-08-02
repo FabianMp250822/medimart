@@ -3,7 +3,7 @@ export const servicesData = [
         title: "Internación",
         slug: "internacion",
         subservices: [
-            { name: "Cuidado Intensivo", url: "/servicios/internacion#cuidado-intensivo" },
+            { name: "Cuidado Intensivo", url: "/servicios/internacion/cuidado-intensivo" },
             { name: "Cuidado Crítico", url: "/servicios/internacion#cuidado-critico" },
             { name: "Hospitalización", url: "/servicios/internacion#hospitalizacion" },
             { name: "Atención Integral y Especializada para Pacientes con VIH/SIDA", url: "/servicios/internacion#atencion-vih" },
