@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   title: 'Clinica de la Costa',
   description: 'Clinica de la Costa',
   icons: {
-    icon: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Flogo%20(1).png?alt=media&token=961c0f8e-b866-47fd-b4a1-d942f2011f82',
-    apple: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Flogo%20(1).png?alt=media&token=961c0f8e-b866-47fd-b4a1-d942f2011f82',
+    icon: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2FChatGPT%20Image%2031%20jul%202025%2C%2023_17_13.png?alt=media&token=67a7820a-9219-41ef-8d56-0d50ee82bb1c',
+    apple: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2FChatGPT%20Image%2031%20jul%202025%2C%2023_17_13.png?alt=media&token=67a7820a-9219-41ef-8d56-0d50ee82bb1c',
   },
 };
 
