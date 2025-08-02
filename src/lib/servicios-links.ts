@@ -70,7 +70,7 @@ export const servicesData = [
             { name: "Medicina Nuclear", url: "/servicios/consulta-externa#medicina-nuclear" },
             { name: "Nefrología Pediátrica", url: "/servicios/consulta-externa#nefrologia-pediatrica" },
             { name: "Neonatología", url: "/servicios/consulta-externa#neonatologia" },
-            { name: "Neumología Pediátrica", url: "/servicios/consulta-externa#neumologia-pediatrica" },
+            { name: "Neumología Pediátrica", url: "/servicios/consulta-externa/neumologia-pediatrica" },
             { name: "Neuropediatría", url: "/servicios/consulta-externa#neuropediatria" },
             { name: "Urología Oncológica", url: "/servicios/consulta-externa#urologia-oncologica" },
             { name: "Hematología Oncológica", url: "/servicios/consulta-externa#hematologia-oncologica" },
@@ -116,7 +116,7 @@ export const servicesData = [
             { name: "Trasplantes", url: "/servicios/otros-programas#trasplantes" },
             { name: "Atención de Pacientes con Dolor Torácico", url: "/servicios/otros-programas#dolor-toracico" },
             { name: "PET-CT", url: "/servicios/otros-programas#pet-ct" },
-            { name: "Manejo Integral del Paciente Hematoncológico", url: "/servicios/otros-programas#manejo-paciente-hematoncologico" }
+            { name: "Manejo Integral del Paciente Hematoncológico", url: "/servicios/otros-programas/manejo-paciente-hematoncologico" }
         ]
     }
 ];
