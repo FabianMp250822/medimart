@@ -62,7 +62,11 @@ export const supportFlow = ai.defineFlow(
     outputSchema: SupportOutputSchema,
   },
   async ({history}) => {
-    const {output} = await prompt({history}, {history});
+    const {output} = await ai.generate({
+      model: 'googleai/gemini-2.0-flash',
+      prompt: prompt.prompt,
+      history,
+    });
     return output!;
   }
 );
