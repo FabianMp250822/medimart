@@ -58,11 +58,13 @@ export const supportFlow = ai.defineFlow(
     outputSchema: SupportOutputSchema,
   },
   async ({history}) => {
-    const {output} = await ai.generate({
+    const {text} = await ai.generate({
       model: 'googleai/gemini-2.0-flash',
-      prompt: systemPrompt,
-      history,
+      prompt: {
+        text: systemPrompt,
+        history: history,
+      },
     });
-    return output || "Lo siento, no pude generar una respuesta en este momento. Por favor, intenta de nuevo.";
+    return text || "Lo siento, no pude generar una respuesta en este momento. Por favor, intenta de nuevo.";
   }
 );
