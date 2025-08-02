@@ -35,11 +35,7 @@ const CLINIC_INFO = `
 - **Valores:** Compromiso con la calidad, atención humanizada, seguridad del paciente e innovación.
 `;
 
-const prompt = ai.definePrompt({
-  name: 'supportPrompt',
-  input: {schema: SupportInputSchema},
-  output: {format: 'text'},
-  prompt: `Eres un asistente virtual de soporte para la "Clínica de la Costa". Tu nombre es CostaBot. Eres amable, servicial y profesional.
+const systemPrompt = `Eres un asistente virtual de soporte para la "Clínica de la Costa". Tu nombre es CostaBot. Eres amable, servicial y profesional.
 
   Tu objetivo es responder las preguntas de los usuarios de manera concisa y clara, utilizando ÚNICAMENTE la siguiente información sobre la clínica. No inventes información que no esté aquí.
 
@@ -52,8 +48,8 @@ const prompt = ai.definePrompt({
   3.  **Guía a los Usuarios:** Si te preguntan cómo pedir una cita, explícales que deben ir a la sección "Solicitar Cita" del menú de Pacientes y registrarse.
   4.  **Mantén tu Personalidad:** Siempre sé amable y profesional. Empieza la primera conversación presentándote.
 
-  A continuación se muestra el historial de conversación. Responde a la última pregunta del usuario.`,
-});
+  A continuación se muestra el historial de conversación. Responde a la última pregunta del usuario.`;
+
 
 export const supportFlow = ai.defineFlow(
   {
@@ -64,7 +60,7 @@ export const supportFlow = ai.defineFlow(
   async ({history}) => {
     const {output} = await ai.generate({
       model: 'googleai/gemini-2.0-flash',
-      prompt: { text: prompt.prompt },
+      prompt: systemPrompt,
       history,
     });
     return output!;
