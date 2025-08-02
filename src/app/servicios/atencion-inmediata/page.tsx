@@ -21,6 +21,9 @@ export default function ServiceCategoryPage() {
           <CardTitle className="text-2xl md:text-3xl font-bold text-primary">{category.title}</CardTitle>
         </CardHeader>
         <CardContent>
+          <p className="text-muted-foreground mb-6">
+            Nuestros servicios de atención inmediata están disponibles para responder a emergencias y situaciones que requieren una acción rápida. Nuestro equipo está preparado para actuar con celeridad y eficacia, garantizando el mejor cuidado en momentos críticos.
+          </p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
             {category.subservices.map((service) => (
               <li key={service.name} className="flex items-start gap-3">

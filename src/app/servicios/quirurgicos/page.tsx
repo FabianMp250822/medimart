@@ -21,6 +21,9 @@ export default function ServiceCategoryPage() {
           <CardTitle className="text-2xl md:text-3xl font-bold text-primary">{category.title}</CardTitle>
         </CardHeader>
         <CardContent>
+          <p className="text-muted-foreground mb-6">
+            Ofrecemos una amplia gama de procedimientos quirúrgicos realizados por especialistas altamente calificados y con tecnología de vanguardia. Nuestro enfoque está en la seguridad del paciente, la precisión en cada intervención y una recuperación óptima.
+          </p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
             {category.subservices.map((service) => (
               <li key={service.name} className="flex items-start gap-3">

@@ -21,6 +21,9 @@ export default function ServiceCategoryPage() {
           <CardTitle className="text-2xl md:text-3xl font-bold text-primary">{category.title}</CardTitle>
         </CardHeader>
         <CardContent>
+          <p className="text-muted-foreground mb-6">
+            Contamos con servicios de apoyo diagnóstico y terapéutico equipados con tecnología avanzada para ofrecer resultados precisos y confiables. Estas herramientas son fundamentales para un diagnóstico certero y un plan de tratamiento efectivo.
+          </p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
             {category.subservices.map((service) => (
               <li key={service.name} className="flex items-start gap-3">
