@@ -2,7 +2,7 @@
 /**
  * @fileOverview A support chatbot flow for Clínica de la Costa.
  *
- * - supportFlow - A function that handles the chatbot conversation.
+ * - askSupport - A function that handles the chatbot conversation.
  * - SupportInput - The input type for the supportFlow function.
  * - SupportOutput - The return type for the supportFlow function.
  */
@@ -50,8 +50,7 @@ const systemPrompt = `Eres un asistente virtual de soporte para la "Clínica de 
 
   A continuación se muestra el historial de conversación. Responde a la última pregunta del usuario.`;
 
-
-export const supportFlow = ai.defineFlow(
+const supportFlow = ai.defineFlow(
   {
     name: 'supportFlow',
     inputSchema: SupportInputSchema,
@@ -68,3 +67,7 @@ export const supportFlow = ai.defineFlow(
     return text || "Lo siento, no pude generar una respuesta en este momento. Por favor, intenta de nuevo.";
   }
 );
+
+export async function askSupport(input: SupportInput): Promise<SupportOutput> {
+  return supportFlow(input);
+}

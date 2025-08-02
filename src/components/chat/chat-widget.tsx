@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageSquare, Send, X, Bot, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { supportFlow, type SupportInput } from "@/ai/flows/support-flow";
+import { askSupport, type SupportInput } from "@/ai/flows/support-flow";
 import ReactMarkdown from "react-markdown";
 
 type Message = SupportInput['history'][number];
@@ -24,13 +24,13 @@ export function ChatWidget() {
         if (isOpen && messages.length === 0) {
             setIsLoading(true);
             // Start the conversation with a greeting from the model
-            supportFlow({ history: [] }).then((response) => {
+            askSupport({ history: [] }).then((response) => {
                 setMessages([{ role: 'model', content: [{ text: response }] }]);
             }).finally(() => {
                 setIsLoading(false);
             });
         }
-    }, [isOpen]);
+    }, [isOpen, messages.length]);
 
      useEffect(() => {
         if (scrollAreaRef.current) {
@@ -52,7 +52,7 @@ export function ChatWidget() {
         setIsLoading(true);
 
         try {
-            const response = await supportFlow({ history: newMessages });
+            const response = await askSupport({ history: newMessages });
             setMessages(prev => [...prev, { role: 'model', content: [{ text: response }] }]);
         } catch (error) {
             console.error("Error calling support flow:", error);
