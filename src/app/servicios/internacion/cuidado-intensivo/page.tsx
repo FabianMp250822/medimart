@@ -4,11 +4,30 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users } from 'lucide-react';
 import type { Metadata } from 'next';
+import { adminDb } from '@/lib/firebase-admin';
+import { Medico } from '@/types/medico';
+import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
 export const metadata: Metadata = {
     title: 'Unidades de Cuidado Intensivo - Clínica de la Costa',
     description: 'Conozca nuestras Unidades de Cuidado Intensivo (UCI) especializadas para adultos, pediátricas y neonatales. Atención crítica con tecnología de punta y un equipo humano comprometido.',
 };
+
+async function getSpecialists(): Promise<Medico[]> {
+    try {
+        const snapshot = await adminDb.collection('medicos')
+            .where('especialidad', '==', 'Medicina Crítica y Cuidado Intensivo')
+            .get();
+        if (snapshot.empty) {
+            return [];
+        }
+        return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
+    } catch (error) {
+        console.error("Error fetching specialists for Cuidado Intensivo: ", error);
+        return [];
+    }
+}
+
 
 const cuidados = [
     {
@@ -42,7 +61,9 @@ const unidadesSoporte = [
     { title: "Unidad Coronaria", description: "Enfocada en el manejo integral de pacientes con enfermedades coronarias." },
 ];
 
-export default function CuidadoIntensivoPage() {
+export default async function CuidadoIntensivoPage() {
+    const specialists = await getSpecialists();
+    
     return (
         <div className="space-y-12">
             <Card className="overflow-hidden">
@@ -143,6 +164,13 @@ export default function CuidadoIntensivoPage() {
                     </CardContent>
                 </Card>
             </div>
+            
+            {specialists.length > 0 && (
+                <RelatedSpecialists
+                    specialists={specialists}
+                    specialtyName="Intensivistas"
+                />
+            )}
 
             <section className="text-center bg-primary/5 p-8 rounded-lg">
                 <h2 className="text-2xl font-bold text-primary">¿Necesitas Más Información?</h2>
