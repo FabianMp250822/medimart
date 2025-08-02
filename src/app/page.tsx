@@ -13,6 +13,12 @@ import { adminDb } from '@/lib/firebase-admin';
 import type { Blog } from '@/types/blog';
 import type { Medico } from '@/types/medico';
 import type { Testimonial } from '@/types/testimonial';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Clínica de la Costa - Cuidado Integral y Especializado en Barranquilla',
+  description: 'Líderes en atención médica en la Región Caribe. Ofrecemos servicios de urgencias 24/7, hospitalización, cirugía avanzada y un completo equipo de especialistas para cuidar de tu salud.',
+};
 
 async function getRecentArticles(): Promise<Blog[]> {
   try {

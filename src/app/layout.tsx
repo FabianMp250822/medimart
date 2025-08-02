@@ -5,10 +5,10 @@ import { ChatWidget } from '@/components/chat/chat-widget';
 
 export const metadata: Metadata = {
   title: 'Clinica de la Costa',
-  description: 'Clinica de la Costa',
+  description: 'Atención médica integral y especializada en Barranquilla. Ofrecemos una amplia gama de servicios para cuidar de tu salud y la de tu familia.',
   icons: {
-    icon: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2FChatGPT%20Image%2031%20jul%202025%2C%2023_17_13.png?alt=media&token=67a7820a-9219-41ef-8d56-0d50ee82bb1c',
-    apple: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2FChatGPT%20Image%2031%20jul%202025%2C%2023_17_13.png?alt=media&token=67a7820a-9219-41ef-8d56-0d50ee82bb1c',
+    icon: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2Ficon_a9af70b932635aeb4c6e23665eb4b91a.ico?alt=media&token=17d9f772-cc73-4a5f-9576-7baf085f95fc',
+    apple: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2Ficon_a9af70b932635aeb4c6e23665eb4b91a.ico?alt=media&token=17d9f772-cc73-4a5f-9576-7baf085f95fc',
   },
 };
 
