@@ -68,14 +68,14 @@ export const servicesData = [
             { name: "Toxicología", url: "/servicios/consulta-externa/toxicologia" },
             { name: "Urología", url: "/servicios/consulta-externa#urologia" },
             { name: "Medicina Nuclear", url: "/servicios/consulta-externa/medicina-nuclear" },
-            { name: "Nefrología Pediátrica", url: "/servicios/consulta-externa#nefrologia-pediatrica" },
+            { name: "Nefrología Pediátrica", url: "/servicios/consulta-externa/nefrologia-pediatrica" },
             { name: "Neonatología", url: "/servicios/consulta-externa/neonatologia" },
             { name: "Neumología Pediátrica", url: "/servicios/consulta-externa/neumologia-pediatrica" },
             { name: "Neuropediatría", url: "/servicios/consulta-externa#neuropediatria" },
             { name: "Urología Oncológica", url: "/servicios/consulta-externa#urologia-oncologica" },
             { name: "Hematología Oncológica", url: "/servicios/consulta-externa#hematologia-oncologica" },
             { name: "Radioterapia", url: "/servicios/consulta-externa#radioterapia" },
-            { name: "Ortopedia Pediátrica", url: "/servicios/consulta-externa#ortopedia-pediatrica" },
+            { name: "Ortopedia Pediátrica", url: "/servicios/consulta-externa/ortopedia-pediatrica" },
             { name: "Vacunación", url: "/servicios/consulta-externa#vacunacion" }
         ]
     },
