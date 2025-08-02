@@ -67,7 +67,7 @@ export const servicesData = [
             { name: "Reumatología", url: "/servicios/consulta-externa#reumatologia" },
             { name: "Toxicología", url: "/servicios/consulta-externa/toxicologia" },
             { name: "Urología", url: "/servicios/consulta-externa#urologia" },
-            { name: "Medicina Nuclear", url: "/servicios/consulta-externa#medicina-nuclear" },
+            { name: "Medicina Nuclear", url: "/servicios/consulta-externa/medicina-nuclear" },
             { name: "Nefrología Pediátrica", url: "/servicios/consulta-externa#nefrologia-pediatrica" },
             { name: "Neonatología", url: "/servicios/consulta-externa/neonatologia" },
             { name: "Neumología Pediátrica", url: "/servicios/consulta-externa/neumologia-pediatrica" },
@@ -95,7 +95,7 @@ export const servicesData = [
             { name: "Servicio Farmacéutico", url: "/servicios/apoyo-diagnostico#servicio-farmaceutico" },
             { name: "Quimioterapia", url: "/servicios/apoyo-diagnostico#quimioterapia" },
             { name: "Laboratorio Clínico", url: "/servicios/apoyo-diagnostico#laboratorio-clinico" },
-            { name: "Medicina Nuclear", url: "/servicios/apoyo-diagnostico#medicina-nuclear" },
+            { name: "Medicina Nuclear", url: "/servicios/consulta-externa/medicina-nuclear" },
             { name: "Fonoaudiología Y/O Terapia Del Lenguaje", url: "/servicios/apoyo-diagnostico#fonoaudiologia-terapia-lenguaje" }
         ]
     },
