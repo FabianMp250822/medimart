@@ -83,11 +83,11 @@ export const servicesData = [
         title: "Apoyo diagnóstico y complementación terapéutica",
         slug: "apoyo-diagnostico",
         subservices: [
+            { name: "Diagnóstico Vascular", url: "/servicios/apoyo-diagnostico/diagnostico-vascular" },
             { name: "Laboratorio de Patología", url: "/servicios/apoyo-diagnostico#laboratorio-patologia" },
             { name: "Gestión Pre-Transfusional", url: "/servicios/apoyo-diagnostico#gestion-pre-transfusional" },
             { name: "Imágenes Diagnósticas", url: "/servicios/apoyo-diagnostico#imagenes-diagnosticas" },
             { name: "Hemodinamia E Intervencionismo", url: "/servicios/apoyo-diagnostico#hemodinamia-intervencionismo" },
-            { name: "Diagnóstico Vascular", url: "/servicios/apoyo-diagnostico#diagnostico-vascular" },
             { name: "Fisioterapia", url: "/servicios/apoyo-diagnostico#fisioterapia" },
             { name: "Hemodiálisis", url: "/servicios/apoyo-diagnostico#hemodialisis" },
             { name: "Laboratorio De Histotecnología", url: "/servicios/apoyo-diagnostico#laboratorio-histotecnologia" },
@@ -104,9 +104,9 @@ export const servicesData = [
         slug: "atencion-inmediata",
         subservices: [
             { name: "Atención Del Parto", url: "/servicios/atencion-inmediata/atencion-parto" },
+            { name: "Atención Prehospitalaria", url: "/servicios/atencion-inmediata/atencion-prehospitalaria" },
             { name: "Urgencias", url: "/servicios/atencion-inmediata#urgencias" },
-            { name: "Transporte Asistencial Medicalizado", url: "/servicios/atencion-inmediata#transporte-asistencial" },
-            { name: "Atención Prehospitalaria", url: "/servicios/atencion-inmediata#atencion-prehospitalaria" }
+            { name: "Transporte Asistencial Medicalizado", url: "/servicios/atencion-inmediata#transporte-asistencial" }
         ]
     },
     {
