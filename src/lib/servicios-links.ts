@@ -76,7 +76,7 @@ export const servicesData = [
             { name: "Hematología Oncológica", url: "/servicios/consulta-externa#hematologia-oncologica" },
             { name: "Radioterapia", url: "/servicios/consulta-externa#radioterapia" },
             { name: "Ortopedia Pediátrica", url: "/servicios/consulta-externa/ortopedia-pediatrica" },
-            { name: "Vacunación", url: "/servicios/consulta-externa#vacunacion" }
+            { name: "Vacunación", url: "/servicios/consulta-externa/vacunacion" }
         ]
     },
     {
@@ -93,7 +93,7 @@ export const servicesData = [
             { name: "Laboratorio De Histotecnología", url: "/servicios/apoyo-diagnostico#laboratorio-histotecnologia" },
             { name: "Laboratorio Citologías Cérvico-Uterinas", url: "/servicios/apoyo-diagnostico#laboratorio-citologias" },
             { name: "Servicio Farmacéutico", url: "/servicios/apoyo-diagnostico#servicio-farmaceutico" },
-            { name: "Quimioterapia", url: "/servicios/apoyo-diagnostico#quimioterapia" },
+            { name: "Quimioterapia", url: "/servicios/apoyo-diagnostico/quimioterapia" },
             { name: "Laboratorio Clínico", url: "/servicios/apoyo-diagnostico#laboratorio-clinico" },
             { name: "Medicina Nuclear", url: "/servicios/consulta-externa/medicina-nuclear" },
             { name: "Fonoaudiología Y/O Terapia Del Lenguaje", url: "/servicios/apoyo-diagnostico#fonoaudiologia-terapia-lenguaje" }
