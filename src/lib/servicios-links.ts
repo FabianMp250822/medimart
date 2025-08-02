@@ -43,7 +43,7 @@ export const servicesData = [
         title: "Consulta Externa",
         slug: "consulta-externa",
         subservices: [
-            { name: "Cardiologia Pediatrica", url: "/servicios/consulta-externa#cardiologia-pediatrica" },
+            { name: "Cardiología Pediátrica", url: "/servicios/consulta-externa/cardiologia-pediatrica" },
             { name: "Cardiología", url: "/servicios/consulta-externa#cardiologia" },
             { name: "Gastroenterología", url: "/servicios/consulta-externa#gastroenterologia" },
             { name: "Infectología", url: "/servicios/consulta-externa#infectologia" },
