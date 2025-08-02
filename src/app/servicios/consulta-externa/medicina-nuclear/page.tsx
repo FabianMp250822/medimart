@@ -141,9 +141,9 @@ export default async function MedicinaNuclearPage() {
                     </CardHeader>
                     <CardContent>
                          <Tabs defaultValue={diagnosticServices[0].category} className="w-full">
-                            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 h-auto">
+                            <TabsList className="flex flex-wrap h-auto justify-start">
                                 {diagnosticServices.map((service) => (
-                                <TabsTrigger key={service.category} value={service.category} className="flex flex-col sm:flex-row gap-2 items-center justify-center py-2">
+                                <TabsTrigger key={service.category} value={service.category} className="flex flex-row gap-2 items-center justify-center py-2">
                                     {service.icon}
                                     <span className="text-xs sm:text-sm">{service.category}</span>
                                 </TabsTrigger>
