@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   title: 'Clinica de la Costa',
   description: 'Atención médica integral y especializada en Barranquilla. Ofrecemos una amplia gama de servicios para cuidar de tu salud y la de tu familia.',
   icons: {
-    icon: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2Ficon_a9af70b932635aeb4c6e23665eb4b91a.ico?alt=media&token=17d9f772-cc73-4a5f-9576-7baf085f95fc',
-    apple: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/banner%2Ficon_a9af70b932635aeb4c6e23665eb4b91a.ico?alt=media&token=17d9f772-cc73-4a5f-9576-7baf085f95fc',
+    icon: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/fondosweb%2Ficon_76d6dee740193497ee4a2507b55fc4e6.ico?alt=media&token=edeeb037-3515-43ce-9f23-5b778dc47f93',
+    apple: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/fondosweb%2Ficon_76d6dee740193497ee4a2507b55fc4e6.ico?alt=media&token=edeeb037-3515-43ce-9f23-5b778dc47f93',
   },
 };
 
