@@ -120,8 +120,8 @@ export default async function EspecialistaDetailPage({ params }: Props) {
     notFound();
   }
 
-  const hasAcademicInfo = especialista.academicInfo && especialista.academicInfo.length > 0;
-  const hasProfessionalExperience = especialista.professionalExperience && especialista.professionalExperience.length > 0;
+  const hasAcademicInfo = especialista.academicInfo && especialista.academicInfo.some(info => info.gradoAcademico || info.institucion);
+  const hasProfessionalExperience = especialista.professionalExperience && especialista.professionalExperience.some(exp => exp.posicion || exp.institucionTrabajo);
   const hasBiography = especialista.researcherData?.biografia?.texto;
 
   return (
