@@ -10,17 +10,32 @@ export const metadata: Metadata = {
 };
 
 async function getEspecialistas(): Promise<Medico[]> {
+  const featuredMedicoId = 'p3DcIXWsU0fJ4m0uamrr';
   try {
     const especialistasSnapshot = await adminDb.collection('medicos').orderBy('nombreCompleto').get();
     if (especialistasSnapshot.empty) {
       console.log('No specialists found.');
       return [];
     }
-    const especialistas: Medico[] = especialistasSnapshot.docs.map(doc => ({
+    let especialistas: Medico[] = especialistasSnapshot.docs.map(doc => ({
       id: doc.id,
       ...(doc.data() as Omit<Medico, 'id'>),
     }));
-    return especialistas;
+
+    // Find the featured specialist
+    const featuredMedico = especialistas.find(m => m.id === featuredMedicoId);
+    
+    // Filter out the featured specialist to avoid duplicates
+    const otherMedicos = especialistas.filter(m => m.id !== featuredMedicoId);
+    
+    // Create the final sorted list
+    const finalMedicos: Medico[] = [];
+    if (featuredMedico) {
+      finalMedicos.push(featuredMedico);
+    }
+    finalMedicos.push(...otherMedicos);
+
+    return finalMedicos;
   } catch (error) {
     console.error("Error fetching specialists: ", error);
     return [];
