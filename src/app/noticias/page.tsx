@@ -32,16 +32,24 @@ async function getBlogs(): Promise<Blog[]> {
 export default async function NoticiasPage() {
   const blogs = await getBlogs();
 
+  const blogsWithImages = blogs.filter(blog => blog.image);
+  const bannerImage = blogsWithImages.length > 0
+    ? blogsWithImages[Math.floor(Math.random() * blogsWithImages.length)].image
+    : "https://placehold.co/1920x400.png";
+  const bannerAlt = blogsWithImages.length > 0 ? "Imagen de una noticia destacada" : "Sala de espera de la clínica";
+
+
   return (
     <div className="bg-background">
       <div className="relative bg-primary/80 text-white py-20 sm:py-28 md:py-32 flex items-center justify-center text-center">
         <Image
-          src="https://placehold.co/1920x400.png"
-          alt="Sala de espera de la clínica"
+          src={bannerImage}
+          alt={bannerAlt}
           layout="fill"
           objectFit="cover"
           className="z-0 opacity-20"
-          data-ai-hint="waiting room"
+          data-ai-hint="medical team meeting"
+          priority
         />
         <div className="relative z-10 px-4">
           <h1 className="text-4xl md:text-6xl font-bold">Nuestro Blog de Noticias</h1>
