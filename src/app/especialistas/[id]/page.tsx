@@ -1,19 +1,26 @@
 import { adminDb } from '@/lib/firebase-admin';
-import { Medico } from '@/types/medico';
+import { Medico, ResearcherData } from '@/types/medico';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { Briefcase, GraduationCap, Building, Mail, Phone } from 'lucide-react';
+import { Briefcase, GraduationCap, Building, Mail, Phone, BookOpen, Star, Trophy, Beaker, Mic, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { ResearcherProfile } from '@/components/especialistas/researcher-profile';
 
 type Props = {
   params: { id: string };
 };
 
-async function getEspecialista(id: string): Promise<Medico | null> {
+// Map specialist IDs to researcher IDs
+const researcherIdMap: { [key: string]: string } = {
+  'p3DcIXWsU0fJ4m0uamrr': 'XUeljyQhYyhm80hYKYzc',
+  // Add other mappings here if needed
+};
+
+async function getEspecialista(id: string): Promise<(Medico & { researcherData?: ResearcherData }) | null> {
   try {
     const docRef = adminDb.collection('medicos').doc(id);
     const docSnap = await docRef.get();
@@ -22,7 +29,19 @@ async function getEspecialista(id: string): Promise<Medico | null> {
       return null;
     }
 
-    return { id: docSnap.id, ...docSnap.data() } as Medico;
+    const medicoData = { id: docSnap.id, ...docSnap.data() } as Medico;
+
+    // Check if there is a researcher associated
+    const researcherId = researcherIdMap[id];
+    if (researcherId) {
+      const researcherRef = adminDb.collection('researchers').doc(researcherId);
+      const researcherSnap = await researcherRef.get();
+      if (researcherSnap.exists) {
+        return { ...medicoData, researcherData: researcherSnap.data() as ResearcherData };
+      }
+    }
+
+    return medicoData;
   } catch (error) {
     console.error("Error fetching specialist: ", error);
     return null;
@@ -153,6 +172,11 @@ export default async function EspecialistaDetailPage({ params }: Props) {
                         </ul>
                     </CardContent>
                 </Card>
+            )}
+
+            {/* Researcher Profile Section */}
+            {especialista.researcherData && (
+              <ResearcherProfile data={especialista.researcherData} />
             )}
 
           </div>
