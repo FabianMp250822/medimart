@@ -37,26 +37,43 @@ async function getRecentArticles(): Promise<Blog[]> {
   }
 }
 
-async function getRandomMedicos(): Promise<Medico[]> {
+async function getFeaturedMedicos(): Promise<Medico[]> {
+  const featuredMedicoId = 'p3DcIXWsU0fJ4m0uamrr';
   try {
     const medicosSnapshot = await adminDb.collection('medicos').get();
     if (medicosSnapshot.empty) {
       return [];
     }
-    const medicos: Medico[] = medicosSnapshot.docs.map(doc => ({
+    
+    let medicos: Medico[] = medicosSnapshot.docs.map(doc => ({
       id: doc.id,
       ...(doc.data() as Omit<Medico, 'id'>),
     }));
 
-    // Algoritmo de Fisher-Yates para mezclar el array
-    for (let i = medicos.length - 1; i > 0; i--) {
+    // Find the featured specialist
+    const featuredMedico = medicos.find(m => m.id === featuredMedicoId);
+    
+    // Filter out the featured specialist to avoid duplicates
+    let otherMedicos = medicos.filter(m => m.id !== featuredMedicoId);
+
+    // Shuffle the rest of the specialists
+    for (let i = otherMedicos.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [medicos[i], medicos[j]] = [medicos[j], medicos[i]];
+      [otherMedicos[i], otherMedicos[j]] = [otherMedicos[j], otherMedicos[i]];
     }
 
-    return medicos.slice(0, 4);
+    // Create the final list
+    const finalMedicos: Medico[] = [];
+    if (featuredMedico) {
+      finalMedicos.push(featuredMedico);
+    }
+
+    // Add 3 other random specialists
+    finalMedicos.push(...otherMedicos.slice(0, 4 - finalMedicos.length));
+
+    return finalMedicos;
   } catch (error) {
-    console.error("Error fetching random medicos: ", error);
+    console.error("Error fetching featured medicos: ", error);
     return [];
   }
 }
@@ -82,7 +99,7 @@ async function getRandomTestimonial(): Promise<Testimonial | null> {
 
 export default async function Home() {
   const articles = await getRecentArticles();
-  const teamMembers = await getRandomMedicos();
+  const teamMembers = await getFeaturedMedicos();
   const testimonial = await getRandomTestimonial();
 
   return (
