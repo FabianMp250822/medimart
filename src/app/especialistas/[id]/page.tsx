@@ -37,7 +37,18 @@ async function getEspecialista(id: string): Promise<(Medico & { researcherData?:
       const researcherRef = adminDb.collection('researchers').doc(researcherId);
       const researcherSnap = await researcherRef.get();
       if (researcherSnap.exists) {
-        return { ...medicoData, researcherData: researcherSnap.data() as ResearcherData };
+        const researcherData = researcherSnap.data() as ResearcherData;
+        // Ensure nested arrays are not undefined
+        return { 
+          ...medicoData, 
+          researcherData: {
+            ...researcherData,
+            produccion_bibliografica: researcherData.produccion_bibliografica || [],
+            eventos_cientificos: researcherData.eventos_cientificos || [],
+            clinical_studies: researcherData.clinical_studies || [],
+            reconocimientos: researcherData.reconocimientos || [],
+          } 
+        };
       }
     }
 
