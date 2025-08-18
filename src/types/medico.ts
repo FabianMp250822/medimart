@@ -91,7 +91,12 @@ export interface Reconocimiento {
     nombre_reconocimiento: string;
 }
 
+export interface Biografia {
+    texto: string;
+}
+
 export interface ResearcherData {
+    biografia?: Biografia;
     clinical_studies: ClinicalStudy[];
     eventos_cientificos: EventoCientifico[];
     experiencia_profesional: ExperienciaProfesionalResearcher[];

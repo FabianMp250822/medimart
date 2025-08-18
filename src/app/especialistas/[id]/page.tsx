@@ -3,7 +3,7 @@ import { Medico, ResearcherData } from '@/types/medico';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { Briefcase, GraduationCap, Building, Mail, Phone, BookOpen, Star, Trophy, Beaker, Mic, Users } from 'lucide-react';
+import { Briefcase, GraduationCap, Building, Mail, Phone, BookOpen, Star, Trophy, Beaker, Mic, Users, UserSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
@@ -43,6 +43,7 @@ async function getEspecialista(id: string): Promise<(Medico & { researcherData?:
           ...medicoData, 
           researcherData: {
             ...researcherData,
+            biografia: researcherData.biografia || undefined,
             produccion_bibliografica: researcherData.produccion_bibliografica || [],
             eventos_cientificos: researcherData.eventos_cientificos || [],
             clinical_studies: researcherData.clinical_studies || [],
@@ -119,6 +120,10 @@ export default async function EspecialistaDetailPage({ params }: Props) {
     notFound();
   }
 
+  const hasAcademicInfo = especialista.academicInfo && especialista.academicInfo.length > 0;
+  const hasProfessionalExperience = especialista.professionalExperience && especialista.professionalExperience.length > 0;
+  const hasBiography = especialista.researcherData?.biografia?.texto;
+
   return (
     <div className="bg-background">
       <div className="container mx-auto py-12 px-4">
@@ -144,8 +149,18 @@ export default async function EspecialistaDetailPage({ params }: Props) {
                 </CardContent>
             </Card>
 
+            {/* Biografía */}
+            {hasBiography && (
+                <Card>
+                    <CardHeader><CardTitle className="flex items-center gap-2 text-2xl text-primary"><UserSquare /> Biografía</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground whitespace-pre-line">{especialista.researcherData.biografia.texto}</p>
+                    </CardContent>
+                </Card>
+            )}
+
             {/* Formación Académica */}
-            {especialista.academicInfo && especialista.academicInfo.length > 0 && (
+            {hasAcademicInfo && (
                  <Card>
                     <CardHeader><CardTitle className="flex items-center gap-2 text-2xl text-primary"><GraduationCap/> Formación Académica</CardTitle></CardHeader>
                     <CardContent>
@@ -165,7 +180,7 @@ export default async function EspecialistaDetailPage({ params }: Props) {
             )}
 
             {/* Experiencia Profesional */}
-            {especialista.professionalExperience && especialista.professionalExperience.length > 0 && (
+            {hasProfessionalExperience && (
                 <Card>
                     <CardHeader><CardTitle className="flex items-center gap-2 text-2xl text-primary"><Briefcase/> Experiencia Profesional</CardTitle></CardHeader>
                     <CardContent>
