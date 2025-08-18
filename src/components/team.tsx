@@ -28,6 +28,7 @@ export function Team({ teamMembers }: TeamProps) {
                       objectPosition="top" 
                       data-ai-hint="doctor portrait"
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                      unoptimized
                     />
                 </div>
               </Link>
