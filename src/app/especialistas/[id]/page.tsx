@@ -17,6 +17,7 @@ type Props = {
 // Map specialist IDs to researcher IDs
 const researcherIdMap: { [key: string]: string } = {
   'p3DcIXWsU0fJ4m0uamrr': 'XUeljyQhYyhm80hYKYzc',
+  'eM8fDVBxZ7KebIU5vJVT': 'WQcvjt8AKrkZpicbwCC9',
   // Add other mappings here if needed
 };
 

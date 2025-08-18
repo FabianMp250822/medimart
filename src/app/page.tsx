@@ -38,7 +38,9 @@ async function getRecentArticles(): Promise<Blog[]> {
 }
 
 async function getFeaturedMedicos(): Promise<Medico[]> {
-  const featuredMedicoId = 'p3DcIXWsU0fJ4m0uamrr';
+  const featuredMedicoIds = ['p3DcIXWsU0fJ4m0uamrr', 'eM8fDVBxZ7KebIU5vJVT'];
+  const totalFeatured = 4;
+
   try {
     const medicosSnapshot = await adminDb.collection('medicos').get();
     if (medicosSnapshot.empty) {
@@ -50,28 +52,26 @@ async function getFeaturedMedicos(): Promise<Medico[]> {
       ...(doc.data() as Omit<Medico, 'id'>),
     }));
 
-    // Find the featured specialist
-    const featuredMedico = medicos.find(m => m.id === featuredMedicoId);
-    
-    // Filter out the featured specialist to avoid duplicates
-    let otherMedicos = medicos.filter(m => m.id !== featuredMedicoId);
+    // Get the main featured specialists in order
+    const mainFeatured = featuredMedicoIds.map(id => medicos.find(m => m.id === id)).filter((m): m is Medico => !!m);
 
-    // Shuffle the rest of the specialists
+    // Get other specialists, excluding the main ones
+    let otherMedicos = medicos.filter(m => !featuredMedicoIds.includes(m.id));
+
+    // Shuffle the other specialists
     for (let i = otherMedicos.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [otherMedicos[i], otherMedicos[j]] = [otherMedicos[j], otherMedicos[i]];
     }
 
-    // Create the final list
-    const finalMedicos: Medico[] = [];
-    if (featuredMedico) {
-      finalMedicos.push(featuredMedico);
+    // Combine the lists, ensuring we have exactly `totalFeatured` specialists
+    const finalMedicos = [...mainFeatured];
+    const remainingNeeded = totalFeatured - finalMedicos.length;
+    if (remainingNeeded > 0) {
+      finalMedicos.push(...otherMedicos.slice(0, remainingNeeded));
     }
 
-    // Add 3 other random specialists
-    finalMedicos.push(...otherMedicos.slice(0, 4 - finalMedicos.length));
-
-    return finalMedicos;
+    return finalMedicos.slice(0, totalFeatured);
   } catch (error) {
     console.error("Error fetching featured medicos: ", error);
     return [];
