@@ -114,15 +114,13 @@ export function ResearcherProfile({ data }: ResearcherProfileProps) {
 
 
   const publicationByYear = uniquePublications.reduce((acc, pub) => {
-    const yearString = pub.fecha?.split('-')[0];
-    if (yearString) {
+    const yearString = String(pub.fecha).split('-')[0];
+    if (yearString && /^\d{4}$/.test(yearString)) {
         const year = parseInt(yearString, 10);
-        if (!isNaN(year)) {
-            acc[year] = (acc[year] || 0) + 1;
-        }
+        acc[year] = (acc[year] || 0) + 1;
     }
     return acc;
-  }, {} as Record<string, number>);
+  }, {} as Record<number, number>);
 
   const publicationChartData = Object.entries(publicationByYear)
     .map(([year, count]) => ({ year, count }))
@@ -180,7 +178,7 @@ export function ResearcherProfile({ data }: ResearcherProfileProps) {
                     }).map((pub, index) => (
                         <li key={index} className="border-b pb-4 last:border-b-0 last:pb-0">
                         <p className="font-bold text-foreground">{pub.titulo_articulo}</p>
-                        <p className="text-sm text-muted-foreground">{pub.revista} ({pub.fecha})</p>
+                        <p className="text-sm text-muted-foreground">{pub.revista} ({String(pub.fecha).split('-')[0]})</p>
                         {pub.doi && <Link href={`https://doi.org/${pub.doi}`} target="_blank" className="text-accent text-sm hover:underline flex items-center gap-1"><LinkIcon size={14}/> Ver DOI</Link>}
                         </li>
                     ))}
