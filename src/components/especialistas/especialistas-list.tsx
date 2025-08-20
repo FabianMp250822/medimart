@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -19,7 +20,7 @@ export function EspecialistasList({ especialistas }: EspecialistasListProps) {
   const [selectedSpecialty, setSelectedSpecialty] = useState('all');
 
   const specialties = useMemo(() => {
-    const allSpecialties = especialistas.map(e => e.especialidad);
+    const allSpecialties = especialistas.map(e => e.especialidad.trim());
     return ['all', ...Array.from(new Set(allSpecialties)).sort()];
   }, [especialistas]);
 
@@ -29,7 +30,7 @@ export function EspecialistasList({ especialistas }: EspecialistasListProps) {
         especialista.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
         especialista.especialidad.toLowerCase().includes(searchTerm.toLowerCase());
       
-      const matchesSpecialty = selectedSpecialty === 'all' || especialista.especialidad === selectedSpecialty;
+      const matchesSpecialty = selectedSpecialty === 'all' || especialista.especialidad.trim() === selectedSpecialty;
 
       return matchesSearch && matchesSpecialty;
     });
