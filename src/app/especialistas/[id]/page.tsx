@@ -203,7 +203,7 @@ export default async function EspecialistaDetailPage({ params }: Props) {
 
             {/* Researcher Profile Section */}
             {especialista.researcherData && (
-              <ResearcherProfile data={especialista.researcherData} />
+              <ResearcherProfile data={especialista.researcherData} specialistId={especialista.id} />
             )}
 
           </div>
