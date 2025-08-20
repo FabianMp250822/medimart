@@ -14,13 +14,109 @@ interface ResearcherProfileProps {
 const COLORS = ['#08245B', '#2868D6', '#5DA5DA', '#80bdeA', '#A3D5F5'];
 
 export function ResearcherProfile({ data }: ResearcherProfileProps) {
+  const allPublications = [
+    ...(data.produccion_bibliografica || []),
+    {
+        "doi": "10.1038/s41598-024-70913-6",
+        "editorial": "Nature Publishing Group",
+        "fecha": "2024",
+        "titulo_articulo": "Gene profiling of Epstein-Barr Virus and human endogenous retrovirus in peripheral blood mononuclear cells of SLE patients: immune response implications",
+        "revista": "Scientific Reports"
+    },
+    {
+        "doi": "10.1007/s11255-024-03949-2",
+        "editorial": "Springer Netherlands",
+        "fecha": "2024",
+        "titulo_articulo": "Alactic base excess (ABE): a novel internal milieu parameter—its concept and clinical importance",
+        "revista": "International Urology and Nephrology"
+    },
+    {
+        "doi": "10.1016/j.xkme.2024.100845",
+        "editorial": "Elsevier Inc.",
+        "fecha": "2024",
+        "titulo_articulo": "CKD Stage and Cardiovascular and Mortality Events Among Older Adults: The SPRINT Trial",
+        "revista": "Kidney Medicine"
+    },
+    {
+        "doi": "10.1177/2333794X241231133",
+        "editorial": "Sage Publications Inc",
+        "fecha": "2024",
+        "titulo_articulo": "Atypical Hemolytic Uremic Syndrome: A Nationwide Colombian Pediatric Series",
+        "revista": "Global Pediatric Health"
+    },
+    {
+        "doi": "10.47307/GMC.2024.132.1.8",
+        "editorial": "Academia Nacional De Medicina",
+        "fecha": "2024",
+        "titulo_articulo": "Caracterización clínica y epidemiológica de la enfermedad renal poliquística en un Centro de referencia de Cuarto Nivel del Caribe Colombiano (2008-2022)",
+        "revista": "Gaceta Médica de Caracas"
+    },
+    {
+        "doi": "10.4103/ijn.ijn_175_22",
+        "editorial": "Wolters Kluwer Medknow Publications",
+        "fecha": "2024",
+        "titulo_articulo": "Mortality Rate and Acute Kidney Injury Prevalence Reduction in COVID-19 Critical Patients Treated with Hemoperfusion",
+        "revista": "Indian Journal of Nephrology"
+    },
+    {
+        "doi": "10.1038/s41598-024-53679-9",
+        "editorial": "Nature Publishing Group",
+        "fecha": "2024",
+        "titulo_articulo": "Surface-enhanced Raman Spectroscopy in urinalysis of hypertension patients with kidney disease",
+        "revista": "Scientific Reports"
+    },
+    {
+        "doi": "10.3390/ijms24098290",
+        "editorial": "MDPI",
+        "fecha": "2023",
+        "titulo_articulo": "From Cell to Symptoms: The Role of SARS-CoV-2 Cytopathic Effects in the Pathogenesis of COVID-19 and Long COVID",
+        "revista": "International Journal of Molecular Sciences"
+    },
+    {
+        "doi": "10.3389/fneph.2023.1133352",
+        "editorial": "Frontiers",
+        "fecha": "2023",
+        "titulo_articulo": "Insulin and the kidneys: a contemporary view on the molecular basis",
+        "revista": "Frontiers in Nephrology"
+    },
+    {
+        "doi": "10.1055/a-2164-8438",
+        "editorial": "Thieme Medical Publishers Inc.",
+        "fecha": "2023",
+        "titulo_articulo": "Pregnancy-Associated Atypical Hemolytic Uremic Syndrome: A Case Report with a rare MCP Gene Mutation and Successful Eculizumab Treatment",
+        "revista": "AJP Reports"
+    },
+    {
+        "doi": "10.1007/s11845-023-03490-8",
+        "editorial": "Springer London",
+        "fecha": "2023",
+        "titulo_articulo": "Hyponatremia and malnutrition: a comprehensive review",
+        "revista": "Irish Journal of Medical Science"
+    },
+    {
+        "doi": "10.1016/j.semnephrol.2023.151336",
+        "editorial": "W.B. Saunders Ltd",
+        "fecha": "2023",
+        "titulo_articulo": "Chronic Kidney Disease Burden in Low-Resource Settings: Regional Perspectives",
+        "revista": "Seminars in Nephrology"
+    },
+    {
+        "doi": "10.3390/biomedicines11092435",
+        "editorial": "MDPI",
+        "fecha": "2023",
+        "titulo_articulo": "Handgrip Strength Is Associated with Specific Aspects of Vascular Function in Individuals with Metabolic Syndrome",
+        "revista": "Biomedicines"
+    }
+  ];
 
-  const publicationByYear = (data.produccion_bibliografica || []).reduce((acc, pub) => {
-    if (pub.fecha) {
-        const year = new Date(pub.fecha).getFullYear();
-        if (year && !isNaN(year)) {
-            acc[year] = (acc[year] || 0) + 1;
-        }
+  // Remove duplicates based on title and keep the latest data
+  const uniquePublications = Array.from(new Map(allPublications.map(item => [item.titulo_articulo, item])).values());
+
+
+  const publicationByYear = uniquePublications.reduce((acc, pub) => {
+    const year = pub.fecha ? new Date(pub.fecha).getFullYear() : 'N/A';
+    if (year !== 'N/A' && !isNaN(year)) {
+        acc[year] = (acc[year] || 0) + 1;
     }
     return acc;
   }, {} as Record<string, number>);
@@ -37,7 +133,7 @@ export function ResearcherProfile({ data }: ResearcherProfileProps) {
 
   const eventChartData = Object.entries(eventTypes).map(([name, value]) => ({ name, value }));
   
-  const hasPublications = data.produccion_bibliografica && data.produccion_bibliografica.length > 0;
+  const hasPublications = uniquePublications.length > 0;
   const hasEvents = data.eventos_cientificos && data.eventos_cientificos.length > 0;
   const hasStudies = data.clinical_studies && data.clinical_studies.length > 0;
   const hasRecognitions = data.reconocimientos && data.reconocimientos.length > 0;
@@ -61,7 +157,7 @@ export function ResearcherProfile({ data }: ResearcherProfileProps) {
           {hasPublications && (
             <TabsContent value="publications" className="mt-6">
                 <Card>
-                <CardHeader><CardTitle className="flex items-center gap-2 text-xl text-primary"><BookOpen/> Producción Bibliográfica</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="flex items-center gap-2 text-xl text-primary"><BookOpen/> Producción Bibliográfica ({uniquePublications.length})</CardTitle></CardHeader>
                 <CardContent>
                     <div className="h-64 w-full mb-8">
                     <ResponsiveContainer>
@@ -74,10 +170,10 @@ export function ResearcherProfile({ data }: ResearcherProfileProps) {
                     </ResponsiveContainer>
                     </div>
                     <ul className="space-y-4">
-                    {data.produccion_bibliografica.map((pub, index) => (
-                        <li key={index} className="border-b pb-4">
+                    {uniquePublications.sort((a,b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()).map((pub, index) => (
+                        <li key={index} className="border-b pb-4 last:border-b-0 last:pb-0">
                         <p className="font-bold text-foreground">{pub.titulo_articulo}</p>
-                        <p className="text-sm text-muted-foreground">{pub.revista}, Vol. {pub.volumen} ({pub.fecha})</p>
+                        <p className="text-sm text-muted-foreground">{pub.revista} ({pub.fecha})</p>
                         {pub.doi && <Link href={`https://doi.org/${pub.doi}`} target="_blank" className="text-accent text-sm hover:underline flex items-center gap-1"><LinkIcon size={14}/> Ver DOI</Link>}
                         </li>
                     ))}
@@ -143,7 +239,7 @@ export function ResearcherProfile({ data }: ResearcherProfileProps) {
                 <CardHeader><CardTitle className="flex items-center gap-2 text-xl text-primary"><Award/> Reconocimientos</CardTitle></CardHeader>
                 <CardContent>
                     <ul className="space-y-3">
-                    {data.reconocimientos.map((rec, index) => (
+                    {data.reconocimientos.sort((a,b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()).map((rec, index) => (
                         <li key={index} className="flex items-start gap-3">
                             <Trophy className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
                             <div>
