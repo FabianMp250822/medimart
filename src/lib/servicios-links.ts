@@ -95,7 +95,6 @@ export const servicesData = [
             { name: "Gestión Pre-Transfusional", url: "/servicios/apoyo-diagnostico#gestion-pre-transfusional" },
             { name: "Fisioterapia", url: "/servicios/apoyo-diagnostico#fisioterapia" },
             { name: "Hemodiálisis", url: "/servicios/apoyo-diagnostico#hemodialisis" },
-            { name: "Laboratorio De Histotecnología", url: "/servicios/apoyo-diagnostico#laboratorio-histotecnologia" },
             { name: "Laboratorio Citologías Cérvico-Uterinas", url: "/servicios/apoyo-diagnostico#laboratorio-citologias" },
             { name: "Servicio Farmacéutico", url: "/servicios/apoyo-diagnostico#servicio-farmaceutico" },
             { name: "Laboratorio Clínico", url: "/servicios/apoyo-diagnostico#laboratorio-clinico" },
