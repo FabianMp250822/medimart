@@ -15,14 +15,36 @@ interface EspecialistasListProps {
   especialistas: Medico[];
 }
 
+// Función para normalizar texto: a minúsculas, sin acentos y sin espacios extra.
+const normalizeText = (text: string) => {
+    if (!text) return '';
+    return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+};
+
+
 export function EspecialistasList({ especialistas }: EspecialistasListProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('all');
 
   const specialties = useMemo(() => {
-    const allSpecialties = especialistas.map(e => e.especialidad.trim());
-    return ['all', ...Array.from(new Set(allSpecialties)).sort()];
+    const specialtyMap = new Map<string, string>();
+    especialistas.forEach(e => {
+        if (e.especialidad) {
+            const normalized = normalizeText(e.especialidad);
+            if (!specialtyMap.has(normalized)) {
+                specialtyMap.set(normalized, e.especialidad.trim()); // Guardar el nombre original bien escrito
+            }
+        }
+    });
+    
+    const sortedSpecialties = Array.from(specialtyMap.values()).sort((a, b) => a.localeCompare(b));
+    return ['all', ...sortedSpecialties];
   }, [especialistas]);
+
 
   const filteredEspecialistas = useMemo(() => {
     return especialistas.filter(especialista => {
@@ -30,7 +52,7 @@ export function EspecialistasList({ especialistas }: EspecialistasListProps) {
         especialista.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
         especialista.especialidad.toLowerCase().includes(searchTerm.toLowerCase());
       
-      const matchesSpecialty = selectedSpecialty === 'all' || especialista.especialidad.trim() === selectedSpecialty;
+      const matchesSpecialty = selectedSpecialty === 'all' || normalizeText(especialista.especialidad) === normalizeText(selectedSpecialty);
 
       return matchesSearch && matchesSpecialty;
     });
