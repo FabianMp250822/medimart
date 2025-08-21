@@ -50,7 +50,7 @@ export default function ServiceCategoryPage() {
       
       <div className="relative h-96 w-full rounded-lg overflow-hidden">
           <Image
-              src="https://placehold.co/1200x400.png"
+              src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/fondosweb%2Fpre-hos.jpg?alt=media&token=1726212b-1014-4544-92d8-2e14ed28d7c9"
               alt="Consulta Externa"
               layout="fill"
               objectFit="cover"
