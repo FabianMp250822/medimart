@@ -7,6 +7,7 @@ import type { Metadata } from 'next';
 import { adminDb } from '@/lib/firebase-admin';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
+import { ServiceNavigation } from '@/components/servicios/service-navigation';
 
 export const metadata: Metadata = {
     title: 'Medicina Interna - Clínica de la Costa',
@@ -172,6 +173,11 @@ export default async function MedicinaInternaPage() {
                     </Button>
                 </div>
             </section>
+
+             <ServiceNavigation
+                currentPath="/servicios/consulta-externa/medicina-interna"
+                categorySlug="consulta-externa"
+            />
         </div>
     );
 }
