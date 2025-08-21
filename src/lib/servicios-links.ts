@@ -91,7 +91,7 @@ export const servicesData = [
             { name: "Quimioterapia", url: "/servicios/apoyo-diagnostico/quimioterapia" },
             { name: "Laboratorio de Patología", url: "/servicios/apoyo-diagnostico#laboratorio-patologia" },
             { name: "Gestión Pre-Transfusional", url: "/servicios/apoyo-diagnostico#gestion-pre-transfusional" },
-            { name: "Hemodinamia E Intervencionismo", url: "/servicios/apoyo-diagnostico#hemodinamia-intervencionismo" },
+            { name: "Hemodinamia E Intervencionismo", url: "/servicios/apoyo-diagnostico/hemodinamia-intervencionismo" },
             { name: "Fisioterapia", url: "/servicios/apoyo-diagnostico#fisioterapia" },
             { name: "Hemodiálisis", url: "/servicios/apoyo-diagnostico#hemodialisis" },
             { name: "Laboratorio De Histotecnología", url: "/servicios/apoyo-diagnostico#laboratorio-histotecnologia" },
