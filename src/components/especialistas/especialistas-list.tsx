@@ -16,7 +16,7 @@ interface EspecialistasListProps {
 }
 
 // Función para normalizar texto: a minúsculas, sin acentos y sin espacios extra.
-const normalizeText = (text: string) => {
+const normalizeText = (text: string | undefined | null): string => {
     if (!text) return '';
     return text
         .toLowerCase()
@@ -33,15 +33,16 @@ export function EspecialistasList({ especialistas }: EspecialistasListProps) {
   const specialties = useMemo(() => {
     const specialtyMap = new Map<string, string>();
     especialistas.forEach(e => {
-        if (e.especialidad) {
-            const normalized = normalizeText(e.especialidad);
+        const specialtyName = e.especialidad?.trim();
+        if (specialtyName) {
+            const normalized = normalizeText(specialtyName);
             if (!specialtyMap.has(normalized)) {
-                specialtyMap.set(normalized, e.especialidad.trim()); // Guardar el nombre original bien escrito
+                specialtyMap.set(normalized, specialtyName); // Guardar el nombre original bien escrito
             }
         }
     });
     
-    const sortedSpecialties = Array.from(specialtyMap.values()).sort((a, b) => a.localeCompare(b));
+    const sortedSpecialties = Array.from(specialtyMap.values()).sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
     return ['all', ...sortedSpecialties];
   }, [especialistas]);
 
@@ -49,8 +50,8 @@ export function EspecialistasList({ especialistas }: EspecialistasListProps) {
   const filteredEspecialistas = useMemo(() => {
     return especialistas.filter(especialista => {
       const matchesSearch = searchTerm === '' ||
-        especialista.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        especialista.especialidad.toLowerCase().includes(searchTerm.toLowerCase());
+        normalizeText(especialista.nombreCompleto).includes(normalizeText(searchTerm)) ||
+        normalizeText(especialista.especialidad).includes(normalizeText(searchTerm));
       
       const matchesSpecialty = selectedSpecialty === 'all' || normalizeText(especialista.especialidad) === normalizeText(selectedSpecialty);
 
