@@ -86,7 +86,7 @@ export const servicesData = [
             { name: "Diagnóstico Vascular", url: "/servicios/apoyo-diagnostico/diagnostico-vascular" },
             { name: "Laboratorio de Patología", url: "/servicios/apoyo-diagnostico#laboratorio-patologia" },
             { name: "Gestión Pre-Transfusional", url: "/servicios/apoyo-diagnostico#gestion-pre-transfusional" },
-            { name: "Imágenes Diagnósticas", url: "/servicios/apoyo-diagnostico#imagenes-diagnosticas" },
+            { name: "Imágenes Diagnósticas", url: "/servicios/apoyo-diagnostico/imagenes-diagnosticas" },
             { name: "Hemodinamia E Intervencionismo", url: "/servicios/apoyo-diagnostico#hemodinamia-intervencionismo" },
             { name: "Fisioterapia", url: "/servicios/apoyo-diagnostico#fisioterapia" },
             { name: "Hemodiálisis", url: "/servicios/apoyo-diagnostico#hemodialisis" },
