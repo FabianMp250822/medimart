@@ -50,6 +50,8 @@ const appointmentSchema = z.object({
     selectedDepartment: z.string().min(1, "Debe seleccionar un departamento"),
     selectedCity: z.string().min(1, "Debe seleccionar una ciudad"),
     birthDate: z.date({ required_error: "Debe seleccionar su fecha de nacimiento" }),
+    documentType: z.string().min(1, "Debe seleccionar un tipo de documento"),
+    documentNumber: z.string().min(5, "Debe ingresar un número de documento válido"),
     appointmentDate: z.date({ required_error: "Debe seleccionar una fecha para la cita" }),
     appointmentType: z.string().min(1, "Debe seleccionar el tipo de cita"),
     appointmentReason: z.string().min(1, "Debe ingresar el motivo de la cita"),
@@ -105,6 +107,8 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
             customEps: "",
             selectedDepartment: "",
             selectedCity: "",
+            documentType: "Cédula de Ciudadanía",
+            documentNumber: "",
             appointmentType: "",
             appointmentReason: "",
             contactPhone: "",
@@ -162,6 +166,7 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
                     const patientDocSnap = querySnapshot.docs[0];
                     const data = patientDocSnap.data();
                     form.setValue("contactPhone", data.telefono || "");
+                    form.setValue("documentNumber", data.identificacion || "");
                     form.setValue("confirmEmail", data.email || user.email || "");
                      if (data.fechaNacimiento) {
                         const date = data.fechaNacimiento instanceof Timestamp 
@@ -170,7 +175,7 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
                         form.setValue("birthDate", date);
                     }
                 } else {
-                    console.log("No patient document found for this user.");
+                     console.log("No patient document found for this user.");
                 }
             } catch (error) {
                  console.error("AppointmentsView: Error fetching 'pacientes' document:", error);
@@ -267,6 +272,8 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
                 department: data.selectedDepartment,
                 city: data.selectedCity,
                 birthDate: Timestamp.fromDate(data.birthDate),
+                documentType: data.documentType,
+                documentNumber: data.documentNumber,
                 appointmentDate: Timestamp.fromDate(data.appointmentDate),
                 appointmentType: data.appointmentType,
                 appointmentReason: data.appointmentReason,
@@ -350,6 +357,7 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
                                 <p><strong>EPS:</strong> {finalEps}</p>
                                 <p><strong>Ubicación:</strong> {formData.selectedCity}, {formData.selectedDepartment}</p>
                                 <p><strong>Fecha de Nac.:</strong> {formData.birthDate ? format(formData.birthDate, "PPP", { locale: es }) : 'N/A'}</p>
+                                <p><strong>Documento:</strong> {formData.documentType} - {formData.documentNumber}</p>
                                 <p><strong>Teléfono:</strong> {formData.contactPhone}</p>
                                 <p className="col-span-2"><strong>Email:</strong> {formData.confirmEmail}</p>
                             </div>
@@ -426,11 +434,14 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
                    <Form {...form}>
                     <form onSubmit={form.handleSubmit(nextStep)} className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <FormField control={form.control} name="birthDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Fecha de Nacimiento</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? (format(field.value, "PPP", { locale: es })) : (<span>Seleccione una fecha</span>)}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar captionLayout="dropdown-buttons" fromYear={1930} toYear={new Date().getFullYear()} mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                            <FormField control={form.control} name="documentType" render={({ field }) => (<FormItem><FormLabel>Tipo de Documento</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione..." /></SelectTrigger></FormControl><SelectContent><SelectItem value="Cédula de Ciudadanía">Cédula de Ciudadanía</SelectItem><SelectItem value="Cédula de Extranjería">Cédula de Extranjería</SelectItem><SelectItem value="Pasaporte">Pasaporte</SelectItem><SelectItem value="Registro Civil">Registro Civil</SelectItem><SelectItem value="Tarjeta de Identidad">Tarjeta de Identidad</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
+                            <FormField control={form.control} name="documentNumber" render={({ field }) => (<FormItem><FormLabel>Número de Documento</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="selectedEps" render={({ field }) => (<FormItem><FormLabel>EPS</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione su EPS" /></SelectTrigger></FormControl><SelectContent>{epsList.map(eps => <SelectItem key={eps} value={eps}>{eps}</SelectItem>)}<SelectItem value="OTRA">OTRA</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                             {form.watch('selectedEps') === 'OTRA' && <FormField control={form.control} name="customEps" render={({ field }) => (<FormItem><FormLabel>Especifique su EPS</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />}
                             <FormField control={form.control} name="selectedDepartment" render={({ field }) => (<FormItem><FormLabel>Departamento</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione departamento" /></SelectTrigger></FormControl><SelectContent>{departments.map(dep => <SelectItem key={dep} value={dep}>{dep}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="selectedCity" render={({ field }) => (<FormItem><FormLabel>Ciudad/Municipio</FormLabel><Select onValueChange={field.onChange} value={field.value || ''} disabled={!selectedDepartment}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione ciudad" /></SelectTrigger></FormControl><SelectContent>{availableCities.map(city => <SelectItem key={city} value={city}>{city}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>)} />
-                            <FormField control={form.control} name="birthDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Fecha de Nacimiento</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? (format(field.value, "PPP", { locale: es })) : (<span>Seleccione una fecha</span>)}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar captionLayout="dropdown-buttons" fromYear={1930} toYear={new Date().getFullYear()} mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                           
                             <FormField control={form.control} name="appointmentDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Fecha Deseada de la Cita</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? (format(field.value, "PPP", { locale: es })) : (<span>Seleccione una fecha</span>)}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar captionLayout="dropdown-buttons" fromYear={new Date().getFullYear()} toYear={new Date().getFullYear() + 1} mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="appointmentType" render={({ field }) => (<FormItem><FormLabel>Tipo de Cita</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccione tipo de cita" /></SelectTrigger></FormControl><SelectContent><SelectItem value="Consulta inicial">Consulta inicial</SelectItem><SelectItem value="Reunión con especialista">Reunión con especialista</SelectItem><SelectItem value="Revisión de exámenes">Revisión de exámenes</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="contactPhone" render={({ field }) => (<FormItem><FormLabel>Teléfono de Contacto</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
