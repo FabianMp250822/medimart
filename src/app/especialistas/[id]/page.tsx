@@ -143,8 +143,6 @@ export default async function EspecialistaDetailPage({ params }: Props) {
                         <p className="text-xl text-accent font-semibold mt-1">{especialista.especialidad}</p>
                         <div className="text-muted-foreground mt-4 space-y-2">
                             {especialista.sede && <div className="flex items-center gap-2 justify-center md:justify-start"><Building className="h-5 w-5" /><span>{especialista.sede}</span></div>}
-                            {especialista.email && <div className="flex items-center gap-2 justify-center md:justify-start"><Mail className="h-5 w-5" /><span>{especialista.email}</span></div>}
-                            {especialista.telefono && <div className="flex items-center gap-2 justify-center md:justify-start"><Phone className="h-5 w-5" /><span>{especialista.telefono}</span></div>}
                         </div>
                     </div>
                 </CardContent>
