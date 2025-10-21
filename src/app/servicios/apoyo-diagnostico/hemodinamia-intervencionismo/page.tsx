@@ -72,7 +72,7 @@ export default async function HemodinamiaPage() {
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://placehold.co/1200x400.png"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM(1).jpeg?alt=media&token=a0535648-1f07-4a43-87c1-8901f530dd94"
                         alt="Sala de Hemodinamia"
                         layout="fill"
                         objectFit="cover"

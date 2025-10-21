@@ -56,7 +56,7 @@ export default async function NeurofisiologiaPage() {
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://placehold.co/1200x400.png"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fimage%20(1).jpg?alt=media&token=477643ba-d800-498a-9bf8-c0c7a737fcf0"
                         alt="Laboratorio de Neurofisiología"
                         layout="fill"
                         objectFit="cover"

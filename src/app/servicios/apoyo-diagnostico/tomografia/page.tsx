@@ -52,7 +52,7 @@ export default async function TomografiaPage() {
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://placehold.co/1200x400.png"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Funnamed%20(2).jpg?alt=media&token=48899b56-764a-4ef2-a8a8-e81fbec4d772"
                         alt="Equipo de Tomografía (TAC)"
                         layout="fill"
                         objectFit="cover"

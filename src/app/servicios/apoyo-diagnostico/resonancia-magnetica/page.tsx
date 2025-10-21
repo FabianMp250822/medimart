@@ -52,7 +52,7 @@ export default async function ResonanciaMagneticaPage() {
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://placehold.co/1200x400.png"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FGemini_Generated_Image_2suckz2suckz2suc.png?alt=media&token=0b9f7b24-5435-4713-a91e-746aa78b9ccc"
                         alt="Equipo de Resonancia Magnética"
                         layout="fill"
                         objectFit="cover"

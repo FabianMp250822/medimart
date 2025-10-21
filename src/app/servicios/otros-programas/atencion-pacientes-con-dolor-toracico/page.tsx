@@ -47,7 +47,7 @@ export default async function DolorToracicoPage() {
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Funidades.jpg?alt=media"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FGemini_Generated_Image_t81degt81degt81d.png?alt=media&token=f853b03b-da58-4249-8ea0-47a6134d078b"
                         alt="Atención a Pacientes con Dolor Torácico"
                         layout="fill"
                         objectFit="cover"
@@ -77,7 +77,7 @@ export default async function DolorToracicoPage() {
             
              <div className="relative h-96 w-full rounded-lg overflow-hidden">
                 <Image
-                    src="https://picsum.photos/1200/400?random=12"
+                    src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FGemini_Generated_Image_ht8e2nht8e2nht8e.png?alt=media&token=4687d4d4-329b-4f7d-a913-59ffb44a836e"
                     alt="Transporte Asistencial"
                     layout="fill"
                     objectFit="cover"
