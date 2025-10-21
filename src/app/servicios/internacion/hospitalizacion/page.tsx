@@ -11,10 +11,36 @@ import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 export const metadata: Metadata = {
     title: 'Servicios de Hospitalización - Clínica de la Costa',
     description: 'Ofrecemos servicios de hospitalización para adultos y pediátricos. Atención integral con calidad, seguridad y un enfoque humano.',
+    keywords: ['hospitalización', 'hospital', 'clínica', 'servicios médicos', 'cuidados intensivos', 'hospitalización pediátrica'],
+    openGraph: {
+        title: 'Servicios de Hospitalización - Clínica de la Costa',
+        description: 'Atención integral en hospitalización para adultos y pediatría. Equipo humano, tecnología y seguridad.',
+        url: '/servicios/internacion/hospitalizacion',
+        siteName: 'Clínica de la Costa',
+        images: [
+            {
+                url: 'https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fhospitalizacion.jpg?alt=media',
+                width: 1200,
+                height: 630,
+                alt: 'Servicios de Hospitalización'
+            }
+        ],
+        type: 'website'
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Servicios de Hospitalización - Clínica de la Costa',
+        description: 'Atención integral en hospitalización para adultos y pediatría.'
+    }
 };
+
 
 async function getSpecialists(): Promise<Medico[]> {
     try {
+        if (!adminDb) {
+            console.warn('adminDb no está inicializado. getSpecialists devolverá lista vacía.');
+            return [];
+        }
         const snapshot = await adminDb.collection('medicos')
             .where('especialidad', '==', 'Medicina Interna')
             .limit(5)
@@ -39,7 +65,7 @@ const hospitalizacionServices = [
     {
         title: "Hospitalización Pediátrica",
         icon: <HeartHandshake className="h-8 w-8 text-accent" />,
-        image: "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fhospital-2.jpg?alt=media",
+        image: "https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Funnamed.jpg?alt=media&token=94042da7-0fe5-44f5-939a-03617e485388",
         hint: "pediatric hospital room"
     }
 ];
@@ -47,19 +73,61 @@ const hospitalizacionServices = [
 
 export default async function HospitalizacionPage() {
     const specialists = await getSpecialists();
+    const lastUpdated = new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const hospitalJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Hospital',
+        'name': 'Clínica de la Costa',
+        'description': metadata.description,
+        'department': {
+            '@type': 'MedicalDepartment',
+            'name': 'Servicio de Hospitalización'
+        }
+    };
+
+    const faqJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': [
+            {
+                '@type': 'Question',
+                'name': '¿Cómo solicito una habitación de hospitalización? ',
+                'acceptedAnswer': {
+                    '@type': 'Answer',
+                    'text': 'Puede solicitar hospitalización a través de nuestro formulario de contacto o llamando al número de atención. También puede solicitar cita desde la sección de especialistas para valoración previa.'
+                }
+            },
+            {
+                '@type': 'Question',
+                'name': '¿Atienden pacientes pediátricos?',
+                'acceptedAnswer': {
+                    '@type': 'Answer',
+                    'text': 'Sí, contamos con hospitalización pediátrica con personal especializado.'
+                }
+            }
+        ]
+    };
     
     return (
         <div className="space-y-12">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([hospitalJsonLd, faqJsonLd]) }} />
+
+            <div className="text-sm text-muted-foreground flex justify-end gap-4 pr-4">
+                <span>Última actualización: <strong>{lastUpdated}</strong></span>
+                <span>Especialistas disponibles: <strong>{specialists.length}</strong></span>
+            </div>
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fhospitalizacion.jpg?alt=media"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.31.54%20PM.jpeg?alt=media&token=128385f5-0c3a-452c-9183-439023b2c3a0"
                         alt="Servicios de Hospitalización"
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        style={{ objectFit: 'cover' }}
                         className="z-0"
                         data-ai-hint="hospitalization services"
                         priority
+                        sizes="100vw"
                     />
                     <div className="absolute inset-0 bg-black/40 z-10" />
                     <div className="relative z-20 flex flex-col items-center justify-center h-full p-4 text-white text-center">
@@ -92,10 +160,11 @@ export default async function HospitalizacionPage() {
                                 <Image 
                                     src={service.image}
                                     alt={service.title}
-                                    layout="fill"
-                                    objectFit="cover"
+                                    fill
+                                    style={{ objectFit: 'cover' }}
                                     data-ai-hint={service.hint}
                                     className="transition-transform duration-300 group-hover:scale-105"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                             </div>
                             <CardContent className="p-6">

@@ -49,9 +49,11 @@ export function RelatedSpecialists({ specialists, specialtyName }: RelatedSpecia
                            <Image
                             src={specialist.profileImage}
                             alt={specialist.nombreCompleto}
-                            layout="fill"
-                            objectFit="cover"
+                            fill
+                            style={{ objectFit: 'cover' }}
                             data-ai-hint="doctor portrait"
+                            sizes="80px"
+                            loading="lazy"
                           />
                         </div>
                       </Link>
