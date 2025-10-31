@@ -30,6 +30,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'contenedor-de-video.firebasestorage.app',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'img.youtube.com',
         port: '',
         pathname: '/**',
