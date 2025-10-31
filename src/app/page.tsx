@@ -10,6 +10,7 @@ import { RecentArticles } from '@/components/recent-articles';
 import { AppFooter } from '@/components/footer';
 import { Header } from '@/components/header';
 import { EntidadesConvenioSlider } from '@/components/servicios/entidades-convenio-slider';
+import { CertificationsSlider } from '@/components/certifications-slider';
 import { adminDb } from '@/lib/firebase-admin';
 import type { Blog } from '@/types/blog';
 import type { Medico } from '@/types/medico';
@@ -113,6 +114,7 @@ export default async function Home() {
           <EntidadesConvenioSlider />
           <Commitment />
           <ComprehensiveCare />
+          <CertificationsSlider />
           <Priority />
           <HowWeServe />
           <Testimonials testimonial={testimonial} />
