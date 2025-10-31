@@ -1,4 +1,4 @@
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { OfertaEmpleo } from '@/types/oferta-empleo';
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 async function getOfertas(): Promise<OfertaEmpleo[]> {
-  try {
-    const ofertasSnapshot = await adminDb.collection('ofertasEmpleos').orderBy('fechaPublicacion', 'desc').get();
+  return safeQuery(async (db) => {
+    const ofertasSnapshot = await db.collection('ofertasEmpleos').orderBy('fechaPublicacion', 'desc').get();
     if (ofertasSnapshot.empty) {
       return [];
     }
@@ -20,10 +20,7 @@ async function getOfertas(): Promise<OfertaEmpleo[]> {
       ...(doc.data() as Omit<OfertaEmpleo, 'id'>),
     }));
     return ofertas;
-  } catch (error) {
-    console.error("Error fetching job offers: ", error);
-    return [];
-  }
+  }, []);
 }
 
 export default async function TrabajaConNosotrosPage() {

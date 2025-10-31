@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, Users, CheckCircle, Hospital } from 'lucide-react';
+import { Phone, CheckCircle } from 'lucide-react';
 import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
@@ -11,7 +11,7 @@ import { generateServiceMetadata } from '@/lib/metadata-helpers';
 import { generateMedicalServiceSchema } from '@/lib/structured-data';
 import { unstable_cache } from 'next/cache';
 
-const serviceData = getServiceMetadata('gastroenterologia')!;
+const serviceData = getServiceMetadata('dermatologia')!;
 export const metadata = generateServiceMetadata(serviceData);
 
 const getSpecialists = unstable_cache(
@@ -26,25 +26,35 @@ const getSpecialists = unstable_cache(
             return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
         }, []);
     },
-    ['specialists-gastroenterologia'],
-    { revalidate: 3600, tags: ['specialists', 'gastroenterologia'] }
+    ['specialists-dermatologia'],
+    { revalidate: 3600, tags: ['specialists', 'dermatologia'] }
 );
 
-const procedures = [
-    "Endoscopia bajo sedación", "Colonoscopia", "CEPRE (Colangiopancreatografía retrógrada endoscópica)",
-    "Gastrostomía", "Rectosigmoidoscopia", "Proctosigmoidoscopia", "Polipectomía endoscópica",
-    "Ligadura de varices esofágicas", "Esofagogastroduodenoscopia", "Obturación de varices gástricas",
-    "Dilatación digestiva", "Cápsula endoscópica", "Spyglass (Litotricia Intraductal por coledoscopia)",
-    "POEM (Miotomía endoscópica para acalasia)", "Terapia de Argón Plasma"
+const services = [
+    "Diagnóstico y tratamiento de acné y rosácea.",
+    "Manejo de enfermedades de la piel (psoriasis, eczema, dermatitis).",
+    "Detección y tratamiento de cáncer de piel.",
+    "Tratamiento de manchas, cicatrices y melasma.",
+    "Procedimientos estéticos con láser y toxina botulínica.",
+    "Dermatología pediátrica."
 ];
 
-const facilities = [
-    "Sala de espera confortable", "Área de admisión y preparación del paciente", "Salas de procedimientos equipadas",
-    "Área de recuperación post-procedimiento", "Unidades sanitarias", "Área para transcripción de resultados",
-    "Almacenamiento seguro de insumos y equipos"
+const benefits = [
+    "Diagnósticos precisos con dermatoscopia digital.",
+    "Tratamientos personalizados según tipo de piel.",
+    "Tecnología láser de última generación.",
+    "Seguimiento continuo y prevención.",
+    "Atención para todas las edades."
 ];
 
-export default async function GastroenterologiaPage() {
+const technologies = [
+    { title: "Dermatoscopia Digital", description: "Evaluación detallada de lunares y lesiones de piel." },
+    { title: "Láser Terapéutico", description: "Tratamiento de manchas, cicatrices y rejuvenecimiento." },
+    { title: "Criocirugía", description: "Eliminación de verrugas y lesiones cutáneas." },
+    { title: "Terapia Fotodinámica", description: "Tratamiento avanzado de cáncer de piel no melanoma." }
+];
+
+export default async function DermatologiaPage() {
     const specialists = await getSpecialists();
     
     const serviceSchema = generateMedicalServiceSchema({
@@ -64,17 +74,16 @@ export default async function GastroenterologiaPage() {
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
-                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/servicios%2Fgastroenterologia.jpg?alt=media"
-                        alt="Gastroenterología y Endoscopia Digestiva"
-                        layout="fill"
-                        objectFit="cover"
-                        className="z-0"
-                        data-ai-hint="gastroenterology endoscopy"
+                        src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2Fdermatologia.jpg?alt=media"
+                        alt="Servicios de Dermatología"
+                        fill
+                        className="object-cover z-0"
+                        data-ai-hint="dermatology service"
                         priority
                     />
                     <div className="absolute inset-0 bg-black/40 z-10" />
                     <div className="relative z-20 flex flex-col items-center justify-center h-full p-4 text-white text-center">
-                        <h1 className="text-3xl md:text-5xl font-bold max-w-4xl">Gastroenterología, Coloproctología y Endoscopia Digestiva</h1>
+                        <h1 className="text-3xl md:text-5xl font-bold max-w-4xl">Dermatología</h1>
                     </div>
                 </div>
             </Card>
@@ -82,45 +91,24 @@ export default async function GastroenterologiaPage() {
             <section>
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-2xl text-primary">Atención Integral para tu Salud Digestiva</CardTitle>
+                        <CardTitle className="text-2xl text-primary">Cuidado Integral de la Piel</CardTitle>
                     </CardHeader>
                     <CardContent className="prose max-w-none text-muted-foreground">
                         <p>
-                            El Servicio de Gastroenterología Clínica y Endoscopia Digestiva de la Clínica de la Costa SAS cuenta con un equipo de gastroenterólogos, coloproctólogos y personal especializado en endoscopia. Este equipo atiende tanto a pacientes de urgencias como a aquellos en consulta externa o chequeos médicos preventivos, ofreciendo diagnósticos y tratamientos de alta calidad.
+                            En la Clínica de la Costa SAS, ofrecemos servicios especializados en Dermatología para el diagnóstico, tratamiento y prevención de enfermedades de la piel, cabello y uñas. Contamos con dermatólogos certificados y tecnología láser de última generación para garantizar los mejores resultados.
                         </p>
                     </CardContent>
                 </Card>
             </section>
-            
-            <section>
-                <Card>
+
+            <div className="grid md:grid-cols-2 gap-8 items-start">
+                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-2xl text-primary">Procedimientos que Realizamos</CardTitle>
+                        <CardTitle className="text-2xl text-primary">Nuestros Servicios</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {procedures.map((proc, index) => (
-                                <li key={index} className="flex items-start gap-3">
-                                    <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                                    <span>{proc}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </CardContent>
-                </Card>
-            </section>
-            
-            <section>
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="text-2xl text-primary flex items-center gap-3"><Hospital /> Instalaciones Especializadas</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground mb-6">
-                            Nuestra unidad de gastroenterología está ubicada en el segundo piso de la sede principal y cuenta con una infraestructura diseñada bajo las normas vigentes para instituciones de salud.
-                        </p>
-                         <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {facilities.map((item, index) => (
+                        <ul className="space-y-3">
+                            {services.map((item, index) => (
                                 <li key={index} className="flex items-start gap-3">
                                     <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
                                     <span>{item}</span>
@@ -129,18 +117,49 @@ export default async function GastroenterologiaPage() {
                         </ul>
                     </CardContent>
                 </Card>
-            </section>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-primary">Beneficios de Nuestra Atención</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                         <ul className="space-y-3">
+                            {benefits.map((item, index) => (
+                                <li key={index} className="flex items-start gap-3">
+                                    <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                                    <span>{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </CardContent>
+                </Card>
+            </div>
             
+             <section>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl text-primary">Tecnología y Métodos Avanzados</CardTitle>
+                    </CardHeader>
+                    <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {technologies.map((tech) => (
+                            <div key={tech.title} className="p-4 rounded-lg bg-primary/5">
+                                <h3 className="font-semibold text-lg text-primary mb-2">{tech.title}</h3>
+                                <p className="text-muted-foreground text-sm">{tech.description}</p>
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
+            </section>
+
             {specialists.length > 0 && (
                 <RelatedSpecialists
                     specialists={specialists}
-                    specialtyName="Gastroenterólogos y Coloproctólogos"
+                    specialtyName="Nuestros Dermatólogos"
                 />
             )}
 
             <section className="text-center bg-primary/5 p-8 rounded-lg">
-                <h2 className="text-2xl font-bold text-primary">¿Necesitas Más Información?</h2>
-                <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Nuestro equipo está listo para brindarte el mejor cuidado digestivo. Contáctanos para agendar una consulta.</p>
+                <h2 className="text-2xl font-bold text-primary">Contáctenos para Más Información</h2>
+                <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">Confía en nuestro equipo para el cuidado de tu piel. ¡Estamos aquí para ayudarte!</p>
                 <div className="mt-6 flex justify-center gap-4">
                     <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
                         <Link href="/contacto">
@@ -150,7 +169,6 @@ export default async function GastroenterologiaPage() {
                     </Button>
                     <Button asChild size="lg" variant="outline">
                         <Link href="/especialistas">
-                            <Users className="mr-2 h-5 w-5" />
                             Ver Especialistas
                         </Link>
                     </Button>

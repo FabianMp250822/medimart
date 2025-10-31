@@ -4,29 +4,33 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
+import { getServiceMetadata } from '@/lib/services-metadata';
+import { generateServiceMetadata } from '@/lib/metadata-helpers';
+import { generateMedicalServiceSchema } from '@/lib/structured-data';
+import { unstable_cache } from 'next/cache';
 
-export const metadata: Metadata = {
-    title: 'Cirugía Urológica - Clínica de la Costa',
-    description: 'Soluciones avanzadas para la salud urológica. Ofrecemos procedimientos mínimamente invasivos para riñón, próstata y más, con tecnología de vanguardia.',
-};
+const serviceData = getServiceMetadata('cirugia-urologica')!;
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
-            .where('especialidad', '==', 'Urología')
-            .get();
-        if (snapshot.empty) {
-            return [];
-        }
-        return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Cirugía Urológica: ", error);
-        return [];
-    }
-}
+export const metadata: Metadata = generateServiceMetadata(serviceData);
+
+const getSpecialists = unstable_cache(
+    async (): Promise<Medico[]> => {
+        return safeQuery(async (db) => {
+            const snapshot = await db.collection('medicos')
+                .where('especialidad', '==', serviceData.specialty)
+                .get();
+            if (snapshot.empty) {
+                return [];
+            }
+            return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
+        }, []);
+    },
+    ['specialists-cirugia-urologica'],
+    { revalidate: 3600, tags: ['specialists', 'cirugia-urologica'] }
+);
 
 const procedures = [
     "Extirpación parcial o total del riñón por cáncer o enfermedades benignas.",
@@ -47,8 +51,20 @@ const laparoscopyBenefits = [
 export default async function CirugiaUrologicaPage() {
     const specialists = await getSpecialists();
     
+    const serviceSchema = generateMedicalServiceSchema({
+        name: serviceData.name,
+        description: serviceData.description,
+        url: `https://clinica-de-la-costa.app/${serviceData.slug}`,
+        alternateName: serviceData.searchTerms
+    });
+
     return (
-        <div className="space-y-12">
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
+            <div className="space-y-12">
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
@@ -145,5 +161,6 @@ export default async function CirugiaUrologicaPage() {
                 </div>
             </section>
         </div>
+        </>
     );
 }

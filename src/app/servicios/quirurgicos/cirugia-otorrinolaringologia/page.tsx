@@ -4,29 +4,33 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
+import { getServiceMetadata } from '@/lib/services-metadata';
+import { generateServiceMetadata } from '@/lib/metadata-helpers';
+import { generateMedicalServiceSchema } from '@/lib/structured-data';
+import { unstable_cache } from 'next/cache';
 
-export const metadata: Metadata = {
-    title: 'Cirugía de Otorrinolaringología - Clínica de la Costa',
-    description: 'Soluciones avanzadas para la salud de oídos, nariz y garganta. Ofrecemos procedimientos seguros y efectivos adaptados a las necesidades de cada paciente.',
-};
+const serviceData = getServiceMetadata('cirugia-otorrinolaringologica')!;
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
-            .where('especialidad', '==', 'Otorrinolaringología')
-            .get();
-        if (snapshot.empty) {
-            return [];
-        }
-        return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Otorrinolaringología: ", error);
-        return [];
-    }
-}
+export const metadata: Metadata = generateServiceMetadata(serviceData);
+
+const getSpecialists = unstable_cache(
+    async (): Promise<Medico[]> => {
+        return safeQuery(async (db) => {
+            const snapshot = await db.collection('medicos')
+                .where('especialidad', '==', serviceData.specialty)
+                .get();
+            if (snapshot.empty) {
+                return [];
+            }
+            return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
+        }, []);
+    },
+    ['specialists-cirugia-otorrinolaringologica'],
+    { revalidate: 3600, tags: ['specialists', 'cirugia-otorrinolaringologica'] }
+);
 
 const procedures = [
     { title: "Cirugía de oídos (otología)", description: "Timpanoplastia, mastoidectomía e implantes cocleares." },
@@ -46,8 +50,20 @@ const whyChooseUs = [
 export default async function CirugiaOtorrinolaringologiaPage() {
     const specialists = await getSpecialists();
     
+    const serviceSchema = generateMedicalServiceSchema({
+        name: serviceData.name,
+        description: serviceData.description,
+        url: `https://clinica-de-la-costa.app/${serviceData.slug}`,
+        alternateName: serviceData.searchTerms
+    });
+
     return (
-        <div className="space-y-12">
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
+            <div className="space-y-12">
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
@@ -139,5 +155,6 @@ export default async function CirugiaOtorrinolaringologiaPage() {
                 </div>
             </section>
         </div>
+        </>
     );
 }

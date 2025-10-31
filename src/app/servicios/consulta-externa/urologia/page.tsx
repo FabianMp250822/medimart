@@ -3,30 +3,32 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle } from 'lucide-react';
-import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
+import { getServiceMetadata } from '@/lib/services-metadata';
+import { generateServiceMetadata } from '@/lib/metadata-helpers';
+import { generateMedicalServiceSchema } from '@/lib/structured-data';
+import { unstable_cache } from 'next/cache';
 
-export const metadata: Metadata = {
-    title: 'Urología - Clínica de la Costa',
-    description: 'Cuidado integral del sistema urinario. Ofrecemos diagnóstico y tratamiento para cálculos renales, infecciones, disfunción eréctil y más, con tecnología de vanguardia.',
-};
+const serviceData = getServiceMetadata('urologia')!;
+export const metadata = generateServiceMetadata(serviceData);
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
-            .where('especialidad', '==', 'Urología')
-            .get();
-        if (snapshot.empty) {
-            return [];
-        }
-        return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Urología: ", error);
-        return [];
-    }
-}
+const getSpecialists = unstable_cache(
+    async (): Promise<Medico[]> => {
+        return safeQuery(async (db) => {
+            const snapshot = await db.collection('medicos')
+                .where('especialidad', '==', serviceData.specialty)
+                .get();
+            if (snapshot.empty) {
+                return [];
+            }
+            return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
+        }, []);
+    },
+    ['specialists-urologia'],
+    { revalidate: 3600, tags: ['specialists', 'urologia'] }
+);
 
 const services = [
     "Diagnóstico y tratamiento de cálculos renales.",
@@ -54,8 +56,20 @@ const technologies = [
 export default async function UrologiaPage() {
     const specialists = await getSpecialists();
     
+    const serviceSchema = generateMedicalServiceSchema({
+        name: serviceData.name,
+        description: serviceData.description,
+        url: `https://clinica-de-la-costa.app/${serviceData.slug}`,
+        alternateName: serviceData.searchTerms
+    });
+    
     return (
-        <div className="space-y-12">
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
+            <div className="space-y-12">
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
@@ -172,6 +186,7 @@ export default async function UrologiaPage() {
                     </Button>
                 </div>
             </section>
-        </div>
+            </div>
+        </>
     );
 }

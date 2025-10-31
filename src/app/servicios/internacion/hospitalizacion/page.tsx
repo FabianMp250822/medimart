@@ -1,14 +1,22 @@
+import { unstable_cache } from 'next/cache';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle, UserCheck, HeartHandshake } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
+import { getServiceMetadata } from '@/lib/services-metadata';
+import { generateServiceMetadata } from '@/lib/metadata-helpers';
+import { generateMedicalServiceSchema } from '@/lib/structured-data';
 
-export const metadata: Metadata = {
+const serviceData = getServiceMetadata('hospitalizacion')!;
+
+export const metadata: Metadata = generateServiceMetadata(serviceData);
+
+const oldMetadata = {
     title: 'Servicios de Hospitalización - Clínica de la Costa',
     description: 'Ofrecemos servicios de hospitalización para adultos y pediátricos. Atención integral con calidad, seguridad y un enfoque humano.',
     keywords: ['hospitalización', 'hospital', 'clínica', 'servicios médicos', 'cuidados intensivos', 'hospitalización pediátrica'],
@@ -34,26 +42,22 @@ export const metadata: Metadata = {
     }
 };
 
-
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        if (!adminDb) {
-            console.warn('adminDb no está inicializado. getSpecialists devolverá lista vacía.');
-            return [];
-        }
-        const snapshot = await adminDb.collection('medicos')
-            .where('especialidad', '==', 'Medicina Interna')
-            .limit(5)
-            .get();
-        if (snapshot.empty) {
-            return [];
-        }
-        return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Hospitalización: ", error);
-        return [];
-    }
-}
+const getSpecialists = unstable_cache(
+    async (): Promise<Medico[]> => {
+        return safeQuery(async (db) => {
+            const snapshot = await db.collection('medicos')
+                .where('especialidad', '==', serviceData.specialty)
+                .limit(5)
+                .get();
+            if (snapshot.empty) {
+                return [];
+            }
+            return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
+        }, []);
+    },
+    ['hospitalizacion-specialists'],
+    { revalidate: 3600, tags: ['medicos', 'hospitalizacion'] }
+);
 
 const hospitalizacionServices = [
     {
@@ -75,16 +79,12 @@ export default async function HospitalizacionPage() {
     const specialists = await getSpecialists();
     const lastUpdated = new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    const hospitalJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Hospital',
-        'name': 'Clínica de la Costa',
-        'description': metadata.description,
-        'department': {
-            '@type': 'MedicalDepartment',
-            'name': 'Servicio de Hospitalización'
-        }
-    };
+    const serviceSchema = generateMedicalServiceSchema({
+        name: serviceData.name,
+        description: serviceData.description,
+        url: `https://clinica-de-la-costa.app/${serviceData.slug}`,
+        alternateName: serviceData.searchTerms
+    });
 
     const faqJsonLd = {
         '@context': 'https://schema.org',
@@ -111,7 +111,7 @@ export default async function HospitalizacionPage() {
     
     return (
         <div className="space-y-12">
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([hospitalJsonLd, faqJsonLd]) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([serviceSchema, faqJsonLd]) }} />
 
             <div className="text-sm text-muted-foreground flex justify-end gap-4 pr-4">
                 <span>Última actualización: <strong>{lastUpdated}</strong></span>

@@ -4,28 +4,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
+import { getServiceMetadata } from '@/lib/services-metadata';
+import { generateServiceMetadata } from '@/lib/metadata-helpers';
+import { generateMedicalServiceSchema } from '@/lib/structured-data';
 
-export const metadata: Metadata = {
-    title: 'Cirugía General - Clínica de la Costa',
-    description: 'Atención integral para emergencias y cirugías electivas. Nuestro equipo de cirugía general ofrece soluciones rápidas, efectivas y seguras para una amplia gama de condiciones.',
-};
+const serviceData = getServiceMetadata('cirugia-general')!;
+
+export const metadata: Metadata = generateServiceMetadata(serviceData);
 
 async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+    return safeQuery(async (db) => {
+        const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Cirugía General')
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Cirugía General: ", error);
-        return [];
-    }
+    }, []);
 }
 
 const objectives = [
@@ -44,11 +43,23 @@ const uniqueFeatures = [
 export default async function CirugiaGeneralPage() {
     const specialists = await getSpecialists();
     
+    const serviceSchema = generateMedicalServiceSchema({
+        name: serviceData.name,
+        description: serviceData.description,
+        url: `https://clinica-de-la-costa.app/${serviceData.slug}`,
+        alternateName: serviceData.searchTerms // Incluir términos alternativos para mejor SEO
+    });
+    
     return (
-        <div className="space-y-12">
-            <Card className="overflow-hidden">
-                <div className="relative h-64 sm:h-80 md:h-96 w-full">
-                    <Image
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
+            <div className="space-y-12">
+                <Card className="overflow-hidden">
+                    <div className="relative h-64 sm:h-80 md:h-96 w-full">
+                        <Image
                         src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%204.42.37%20PM(1).jpeg?alt=media&token=a0535648-1f07-4a43-87c1-8901f530dd94"
                         alt="Cirugía General"
                         layout="fill"
@@ -136,5 +147,6 @@ export default async function CirugiaGeneralPage() {
                 </div>
             </section>
         </div>
+        </>
     );
 }

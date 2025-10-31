@@ -4,28 +4,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, Stethoscope, CheckCircle, HeartHandshake } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
+import { getServiceMetadata } from '@/lib/services-metadata';
+import { generateServiceMetadata } from '@/lib/metadata-helpers';
+import { generateMedicalServiceSchema } from '@/lib/structured-data';
 
-export const metadata: Metadata = {
-    title: 'Atención Integral para Pacientes con VIH/SIDA - Clínica de la Costa',
-    description: 'Programa integral con un equipo multidisciplinario para la atención, prevención y control del VIH/SIDA, mejorando la calidad de vida de los pacientes.',
-};
+const serviceData = getServiceMetadata('atencion-vih')!;
+
+export const metadata: Metadata = generateServiceMetadata(serviceData);
 
 async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
-            .where('especialidad', '==', 'Infectología')
+    return safeQuery(async (db) => {
+        const snapshot = await db.collection('medicos')
+            .where('especialidad', '==', serviceData.specialty)
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for VIH Program: ", error);
-        return [];
-    }
+    }, []);
 }
 
 const specializedServices = [
@@ -55,10 +54,22 @@ const comprehensiveCarePoints = [
 export default async function VIHPage() {
     const specialists = await getSpecialists();
     
+    const serviceSchema = generateMedicalServiceSchema({
+        name: serviceData.name,
+        description: serviceData.description,
+        url: `https://clinica-de-la-costa.app/${serviceData.slug}`,
+        alternateName: serviceData.searchTerms
+    });
+    
     return (
-        <div className="space-y-12">
-            <Card className="overflow-hidden">
-                <div className="relative h-64 sm:h-80 md:h-96 w-full">
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
+            <div className="space-y-12">
+                <Card className="overflow-hidden">
+                    <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
                         src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%206.31.54%20PM.jpeg?alt=media&token=128385f5-0c3a-452c-9183-439023b2c3a0"
                         alt="Programa de Atención Integral VIH"
@@ -168,5 +179,6 @@ export default async function VIHPage() {
                 </div>
             </section>
         </div>
+        </>
     );
 }

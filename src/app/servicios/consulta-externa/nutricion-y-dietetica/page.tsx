@@ -4,28 +4,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle, Leaf } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
+import { generateMedicalServiceSchema } from '@/lib/structured-data';
+import { getServiceMetadata } from '@/lib/services-metadata';
+import { generateServiceMetadata } from '@/lib/metadata-helpers';
 
-export const metadata: Metadata = {
-    title: 'Unidad de Nutrición y Dietética - Clínica de la Costa',
-    description: 'Promovemos la salud integral a través de orientación y tratamientos dietéticos personalizados, diseñados para mejorar la calidad de vida de nuestros pacientes.',
-};
+const serviceData = getServiceMetadata('nutricion-dietetica')!;
+
+export const metadata: Metadata = generateServiceMetadata(serviceData);
 
 async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+    return safeQuery(async (db) => {
+        const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Nutrición y Dietética')
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Nutrición y Dietética: ", error);
-        return [];
-    }
+    }, []);
 }
 
 const services = [
@@ -50,8 +49,21 @@ const services = [
 export default async function NutricionYDieteticaPage() {
     const specialists = await getSpecialists();
 
+    // Generar datos estructurados para este servicio
+    const serviceSchema = generateMedicalServiceSchema({
+        name: 'Nutrición y Dietética',
+        description: 'Servicio especializado de nutrición y dietética con planes alimenticios personalizados para mejorar la calidad de vida de nuestros pacientes.',
+        url: 'https://clinica-de-la-costa.app/servicios/consulta-externa/nutricion-y-dietetica'
+    });
+
     return (
-        <div className="space-y-12">
+        <>
+            {/* Datos estructurados JSON-LD */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
+            <div className="space-y-12">
             <Card className="overflow-hidden">
                 <div className="relative h-64 sm:h-80 md:h-96 w-full">
                     <Image
@@ -144,6 +156,7 @@ export default async function NutricionYDieteticaPage() {
                     </Button>
                 </div>
             </section>
-        </div>
+            </div>
+        </>
     );
 }

@@ -1,4 +1,4 @@
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Blog } from '@/types/blog';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 };
 
 async function getBlogs(): Promise<Blog[]> {
-  try {
-    const blogsSnapshot = await adminDb.collection('blogs').where('lugar', '==', 'clinica').orderBy('date', 'desc').get();
+  return safeQuery(async (db) => {
+    const blogsSnapshot = await db.collection('blogs').where('lugar', '==', 'clinica').orderBy('date', 'desc').get();
     if (blogsSnapshot.empty) {
       console.log('No blogs found.');
       return [];
@@ -23,10 +23,7 @@ async function getBlogs(): Promise<Blog[]> {
       ...(doc.data() as Omit<Blog, 'id'>),
     }));
     return blogs;
-  } catch (error) {
-    console.error("Error fetching blogs: ", error);
-    return [];
-  }
+  }, []);
 }
 
 export default async function NoticiasPage() {

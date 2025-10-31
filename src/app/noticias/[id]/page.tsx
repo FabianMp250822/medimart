@@ -1,4 +1,4 @@
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Blog } from '@/types/blog';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -12,8 +12,8 @@ type Props = {
 };
 
 async function getBlog(id: string): Promise<Blog | null> {
-  try {
-    const docRef = adminDb.collection('blogs').doc(id);
+  return safeQuery(async (db) => {
+    const docRef = db.collection('blogs').doc(id);
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) {
@@ -21,15 +21,12 @@ async function getBlog(id: string): Promise<Blog | null> {
     }
 
     return { id: docSnap.id, ...docSnap.data() } as Blog;
-  } catch (error) {
-    console.error("Error fetching blog post: ", error);
-    return null;
-  }
+  }, null);
 }
 
 async function getRecentBlogs(currentId: string): Promise<Blog[]> {
-    try {
-        const blogsSnapshot = await adminDb.collection('blogs')
+    return safeQuery(async (db) => {
+        const blogsSnapshot = await db.collection('blogs')
             .where('lugar', '==', 'clinica')
             .orderBy('date', 'desc')
             .limit(4)
@@ -41,15 +38,12 @@ async function getRecentBlogs(currentId: string): Promise<Blog[]> {
             .slice(0, 3);
             
         return blogs;
-    } catch (error) {
-        console.error("Error fetching recent blogs: ", error);
-        return [];
-    }
+    }, []);
 }
 
 async function getSimilarBlogs(category: string, currentId: string): Promise<Blog[]> {
-    try {
-        const blogsSnapshot = await adminDb.collection('blogs')
+    return safeQuery(async (db) => {
+        const blogsSnapshot = await db.collection('blogs')
             .where('category', '==', category)
             .orderBy('date', 'desc')
             .limit(4)
@@ -61,15 +55,12 @@ async function getSimilarBlogs(category: string, currentId: string): Promise<Blo
             .slice(0, 3);
             
         return blogs;
-    } catch (error) {
-        console.error("Error fetching similar blogs: ", error);
-        return [];
-    }
+    }, []);
 }
 
 async function getAndUpdateVisitCount(id: string): Promise<number> {
-  const visitRef = adminDb.collection('visitas').doc(id);
-  try {
+  return safeQuery(async (db) => {
+    const visitRef = db.collection('visitas').doc(id);
     await visitRef.set({ 
       visitas: admin.firestore.FieldValue.increment(1) 
     }, { merge: true });
@@ -80,10 +71,7 @@ async function getAndUpdateVisitCount(id: string): Promise<number> {
       return docSnap.data()?.visitas || 1;
     }
     return 1;
-  } catch (error) {
-    console.error("Error updating or fetching visit count: ", error);
-    return 0;
-  }
+  }, 0);
 }
 
 export async function generateMetadata(
@@ -118,11 +106,8 @@ export async function generateMetadata(
           alt: blog.title,
         },
       ],
-      article: {
-        publishedTime: new Date(blog.date).toISOString(),
-        authors: [blog.author],
-        tags: [blog.category],
-      },
+      publishedTime: new Date(blog.date).toISOString(),
+      authors: [blog.author],
     },
     twitter: {
       card: 'summary_large_image',

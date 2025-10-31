@@ -1,4 +1,4 @@
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico, ResearcherData } from '@/types/medico';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ResearcherProfile } from '@/components/especialistas/researcher-profile';
+import { generatePhysicianSchema } from '@/lib/structured-data';
 
 type Props = {
   params: { id: string };
@@ -22,8 +23,8 @@ const researcherIdMap: { [key: string]: string } = {
 };
 
 async function getEspecialista(id: string): Promise<(Medico & { researcherData?: ResearcherData }) | null> {
-  try {
-    const docRef = adminDb.collection('medicos').doc(id);
+  return safeQuery(async (db) => {
+    const docRef = db.collection('medicos').doc(id);
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) {
@@ -35,7 +36,7 @@ async function getEspecialista(id: string): Promise<(Medico & { researcherData?:
     // Check if there is a researcher associated
     const researcherId = researcherIdMap[id];
     if (researcherId) {
-      const researcherRef = adminDb.collection('researchers').doc(researcherId);
+      const researcherRef = db.collection('researchers').doc(researcherId);
       const researcherSnap = await researcherRef.get();
       if (researcherSnap.exists) {
         const researcherData = researcherSnap.data() as ResearcherData;
@@ -55,24 +56,18 @@ async function getEspecialista(id: string): Promise<(Medico & { researcherData?:
     }
 
     return medicoData;
-  } catch (error) {
-    console.error("Error fetching specialist: ", error);
-    return null;
-  }
+  }, null);
 }
 
 async function getOtherEspecialistas(currentId: string): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos').limit(10).get();
+    return safeQuery(async (db) => {
+        const snapshot = await db.collection('medicos').limit(10).get();
         const medicos = snapshot.docs
             .map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }))
             .filter(medico => medico.id !== currentId)
             .slice(0, 5);
         return medicos;
-    } catch (error) {
-        console.error("Error fetching other specialists: ", error);
-        return [];
-    }
+    }, []);
 }
 
 export async function generateMetadata(
@@ -87,29 +82,63 @@ export async function generateMetadata(
     };
   }
   
-  const description = `Conozca más sobre ${especialista.nombreCompleto}, especialista en ${especialista.especialidad} en Clínica de la Costa.`;
+  // Generar descripción rica y única para cada especialista
+  const experienceText = especialista.professionalExperience && especialista.professionalExperience.length > 0
+    ? ` Con experiencia en ${especialista.professionalExperience[0].institucionTrabajo}.`
+    : '';
+  
+  const academicText = especialista.academicInfo && especialista.academicInfo.length > 0
+    ? ` Formación: ${especialista.academicInfo[0].gradoAcademico} en ${especialista.academicInfo[0].institucion}.`
+    : '';
+
+  const description = `Dr(a). ${especialista.nombreCompleto}, especialista en ${especialista.especialidad} en Clínica de la Costa, Barranquilla.${academicText}${experienceText} Agenda tu cita con este profesional certificado.`;
+
+  const keywords = [
+    especialista.especialidad,
+    especialista.nombreCompleto,
+    `doctor ${especialista.especialidad}`,
+    `médico ${especialista.especialidad} Barranquilla`,
+    'Clínica de la Costa',
+    'especialista certificado',
+    'atención médica',
+  ];
 
   return {
-    title: `${especialista.nombreCompleto} - ${especialista.especialidad}`,
+    title: `Dr(a). ${especialista.nombreCompleto} - ${especialista.especialidad}`,
     description: description,
+    keywords: keywords,
+    authors: [{ name: especialista.nombreCompleto }],
+    alternates: {
+      canonical: `/especialistas/${especialista.id}`
+    },
     openGraph: {
-      title: especialista.nombreCompleto,
+      title: `Dr(a). ${especialista.nombreCompleto} - ${especialista.especialidad}`,
       description: description,
       type: 'profile',
       url: `https://clinica-de-la-costa.app/especialistas/${especialista.id}`,
+      siteName: 'Clínica de la Costa',
+      locale: 'es_CO',
       images: [
         {
-          url: especialista.profileImage,
-          width: 400,
-          height: 400,
-          alt: especialista.nombreCompleto,
+          url: especialista.profileImage || 'https://clinica-de-la-costa.app/default-doctor.jpg',
+          width: 800,
+          height: 800,
+          alt: `Dr(a). ${especialista.nombreCompleto} - ${especialista.especialidad}`,
         },
       ],
-      profile: {
-        firstName: especialista.nombreCompleto.split(' ')[0],
-        lastName: especialista.nombreCompleto.split(' ').slice(1).join(' '),
-      },
+      firstName: especialista.nombreCompleto.split(' ')[0],
+      lastName: especialista.nombreCompleto.split(' ').slice(1).join(' '),
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Dr(a). ${especialista.nombreCompleto}`,
+      description: `Especialista en ${especialista.especialidad} - Clínica de la Costa`,
+      images: [especialista.profileImage || 'https://clinica-de-la-costa.app/default-doctor.jpg'],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    }
   };
 }
 
@@ -121,14 +150,32 @@ export default async function EspecialistaDetailPage({ params }: Props) {
     notFound();
   }
 
+  // Generar datos estructurados completos para el médico
+  const physicianSchema = generatePhysicianSchema({
+    id: especialista.id,
+    nombreCompleto: especialista.nombreCompleto,
+    especialidad: especialista.especialidad,
+    profileImage: especialista.profileImage,
+    email: especialista.email,
+    telefono: especialista.telefono,
+    academicInfo: especialista.academicInfo,
+    professionalExperience: especialista.professionalExperience
+  });
+
   const hasAcademicInfo = especialista.academicInfo && especialista.academicInfo.some(info => info.gradoAcademico || info.institucion);
   const hasProfessionalExperience = especialista.professionalExperience && especialista.professionalExperience.some(exp => exp.posicion || exp.institucionTrabajo);
   const hasBiography = especialista.researcherData?.biografia?.texto;
 
   return (
-    <div className="bg-background">
-      <div className="container mx-auto py-12 px-4">
-        <div className="grid lg:grid-cols-3 gap-12">
+    <>
+      {/* Datos estructurados JSON-LD para SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(physicianSchema) }}
+      />
+      <div className="bg-background">
+        <div className="container mx-auto py-12 px-4">
+          <div className="grid lg:grid-cols-3 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Header Perfil */}
@@ -153,7 +200,7 @@ export default async function EspecialistaDetailPage({ params }: Props) {
                 <Card>
                     <CardHeader><CardTitle className="flex items-center gap-2 text-2xl text-primary"><UserSquare /> Biografía</CardTitle></CardHeader>
                     <CardContent>
-                        <p className="text-muted-foreground whitespace-pre-line">{especialista.researcherData.biografia.texto}</p>
+                        <p className="text-muted-foreground whitespace-pre-line">{especialista.researcherData?.biografia?.texto}</p>
                     </CardContent>
                 </Card>
             )}
@@ -164,7 +211,7 @@ export default async function EspecialistaDetailPage({ params }: Props) {
                     <CardHeader><CardTitle className="flex items-center gap-2 text-2xl text-primary"><GraduationCap/> Formación Académica</CardTitle></CardHeader>
                     <CardContent>
                         <ul className="space-y-4">
-                        {especialista.academicInfo.map((info, index) => (
+                        {especialista.academicInfo?.map((info, index) => (
                             <li key={index} className="flex items-start gap-4">
                                 <div className="mt-1.5 bg-accent/20 p-2 rounded-full"><GraduationCap className="h-5 w-5 text-accent"/></div>
                                 <div>
@@ -184,7 +231,7 @@ export default async function EspecialistaDetailPage({ params }: Props) {
                     <CardHeader><CardTitle className="flex items-center gap-2 text-2xl text-primary"><Briefcase/> Experiencia Profesional</CardTitle></CardHeader>
                     <CardContent>
                         <ul className="space-y-4">
-                        {especialista.professionalExperience.map((exp, index) => (
+                        {especialista.professionalExperience?.map((exp, index) => (
                            <li key={index} className="flex items-start gap-4">
                                 <div className="mt-1.5 bg-accent/20 p-2 rounded-full"><Briefcase className="h-5 w-5 text-accent"/></div>
                                 <div>
@@ -235,8 +282,9 @@ export default async function EspecialistaDetailPage({ params }: Props) {
                 </CardContent>
             </Card>
           </aside>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

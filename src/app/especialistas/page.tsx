@@ -1,4 +1,4 @@
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Medico } from '@/types/medico';
@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 async function getEspecialistas(): Promise<Medico[]> {
   const featuredMedicoIds = ['p3DcIXWsU0fJ4m0uamrr', 'eM8fDVBxZ7KebIU5vJVT'];
-  try {
-    const especialistasSnapshot = await adminDb.collection('medicos').orderBy('nombreCompleto').get();
+  return safeQuery(async (db) => {
+    const especialistasSnapshot = await db.collection('medicos').orderBy('nombreCompleto').get();
     if (especialistasSnapshot.empty) {
       console.log('No specialists found.');
       return [];
@@ -29,10 +29,7 @@ async function getEspecialistas(): Promise<Medico[]> {
     const finalMedicos = [...featuredMedicos, ...otherMedicos];
 
     return finalMedicos;
-  } catch (error) {
-    console.error("Error fetching specialists: ", error);
-    return [];
-  }
+  }, []);
 }
 
 export default async function EspecialistasPage() {
