@@ -3,7 +3,10 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  // Image optimization enabled for remote patterns
+  // Force clean rebuild - Updated: Oct 31, 2025
+  generateBuildId: async () => {
+    return `build-${Date.now()}`;
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
