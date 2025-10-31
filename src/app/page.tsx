@@ -9,6 +9,7 @@ import { Team } from '@/components/team';
 import { RecentArticles } from '@/components/recent-articles';
 import { AppFooter } from '@/components/footer';
 import { Header } from '@/components/header';
+import { EntidadesConvenioSlider } from '@/components/servicios/entidades-convenio-slider';
 import { adminDb } from '@/lib/firebase-admin';
 import type { Blog } from '@/types/blog';
 import type { Medico } from '@/types/medico';
@@ -109,6 +110,7 @@ export default async function Home() {
         <Hero />
         <div className="container mx-auto">
           <Services />
+          <EntidadesConvenioSlider />
           <Commitment />
           <ComprehensiveCare />
           <Priority />

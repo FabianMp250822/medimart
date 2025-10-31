@@ -7,7 +7,6 @@ import type { Metadata } from 'next';
 import { adminDb } from '@/lib/firebase-admin';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
-import { EntidadesConvenioSlider } from '@/components/servicios/entidades-convenio-slider';
 
 export const metadata: Metadata = {
     title: 'Servicios de Hospitalización - Clínica de la Costa',
@@ -191,8 +190,6 @@ export default async function HospitalizacionPage() {
                     </CardContent>
                 </Card>
             </section>
-
-            <EntidadesConvenioSlider />
 
             {specialists.length > 0 && (
                 <RelatedSpecialists
