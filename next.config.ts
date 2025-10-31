@@ -3,6 +3,7 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // Image optimization enabled for remote patterns
   typescript: {
     ignoreBuildErrors: true,
   },
