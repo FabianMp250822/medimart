@@ -31,8 +31,8 @@ export function Commitment() {
                 <Image
                     src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641"
                     alt="Clínica exterior"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: 'cover' }}
                     data-ai-hint="clinic exterior"
                     className="z-10"
                     sizes="(max-width: 768px) 100vw, 50vw"

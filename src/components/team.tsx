@@ -23,9 +23,8 @@ export function Team({ teamMembers }: TeamProps) {
                     <Image 
                       src={member.profileImage || "https://placehold.co/300x400.png"} 
                       alt={member.nombreCompleto} 
-                      layout="fill" 
-                      objectFit="cover" 
-                      objectPosition="top" 
+                      fill
+                      style={{ objectFit: 'cover', objectPosition: 'top' }}
                       data-ai-hint="doctor portrait"
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
                       unoptimized

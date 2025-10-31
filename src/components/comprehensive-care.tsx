@@ -34,7 +34,7 @@ export function ComprehensiveCare() {
           <Card key={item.title} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
             <CardContent className="p-0">
               <div className="relative h-56">
-                <Image src={item.image} alt={item.title} layout="fill" objectFit="cover" data-ai-hint={item.hint}/>
+                <Image src={item.image} alt={item.title} fill style={{ objectFit: 'cover' }} data-ai-hint={item.hint} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"/>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col items-start p-6 bg-card">

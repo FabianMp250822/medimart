@@ -39,9 +39,10 @@ export function Priority() {
                     <Image
                         src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%205.39.18%20PM.jpeg?alt=media&token=f5430294-929e-4089-be48-1ee6674b1d1f"
                         alt="Equipo médico de alta tecnología"
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        style={{ objectFit: 'cover' }}
                         data-ai-hint="medical equipment"
+                        sizes="(max-width: 768px) 100vw, 50vw"
                     />
                 </div>
             </div>

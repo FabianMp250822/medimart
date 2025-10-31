@@ -51,7 +51,7 @@ export function HowWeServe() {
           <div key={item.step} className="relative flex flex-col items-center">
             <div className="relative z-10">
                 <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-card shadow-lg bg-background">
-                    <Image src={item.image} alt={item.title} layout="fill" objectFit="cover" data-ai-hint={item.hint} />
+                    <Image src={item.image} alt={item.title} fill style={{ objectFit: 'cover' }} data-ai-hint={item.hint} sizes="192px" />
                 </div>
                 <div className="absolute -top-4 -left-4 bg-accent text-accent-foreground h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold">
                     {item.step}

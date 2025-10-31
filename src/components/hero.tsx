@@ -53,11 +53,12 @@ export function Hero() {
                     <Image
                         src="https://firebasestorage.googleapis.com/v0/b/clinica-de-la-costa.appspot.com/o/web%20imagen%2FWhatsApp%20Image%202024-11-19%20at%2011.40.55%20AM.jpeg?alt=media&token=128aa14c-6aa0-4a6f-a301-68276956f641"
                         alt="Fachada de la Clínica de la Costa"
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        style={{ objectFit: 'cover' }}
                         className="rounded-xl shadow-2xl"
                         data-ai-hint="clinic exterior"
                         priority
+                        sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                 </div>
             </div>
