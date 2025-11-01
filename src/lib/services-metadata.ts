@@ -440,11 +440,17 @@ export const servicesMetadata: Record<string, ServiceMetadata> = {
 };
 
 /**
- * Obtiene los metadatos de un servicio por su slug
+ * Obtiene los metadatos de un servicio por su key o slug
  */
-export function getServiceMetadata(slug: string): ServiceMetadata | undefined {
+export function getServiceMetadata(keyOrSlug: string): ServiceMetadata | undefined {
+  // Primero intenta buscar directamente por key
+  if (servicesMetadata[keyOrSlug]) {
+    return servicesMetadata[keyOrSlug];
+  }
+  
+  // Si no encuentra, busca por slug
   const key = Object.keys(servicesMetadata).find(k => 
-    servicesMetadata[k].slug.includes(slug)
+    servicesMetadata[k].slug.includes(keyOrSlug)
   );
   return key ? servicesMetadata[key] : undefined;
 }
