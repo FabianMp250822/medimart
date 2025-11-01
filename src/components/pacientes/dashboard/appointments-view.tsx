@@ -144,9 +144,11 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
             return;
         }
 
+        const db = imedicDb; // Capture the non-null value for use in async functions
+
         const fetchInitialData = async () => {
             try {
-                const epsSnapshot = await getDocs(collection(imedicDb, "eps"));
+                const epsSnapshot = await getDocs(collection(db, "eps"));
                 if (!epsSnapshot.empty) {
                     const epsData = epsSnapshot.docs[0].data();
                     if (epsData.listEps && Array.isArray(epsData.listEps)) {
@@ -159,7 +161,7 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
             }
 
             try {
-                const q = query(collection(imedicDb, "pacientes"), where("uid", "==", user.uid));
+                const q = query(collection(db, "pacientes"), where("uid", "==", user.uid));
                 const querySnapshot = await getDocs(q);
 
                 if (!querySnapshot.empty) {
@@ -183,7 +185,7 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
             }
         };
 
-        const q = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
+        const q = query(collection(db, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setRequests(data);
@@ -219,21 +221,24 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
         if (!imedicDb || !imedicStorage || !user || !selectedDoctor) return;
         setLoading(true);
 
+        const db = imedicDb; // Capture non-null value
+        const storage = imedicStorage; // Capture non-null value
+
         try {
             // 1. Asignar un agente
             let assignedAgentUid: string | null = null;
-            const agentPatientRelationQuery = query(collection(imedicDb, "agentPatientRelations"), where("patientId", "==", user.uid));
+            const agentPatientRelationQuery = query(collection(db, "agentPatientRelations"), where("patientId", "==", user.uid));
             const relationSnapshot = await getDocs(agentPatientRelationQuery);
 
             if (!relationSnapshot.empty) {
                 assignedAgentUid = relationSnapshot.docs[0].data().agentUid;
             } else {
-                const agentQuery = query(collection(imedicDb, "agentes"));
+                const agentQuery = query(collection(db, "agentes"));
                 const agentSnapshot = await getDocs(agentQuery);
                 if (!agentSnapshot.empty) {
                     const agentDoc = agentSnapshot.docs[0]; // Asignación simple
                     assignedAgentUid = agentDoc.id;
-                    await addDoc(collection(imedicDb, "agentPatientRelations"), {
+                    await addDoc(collection(db, "agentPatientRelations"), {
                         agentUid: assignedAgentUid,
                         patientId: user.uid,
                         assignedAt: Timestamp.now()
@@ -249,7 +254,7 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
             let examDocuments: { url: string; name: string; type: string; }[] = [];
             if (data.examFiles && data.examFiles.length > 0) {
                 for (const file of Array.from(data.examFiles as FileList)) {
-                    const fileRef = storageRef(imedicStorage, `fotos/examenes/${user.uid}/${Date.now()}_${file.name}`);
+                    const fileRef = storageRef(storage, `fotos/examenes/${user.uid}/${Date.now()}_${file.name}`);
                     const snapshot = await uploadBytes(fileRef, file);
                     const downloadURL = await getDownloadURL(snapshot.ref);
                     examDocuments.push({
@@ -288,7 +293,7 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
             };
 
             // 4. Guardar la solicitud
-            await addDoc(collection(imedicDb, "solicitudesCitas"), appointmentObj);
+            await addDoc(collection(db, "solicitudesCitas"), appointmentObj);
             
             toast({ title: "Solicitud Enviada", description: "Su solicitud ha sido enviada. Será redirigido al chat de soporte." });
             resetForm();
@@ -372,8 +377,8 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
                                     <div>
                                         <strong>Archivos Adjuntos:</strong>
                                         <ul className="list-disc pl-5">
-                                            {Array.from(examFiles).map((file: File, index) => (
-                                                <li key={index}>{file.name}</li>
+                                            {Array.from(examFiles).map((file, index) => (
+                                                <li key={index}>{(file as File).name}</li>
                                             ))}
                                         </ul>
                                     </div>
@@ -472,7 +477,7 @@ export function AppointmentsView({ user, setActiveView }: AppointmentsViewProps)
                              <div className="space-y-2 pt-2">
                                 <p className="text-sm font-medium">Archivos seleccionados:</p>
                                 <div className="space-y-2">
-                                {Array.from(examFiles).map((file: File, index) => (
+                                {(Array.from(examFiles) as File[]).map((file, index) => (
                                     <div key={index} className="flex items-center justify-between p-2 rounded-md border bg-muted/50">
                                         <div className="flex items-center gap-2 truncate">
                                             <Paperclip className="h-4 w-4 flex-shrink-0" />

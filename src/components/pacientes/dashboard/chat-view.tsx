@@ -115,11 +115,12 @@ export function ChatView({ setActiveView }: ChatViewProps) {
 
     const checkForAppointmentRequests = async () => {
       if (!imedicDb) return;
+      const db = imedicDb; // Capture non-null value
       try {
         setLoadingRequests(true);
-        const solQuery = query(collection(imedicDb, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
+        const solQuery = query(collection(db, "solicitudesCitas"), where("uidPaciente", "==", user.uid));
         const solSnapshot = await getDocs(solQuery);
-        const citasQuery = query(collection(imedicDb, "citas"), where("uidPaciente", "==", user.uid));
+        const citasQuery = query(collection(db, "citas"), where("uidPaciente", "==", user.uid));
         const citasSnapshot = await getDocs(citasQuery);
         setHasAppointmentRequest(!solSnapshot.empty || !citasSnapshot.empty);
       } catch (error) {
@@ -133,8 +134,9 @@ export function ChatView({ setActiveView }: ChatViewProps) {
 
   useEffect(() => {
     if (!user || !imedicDb) return;
+    const db = imedicDb; // Capture non-null value
 
-    const relQ = query(collection(imedicDb, "agentPatientRelations"), where("patientId", "==", user.uid));
+    const relQ = query(collection(db, "agentPatientRelations"), where("patientId", "==", user.uid));
     const unsubscribeRel = onSnapshot(relQ, (snap) => {
       if (!snap.empty) {
         const relationData = snap.docs[0].data();
@@ -155,12 +157,13 @@ export function ChatView({ setActiveView }: ChatViewProps) {
               setIsAssigningAgent(true);
               setStatusMessage("Asignando un agente de soporte...");
               if (!imedicDb) return;
+              const db = imedicDb; // Capture non-null value
               try {
-                  const agentQuery = query(collection(imedicDb, "agentes"));
+                  const agentQuery = query(collection(db, "agentes"));
                   const agentSnapshot = await getDocs(agentQuery);
                   if (!agentSnapshot.empty) {
                       const agentDoc = agentSnapshot.docs[0]; // Simple assignment logic
-                      await addDoc(collection(imedicDb, "agentPatientRelations"), {
+                      await addDoc(collection(db, "agentPatientRelations"), {
                           agentUid: agentDoc.id,
                           patientId: user.uid,
                           assignedAt: Timestamp.now()
@@ -182,10 +185,11 @@ export function ChatView({ setActiveView }: ChatViewProps) {
   
   const initChat = useCallback(async (patientId: string, agentUid: string) => {
     if (!imedicDb) return;
+    const db = imedicDb; // Capture non-null value
     try {
       setStatusMessage("Buscando chat...");
       const chatQ = query(
-        collection(imedicDb, "chats"),
+        collection(db, "chats"),
         where("patientUid", "==", patientId),
         where("agentUid", "==", agentUid)
       );
@@ -193,7 +197,7 @@ export function ChatView({ setActiveView }: ChatViewProps) {
       let newChatId: string;
 
       if (chatSnap.empty) {
-        const chatRef = await addDoc(collection(imedicDb, "chats"), {
+        const chatRef = await addDoc(collection(db, "chats"), {
           patientUid: patientId,
           agentUid,
           createdAt: Timestamp.now(),
@@ -202,7 +206,7 @@ export function ChatView({ setActiveView }: ChatViewProps) {
         newChatId = chatRef.id;
 
         const welcomeMessage = `Bienvenido(a) al chat de soporte de Clínica de la Costa. Este canal está disponible para el agendamiento y seguimiento de sus citas médicas. Si ya ha realizado una solicitud, un agente se comunicará con usted en breve por este medio para asistirlo.`;
-        await addDoc(collection(imedicDb, "chats", newChatId, "messages"), {
+        await addDoc(collection(db, "chats", newChatId, "messages"), {
           message: welcomeMessage,
           sender: agentUid,
           status: "recibido",
@@ -213,7 +217,7 @@ export function ChatView({ setActiveView }: ChatViewProps) {
       }
       setChatId(newChatId);
 
-      const agentDoc = await getDoc(doc(imedicDb, "agentes", agentUid));
+      const agentDoc = await getDoc(doc(db, "agentes", agentUid));
       if (agentDoc.exists()) {
         setAgentName(agentDoc.data().agentName);
         setStatusMessage("");
@@ -252,7 +256,8 @@ export function ChatView({ setActiveView }: ChatViewProps) {
       setMessages([]);
       return;
     }
-    const messagesRef = collection(imedicDb, "chats", chatId, "messages");
+    const db = imedicDb; // Capture non-null value
+    const messagesRef = collection(db, "chats", chatId, "messages");
     const q = query(messagesRef, orderBy("timestamp", "asc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
@@ -266,17 +271,20 @@ export function ChatView({ setActiveView }: ChatViewProps) {
   const sendMessage = async () => {
     if ((!newMsg.trim() && !file) || !chatId || !user || !imedicDb || !imedicStorage) return;
 
+    const db = imedicDb; // Capture non-null value
+    const storage = imedicStorage; // Capture non-null value
+
     try {
       let fileUrl = null;
       let fileType = null;
       if (file) {
         const storagePath = `chats/${chatId}/${Date.now()}_${file.name}`;
-        const fileRef = storageRef(imedicStorage, storagePath);
+        const fileRef = storageRef(storage, storagePath);
         const snapshot = await uploadBytes(fileRef, file);
         fileUrl = await getDownloadURL(snapshot.ref);
         fileType = file.type;
       }
-      await addDoc(collection(imedicDb, "chats", chatId, "messages"), {
+      await addDoc(collection(db, "chats", chatId, "messages"), {
         message: newMsg.trim(),
         sender: user.uid,
         status: "emitido",
