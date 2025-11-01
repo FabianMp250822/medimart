@@ -25,4 +25,20 @@ if (serviceAccountKey && clientEmail && projectId && !admin.apps.length) {
 const adminDb = admin.apps.length ? admin.firestore() : null;
 const adminAuth = admin.apps.length ? admin.auth() : null;
 
+export async function safeQuery<T>(
+  query: (db: admin.firestore.Firestore) => Promise<T>,
+  fallback: T
+): Promise<T> {
+  if (!adminDb) {
+    console.warn('Firebase Admin not initialized, returning fallback');
+    return fallback;
+  }
+  try {
+    return await query(adminDb);
+  } catch (error) {
+    console.error('Firebase Admin query error:', error);
+    return fallback;
+  }
+}
+
 export { adminDb, adminAuth };
