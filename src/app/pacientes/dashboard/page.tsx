@@ -14,11 +14,16 @@ import { Loader2 } from 'lucide-react';
 import type { User } from 'firebase/auth';
 
 export default function DashboardPage() {
-  const [user, loading, error] = useAuthState(imedicAuth);
+  const [user, loading, error] = useAuthState(imedicAuth!);
   const [activeView, setActiveView] = useState('profile');
   const router = useRouter();
 
   useEffect(() => {
+    if (!imedicAuth) {
+      console.error('Firebase auth not initialized');
+      router.push('/pacientes/solicitar-cita');
+      return;
+    }
     if (!loading && !user) {
       router.push('/pacientes/solicitar-cita');
     }
