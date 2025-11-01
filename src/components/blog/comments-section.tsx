@@ -34,7 +34,8 @@ const commentSchema = z.object({
 type CommentFormValues = z.infer<typeof commentSchema>;
 
 export function CommentsSection({ blogId }: CommentsSectionProps) {
-    const [user, loading] = useAuthState(auth);
+    // Handle the case when auth is null
+    const [user, loading] = useAuthState(auth as any);
     const [comments, setComments] = useState<Comment[]>([]);
 
     const form = useForm<CommentFormValues>({
@@ -43,7 +44,7 @@ export function CommentsSection({ blogId }: CommentsSectionProps) {
     });
 
     useEffect(() => {
-        if (!blogId) return;
+        if (!blogId || !db) return;
         const commentsRef = collection(db, 'blogs', blogId, 'comments');
         const q = query(commentsRef, orderBy('timestamp', 'desc'));
 
@@ -54,6 +55,7 @@ export function CommentsSection({ blogId }: CommentsSectionProps) {
                 
                 // Fetch user data if not present on comment
                 if (!commentData.userName || !commentData.userImage) {
+                    if (!db) continue;
                     const userRef = doc(db, 'users', commentData.userId); // Assuming you have a 'users' collection
                     const userSnap = await getDoc(userRef);
                     if (userSnap.exists()) {
@@ -71,7 +73,7 @@ export function CommentsSection({ blogId }: CommentsSectionProps) {
     }, [blogId]);
 
     const onSubmit: SubmitHandler<CommentFormValues> = async (data) => {
-        if (!user) return;
+        if (!user || !db) return;
         
         const commentsRef = collection(db, 'blogs', blogId, 'comments');
         await addDoc(commentsRef, {

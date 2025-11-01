@@ -89,7 +89,7 @@ function ChatMessage({ msg, isAgent, onNavigateToAppointments }: { msg: any; isA
 }
 
 export function ChatView({ setActiveView }: ChatViewProps) {
-  const [user, userLoading] = useAuthState(imedicAuth);
+  const [user, userLoading] = useAuthState(imedicAuth as any);
   const [statusMessage, setStatusMessage] = useState("Cargando información...");
   const [chatId, setChatId] = useState<string | null>(null);
   const [agentName, setAgentName] = useState("");
