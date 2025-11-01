@@ -1,4 +1,4 @@
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { OfertaEmpleo } from '@/types/oferta-empleo';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -11,12 +11,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 async function getOferta(id: string): Promise<OfertaEmpleo | null> {
-  try {
-    const docRef = adminDb.collection('ofertasEmpleos').doc(id);
+  return safeQuery(async (db) => {
+    const docRef = db.collection('ofertasEmpleos').doc(id);
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) {
@@ -24,17 +24,15 @@ async function getOferta(id: string): Promise<OfertaEmpleo | null> {
     }
 
     return { id: docSnap.id, ...docSnap.data() } as OfertaEmpleo;
-  } catch (error) {
-    console.error("Error fetching job offer: ", error);
-    return null;
-  }
+  }, null);
 }
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const oferta = await getOferta(params.id);
+  const { id } = await params;
+  const oferta = await getOferta(id);
 
   if (!oferta) {
     return {
@@ -50,7 +48,7 @@ export async function generateMetadata(
     openGraph: {
       title: `Vacante: ${oferta.titulo} | Clínica de la Costa`,
       description: description,
-      type: 'article',
+      type: 'website',
       url: `https://clinica-de-la-costa.app/trabaja-con-nosotros/${oferta.id}`,
       images: [
         {
@@ -60,10 +58,6 @@ export async function generateMetadata(
           alt: 'Logo Clínica de la Costa',
         },
       ],
-      article: {
-        publishedTime: new Date(oferta.fechaPublicacion).toISOString(),
-        tags: [oferta.tipoContrato, oferta.jornada, oferta.ubicacion],
-      },
     },
     twitter: {
         card: 'summary_large_image',
@@ -86,7 +80,8 @@ const DetailItem = ({ icon, label, children }: { icon: React.ReactNode, label: s
 
 
 export default async function OfertaDetailPage({ params }: Props) {
-  const oferta = await getOferta(params.id);
+  const { id } = await params;
+  const oferta = await getOferta(id);
 
   if (!oferta) {
     notFound();

@@ -8,7 +8,7 @@ import { BlogLayout } from '@/components/blog/blog-layout';
 import admin from 'firebase-admin';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 async function getBlog(id: string): Promise<Blog | null> {
@@ -78,7 +78,8 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const blog = await getBlog(params.id);
+  const { id } = await params;
+  const blog = await getBlog(id);
 
   if (!blog) {
     return {
@@ -119,16 +120,17 @@ export async function generateMetadata(
 }
 
 export default async function BlogDetailPage({ params }: Props) {
-  const blog = await getBlog(params.id);
+  const { id } = await params;
+  const blog = await getBlog(id);
 
   if (!blog) {
     notFound();
   }
 
   const [recentBlogs, similarBlogs, visitCount] = await Promise.all([
-    getRecentBlogs(params.id),
-    getSimilarBlogs(blog.category, params.id),
-    getAndUpdateVisitCount(params.id)
+    getRecentBlogs(id),
+    getSimilarBlogs(blog.category, id),
+    getAndUpdateVisitCount(id)
   ]);
 
   return (

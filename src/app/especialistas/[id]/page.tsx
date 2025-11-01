@@ -12,7 +12,7 @@ import { ResearcherProfile } from '@/components/especialistas/researcher-profile
 import { generatePhysicianSchema } from '@/lib/structured-data';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 // Map specialist IDs to researcher IDs
@@ -74,7 +74,8 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const especialista = await getEspecialista(params.id);
+  const { id } = await params;
+  const especialista = await getEspecialista(id);
 
   if (!especialista) {
     return {
@@ -143,8 +144,9 @@ export async function generateMetadata(
 }
 
 export default async function EspecialistaDetailPage({ params }: Props) {
-  const especialista = await getEspecialista(params.id);
-  const otherEspecialistas = await getOtherEspecialistas(params.id);
+  const { id } = await params;
+  const especialista = await getEspecialista(id);
+  const otherEspecialistas = await getOtherEspecialistas(id);
 
   if (!especialista) {
     notFound();
