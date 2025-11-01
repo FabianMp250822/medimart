@@ -16,9 +16,10 @@ export const metadata = generateServiceMetadata(serviceData);
 
 const getSpecialists = unstable_cache(
     async (): Promise<Medico[]> => {
+        const data = getServiceMetadata('ginecologia-obstetricia')!;
         return safeQuery(async (db) => {
             const snapshot = await db.collection('medicos')
-                .where('especialidad', '==', serviceData.specialty)
+                .where('especialidad', '==', data.specialty)
                 .get();
             if (snapshot.empty) {
                 return [];
@@ -56,12 +57,13 @@ const technologies = [
 
 export default async function GinecologiaPage() {
     const specialists = await getSpecialists();
+    const data = getServiceMetadata('ginecologia-obstetricia')!;
     
     const serviceSchema = generateMedicalServiceSchema({
-        name: serviceData.name,
-        description: serviceData.description,
-        url: `https://clinica-de-la-costa.app/${serviceData.slug}`,
-        alternateName: serviceData.searchTerms
+        name: data.name,
+        description: data.description,
+        url: `https://clinica-de-la-costa.app/${data.slug}`,
+        alternateName: data.searchTerms
     });
     
     return (
