@@ -1,3 +1,5 @@
+// Global type declarations
+
 declare module 'react-world-flags' {
   import { ComponentType } from 'react';
 
