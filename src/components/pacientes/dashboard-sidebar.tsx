@@ -25,7 +25,7 @@ const menuItems = [
 export function DashboardSidebar({ activeView, setActiveView }: DashboardSidebarProps) {
   const router = useRouter();
   const { toast } = useToast();
-  const [signOut, loading, error] = useSignOut(imedicAuth);
+  const [signOut, loading, error] = useSignOut(imedicAuth as any);
 
   const handleSignOut = async () => {
     const success = await signOut();
