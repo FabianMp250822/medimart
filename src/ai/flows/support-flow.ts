@@ -57,13 +57,19 @@ const supportFlow = ai.defineFlow(
     outputSchema: SupportOutputSchema,
   },
   async ({history}) => {
-    const {text} = await ai.generate({
-      model: 'googleai/gemini-2.0-flash',
-      prompt: {
-        text: systemPrompt,
-        history: history,
-      },
-    });
+    // Construir el prompt completo con el historial
+    let fullPrompt = systemPrompt + "\n\n";
+    
+    // Agregar el historial de conversación al prompt
+    for (const message of history) {
+      const role = message.role === 'user' ? 'Usuario' : 'Asistente';
+      const text = message.content.map(c => c.text).join(' ');
+      fullPrompt += `${role}: ${text}\n`;
+    }
+    
+    // Generar la respuesta usando solo el texto del prompt
+    const {text} = await ai.generate(fullPrompt);
+    
     return text || "Lo siento, no pude generar una respuesta en este momento. Por favor, intenta de nuevo.";
   }
 );
