@@ -67,9 +67,13 @@ export default function SolicitarCitaPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
   const router = useRouter();
-  const [user, authLoading] = useAuthState(imedicAuth);
+  const [user, authLoading] = useAuthState(imedicAuth!);
 
   useEffect(() => {
+    if (!imedicAuth) {
+      console.error('imedicAuth is not initialized');
+      return;
+    }
     if (!authLoading && user) {
       router.push('/pacientes/dashboard');
     }
