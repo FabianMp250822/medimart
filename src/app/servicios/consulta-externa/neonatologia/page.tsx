@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle, Baby } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
@@ -13,20 +13,14 @@ export const metadata: Metadata = {
     description: 'Cuidado especializado para recién nacidos, especialmente prematuros o con condiciones médicas complejas. Servicio integral con UCIN y programas de seguimiento.',
 };
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+async function getSpecialists(): Promise<Medico[]> { return safeQuery(async (db) => { const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Neonatología')
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Neonatología: ", error);
-        return [];
-    }
-}
+    }, []); }
 
 const ucinServices = [
     "Atención especializada las 24 horas del día.",

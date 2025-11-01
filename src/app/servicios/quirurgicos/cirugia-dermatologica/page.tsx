@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
@@ -13,20 +13,14 @@ export const metadata: Metadata = {
     description: 'Tratamientos quirúrgicos especializados para la piel, incluyendo cáncer de piel, lesiones benignas y procedimientos estéticos, con tecnología de punta y un enfoque en la seguridad del paciente.',
 };
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+async function getSpecialists(): Promise<Medico[]> { return safeQuery(async (db) => { const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Dermatología')
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Cirugía Dermatológica: ", error);
-        return [];
-    }
-}
+    }, []); }
 
 const procedures = [
     {

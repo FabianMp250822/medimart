@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
@@ -13,20 +13,14 @@ export const metadata: Metadata = {
     description: 'Salud de las encías y el soporte dental. Tratamos gingivitis, periodontitis y realizamos injertos de encía para una sonrisa saludable.',
 };
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+async function getSpecialists(): Promise<Medico[]> { return safeQuery(async (db) => { const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Periodoncia')
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Periodoncia: ", error);
-        return [];
-    }
-}
+    }, []); }
 
 const services = [
     "Tratamiento de gingivitis y periodontitis.",

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle, Radio } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
@@ -13,9 +13,7 @@ export const metadata: Metadata = {
     description: 'Servicio de Resonancia Magnética (RM) de alta resolución para diagnósticos detallados del sistema nervioso, musculoesquelético y tejidos blandos sin radiación.',
 };
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+async function getSpecialists(): Promise<Medico[]> { return safeQuery(async (db) => { const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Radiología')
             .limit(5)
             .get();
@@ -23,11 +21,7 @@ async function getSpecialists(): Promise<Medico[]> {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Resonancia Magnética: ", error);
-        return [];
-    }
-}
+    }, []); }
 
 const applications = [
     "Diagnóstico de enfermedades neurológicas como esclerosis múltiple, tumores cerebrales y ACV.",

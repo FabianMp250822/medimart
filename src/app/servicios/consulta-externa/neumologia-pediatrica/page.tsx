@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle, HeartHandshake } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
@@ -13,20 +13,14 @@ export const metadata: Metadata = {
     description: 'Cuidado integral para enfermedades respiratorias en niños, desde asma hasta condiciones complejas, con un enfoque personalizado y humano.',
 };
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+async function getSpecialists(): Promise<Medico[]> { return safeQuery(async (db) => { const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Neumología Pediátrica')
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Neumología Pediátrica: ", error);
-        return [];
-    }
-}
+    }, []); }
 
 const teamMembers = [
     "Neumólogos pediátricos con amplia experiencia.",

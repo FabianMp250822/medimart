@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle, Heart, Bone, Syringe, Radio, BrainCircuit, Dna, ShieldCheck, Stethoscope, Clock, BookUser, Building, Handshake, Award } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -14,20 +14,14 @@ export const metadata: Metadata = {
     description: 'Servicios diagnósticos y terapéuticos de la más alta calidad con tecnología de vanguardia y un equipo médico especializado en Medicina Nuclear.',
 };
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+async function getSpecialists(): Promise<Medico[]> { return safeQuery(async (db) => { const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Medicina Nuclear')
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Medicina Nuclear: ", error);
-        return [];
-    }
-}
+    }, []); }
 
 const diagnosticServices = [
     {

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
@@ -13,20 +13,14 @@ export const metadata: Metadata = {
     description: 'Soluciones quirúrgicas avanzadas para enfermedades del sistema digestivo. Ofrecemos cirugía de esófago, estómago, colon y más, con técnicas mínimamente invasivas.',
 };
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+async function getSpecialists(): Promise<Medico[]> { return safeQuery(async (db) => { const snapshot = await db.collection('medicos')
             .where('especialidad', 'in', ['Cirugía Gastrointestinal', 'Cirugía General'])
             .get();
         if (snapshot.empty) {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Cirugía Gastrointestinal: ", error);
-        return [];
-    }
-}
+    }, []); }
 
 const areas = [
     {

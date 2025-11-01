@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Users, CheckCircle, ShieldCheck } from 'lucide-react';
 import type { Metadata } from 'next';
-import { adminDb } from '@/lib/firebase-admin';
+import { safeQuery } from '@/lib/firebase-helpers';
 import { Medico } from '@/types/medico';
 import { RelatedSpecialists } from '@/components/servicios/related-specialists';
 
@@ -13,9 +13,7 @@ export const metadata: Metadata = {
     description: 'Protección completa para tu salud y la de tu familia con nuestro programa de vacunación integral, incluyendo vacunas para todas las edades y COVID-19.',
 };
 
-async function getSpecialists(): Promise<Medico[]> {
-    try {
-        const snapshot = await adminDb.collection('medicos')
+async function getSpecialists(): Promise<Medico[]> { return safeQuery(async (db) => { const snapshot = await db.collection('medicos')
             .where('especialidad', '==', 'Medicina General')
             .limit(5)
             .get();
@@ -23,11 +21,7 @@ async function getSpecialists(): Promise<Medico[]> {
             return [];
         }
         return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<Medico, 'id'>) }));
-    } catch (error) {
-        console.error("Error fetching specialists for Vacunación: ", error);
-        return [];
-    }
-}
+    }, []); }
 
 const covidVaccinationFeatures = [
     "Vacunas de última generación aprobadas por organismos de salud.",
