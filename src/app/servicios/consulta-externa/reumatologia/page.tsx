@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function ReumatologiaRedirectPage() {
-    const externalUrl = "https://clinica-reumatologia.vercel.app/";
+    const externalUrl = "https://www.reumatologiaclinicadelacosta.com/";
 
     return (
         <div className="flex items-center justify-center py-12">
