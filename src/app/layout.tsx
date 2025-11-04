@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import { ChatWidget } from '@/components/chat/chat-widget';
+// import { ChatWidget } from '@/components/chat/chat-widget';
 import { Open_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { clinicaStructuredData, organizationStructuredData } from '@/lib/structured-data';
@@ -94,7 +94,7 @@ export default function RootLayout({
       <body className={cn(openSans.variable, 'font-body antialiased')}>
         {children}
         <Toaster />
-        <ChatWidget />
+        {/* <ChatWidget /> */}
       </body>
     </html>
   );
