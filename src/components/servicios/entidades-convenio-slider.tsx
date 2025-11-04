@@ -18,40 +18,43 @@ interface Entidad {
   categoria: string;
 }
 
-// Orden exacto según la imagen mostrada y categorías definidas
+// Orden exacto según las categorías y el listado proporcionado
 const entidadesConvenio: Entidad[] = [
-  // Orden del slider: AXA COLPATRIA, BASE NAVAL, BAVARIA, COOSALUD, DUSAKAWI
-  { nombre: 'AXA COLPATRIA', categoria: 'ARL', logo: '/logos-entidades/AXA COLPATRIA-8.png' },
-  { nombre: 'BASE NAVAL', categoria: 'Fuerzas Militares', logo: '/logos-entidades/BASE NAVAL-8.png' },
-  { nombre: 'BAVARIA', categoria: 'Empresarial', logo: '/logos-entidades/BAVARIA-8.png' },
-  { nombre: 'COOSALUD', categoria: 'EPS', logo: '/logos-entidades/COOSALUD-8.png' },
-  { nombre: 'DUSAKAWI', categoria: 'EPS', logo: '/logos-entidades/DUSAKAWI-8.png' },
-  { nombre: 'EJERCITO NACIONAL', categoria: 'Fuerzas Militares', logo: '/logos-entidades/EJERCITO NACIONAL-8.png' },
-  
-  // Pólizas de Salud
-  { nombre: 'ALIANZ SEGUROS MEDICOS', categoria: 'Pólizas de Salud', logo: '/logos-entidades/ALIANZ SEGUROS MEDICOS-8.png' },
-  { nombre: 'PANAMERICAN LIFE', categoria: 'Pólizas de Salud', logo: '/logos-entidades/PNAMERICAN LIFE-8.png' },
+  // 1. PÓLIZAS DE SALUD
+  { nombre: 'Allianz Seguros Médicos', categoria: 'Pólizas de Salud', logo: '/logos-entidades/ALIANZ SEGUROS MEDICOS-8.png' },
+  { nombre: 'Panamerican Life', categoria: 'Pólizas de Salud', logo: '/logos-entidades/PNAMERICAN LIFE-8.png' },
   { nombre: 'BMI', categoria: 'Pólizas de Salud', logo: '/logos-entidades/bmi-8.png' },
-  { nombre: 'MUNDIAL DE SEGUROS', categoria: 'Pólizas de Salud', logo: '/logos-entidades/MUNDIAL DE SEGUROS-8.png' },
+  { nombre: 'Mundial de Seguros', categoria: 'Pólizas de Salud', logo: '/logos-entidades/MUNDIAL DE SEGUROS-8.png' },
+  { nombre: 'Seguros Bolívar', categoria: 'Pólizas de Salud', logo: '/logos-entidades/SEGUROS BOLIVAR-8.png' },
   
-  // Medicina Prepagada
-  { nombre: 'COLMENA', categoria: 'Medicina Prepagada', logo: '/logos-entidades/colmena-8.png' },
+  // 2. MEDICINA PREPAGADA
+  { nombre: 'Colsanitas', categoria: 'Medicina Prepagada', logo: '/logos-entidades/colmena-8.png' },
+  { nombre: 'Coomeva Medicina Prepagada', categoria: 'Medicina Prepagada', logo: '/logos-entidades/COOMEVA-8.png' },
+  { nombre: 'Allianz Seguros Médicos', categoria: 'Medicina Prepagada', logo: '/logos-entidades/ALIANZ SEGUROS MEDICOS-8.png' },
   
-  // ARL
-  { nombre: 'POSITIVA', categoria: 'ARL', logo: '/logos-entidades/POSITIVA.png' },
+  // 3. ARL
+  { nombre: 'Colmena ARL', categoria: 'ARL', logo: '/logos-entidades/colmena-8.png' },
+  { nombre: 'Positiva Compañía de Seguros', categoria: 'ARL', logo: '/logos-entidades/POSITIVA.png' },
+  { nombre: 'AXA Colpatria', categoria: 'ARL', logo: '/logos-entidades/AXA COLPATRIA-8.png' },
   { nombre: 'SURA ARL', categoria: 'ARL', logo: '/logos-entidades/SURA ARL-8.png' },
   
-  // Régimen de Excepción
-  { nombre: 'FOMAG', categoria: 'Régimen de Excepción', logo: '/logos-entidades/FOMAG-8.png' },
-  { nombre: 'SENA ATLANTICO', categoria: 'Régimen de Excepción', logo: '/logos-entidades/SENA ATLANTICO-8.png' },
-  { nombre: 'POLICIA ATLANTICO', categoria: 'Régimen de Excepción', logo: '/logos-entidades/POLICIA ATLANTICO-8.png' },
-  { nombre: 'FUERZA AEREA', categoria: 'Régimen de Excepción', logo: '/logos-entidades/FUERZA AEREA-8.png' },
+  // 4. RÉGIMEN DE EXCEPCIÓN
+  { nombre: 'FOMAG – Fiduprevisora', categoria: 'Régimen de Excepción', logo: '/logos-entidades/FOMAG-8.png' },
+  { nombre: 'SENA Atlántico', categoria: 'Régimen de Excepción', logo: '/logos-entidades/SENA ATLANTICO-8.png' },
+  { nombre: 'Bavaria S.A.', categoria: 'Régimen de Excepción', logo: '/logos-entidades/BAVARIA-8.png' },
+  { nombre: 'Policía Nacional – Regional Atlántico', categoria: 'Régimen de Excepción', logo: '/logos-entidades/POLICIA ATLANTICO-8.png' },
+  { nombre: 'Base Naval ARC – Dispensario Médico Nivel II', categoria: 'Régimen de Excepción', logo: '/logos-entidades/BASE NAVAL-8.png' },
+  { nombre: 'Ejército Nacional (Sanidad BAS02)', categoria: 'Régimen de Excepción', logo: '/logos-entidades/EJERCITO NACIONAL-8.png' },
   
-  // EPS
-  { nombre: 'MUTUAL SER', categoria: 'EPS', logo: '/logos-entidades/MUTUAL SER-8.png' },
-  { nombre: 'ANAS WAYUU', categoria: 'EPS', logo: '/logos-entidades/ANAS WAYUU-8.png' },
-  { nombre: 'SALUD TOTAL', categoria: 'EPS', logo: '/logos-entidades/SALUD TOTAL-8.png' },
-  { nombre: 'SURA EPS', categoria: 'EPS', logo: '/logos-entidades/SURA EPS-8.png' },
+  // 5. EPS
+  { nombre: 'Mutual Ser EPS', categoria: 'EPS', logo: '/logos-entidades/MUTUAL SER-8.png' },
+  { nombre: 'Anas Wayuu EPSI', categoria: 'EPS', logo: '/logos-entidades/ANAS WAYUU-8.png' },
+  { nombre: 'Dusakawi EPSI', categoria: 'EPS', logo: '/logos-entidades/DUSAKAWI-8.png' },
+  { nombre: 'Salud Total EPS', categoria: 'EPS', logo: '/logos-entidades/SALUD TOTAL-8.png' },
+  { nombre: 'Coosalud EPS S.A. (Contributivo)', categoria: 'EPS', logo: '/logos-entidades/COOSALUD-8.png' },
+  { nombre: 'Coosalud EPS S.A. (Subsidiado)', categoria: 'EPS', logo: '/logos-entidades/COOSALUD-8.png' },
+  { nombre: 'Coosalud EPS – Trasplantes', categoria: 'EPS', logo: '/logos-entidades/COOSALUD-8.png' },
+  { nombre: 'Sura EPS', categoria: 'EPS', logo: '/logos-entidades/SURA EPS-8.png' },
 ];
 
 export function EntidadesConvenioSlider() {
