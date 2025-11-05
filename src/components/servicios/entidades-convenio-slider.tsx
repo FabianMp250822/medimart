@@ -28,7 +28,7 @@ const entidadesConvenio: Entidad[] = [
   { nombre: 'Seguros Bolívar', categoria: 'Pólizas de Salud', logo: '/logos-entidades/SEGUROS BOLIVAR-8.png' },
   
   // 2. MEDICINA PREPAGADA
-  { nombre: 'Colsanitas', categoria: 'Medicina Prepagada', logo: '/logos-entidades/colmena-8.png' },
+  { nombre: 'Colsanitas', categoria: 'Medicina Prepagada', logo: '/logos-entidades/COLSANITAS-8.png' },
   { nombre: 'Coomeva Medicina Prepagada', categoria: 'Medicina Prepagada', logo: '/logos-entidades/COOMEVA-8.png' },
   { nombre: 'Allianz Seguros Médicos', categoria: 'Medicina Prepagada', logo: '/logos-entidades/ALIANZ SEGUROS MEDICOS-8.png' },
   
@@ -51,10 +51,8 @@ const entidadesConvenio: Entidad[] = [
   { nombre: 'Anas Wayuu EPSI', categoria: 'EPS', logo: '/logos-entidades/ANAS WAYUU-8.png' },
   { nombre: 'Dusakawi EPSI', categoria: 'EPS', logo: '/logos-entidades/DUSAKAWI-8.png' },
   { nombre: 'Salud Total EPS', categoria: 'EPS', logo: '/logos-entidades/SALUD TOTAL-8.png' },
-  { nombre: 'Coosalud EPS S.A. (Contributivo)', categoria: 'EPS', logo: '/logos-entidades/COOSALUD-8.png' },
-  { nombre: 'Coosalud EPS S.A. (Subsidiado)', categoria: 'EPS', logo: '/logos-entidades/COOSALUD-8.png' },
-  { nombre: 'Coosalud EPS – Trasplantes', categoria: 'EPS', logo: '/logos-entidades/COOSALUD-8.png' },
-  { nombre: 'Sura EPS', categoria: 'EPS', logo: '/logos-entidades/SURA EPS-8.png' },
+  { nombre: 'Coosalud EPS S.A.', categoria: 'EPS', logo: '/logos-entidades/COOSALUD-8.png' },
+   { nombre: 'Sura EPS', categoria: 'EPS', logo: '/logos-entidades/SURA EPS-8.png' },
 ];
 
 export function EntidadesConvenioSlider() {
