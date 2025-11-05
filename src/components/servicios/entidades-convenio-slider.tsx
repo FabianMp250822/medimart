@@ -25,7 +25,7 @@ const entidadesConvenio: Entidad[] = [
   { nombre: 'Panamerican Life', categoria: 'Pólizas de Salud', logo: '/logos-entidades/PNAMERICAN LIFE-8.png' },
   { nombre: 'BMI', categoria: 'Pólizas de Salud', logo: '/logos-entidades/bmi-8.png' },
   { nombre: 'Mundial de Seguros', categoria: 'Pólizas de Salud', logo: '/logos-entidades/MUNDIAL DE SEGUROS-8.png' },
-  { nombre: 'Seguros Bolívar', categoria: 'Pólizas de Salud', logo: '/logos-entidades/SEGUROS BOLIVAR-8.png' },
+  { nombre: 'Seguros Bolívar', categoria: 'Pólizas de Salud', logo: '/logos-entidades/SRGOROS BOLIVAR-8.png' },
   
   // 2. MEDICINA PREPAGADA
   { nombre: 'Colsanitas', categoria: 'Medicina Prepagada', logo: '/logos-entidades/COLSANITAS-8.png' },
