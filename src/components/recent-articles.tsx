@@ -2,10 +2,15 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from './ui/button';
 import Link from 'next/link';
-import { Blog } from '@/types/blog';
+import { Blog, generateSlug } from '@/types/blog';
 
 interface RecentArticlesProps {
   articles: Blog[];
+}
+
+function getBlogUrl(blog: Blog): string {
+  const slug = blog.slug || generateSlug(blog.title);
+  return `/noticias/${slug}`;
 }
 
 export function RecentArticles({ articles }: RecentArticlesProps) {
@@ -17,18 +22,18 @@ export function RecentArticles({ articles }: RecentArticlesProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             {articles.map((article) => (
               <Card key={article.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 text-left flex flex-col group">
-                 <Link href={`/noticias/${article.id}`} className="block overflow-hidden">
+                 <Link href={getBlogUrl(article)} className="block overflow-hidden">
                     <div className="relative h-56">
                         <Image src={article.image} alt={article.title} fill style={{ objectFit: 'cover' }} className="transition-transform duration-300 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 33vw"/>
                     </div>
                 </Link>
                 <CardContent className="p-6 flex flex-col flex-grow">
                   <p className="text-sm text-accent font-semibold">{article.category}</p>
-                  <Link href={`/noticias/${article.id}`} className="hover:underline">
+                  <Link href={getBlogUrl(article)} className="hover:underline">
                     <h3 className="text-lg font-bold text-primary mt-2 mb-4 flex-grow">{article.title}</h3>
                   </Link>
                    <Button variant="link" className="p-0 text-accent mt-auto self-start">
-                     <Link href={`/noticias/${article.id}`}>Leer más...</Link>
+                     <Link href={getBlogUrl(article)}>Leer más...</Link>
                     </Button>
                 </CardContent>
               </Card>

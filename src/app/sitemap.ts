@@ -113,8 +113,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     
     return snapshot.docs.map((doc): MetadataRoute.Sitemap[0] => {
       const data = doc.data();
+      // Usar slug si existe, generar desde título si no
+      const slug = data.slug || data.title
+        ?.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-') || doc.id;
+      
       return {
-        url: `${baseUrl}/noticias/${doc.id}`,
+        url: `${baseUrl}/noticias/${slug}`,
         lastModified: data.date ? new Date(data.date) : currentDate,
         changeFrequency: 'monthly',
         priority: 0.6,

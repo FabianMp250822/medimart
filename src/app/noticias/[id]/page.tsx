@@ -11,16 +11,51 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-async function getBlog(id: string): Promise<Blog | null> {
+async function getBlog(idOrSlug: string): Promise<Blog | null> {
   return safeQuery(async (db) => {
-    const docRef = db.collection('blogs').doc(id);
+    // 1. Primero intentar buscar por ID directo
+    const docRef = db.collection('blogs').doc(idOrSlug);
     const docSnap = await docRef.get();
 
-    if (!docSnap.exists) {
-      return null;
+    if (docSnap.exists) {
+      return { id: docSnap.id, ...docSnap.data() } as Blog;
     }
 
-    return { id: docSnap.id, ...docSnap.data() } as Blog;
+    // 2. Buscar por slug exacto
+    const slugQuery = await db.collection('blogs')
+      .where('slug', '==', idOrSlug)
+      .limit(1)
+      .get();
+
+    if (!slugQuery.empty) {
+      const doc = slugQuery.docs[0];
+      return { id: doc.id, ...doc.data() } as Blog;
+    }
+
+    // 3. Fallback: buscar por título generando slug y comparando
+    // Obtener todas las noticias y buscar manualmente
+    const allBlogs = await db.collection('blogs')
+      .where('lugar', '==', 'clinica')
+      .get();
+
+    for (const doc of allBlogs.docs) {
+      const data = doc.data();
+      // Generar slug del título y comparar
+      const generatedSlug = data.title
+        ?.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+
+      if (generatedSlug === idOrSlug) {
+        return { id: doc.id, ...data } as Blog;
+      }
+    }
+
+    return null;
   }, null);
 }
 

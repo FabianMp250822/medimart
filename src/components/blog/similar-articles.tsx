@@ -1,4 +1,4 @@
-import { Blog } from '@/types/blog';
+import { Blog, generateSlug } from '@/types/blog';
 import { Card, CardContent } from '../ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,6 +6,11 @@ import { Separator } from '../ui/separator';
 
 interface SimilarArticlesProps {
     articles: Blog[];
+}
+
+function getBlogUrl(blog: Blog): string {
+  const slug = blog.slug || generateSlug(blog.title);
+  return `/noticias/${slug}`;
 }
 
 export function SimilarArticles({ articles }: SimilarArticlesProps) {
@@ -16,7 +21,7 @@ export function SimilarArticles({ articles }: SimilarArticlesProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {articles.map((article) => (
                     <Card key={article.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col group">
-                        <Link href={`/noticias/${article.id}`} className="block overflow-hidden">
+                        <Link href={getBlogUrl(article)} className="block overflow-hidden">
                             <div className="relative h-48 w-full">
                                 <Image
                                     src={article.image}
@@ -30,7 +35,7 @@ export function SimilarArticles({ articles }: SimilarArticlesProps) {
                         <CardContent className="p-4 flex flex-col flex-grow">
                             <p className="text-xs text-accent font-semibold mb-1">{article.category}</p>
                             <h3 className="text-base font-bold text-primary flex-grow">
-                                <Link href={`/noticias/${article.id}`} className="hover:underline">
+                                <Link href={getBlogUrl(article)} className="hover:underline">
                                     {article.title}
                                 </Link>
                             </h3>

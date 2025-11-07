@@ -175,11 +175,22 @@ export function generateArticleSchema(article: {
   date: string;
   image: string;
   category: string;
+  slug?: string;
 }) {
+  // Usar slug si existe, generar desde título si no
+  const slug = article.slug || article.title
+    ?.toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-') || article.id;
+    
   return {
     "@context": "https://schema.org",
     "@type": "Article",
-    "@id": `https://clinica-de-la-costa.app/noticias/${article.id}`,
+    "@id": `https://clinica-de-la-costa.app/noticias/${slug}`,
     "headline": article.title,
     "image": article.image,
     "datePublished": new Date(article.date).toISOString(),

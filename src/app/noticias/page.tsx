@@ -1,10 +1,16 @@
 import { safeQuery } from '@/lib/firebase-helpers';
-import { Blog } from '@/types/blog';
+import { Blog, generateSlug } from '@/types/blog';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { Metadata } from 'next';
+
+// Helper para obtener slug o generarlo
+function getBlogUrl(blog: Blog): string {
+  const slug = blog.slug || generateSlug(blog.title);
+  return `/noticias/${slug}`;
+}
 
 export const metadata: Metadata = {
   title: 'Noticias - Clínica de la Costa',
@@ -61,7 +67,7 @@ export default async function NoticiasPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogs.map((blog) => (
               <Card key={blog.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col group">
-                 <Link href={`/noticias/${blog.id}`} className="block overflow-hidden">
+                 <Link href={getBlogUrl(blog)} className="block overflow-hidden">
                    <div className="relative h-56 w-full">
                      <Image 
                        src={blog.image} 
@@ -75,7 +81,7 @@ export default async function NoticiasPage() {
                 <CardContent className="p-6 flex flex-col flex-grow">
                    <p className="text-sm text-accent font-semibold mb-2">{blog.category}</p>
                    <h2 className="text-xl font-bold text-primary mb-4 flex-grow">
-                     <Link href={`/noticias/${blog.id}`} className="hover:underline">
+                     <Link href={getBlogUrl(blog)} className="hover:underline">
                        {blog.title}
                      </Link>
                    </h2>
@@ -84,7 +90,7 @@ export default async function NoticiasPage() {
                      <span>Por {blog.author}</span>
                    </div>
                     <Button asChild className="mt-6 bg-accent hover:bg-accent/90 w-full">
-                      <Link href={`/noticias/${blog.id}`}>Leer más</Link>
+                      <Link href={getBlogUrl(blog)}>Leer más</Link>
                     </Button>
                 </CardContent>
               </Card>

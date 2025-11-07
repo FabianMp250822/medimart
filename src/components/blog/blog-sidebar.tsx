@@ -1,10 +1,15 @@
-import { Blog } from '@/types/blog';
+import { Blog, generateSlug } from '@/types/blog';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
 
 interface BlogSidebarProps {
     recentBlogs: Blog[];
+}
+
+function getBlogUrl(blog: Blog): string {
+  const slug = blog.slug || generateSlug(blog.title);
+  return `/noticias/${slug}`;
 }
 
 export function BlogSidebar({ recentBlogs }: BlogSidebarProps) {
@@ -18,7 +23,7 @@ export function BlogSidebar({ recentBlogs }: BlogSidebarProps) {
                     <ul className="space-y-4">
                         {recentBlogs.map(blog => (
                             <li key={blog.id} className="flex items-start gap-4">
-                                <Link href={`/noticias/${blog.id}`} className="block w-20 h-20 relative flex-shrink-0">
+                                <Link href={getBlogUrl(blog)} className="block w-20 h-20 relative flex-shrink-0">
                                     <Image 
                                         src={blog.image} 
                                         alt={blog.title} 
@@ -29,7 +34,7 @@ export function BlogSidebar({ recentBlogs }: BlogSidebarProps) {
                                 </Link>
                                 <div>
                                     <h4 className="font-semibold text-base leading-tight">
-                                        <Link href={`/noticias/${blog.id}`} className="hover:text-accent transition-colors">
+                                        <Link href={getBlogUrl(blog)} className="hover:text-accent transition-colors">
                                             {blog.title}
                                         </Link>
                                     </h4>
