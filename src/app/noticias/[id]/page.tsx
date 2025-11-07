@@ -118,38 +118,104 @@ export async function generateMetadata(
 
   if (!blog) {
     return {
-      title: 'Artículo no encontrado',
+      title: 'Artículo no encontrado - Clínica de la Costa',
+      description: 'El artículo que buscas no está disponible.',
     };
   }
   
+  // Generar slug para la URL canónica
+  const slug = blog.slug || blog.title
+    ?.toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-') || blog.id;
+  
+  // Descripción limpia sin HTML
   const description = blog.content
     .replace(/<[^>]*>?/gm, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
     .substring(0, 160) + '...';
 
+  const canonicalUrl = `https://www.clinicadelacosta.com/noticias/${slug}`;
+  const logoUrl = 'https://firebasestorage.googleapis.com/v0/b/contenedor-de-video.firebasestorage.app/o/public%2Flogo-clinica.png?alt=media';
+
   return {
-    title: `${blog.title} - Clínica de la Costa`,
+    title: `${blog.title} | Clínica de la Costa`,
     description: description,
+    keywords: [
+      blog.category,
+      'Clínica de la Costa',
+      'Barranquilla',
+      'Salud',
+      'Noticias médicas',
+      'Colombia',
+      blog.title,
+    ],
+    authors: [{ name: blog.author }],
+    creator: blog.author,
+    publisher: 'Clínica de la Costa',
+    category: blog.category,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: blog.title,
       description: description,
       type: 'article',
-      url: `https://clinica-de-la-costa.app/noticias/${blog.id}`,
+      url: canonicalUrl,
+      siteName: 'Clínica de la Costa',
+      locale: 'es_CO',
       images: [
         {
           url: blog.image,
           width: 1200,
           height: 630,
           alt: blog.title,
+          type: 'image/jpeg',
+        },
+        {
+          url: logoUrl,
+          width: 400,
+          height: 400,
+          alt: 'Logo Clínica de la Costa',
         },
       ],
       publishedTime: new Date(blog.date).toISOString(),
+      modifiedTime: new Date(blog.date).toISOString(),
       authors: [blog.author],
+      section: blog.category,
     },
     twitter: {
       card: 'summary_large_image',
+      site: '@ClinicadelaCosta',
+      creator: '@ClinicadelaCosta',
       title: blog.title,
       description: description,
-      images: [blog.image],
+      images: {
+        url: blog.image,
+        alt: blog.title,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    other: {
+      'article:published_time': new Date(blog.date).toISOString(),
+      'article:author': blog.author,
+      'article:section': blog.category,
     },
   };
 }
@@ -168,8 +234,88 @@ export default async function BlogDetailPage({ params }: Props) {
     getAndUpdateVisitCount(id)
   ]);
 
+  // Generar slug para la URL canónica
+  const slug = blog.slug || blog.title
+    ?.toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-') || blog.id;
+
+  const canonicalUrl = `https://www.clinicadelacosta.com/noticias/${slug}`;
+
+  // Schema.org JSON-LD para SEO
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: blog.title,
+    image: [blog.image],
+    datePublished: new Date(blog.date).toISOString(),
+    dateModified: new Date(blog.date).toISOString(),
+    author: {
+      '@type': 'Person',
+      name: blog.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Clínica de la Costa',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://firebasestorage.googleapis.com/v0/b/contenedor-de-video.firebasestorage.app/o/public%2Flogo-clinica.png?alt=media',
+      },
+    },
+    description: blog.content.replace(/<[^>]*>?/gm, '').substring(0, 160),
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
+    },
+    articleSection: blog.category,
+    inLanguage: 'es-CO',
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Inicio',
+        item: 'https://www.clinicadelacosta.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Noticias',
+        item: 'https://www.clinicadelacosta.com/noticias',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: blog.title,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
   return (
     <>
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
       <BlogLayout
         blog={blog}
         recentBlogs={recentBlogs}
