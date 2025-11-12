@@ -1,0 +1,47 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "postulaciones",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "informacionPersonal.numeroDocumento",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "fechaPostulacion",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "postulaciones",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ofertaId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "fechaPostulacion",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "postulaciones",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "estado",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "fechaPostulacion",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

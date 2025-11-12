@@ -149,14 +149,116 @@ export function ApplyModal({ isOpen, onClose, oferta }: ApplyModalProps) {
   const cvFileRef = form.register("cv");
   const certificadosFileRef = form.register("certificadosAdjuntos");
 
-  const onSubmit: SubmitHandler<ApplyFormValues> = (data) => {
-    console.log(data);
-    toast({
+  const onSubmit: SubmitHandler<ApplyFormValues> = async (data) => {
+    try {
+      // Importar Firebase client (necesitas agregarlo arriba)
+      const { db, storage } = await import('@/lib/firebase');
+      const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
+      const { ref, uploadBytes, getDownloadURL } = await import('firebase/storage');
+
+      if (!db || !storage) {
+        throw new Error('Firebase no está inicializado');
+      }
+
+      // Subir CV
+      const cvFile = data.cv[0];
+  // Cast storage to any to satisfy TypeScript (storage is non-null at runtime)
+  const cvRef = ref(storage as any, `postulaciones/${data.numeroDocumento}/cv_${Date.now()}_${cvFile.name}`);
+      await uploadBytes(cvRef, cvFile);
+      const cvURL = await getDownloadURL(cvRef);
+
+      // Subir certificados (si existen)
+      let certificadosURLs: string[] = [];
+      if (data.certificadosAdjuntos && data.certificadosAdjuntos.length > 0) {
+        const certificadosPromises = Array.from(data.certificadosAdjuntos).map(async (file: any) => {
+          const certRef = ref(storage as any, `postulaciones/${data.numeroDocumento}/certificados/${Date.now()}_${file.name}`);
+          await uploadBytes(certRef, file);
+          return getDownloadURL(certRef);
+        });
+        certificadosURLs = await Promise.all(certificadosPromises);
+      }
+
+      // Preparar datos para Firestore
+      const postulacionData = {
+        // Información Personal
+        nombresApellidos: data.nombresApellidos,
+        tipoDocumento: data.tipoDocumento,
+        numeroDocumento: data.numeroDocumento,
+        fechaNacimiento: data.fechaNacimiento,
+        lugarNacimiento: data.lugarNacimiento,
+        genero: data.genero,
+        estadoCivil: data.estadoCivil,
+        direccionResidencia: data.direccionResidencia,
+        telefonoFijo: data.telefonoFijo || '',
+        telefonoCelular: data.telefonoCelular,
+        correoElectronico: data.correoElectronico,
+        
+        // Información Académica
+        tituloObtenido: data.tituloObtenido,
+        universidad: data.universidad,
+        fechaGrado: data.fechaGrado,
+        paisTitulo: data.paisTitulo,
+        tituloConvalidado: data.tituloConvalidado,
+        numeroResolucion: data.numeroResolucion || '',
+        especializacion: data.especializacion || '',
+        universidadEspecializacion: data.universidadEspecializacion || '',
+        fechaInicioEspecializacion: data.fechaInicioEspecializacion || '',
+        fechaFinEspecializacion: data.fechaFinEspecializacion || '',
+        otraInfoAcademica: data.otraInfoAcademica || '',
+        
+        // Experiencia Laboral
+        experiencias: data.experiencias || [],
+        
+        // Certificaciones
+        certificaciones: data.certificaciones || [],
+        
+        // Habilidades
+        tieneTarjetaProfesional: data.tieneTarjetaProfesional,
+        numeroTarjetaProfesional: data.numeroTarjetaProfesional || '',
+        tieneRethus: data.tieneRethus,
+        cursosAdicionales: data.cursosAdicionales || '',
+        idiomas: data.idiomas || '',
+        habilidadesInformaticas: data.habilidadesInformaticas || '',
+        
+        // Información Adicional
+        tieneDiscapacidad: data.tieneDiscapacidad,
+        perteneceMinoria: data.perteneceMinoria,
+        aspiracionSalarial: data.aspiracionSalarial || '',
+        disponibilidadViajar: data.disponibilidadViajar,
+        
+        // Referencias
+        referencias: data.referencias || [],
+        
+        // Archivos
+        cvURL: cvURL,
+        certificadosURLs: certificadosURLs,
+        
+        // Metadata
+        ofertaId: oferta?.id || null,
+        ofertaTitulo: oferta?.titulo || 'Postulación Espontánea',
+        fechaPostulacion: serverTimestamp(),
+        estado: 'Pendiente',
+      };
+
+      // Guardar en Firestore
+  // Cast db to any to avoid Firestore nullable types; it's initialized at runtime
+  await addDoc(collection(db as any, 'postulaciones'), postulacionData);
+
+      toast({
         title: "¡Postulación enviada!",
         description: "Hemos recibido tu información. ¡Mucho éxito!",
-    });
-    form.reset();
-    onClose();
+      });
+      
+      form.reset();
+      onClose();
+    } catch (error) {
+      console.error('Error al enviar postulación:', error);
+      toast({
+        title: "Error",
+        description: "Hubo un problema al enviar tu postulación. Por favor intenta de nuevo.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
