@@ -7,6 +7,7 @@ import { Priority } from '@/components/priority';
 import { HowWeServe } from '@/components/how-we-serve';
 import { AppFooter } from '@/components/footer';
 import { Header } from '@/components/header';
+import { ChristmasSnow, ChristmasBanner } from '@/components/christmas-snow';
 import { unstable_cache } from 'next/cache';
 import { CardsSkeleton, SectionSkeleton, SliderSkeleton } from '@/components/ui/skeleton-loaders';
 
@@ -147,6 +148,8 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
+      <ChristmasSnow />
+      <ChristmasBanner />
       <Header />
       <main className="flex-1 w-full">
         <Hero />
