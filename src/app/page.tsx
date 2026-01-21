@@ -10,6 +10,7 @@ import { Header } from '@/components/header';
 import { ChristmasSnow, ChristmasBanner } from '@/components/christmas-snow';
 import { unstable_cache } from 'next/cache';
 import { CardsSkeleton, SectionSkeleton, SliderSkeleton } from '@/components/ui/skeleton-loaders';
+import { siteConfig } from '@/config/site';
 
 // Dynamic imports para code splitting - Solo componentes que requieren interactividad
 // o que no son críticos para el initial paint
@@ -89,7 +90,7 @@ const getFeaturedMedicos = unstable_cache(
       if (medicosSnapshot.empty) {
         return [];
       }
-      
+
       let medicos: Medico[] = medicosSnapshot.docs.map(doc => ({
         id: doc.id,
         ...(doc.data() as Omit<Medico, 'id'>),
@@ -148,8 +149,12 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <ChristmasSnow />
-      <ChristmasBanner />
+      {siteConfig.features.christmasTheme && (
+        <>
+          <ChristmasSnow />
+          <ChristmasBanner />
+        </>
+      )}
       <Header />
       <main className="flex-1 w-full">
         <Hero />
