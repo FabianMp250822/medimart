@@ -14,7 +14,7 @@ export default function SolicitarCitaPage() {
         </Link>
       </div>
       <div className="mb-8 w-full max-w-lg lg:max-w-4xl grid gap-4 md:grid-cols-2">
-        <Card className="hover:border-accent/50 transition-colors cursor-pointer group" onClick={() => window.open('https://wa.me/573044579302', '_blank')}>
+        <Card className="hover:border-accent/50 transition-colors cursor-pointer group" onClick={() => window.open('https://wa.me/573218150179', '_blank')}>
           <CardContent className="p-6 flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-muted-foreground mb-1">Programación de Cirugías</p>
@@ -26,7 +26,7 @@ export default function SolicitarCitaPage() {
           </CardContent>
         </Card>
 
-        <Card className="hover:border-accent/50 transition-colors cursor-pointer group" onClick={() => window.open('https://wa.me/573044579286', '_blank')}>
+        <Card className="hover:border-accent/50 transition-colors cursor-pointer group" onClick={() => window.open('https://wa.me/573213339684', '_blank')}>
           <CardContent className="p-6 flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-muted-foreground mb-1">Citas y Exámenes</p>
