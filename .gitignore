@@ -3,6 +3,7 @@ node_modules/
 # Ignorar archivos de entorno
 .env
 .next
+.env.local
 # Ignorar carpetas de build y distribuciones
 dist/
 build/

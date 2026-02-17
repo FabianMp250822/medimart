@@ -1,4 +1,5 @@
 import Providers from "./Providers";
+import Script from "next/script";
 import "@/node_modules/react-modal-video/css/modal-video.css";
 import "../public/assets/css/bootstrap.css";
 import "../public/assets/css/color.css";
@@ -40,6 +41,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1836982869173182"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body>
         {/* Aquí envolvemos la app en Providers, que es un Client Component */}
         <Providers>
