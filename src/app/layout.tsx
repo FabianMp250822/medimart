@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ChatWidget } from '@/components/chat/chat-widget';
@@ -84,6 +85,12 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1836982869173182"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Datos Estructurados Schema.org para SEO */}
         <script
