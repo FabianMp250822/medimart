@@ -131,7 +131,9 @@ export default async function OfertaDetailPage({ params }: Props) {
                        <Card className="bg-primary/5">
                            <CardContent className="p-4 space-y-4">
                                 <DetailItem icon={<DollarSign className="h-6 w-6"/>} label="Sueldo">
-                                    {oferta.sueldo ? `$${Number(oferta.sueldo).toLocaleString('es-CO')}` : 'A convenir'}
+                                    {!isNaN(Number(oferta.sueldo)) 
+                                        ? `$${Number(oferta.sueldo).toLocaleString('es-CO')}` 
+                                        : oferta.sueldo || 'A convenir'}
                                 </DetailItem>
                                 <DetailItem icon={<Clock className="h-6 w-6"/>} label="Jornada">
                                     {oferta.jornada}

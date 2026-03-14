@@ -24,7 +24,14 @@ export function RecentArticles({ articles }: RecentArticlesProps) {
               <Card key={article.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 text-left flex flex-col group">
                  <Link href={getBlogUrl(article)} className="block overflow-hidden">
                     <div className="relative h-56">
-                        <Image src={article.image} alt={article.title} fill style={{ objectFit: 'cover' }} className="transition-transform duration-300 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 33vw"/>
+                        <Image 
+                          src={article.image || 'https://placehold.co/600x400?text=Clinica+de+la+Costa'} 
+                          alt={article.title} 
+                          fill 
+                          style={{ objectFit: 'cover' }} 
+                          className="transition-transform duration-300 group-hover:scale-105" 
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
                     </div>
                 </Link>
                 <CardContent className="p-6 flex flex-col flex-grow">

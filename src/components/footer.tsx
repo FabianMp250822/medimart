@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Logo } from './logo';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Lock as LockIcon } from 'lucide-react';
 import Image from 'next/image';
 
 export function AppFooter() {
@@ -33,6 +33,12 @@ export function AppFooter() {
               <li><Link href="#" className="text-primary-foreground/80 hover:text-accent">Servicios</Link></li>
               <li><Link href="#" className="text-primary-foreground/80 hover:text-accent">Especialistas</Link></li>
               <li><Link href="#" className="text-primary-foreground/80 hover:text-accent">Contacto</Link></li>
+              <li className="pt-2 border-t border-primary-foreground/10">
+                <Link href="/login" className="text-primary-foreground/60 hover:text-accent flex items-center gap-2 group transition-colors">
+                  <LockIcon className="h-3 w-3 opacity-40 group-hover:opacity-100" />
+                  <span>Acceso Profesional</span>
+                </Link>
+              </li>
             </ul>
           </div>
 

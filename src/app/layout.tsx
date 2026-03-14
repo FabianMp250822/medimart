@@ -76,6 +76,7 @@ const openSans = Open_Sans({
 });
 
 import { siteConfig } from '@/config/site';
+import { AuthProvider } from '@/components/providers/auth-context';
 
 export default function RootLayout({
   children,
@@ -101,9 +102,11 @@ export default function RootLayout({
         />
       </head>
       <body className={cn(openSans.variable, 'font-body antialiased')}>
-        {children}
-        <Toaster />
-        {siteConfig.features.enableChat && <ChatWidget />}
+        <AuthProvider>
+          {children}
+          <Toaster />
+          {siteConfig.features.enableChat && <ChatWidget />}
+        </AuthProvider>
       </body>
     </html>
   );

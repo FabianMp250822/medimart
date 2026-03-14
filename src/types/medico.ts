@@ -12,6 +12,24 @@ export interface ProfessionalExperience {
     posicion: string;
 }
 
+export interface Award {
+    nombre: string;
+    anio: string;
+    descripcion: string;
+}
+
+export interface Certification {
+    nombre: string;
+    institucion: string;
+    anio: string;
+}
+
+export interface Publication {
+    titulo: string;
+    fecha: string;
+    descripcion: string;
+}
+
 export interface Medico {
     id: string;
     nombreCompleto: string;
@@ -26,9 +44,9 @@ export interface Medico {
     aplicaEnTodasLasSedes?: boolean;
     academicInfo?: AcademicInfo[];
     professionalExperience?: ProfessionalExperience[];
-    awards?: any[]; 
-    certifications?: any[]; 
-    publications?: any[]; 
+    awards?: Award[]; 
+    certifications?: Certification[]; 
+    publications?: Publication[]; 
     researcherData?: ResearcherData;
 }
 

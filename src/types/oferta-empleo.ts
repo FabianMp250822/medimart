@@ -13,4 +13,5 @@ export interface OfertaEmpleo {
     habilidades?: string;
     idiomas?: string;
     otros?: string;
+    slug?: string;
 }

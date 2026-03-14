@@ -3,6 +3,7 @@ export interface Blog {
   author: string;
   category: string;
   comments: number;
+  votes?: number; // Added for social engagement
   content: string;
   date: string;
   image: string;
