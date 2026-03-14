@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 import { FollowUpModal } from '@/components/dashboard/follow-up-modal';
 
 interface ApplicationDetailsPageProps {

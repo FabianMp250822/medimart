@@ -119,16 +119,16 @@ export default function ApplicationsListPage() {
         q = query(q, startAfter(lastDocs[currentPage - 1]));
       }
 
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(q as any);
       const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
       
       const newLastDocs = [...lastDocs];
-      newLastDocs[currentPage] = lastVisible;
+      newLastDocs[currentPage] = lastVisible as any;
       setLastDocs(newLastDocs);
 
       const appsData = querySnapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data(),
+        ...doc.data() as any,
       })) as Postulacion[];
       
       // Update cache

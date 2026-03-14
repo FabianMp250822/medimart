@@ -34,6 +34,7 @@ import {
   MapPin,
   Send,
   Check,
+  Edit,
 } from "lucide-react";
 
 export const Icons = {
@@ -96,4 +97,5 @@ export const Icons = {
   location: MapPin,
   send: Send,
   check: Check,
+  edit: Edit,
 };

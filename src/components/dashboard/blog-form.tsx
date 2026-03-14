@@ -78,6 +78,7 @@ export function BlogForm({ initialData, isEditing = false }: BlogFormProps) {
 
   const handleImageUpload = async (file: File, type: 'cover' | 'inline') => {
     try {
+      if (!storage) throw new Error("Storage not initialized");
       const storageRef = ref(storage, `blog/${uuidv4()}_${file.name}`);
       const snapshot = await uploadBytes(storageRef, file);
       const url = await getDownloadURL(snapshot.ref);

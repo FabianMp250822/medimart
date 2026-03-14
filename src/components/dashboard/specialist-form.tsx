@@ -201,7 +201,7 @@ export function SpecialistForm({ initialData, isEditing = false }: SpecialistFor
                       id="specialty" 
                       required 
                       value={formData.especialidad} 
-                      onChange={(e) => setFormData({...formData, specialty: e.target.value})}
+                      onChange={(e) => setFormData({...formData, especialidad: e.target.value})}
                     />
                  </div>
               </div>
