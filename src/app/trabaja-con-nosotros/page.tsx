@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: 'Explora las oportunidades de carrera en Clínica de la Costa. Únete a nuestro equipo de profesionales y ayúdanos a brindar una atención excepcional.',
 };
 
+export const revalidate = 60; // Revalidar cada minuto
+
 async function getOfertas(): Promise<OfertaEmpleo[]> {
   return safeQuery(async (db) => {
     const ofertasSnapshot = await db.collection('ofertasEmpleos').orderBy('fechaPublicacion', 'desc').get();

@@ -1,4 +1,6 @@
 import { safeQuery } from '@/lib/firebase-helpers';
+
+export const revalidate = 60; // Revalidar cada minuto
 import { OfertaEmpleo } from '@/types/oferta-empleo';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -119,11 +121,17 @@ export default async function OfertaDetailPage({ params }: Props) {
                     <div className="md:col-span-2 space-y-8">
                         <div>
                             <h3 className="text-xl font-bold text-primary mb-4 border-b pb-2">Descripción del Puesto</h3>
-                            <p className="text-foreground whitespace-pre-line">{oferta.descripcion}</p>
+                            <div 
+                                className="text-foreground prose prose-slate max-w-none"
+                                dangerouslySetInnerHTML={{ __html: oferta.descripcion }}
+                            />
                         </div>
                         <div>
                             <h3 className="text-xl font-bold text-primary mb-4 border-b pb-2">Requisitos</h3>
-                            <p className="text-foreground whitespace-pre-line">{oferta.requisitos}</p>
+                            <div 
+                                className="text-foreground prose prose-slate max-w-none"
+                                dangerouslySetInnerHTML={{ __html: oferta.requisitos }}
+                            />
                         </div>
                     </div>
 

@@ -28,8 +28,8 @@ export function JobOfferCard({ oferta }: JobOfferCardProps) {
         </div>
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="text-muted-foreground line-clamp-3">
-          {oferta.descripcion}
+        <p className="text-muted-foreground line-clamp-3 text-sm">
+          {oferta.descripcion.replace(/<[^>]*>?/gm, '')}
         </p>
       </CardContent>
       <CardFooter className="bg-primary/5 p-4 flex flex-wrap items-center justify-between text-sm text-muted-foreground gap-4">

@@ -12,7 +12,7 @@ import { TextStyle } from '@tiptap/extension-text-style';
 import { Color } from '@tiptap/extension-color';
 import { FontSize } from '@/lib/tiptap-extensions';
 import { EditorToolbar } from './editor-toolbar';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 
 interface RichTextEditorProps {
   content: string;
@@ -31,7 +31,9 @@ export function RichTextEditor({
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: { levels: [1, 2, 3] },
+      }),
       Underline,
       Highlight,
       Typography,
@@ -39,18 +41,56 @@ export function RichTextEditor({
       Color,
       FontSize,
       ImageExtension.configure({
-        allowBase64: true,
+        allowBase64: false, // Forzado a subir a Storage
         HTMLAttributes: {
-          class: 'rounded-lg max-w-full h-auto',
+          class: 'rounded-lg max-w-full h-auto my-4 shadow-md',
         },
       }),
       Link.configure({
         openOnClick: false,
+        HTMLAttributes: {
+          class: 'text-primary underline cursor-pointer',
+        },
       }),
       Placeholder.configure({
         placeholder,
       }),
     ],
+    editorProps: {
+      handlePaste: (view, event) => {
+        const items = Array.from(event.clipboardData?.items || []);
+        const imageItems = items.filter(item => item.type.startsWith('image/'));
+
+        if (imageItems.length > 0 && onImageUpload) {
+          event.preventDefault();
+          
+          imageItems.forEach(async (item) => {
+            const file = item.getAsFile();
+            if (file) {
+              try {
+                const url = await onImageUpload(file);
+                const { schema } = view.state;
+                const node = schema.nodes.image.create({ src: url });
+                const transaction = view.state.tr.replaceSelectionWith(node);
+                view.dispatch(transaction);
+              } catch (error) {
+                console.error("Error al subir imagen pegada:", error);
+              }
+            }
+          });
+          return true;
+        }
+
+        // Bloquear file:/// links de Word
+        const text = event.clipboardData?.getData('text/plain');
+        if (text?.includes('file:///')) {
+          console.warn('Bloqueado link local de Word:', text);
+          return true;
+        }
+
+        return false;
+      },
+    },
     immediatelyRender: false,
     content: content || '',
     onUpdate: ({ editor }) => {
