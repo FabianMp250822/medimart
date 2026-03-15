@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { BlogLayout } from '@/components/blog/blog-layout';
 import admin from 'firebase-admin';
 
+export const revalidate = 60; // Revalidar cada minuto
+
 type Props = {
   params: Promise<{ id: string }>;
 };

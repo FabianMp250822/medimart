@@ -1,16 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import ImageExtension from '@tiptap/extension-image';
-import Link from '@tiptap/extension-link';
-import Underline from '@tiptap/extension-underline';
-import Placeholder from '@tiptap/extension-placeholder';
-import Highlight from '@tiptap/extension-highlight';
-import Typography from '@tiptap/extension-typography';
 import { db, storage } from '@/lib/firebase';
+import { RichTextEditor } from './rich-text-editor';
 import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Blog } from '@/types/blog';
@@ -21,9 +12,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Icons } from '@/components/icons';
 import { toast } from '@/hooks/use-toast';
-import { EditorToolbar } from './editor-toolbar';
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
+import { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface BlogFormProps {
   initialData?: Blog;
@@ -48,33 +40,13 @@ export function BlogForm({ initialData, isEditing = false }: BlogFormProps) {
   );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const editorFileInputRef = useRef<HTMLInputElement>(null);
 
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Highlight,
-      Typography,
-      ImageExtension.configure({
-        allowBase64: true,
-        HTMLAttributes: {
-          class: 'rounded-lg max-w-full h-auto',
-        },
-      }),
-      Link.configure({
-        openOnClick: false,
-      }),
-      Placeholder.configure({
-        placeholder: 'Escribe el contenido de tu artículo aquí...',
-      }),
-    ],
-    immediatelyRender: false,
-    content: formData.content || '',
-    onUpdate: ({ editor }) => {
-      setFormData(prev => ({ ...prev, content: editor.getHTML() }));
-    },
-  });
+  const handleEditorImageUpload = async (file: File): Promise<string> => {
+    if (!storage) throw new Error("Storage not initialized");
+    const storageRef = ref(storage, `blog/${uuidv4()}_${file.name}`);
+    const snapshot = await uploadBytes(storageRef, file);
+    return await getDownloadURL(snapshot.ref);
+  };
 
   const handleImageUpload = async (file: File, type: 'cover' | 'inline') => {
     try {
@@ -85,8 +57,6 @@ export function BlogForm({ initialData, isEditing = false }: BlogFormProps) {
       
       if (type === 'cover') {
         setFormData(prev => ({ ...prev, image: url }));
-      } else {
-        editor?.chain().focus().setImage({ src: url }).run();
       }
     } catch (error) {
       console.error("Error uploading image: ", error);
@@ -176,21 +146,11 @@ export function BlogForm({ initialData, isEditing = false }: BlogFormProps) {
 
               <div className="space-y-2">
                 <Label>Contenido</Label>
-                <div className="rounded-md border border-input overflow-hidden focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-                  <EditorToolbar 
-                    editor={editor} 
-                    onImageClick={() => editorFileInputRef.current?.click()} 
-                  />
-                  <div className="p-4 min-h-[500px] prose prose-sm sm:prose lg:prose-lg max-w-none focus:outline-none bg-white">
-                    <EditorContent editor={editor} />
-                  </div>
-                </div>
-                <input 
-                  type="file" 
-                  ref={editorFileInputRef} 
-                  className="hidden" 
-                  accept="image/*" 
-                  onChange={(e) => handleFileChange(e, 'inline')}
+                <RichTextEditor 
+                  content={formData.content || ''}
+                  onChange={(content) => setFormData(prev => ({ ...prev, content }))}
+                  placeholder="Escribe el contenido de tu artículo aquí..."
+                  onImageUpload={handleEditorImageUpload}
                 />
               </div>
             </CardContent>

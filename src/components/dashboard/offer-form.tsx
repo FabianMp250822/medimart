@@ -17,6 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Icons } from '@/components/icons';
 import { toast } from '@/hooks/use-toast';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { RichTextEditor } from './rich-text-editor';
 
 const offerSchema = z.object({
   titulo: z.string().min(3, "El título es requerido"),
@@ -136,7 +137,11 @@ export function OfferForm({ initialData, isEditing = false }: OfferFormProps) {
                   <FormItem className="md:col-span-2">
                     <FormLabel>Descripción *</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Describe las responsabilidades del cargo..." className="min-h-[120px]" {...field} />
+                      <RichTextEditor 
+                        content={field.value}
+                        onChange={field.onChange}
+                        placeholder="Describe las responsabilidades del cargo..."
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -150,7 +155,11 @@ export function OfferForm({ initialData, isEditing = false }: OfferFormProps) {
                   <FormItem className="md:col-span-2">
                     <FormLabel>Requisitos *</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Formación, conocimientos específicos, etc..." className="min-h-[100px]" {...field} />
+                      <RichTextEditor 
+                        content={field.value}
+                        onChange={field.onChange}
+                        placeholder="Formación, conocimientos específicos, etc..."
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

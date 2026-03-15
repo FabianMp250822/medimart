@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: 'Manténgase al día con las últimas noticias, artículos y consejos de salud de la Clínica de la Costa.',
 };
 
+export const revalidate = 60; // Revalidar cada minuto
+
 async function getBlogs(): Promise<Blog[]> {
   return safeQuery(async (db) => {
     const blogsSnapshot = await db.collection('blogs').where('lugar', '==', 'clinica').orderBy('date', 'desc').get();
